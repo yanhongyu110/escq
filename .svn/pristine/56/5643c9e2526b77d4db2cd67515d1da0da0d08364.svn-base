@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.VisitRecordMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.VisitRecord">
+    <id column="VR_ID" jdbcType="VARCHAR" property="vrId" />
+    <result column="VR_TIME" jdbcType="TIMESTAMP" property="vrTime" />
+    <result column="VR_IP" jdbcType="VARCHAR" property="vrIp" />
+    <result column="VR_NAME" jdbcType="VARCHAR" property="vrName" />
+    <result column="VR_BROWER" jdbcType="VARCHAR" property="vrBrower" />
+    <result column="VR_SOURCE" jdbcType="VARCHAR" property="vrSource" />
+    <result column="VR_COMMENT" jdbcType="VARCHAR" property="vrComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    VR_ID, VR_TIME, VR_IP, VR_NAME, VR_BROWER, VR_SOURCE, VR_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from visit_record
+    where VR_ID = #{vrId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from visit_record
+    where VR_ID = #{vrId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.VisitRecord">
+    insert into visit_record (VR_ID, VR_TIME, VR_IP, 
+      VR_NAME, VR_BROWER, VR_SOURCE, 
+      VR_COMMENT)
+    values (#{vrId,jdbcType=VARCHAR}, #{vrTime,jdbcType=TIMESTAMP}, #{vrIp,jdbcType=VARCHAR}, 
+      #{vrName,jdbcType=VARCHAR}, #{vrBrower,jdbcType=VARCHAR}, #{vrSource,jdbcType=VARCHAR}, 
+      #{vrComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.VisitRecord">
+    insert into visit_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="vrId != null">
+        VR_ID,
+      </if>
+      <if test="vrTime != null">
+        VR_TIME,
+      </if>
+      <if test="vrIp != null">
+        VR_IP,
+      </if>
+      <if test="vrName != null">
+        VR_NAME,
+      </if>
+      <if test="vrBrower != null">
+        VR_BROWER,
+      </if>
+      <if test="vrSource != null">
+        VR_SOURCE,
+      </if>
+      <if test="vrComment != null">
+        VR_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="vrId != null">
+        #{vrId,jdbcType=VARCHAR},
+      </if>
+      <if test="vrTime != null">
+        #{vrTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vrIp != null">
+        #{vrIp,jdbcType=VARCHAR},
+      </if>
+      <if test="vrName != null">
+        #{vrName,jdbcType=VARCHAR},
+      </if>
+      <if test="vrBrower != null">
+        #{vrBrower,jdbcType=VARCHAR},
+      </if>
+      <if test="vrSource != null">
+        #{vrSource,jdbcType=VARCHAR},
+      </if>
+      <if test="vrComment != null">
+        #{vrComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.VisitRecord">
+    update visit_record
+    <set>
+      <if test="vrTime != null">
+        VR_TIME = #{vrTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vrIp != null">
+        VR_IP = #{vrIp,jdbcType=VARCHAR},
+      </if>
+      <if test="vrName != null">
+        VR_NAME = #{vrName,jdbcType=VARCHAR},
+      </if>
+      <if test="vrBrower != null">
+        VR_BROWER = #{vrBrower,jdbcType=VARCHAR},
+      </if>
+      <if test="vrSource != null">
+        VR_SOURCE = #{vrSource,jdbcType=VARCHAR},
+      </if>
+      <if test="vrComment != null">
+        VR_COMMENT = #{vrComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where VR_ID = #{vrId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.VisitRecord">
+    update visit_record
+    set VR_TIME = #{vrTime,jdbcType=TIMESTAMP},
+      VR_IP = #{vrIp,jdbcType=VARCHAR},
+      VR_NAME = #{vrName,jdbcType=VARCHAR},
+      VR_BROWER = #{vrBrower,jdbcType=VARCHAR},
+      VR_SOURCE = #{vrSource,jdbcType=VARCHAR},
+      VR_COMMENT = #{vrComment,jdbcType=VARCHAR}
+    where VR_ID = #{vrId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,136 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<title>申请预约</title>
+<%--<%@ include file="/WEB-INF/jsp/common/header.jsp"%>--%>
+	<script type="text/javascript" src="${webtxc}/js/common.js?v=20160111"></script>
+<%@ include file="/WEB-INF/jsp/common/easyui.jsp"%>
+<meta content="yes" name="apple-mobile-web-app-capable">
+<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+<meta name="apple-touch-fullscreen" content="yes">
+<!-- 开启对web app程序的支持  -->
+<meta content="telephone=no,email=no" name="format-detection">
+<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+<!--base css-->
+<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+<link rel="stylesheet" href="${webtxc }/css/wap/reset.css" />
+<link rel="stylesheet" href="${webtxc }/css/wap/personer.css" />
+<script src="${webtxc }/js/wap/reset.js"></script>
+<%-- <script src="${webtxc }/js/wap/jquery.min.js"></script> --%>
+<script type="text/javascript" src="${webtxc }/myjs/wap/saleinfo/ordersubmit.js?v=2212"></script>
+	<script type="text/javascript" src="${webtxc }/js/wap/common.js?v=12312"></script>
+</head>
+	<body>
+		<!--wapper-->
+		<div class="wapper" style="border-top:1px solid #eee">
+			<!--page-->
+			<div id="page">
+
+				<!-- <div class="personer_top">
+					<h3>申请预约</h3>
+					<span onclick="history.go(-1)" style="width:40px;height:50px;display:block;position:absolute;left:0;top:0;"></span>
+				</div> -->
+
+				<div class="my_date_bt">
+
+					<div class="service_content">
+						<div class="service_content_pj show">
+							<div class="personer_mes" style=" padding-bottom: 10px;">
+							<c:forEach var="list" items="${list}">
+								<input type="hidden" class="serviceId" value="${list.box.serviceId }">
+								<input type="hidden" class="scartNum" value="${list.scartNum }">
+								<input type="hidden" class="scartSource" value="${list.scartSource }">
+								<ul class="my_date">
+									<li class="my_date_img"><img src="${list.box.servicePic }"></li>
+									<li class="my_date_title">
+										<h3>${list.box.serviceTitle }</h3>
+										<p><b>${list.scartPrice}</b> </p>
+									</li>
+									<li class="my_date_zt">
+										<p>订单未提交</p>
+										<span>${list.scartCreatetime }</span>
+									</li>
+								</ul>
+							</c:forEach>
+							</div>
+							<!--end.personer_mes-->
+							<div class="personer_mes_zl">
+								<ul class="personer_mes_zl_ms have_border">
+									<li>预约时间</li>
+									<li class="mes_input">
+										<input id="orderMeettime"  type="text" />
+									</li>
+								</ul>
+								<ul class="personer_mes_zl_ms">
+									<li>联系人</li>
+									<li class="mes_input" style="width:48%;">
+										<input id="orderPerson" type="text" placeholder="请输入姓名"  />
+									</li>
+									<li id="orderPersonicon"  style="width:22%;float:right;font-size:12px;text-align: right;"></li>
+								</ul>
+								<ul class="personer_mes_zl_ms">
+									<li>约定区域</li>
+									<li class="mes_input" style="width:48%;">
+										<input id="orderArea" type="text" placeholder="约定区域" />
+									</li>
+									<li id="orderAreaicon" style="width:22%;float:right;font-size:12px;text-align: right;"></li>
+								</ul>
+								<ul class="personer_mes_zl_ms">
+									<li>约定地点</li>
+									<li class="mes_input" style="width:48%;">
+										<input id="orderAddr" type="text" placeholder="约定地点" />
+									</li>
+									<li id="orderAddricon" style="width:22%;float:right;font-size:12px;text-align: right;"></li>
+								</ul>
+								<ul class="personer_mes_zl_ms">
+									<li>联系方式</li>
+									<li class="mes_input" style="width:48%;">
+										<input id="orderPersoncell" type="text" placeholder="联系方式" />
+									</li>
+									<li id="orderPersoncellicon" style="width:22%;float:right;font-size:12px;text-align: right;"></li>
+								</ul>
+								<ul class="personer_zp" style="height: auto;min-height: 160px">
+									<li>服务描述</li>
+									<li class="personer_js" style="height: 100%">
+										<textarea style="display: block;" id="orderRequest" placeholder="对自己进行简单的介绍..." ></textarea>
+									</li>
+								</ul>
+								<ul class="personer_fb">
+									<li>发票信息</li>
+										<li><input type="radio" name="orderIsbill" onclick="invoice()" value="1" /> 开具发票</li>
+										<li><input type="radio" name="orderIsbill" onclick="noinvoice()" value="0" checked="checked" /> 不开发票
+									</li>
+								</ul>
+								<ul id="describe" class="personer_zp" style="display:none">
+									<li>发票描述</li>
+									<li class="personer_js"><textarea id="orderBillcontent" placeholder="发票描述..." ></textarea></li>
+								</ul>
+								<ul id="address" class="personer_mes_zl_ms" style="display:none">
+									<li>发票地址</li>
+									<li class="mes_input">
+										<input id="orderBilladdr" type="text" placeholder="发票地址" />
+									</li>
+									<li id="orderBilladdricon"></li>
+								</ul>
+							</div>
+							<div class="personer_excit">
+					<div class="excit" onclick="submit()">申请约见</div>
+				</div>
+						</div>
+						<!--end.service_content_pj-->
+					</div>
+					<!--end.service_content-->
+				</div>
+				<!--end.wap_service_xq-->
+			</div>
+			<!--page end-->
+		</div>
+		<!--wapper end-->
+	</body>
+</html>

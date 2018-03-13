@@ -1,0 +1,19 @@
+/**
+ * 获取参数
+ * 
+ * @param name
+ * @returns
+ */
+function getQueryString(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	var r = window.location.search.substr(1).match(reg); 
+	if (r != null) return decodeURI(r[2]); return null; 
+}
+
+$(function(){
+	var parentId = getQueryString("parentId");
+	var cookieDate = new Date();
+	cookieDate.setTime(cookieDate.getTime() + 3*24*60*60*1000);
+	document.cookie = "distriteuidckname" + '=' + parentId
+	+ ";expires=" + cookieDate.toGMTString() + ";path=/";
+});

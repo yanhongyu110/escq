@@ -1,0 +1,162 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jsp/common/common.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>我的账户</title>
+
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+    <meta name="apple-touch-fullscreen" content="yes">
+    <!-- 开启对web app程序的支持  -->
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+    <!--base css-->
+
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes"/>
+    <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
+    <%@ include file="/WEB-INF/jsp/common/easyui.jsp" %>
+    <script type="text/javascript" src="${webtxc}/jquery/jquery.cookie.js"></script>
+    <script type="text/javascript" src="${webtxc}/jquery/jquery.md5.js"></script>
+    <script type="text/javascript" src="${webtxc}/js/validate.js"></script>
+    <script type="text/javascript" src="${webtxc}/js/common.js?v=20160111"></script>
+    <link rel="stylesheet" href="${webtxc }/css/wap/reset.css"/>
+    <link rel="stylesheet" href="${webtxc }/css/wap/personer.css"/>
+    <script src="${webtxc }/js/wap/reset.js"></script>
+    <script src="${webtxc }/js/wap/TouchSlide.js"></script>
+    <script type="text/javascript" src="${webtxc }/js/wap/common.js?v=12312"></script>
+    <script src="${webtxc }/myjs/wap/details/myaccount.js?v=55151"></script>
+    <script type="text/javascript">
+        var jsonList = ${jsonList};
+        var count = ${count};
+        var serviceTypetree = '${serviceTypetree}';
+    </script>
+    <style type="text/css">
+
+        #logCell {
+            background: transparent;
+        }
+
+        .wapper {
+            padding-bottom: 80px;
+        }
+    </style>
+</head>
+<body>
+<!--wapper-->
+<div class="wapper">
+    <!--page-->
+    <div id="page">
+        <div class="personer_top">
+            <h3>我的账户</h3>
+            <span onclick="history.go(-1)"
+                  style="width:40px;height:50px;display:block;position:absolute;left:0;top:0;"></span>
+        </div>
+        <div class="personer_mes_phto">
+            <img src="${logInfo.userPhoto}"/>
+            <%--${logInfo.userPhoto}--%>
+            <c:if test="${!empty accList[0].accBalance}">
+            <h3>账户余额：<span>${accList[0].accBalance}元</span>
+                </c:if>
+                <c:if test="${empty accList[0].accBalance}">
+                <h3>账户余额：<span>0.0元</span>
+                    </c:if>
+                    <br>
+                    <%-- <c:if test="${!empty accList[0].accPoint}">
+                        积分：<span>${accList[0].accPoint}分</span></h3>
+                    </c:if>
+                    <c:if test="${empty accList[0].accPoint}">
+                        积分：<span>0分</span></h3>
+                    </c:if> --%>
+        </div>
+        <!--end.personer_mes_phto-->
+        <div id="account_body" class="personer_mes">
+            <ul id="bill" class="list_mes list_mes_father  have_border">
+                <li>账单</li>
+                <li class="mm"></li>
+            </ul>
+            <ul id="account_edit_pay_pass_btn" class="list_mes list_mes_father ">
+                <li class="edit_pay">修改支付密码</li>
+                <li class="mm"></li>
+            </ul>
+        </div>
+
+        <div id="account_bill" class="my_zd" style="visibility:hidden;">
+            <form id="myform" action="${webtxc}/wap/details/AccountPaymentDetails/showIODetailsByAjax.html"
+                  method="post">
+                <ul class="zd_title">
+                    <li class="b_year">起始日期:</li>
+                    <input name="startTime" id="startTime" type="text" class="easyui-datebox"
+                           style="display: none;width: 70%;height: 30px; border-radius: 0;"/>
+                </ul>
+                <ul class="zd_title">
+                    <li class="b_year">截止日期:</li>
+                    <input name="endTime" id="endTime" type="text" class="easyui-datebox"
+                           style="display:none;width: 70%;height: 30px; border-radius: 0;"/>
+                </ul>
+                <ul class="zd_title">
+                    <li class="b_year">计算单位:</li>
+                    <select id="cc" class="easyui-combobox" name="flag"
+                            style="display: none;;width: 50%;height: 30px; border-radius: 0;">
+                        <option value="d">请选择</option>
+                        <option value="a">根据年</option>
+                        <option value="b">根据月</option>
+                        <option value="c">根据日</option>
+                    </select>
+                    <a href="javascript:void(0)" id="searchh" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-search'"
+                       style="margin-right: 0px; margin-left: 5px;height: 30px; border-radius: 0;">确定</a>
+                </ul>
+            </form>
+            <div id="billlist">
+
+            </div>
+        </div>
+
+        <div id="account_edit_pay_pass" class="personer_mes_zl" style="display:none">
+            <ul class="personer_mes_zl_ms">
+                <h3>修改支付密码</h3>
+            </ul>
+            <ul class="personer_mes_zl_ms">
+                <li>手机号</li>
+                <li class="mes_input">
+                    <input id="logCell" style="color:black" type="text" value="${sessionScope.logInfo.logCell}"
+                           disabled="true" 　readOnly="true"/>
+                </li>
+            </ul>
+            <ul class="personer_mes_zl_ms">
+                <li>验证码</li>
+                <li class="mes_input" style="width:110px;">
+                    <input id="xfjcheck" placeholder="请输入验证码" type="text"/>
+                </li>
+                <li class="hq_yzm" style="margin-top: 0;float:right" id="getvalidate">获取验证码</li>
+            </ul>
+            <ul class="personer_mes_zl_ms">
+                <li>新密码</li>
+                <li class="mes_input">
+                    <input id="newPass" placeholder="至少输入6个字符" type="password"/>
+                </li>
+                <li id="newPassicon"></li>
+            </ul>
+            <ul class="personer_mes_zl_ms">
+                <li>确认密码</li>
+                <li class="mes_input">
+                    <input id="confirmPass" placeholder="至少输入6个字符" type="password"/>
+                </li>
+                <li id="confirmPassicon"></li>
+            </ul>
+
+        </div>
+        <div id="sub-btn" class="personer_excit" style="display: none;">
+            <div id="sub" class="excit" style="cursor:pointer">修改</div>
+            <div class="cz" onclick="history.go(0)">返回</div>
+        </div>
+    </div>
+    <!--page end-->
+</div>
+<!--wapper end-->
+<%@ include file="/WEB-INF/jsp/wap/common/bottom.jsp" %>
+</body>
+</html>

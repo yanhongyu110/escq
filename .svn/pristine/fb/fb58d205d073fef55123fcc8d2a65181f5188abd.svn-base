@@ -1,0 +1,149 @@
+package com.jero.esc.controller.activity;
+
+import java.net.InetAddress;
+import java.net.URLDecoder;
+import java.net.UnknownHostException;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.jdom.JDOMException;
+import org.json.JSONObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jero.esc.common.utils.DateUtil;
+
+
+/**
+ * 
+ * <pre>
+ * <b> 发送红包 .</b>
+ * <b>Description:</b> 
+ *    
+ * <b>Author:</b> yanhongyu
+ * <b>Date:</b> 2017-11-29下午3:17:46
+ * <b>Changelog:</b>
+ *   ----------------------------------------------------------------------------
+ *   Ver   Date                     Detail
+ *   ----------------------------------------------------------------------------
+ *   1.0   2017-11-29下午3:17:46         new file.
+ * </pre>
+ */
+@Controller
+@RequestMapping(value="/activity/weiXinRedPacket")
+public class WeiXinRedPacket {
+	private static final Logger LOGGER = Logger.getLogger(WeiXinRedPacket.class);
+	
+	public Map<String, String> sendRedPacket(String openid) throws JDOMException{
+		try {
+			RedPacket redPacket = new RedPacket();
+			//设置随机字符串
+			redPacket.setNonce_str(UUID.randomUUID().toString().toUpperCase().replaceAll("-", ""));
+			//设置签名
+			redPacket.setSign("");
+			//设置商户订单号
+			redPacket.setMch_billno(DateUtil.getPayMentId());
+			//设置商户号
+			redPacket.setMch_id("1486272382");
+			//公众号
+			redPacket.setWxappid("wxd0c763640d4b8f08");
+			//商户名称
+			redPacket.setSend_name("近到家公众平台");
+			//设置用户id
+			redPacket.setRe_openid(openid);
+			//设置金额: 分
+			redPacket.setTotal_amount(100);
+			//红包人数
+			redPacket.setTotal_num(1);
+			//红包祝福语
+			redPacket.setWishing("注册新用户,万元红包等你拿");
+			//ip
+			redPacket.setClient_ip(InetAddress.getLocalHost().getHostAddress());
+			//活动名称
+			redPacket.setAct_name("注册有奖");
+			
+			WeixinDraw wxDraw = new WeixinDraw();
+			Map<String, String> map = wxDraw.sendredpack(redPacket);
+			
+			return map;
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	public static void main(String[] args) throws JDOMException {
+		WeiXinRedPacket wxrp = new WeiXinRedPacket();
+		Map<String, String> map = wxrp.sendRedPacket("o-u9K1k1Lg10jwqFwa3qbN19_bJQ");
+		System.out.println(map.get("return_msg"));
+		System.out.println(map.get("return_code"));
+		System.out.println(map.get("err_code_des"));
+//		System.out.println(map.get("sign"));
+	}
+	
+	@RequestMapping(value="/payWeiXinAction")
+	public void payWeiXinAction(HttpServletRequest request, HttpServletResponse response){
+		try {
+			String code = request.getParameter("code");//
+			String state = request.getParameter("state");
+			System.out.println("code:" + code + ",state:" + state);
+			LOGGER.info(">>>>>>>获取微信openid开始");
+			String reString = HttpRequest.sendGet(
+					"https://api.weixin.qq.com/sns/oauth2/access_token",
+					"appid=wxd0c763640d4b8f08&secret=3efc3786db25c423b44dcdbcc35d63f7&code="
+							+ code + "&grant_type=authorization_code");
+			JSONObject jsonObject = new JSONObject(reString);
+			if (jsonObject.has("errcode")) { // 错误
+				response.sendRedirect(URLDecoder.decode(state, "utf-8"));
+				LOGGER.error("获取openid失败");
+				System.out.println("获取openid失败");
+			} else { // 正确
+				String openid = jsonObject.getString("openid");
+//				WeChatUtils  wu = new WeChatUtils();
+				LOGGER.info("获取openid为  :"+openid);
+				System.out.println("获取openid为  :"+openid);
+////				Map<String, String> map = wu.sendRedPack(openid);
+//				Map<String, String> map = this.sendRedPacket(openid);
+//				for(String str : map.keySet()){
+//					System.out.println(str+"的值是   :"+map.get(str));
+//				}
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="/getOpenId")
+	public void getOpenId(HttpServletRequest request, HttpServletResponse response){
+		try {
+		String code = request.getParameter("code");//
+		String state = request.getParameter("state");
+		System.out.println("code:" + code + ",state:" + state);
+		LOGGER.info(">>>>>>>获取微信openid开始");
+		String reString = HttpRequest.sendGet(
+				"https://api.weixin.qq.com/sns/oauth2/access_token",
+				"appid=wxd0c763640d4b8f08&secret=3efc3786db25c423b44dcdbcc35d63f7&code="
+						+ code + "&grant_type=authorization_code");
+		JSONObject jsonObject;
+			jsonObject = new JSONObject(reString);
+		if (jsonObject.has("errcode")) { // 错误
+			response.sendRedirect(URLDecoder.decode(state, "utf-8"));
+			LOGGER.error("获取openid失败");
+			System.out.println("获取openid失败");
+		} else { // 正确
+			String openid = jsonObject.getString("openid");
+//			WeChatUtils  wu = new WeChatUtils();
+			LOGGER.info("获取openid为  :"+openid);
+			System.out.println("获取openid为  :"+openid);
+		}
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
+}

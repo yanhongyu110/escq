@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         updateCheck="false">
+
+    <!-- 指定一个文件目录，当EhCache把数据写到硬盘上时，将把数据写到这个文件目录下 -->
+    <!--<diskStore path="java.io.tmpdir"/>-->
+
+    <!-- 登录记录缓存 锁定10分钟 -->
+    <defaultCache
+           maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LFU"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="300"
+           overflowToDisk="false"
+           statistics="true">
+    </defaultCache>
+    
+    <cache name="comSearchChae"
+           maxElementsInMemory="10000"
+           eternal="false"
+           memoryStoreEvictionPolicy="LFU"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+
+    <cache name="homeChae"
+           maxElementsInMemory="10000"
+           eternal="false"
+           memoryStoreEvictionPolicy="LFU"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+
+    <cache name="tokenChae"
+           maxElementsInMemory="10000"
+           eternal="false"
+           memoryStoreEvictionPolicy="LFU"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="1500"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+
+    <cache name="action"
+           maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LFU"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+
+    <cache name="checkCode"
+           maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LFU"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+
+
+</ehcache>

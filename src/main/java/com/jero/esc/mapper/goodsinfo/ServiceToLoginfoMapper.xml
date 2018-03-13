@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.goodsinfo.ServiceToLoginfoMapper">
+    <resultMap id="serviceToLogMap" type="com.jero.esc.po.goodsinfo.ServiceToLoginfo">
+        <id column="ID" jdbcType="VARCHAR" property="id"/>
+        <result column="SERVER_ID" jdbcType="VARCHAR" property="serviceId"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="logId"/>
+    </resultMap>
+
+    <select id="select" resultMap="serviceToLogMap">
+        SELECT server_to_loginfo.ID,server_to_loginfo.SERVER_ID,server_to_loginfo.LOG_ID FROM server_to_loginfo
+        WHERE SERVER_ID = #{serviceId} and LOG_ID = #{logId}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO server_to_loginfo VALUE (#{id}, #{serviceId}, #{logId})
+    </insert>
+
+    <delete id="deleteByLogIdAndServiceId">
+        DELETE FROM server_to_loginfo WHERE SERVER_ID = #{serviceId} and LOG_ID = #{logId}
+    </delete>
+</mapper>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.pubinfo.FriendlyLinkInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.pubinfo.FriendlyLinkInfo">
+    <id column="FL_ID" jdbcType="VARCHAR" property="flId" />
+    <result column="FL_TITLE" jdbcType="VARCHAR" property="flTitle" />
+    <result column="FL_URL" jdbcType="VARCHAR" property="flUrl" />
+    <result column="FL_SORT" jdbcType="INTEGER" property="flSort" />
+    <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" />
+    <result column="FL_COMMENT" jdbcType="VARCHAR" property="flComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    FL_ID, FL_TITLE, FL_URL, FL_SORT, ADMIN_ID, FL_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from friendly_link_info
+    where FL_ID = #{flId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from friendly_link_info
+    where FL_ID = #{flId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.pubinfo.FriendlyLinkInfo">
+    insert into friendly_link_info (FL_ID, FL_TITLE, FL_URL, 
+      FL_SORT, ADMIN_ID, FL_COMMENT
+      )
+    values (#{flId,jdbcType=VARCHAR}, #{flTitle,jdbcType=VARCHAR}, #{flUrl,jdbcType=VARCHAR}, 
+      #{flSort,jdbcType=INTEGER}, #{adminId,jdbcType=VARCHAR}, #{flComment,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.pubinfo.FriendlyLinkInfo">
+    insert into friendly_link_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="flId != null">
+        FL_ID,
+      </if>
+      <if test="flTitle != null">
+        FL_TITLE,
+      </if>
+      <if test="flUrl != null">
+        FL_URL,
+      </if>
+      <if test="flSort != null">
+        FL_SORT,
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="flComment != null">
+        FL_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="flId != null">
+        #{flId,jdbcType=VARCHAR},
+      </if>
+      <if test="flTitle != null">
+        #{flTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="flUrl != null">
+        #{flUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="flSort != null">
+        #{flSort,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="flComment != null">
+        #{flComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.pubinfo.FriendlyLinkInfo">
+    update friendly_link_info
+    <set>
+      <if test="flTitle != null">
+        FL_TITLE = #{flTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="flUrl != null">
+        FL_URL = #{flUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="flSort != null">
+        FL_SORT = #{flSort,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="flComment != null">
+        FL_COMMENT = #{flComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FL_ID = #{flId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.pubinfo.FriendlyLinkInfo">
+    update friendly_link_info
+    set FL_TITLE = #{flTitle,jdbcType=VARCHAR},
+      FL_URL = #{flUrl,jdbcType=VARCHAR},
+      FL_SORT = #{flSort,jdbcType=INTEGER},
+      ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      FL_COMMENT = #{flComment,jdbcType=VARCHAR}
+    where FL_ID = #{flId,jdbcType=VARCHAR}
+  </update>
+</mapper>

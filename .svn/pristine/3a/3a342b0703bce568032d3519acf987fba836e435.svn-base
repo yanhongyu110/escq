@@ -1,0 +1,136 @@
+package com.jero.esc.po.pubinfo;
+
+import java.util.List;
+/**
+ * 
+ * <pre>
+ * <b> 通用类型表 .</b>
+ * <b>Description:</b> 
+ *    
+ * <b>Author:</b> yanhongyu
+ * <b>Date:</b> 2017-10-30下午5:06:06
+ * <b>Changelog:</b>
+ *   ----------------------------------------------------------------------------
+ *   Ver   Date                     Detail
+ *   ----------------------------------------------------------------------------
+ *   1.0   2017-10-30下午5:06:06         new file.
+ * </pre>
+ */
+public class CommonType {
+
+    private List<CommonType> children;
+
+    private  CommonType commonType;
+
+    private String ctId;
+
+    /** 分类 */
+    private Integer ctType;
+
+    /** 名称 */
+    private String ctName;
+
+    /** 父类编号 */
+    private String ctFid;
+
+    /** 是否叶子 */
+    private Boolean ctIsleaf;
+
+    /** 顺序 */
+    private Integer ctSort;
+
+    /** 备注 */
+    private String ctComment;
+
+    private String company;
+
+    private String ctTemplate;
+
+    public String getCtId() {
+        return ctId;
+    }
+
+    public void setCtId(String ctId) {
+        this.ctId = ctId == null ? null : ctId.trim();
+    }
+
+    public Integer getCtType() {
+        return ctType;
+    }
+
+    public void setCtType(Integer ctType) {
+        this.ctType = ctType;
+    }
+
+    public String getCtName() {
+        return ctName;
+    }
+
+    public void setCtName(String ctName) {
+        this.ctName = ctName == null ? null : ctName.trim();
+    }
+
+    public String getCtFid() {
+        return ctFid;
+    }
+
+    public void setCtFid(String ctFid) {
+        this.ctFid = ctFid == null ? null : ctFid.trim();
+    }
+
+    public Boolean getCtIsleaf() {
+        return ctIsleaf;
+    }
+
+    public void setCtIsleaf(Boolean ctIsleaf) {
+        this.ctIsleaf = ctIsleaf;
+    }
+
+    public Integer getCtSort() {
+        return ctSort;
+    }
+
+    public void setCtSort(Integer ctSort) {
+        this.ctSort = ctSort;
+    }
+
+    public String getCtComment() {
+        return ctComment;
+    }
+
+    public void setCtComment(String ctComment) {
+        this.ctComment = ctComment == null ? null : ctComment.trim();
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company == null ? null : company.trim();
+    }
+
+    public String getCtTemplate() {
+        return ctTemplate;
+    }
+
+    public void setCtTemplate(String ctTemplate) {
+        this.ctTemplate = ctTemplate == null ? null : ctTemplate.trim();
+    }
+
+    public List<CommonType> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<CommonType> children) {
+        this.children = children;
+    }
+
+    public CommonType getCommonType() {
+        return commonType;
+    }
+
+    public void setCommonType(CommonType commonType) {
+        this.commonType = commonType;
+    }
+}

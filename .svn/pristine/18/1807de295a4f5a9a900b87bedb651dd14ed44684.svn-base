@@ -1,0 +1,11 @@
+/* fenye */
+
+.jogger {clear: both;font-family:"Microsoft YaHei";padding-top: 50px;height:50px;} 
+.jogger A { padding:5px 10px;color: #333; border: 1px solid #f5f5f5; text-decoration: none; margin-left:5px; background: #fff;} 
+.jogger A:hover {padding: 5px 10px;color: #fb5a5a;} 
+.jogger A:active {padding:8px 10px; color: #fff; background: #FB5A5A; } 
+.jogger SPAN.current {padding: 8px 10px; color: #6d643c; font-weight: bold;border: 1px solid #f5f5f5;margin-left: 5px;background: red;} 
+.jogger SPAN.disabled { border: 1px solid #f5f5f5;padding: 4px 10px;} 
+.jogger input{width: 30px;height: 11px;padding: 9px 8px;margin-left: 5px;border: 1px solid #f5f5f5;}
+.jogger .x_tiao{color:#999;margin-left:10px;}
+.jogger .x_tiao em{ margin-right:5px;font-style:normal;}

@@ -1,0 +1,95 @@
+package com.jero.esc.controller.details;
+
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.alibaba.fastjson.JSON;
+import com.jero.esc.common.controller.BaseController;
+import com.jero.esc.common.utils.JsonUtil;
+import com.jero.esc.po.details.AccontPaymentDetails;
+import com.jero.esc.service.details.IAccountPaymentDetailsService;
+@Controller
+@RequestMapping(value="/details")
+public class AccountPaymentDetailsController extends BaseController{
+	@Autowired
+	private IAccountPaymentDetailsService accountPaymentDetailsService;
+	
+	@RequestMapping(value="/AccountPaymentDetails/showIODetails")
+	public ModelAndView showIODetails(HttpSession session,Integer page,String startTime,String endTime){
+		// 更新session
+		refresh(session);
+		if(page==null){
+			page = 1;
+		}
+		Integer pageSize = 10;
+		RowBounds rb = this.getRowBounds(page, pageSize);
+		String logId = this.retrievalCurrentUserInfo(session).getLogId();
+		HashMap<String, Object> map = accountPaymentDetailsService.queryAccountIODetailsById(rb, logId,startTime,endTime);
+		Object acDetailsList = map.get("apdList");
+		Object accList = map.get("accList");
+		Integer count = accountPaymentDetailsService.queryAccountIODetailsCountById(logId,startTime,endTime);
+		String jsonList = JSON.toJSONString(acDetailsList);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("details/accountPaymentDetails");
+		modelAndView.addObject("jsonList", jsonList);
+		modelAndView.addObject("accList", accList);
+		modelAndView.addObject("count", count);
+		return modelAndView; 
+	}
+	
+	@RequestMapping(value="/AccountPaymentDetails/showIODetailsByAjax")
+	public void showIODetailsByAjax(HttpSession session,HttpServletResponse response, Integer page,String flag,String startTime,String endTime){
+	    if(page==null){
+	    	page=1;
+	    }
+	    if("".equals(startTime)){
+	    	startTime = null;
+	    }else if("".equals(endTime)){
+	    	endTime = null;
+	    }
+		Integer pageSize = 10;
+		RowBounds rb = this.getRowBounds(page, pageSize);
+		String logId = this.retrievalCurrentUserInfo(session).getLogId();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if(flag.equals("a")){
+			List<AccontPaymentDetails> acDetailsList = accountPaymentDetailsService.queryAccountIOByIdYear(rb, logId, startTime, endTime);
+			Integer count = accountPaymentDetailsService.queryAccountIOCountByIdYear(logId, startTime, endTime);
+			map.put("acDetailsList", acDetailsList);
+			map.put("count", count);
+			map.put("pageNo", page);
+			map.put("flag", flag);
+		}else if(flag.equals("b")){
+			List<AccontPaymentDetails> acDetailsList = accountPaymentDetailsService.queryAccountIOByIdMonth(rb, logId, startTime, endTime);
+			Integer count = accountPaymentDetailsService.queryAccountIOCountByIdMonth(logId, startTime, endTime);
+			map.put("acDetailsList", acDetailsList);
+			map.put("count", count);
+			map.put("pageNo", page);
+			map.put("flag", flag);
+		}else if(flag.equals("c")){
+			List<AccontPaymentDetails> acDetailsList = accountPaymentDetailsService.queryAccountIOByIdDay(rb, logId, startTime, endTime);
+			Integer count = accountPaymentDetailsService.queryAccountIOCountByIdDay(logId, startTime, endTime);
+			map.put("acDetailsList", acDetailsList);
+			map.put("count", count);
+			map.put("pageNo", page);
+			map.put("flag", flag);
+		}else if(flag.equals("d")){
+			HashMap<String, Object> mmap = accountPaymentDetailsService.queryAccountIODetailsById(rb, logId,startTime,endTime);
+			Object acDetailsList = mmap.get("apdList");
+			Integer count = accountPaymentDetailsService.queryAccountIODetailsCountById(logId,startTime,endTime);
+			map.put("acDetailsList", acDetailsList);
+			map.put("count", count);
+			map.put("pageNo", page);
+			map.put("flag", flag);
+		}
+		JsonUtil.printByJSON(response, map);
+	}
+}

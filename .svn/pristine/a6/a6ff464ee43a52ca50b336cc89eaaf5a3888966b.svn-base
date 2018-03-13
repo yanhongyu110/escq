@@ -1,0 +1,537 @@
+package com.jero.esc.controller.wap.goodsinfo;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.alibaba.fastjson.JSONObject;
+import com.jero.esc.common.annotation.NoRepeatRequest;
+import com.jero.esc.common.controller.BaseController;
+import com.jero.esc.common.po.FastPage;
+import com.jero.esc.common.po.JsonResult;
+import com.jero.esc.common.po.PageRowBounds;
+import com.jero.esc.common.utils.JsonUtil;
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import com.jero.esc.common.utils.fastvalidate.FastValid;
+import com.jero.esc.common.utils.fastvalidate.FastValidate;
+import com.jero.esc.common.utils.fastvalidate.ValidateResult;
+import com.jero.esc.mapper.goodsinfo.ServiceInfoMapper;
+import com.jero.esc.mapper.userinfo.ProviderInfoMapper;
+import com.jero.esc.po.checkinfo.ProviderCheckInfo;
+import com.jero.esc.po.goodsinfo.ServiceInfo;
+import com.jero.esc.po.goodsinfo.ServiceStep;
+import com.jero.esc.po.goodsinfo.ServiceToLoginfo;
+import com.jero.esc.po.userinfo.LogInfo;
+import com.jero.esc.po.userinfo.ProviderInfo;
+import com.jero.esc.service.checkinfo.IProviderCheckInfoService;
+import com.jero.esc.service.goodsinfo.ICartService;
+import com.jero.esc.service.goodsinfo.IRemarkService;
+import com.jero.esc.service.goodsinfo.IServiceService;
+import com.jero.esc.service.goodsinfo.IServiceToLoginfoService;
+import com.jero.esc.service.userinfo.IProviderInfoService;
+import com.jero.esc.vo.goodsinfo.RemarkCountVo;
+import com.jero.esc.vo.goodsinfo.ServiceInfoVo;
+import com.jero.esc.vo.goodsinfo.ServiceRemarkVo;
+import com.jero.esc.vo.userinfo.ProviderVo;
+import com.jero.esc.vo.userinfo.ServiceVo;
+
+/**
+ * Created by blazh on 2016/12/12.
+ */
+@Controller
+@RequestMapping("/wap/goodsinfo")
+public class WapServiceController  extends BaseController{
+
+    @Autowired
+    private IServiceService serviceService;
+
+    @Autowired
+    private IRemarkService remarkService;
+    
+    @Autowired
+    private IProviderInfoService providerInfoService;
+
+	@Autowired
+	private IProviderCheckInfoService providerCheckInfoService;
+
+	@Autowired
+	private IServiceToLoginfoService serviceToLoginfoService;
+	
+	@Autowired
+	private ServiceInfoMapper serviceMapper;
+	
+	@Autowired
+	private ProviderInfoMapper providerMapper;
+	@Autowired
+	private ICartService  cartService;
+
+	/**
+     * 删除服务
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/service/deleteService",produces = "text/html;charset=UTF-8")
+    @NoRepeatRequest
+    public  void  deleteService(HttpServletResponse response,HttpSession session, @RequestParam("serviceId")String serviceId) throws Exception {
+    	JsonResult jr = new JsonResult();
+    	String resMsg = "";
+    	ServiceInfo serviceInfo = new ServiceInfo();
+    	if(retrievalCurrentUserInfo(session).getLogId()!=null||serviceId!=null){
+    		serviceInfo.setServiceId(serviceId);
+    		serviceInfo.setLogId(retrievalCurrentUserInfo(session).getLogId());
+    		try {
+    			Boolean res = serviceService.removeService(serviceInfo);
+    			if(res){
+    				jr.setSuccess(true);
+    				resMsg = "删除成功！";
+    			}else{
+    				jr.setSuccess(false);
+    				resMsg = "删除失败！";
+    			}
+    		} catch (Exception e) {
+    			jr.setSuccess(false);
+    			resMsg = "删除失败！";
+    			e.printStackTrace();
+    		}
+    	}else{
+    		jr.setSuccess(false);
+    		resMsg = "删除失败！";
+    	}
+    	jr.setErrorMsg(resMsg);
+    	JsonUtil.printByJSON(response, jr);
+    }
+	
+    /**
+     * 打开添加服务页面
+     * @return
+     */
+    @RequestMapping("/service/viewAddService")
+    public ModelAndView viewAddService(HttpSession session){
+        ModelAndView modelAndView = new ModelAndView();
+        // TODO: 2016/12/12
+
+		ProviderCheckInfo providerCheckInfo = providerCheckInfoService.queryByLogId(retrievalCurrentUserInfo(session).getLogId());
+		if (providerCheckInfo==null||providerCheckInfo.getPciState()!=2){
+			modelAndView.addObject("title", "添加服务");
+			modelAndView.addObject("content", "请进行服务商认证");
+			modelAndView.addObject("url", "/wap/checkinfo/providerCheck/getCheckInfo.html");
+			modelAndView.setViewName("wap/pubinfo/kanban");
+			return modelAndView;
+		}
+
+		modelAndView.setViewName("wap/goodsinfo/addservice");
+        modelAndView.addObject("flag", 2);
+        return  modelAndView;
+    }
+
+
+    /**
+     * 添加服务
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/service/addService",produces = "text/html;charset=UTF-8")
+    public  String  addService(HttpSession session, @RequestParam("service")String service) throws Exception {
+        JSONObject.DEFFAULT_DATE_FORMAT="yyyy-MM-dd";
+        ServiceInfo serviceInfo = JSONObject.parseObject(service, ServiceInfo.class);
+        if (isValidate){
+            FastValidate<ServiceInfo> serviceInfoFastValidate = new FastValidate<ServiceInfo>(serviceInfo);
+            //serviceBiref,
+            serviceInfoFastValidate.setReqiureList("servicePic,serviceType,serviceTitle,serviceContent,serviceMeettime,serviceAttrinfo,serviceSteps,priceSets",true);
+            ValidateResult validateResult = serviceInfoFastValidate.validateObject(true);
+            if (!validateResult.validate){
+                validateResult.printAllMeassage();
+                return new JsonResult(false,"错误",validateResult.list).toJSON();
+            }
+            //TODO  
+            serviceInfo.setLogId(retrievalCurrentUserInfo(session).getLogId());
+		}
+        try {
+            serviceService.addService(serviceInfo);
+        }catch (ExceptionWithMessage e){
+            return  e.jsonResult.toJSON();
+        } catch (Exception e) {
+            return  new JsonResult(false,"添加失败",null).toJSON();
+        }
+        return  new JsonResult(true,null,"/wap/goodsinfo/service/viewProviderService.html?serviceState=2").toJSON();
+    }
+
+    /**
+     * 显示服务查询页面
+     * @return
+     * @throws Exception 
+     */
+	@RequestMapping("/service/viewProviderService")
+    public  ModelAndView viewProviderService(ServiceVo serviceVo,HttpServletResponse response,HttpSession session,Integer page,Integer pageSize) throws Exception{
+		if(retrievalCurrentUserInfo(session)==null){
+    		throw new Exception();
+    	}
+    	if (FastValid.isEmp(page,serviceVo.getServiceState())){
+            page=1;
+            serviceVo.setServiceState(2);
+        }
+    	serviceVo.setPsetDiscountType(1);
+    	PageRowBounds pageRowBounds = getPageRowBounds(page,10);
+		serviceVo.setLogId(retrievalCurrentUserInfo(session).getLogId());
+    	FastPage<ServiceVo> infos = serviceService.queryServiceInfo(serviceVo, pageRowBounds);
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("infos", infos);
+        mv.addObject("page", page);
+        mv.addObject("info", serviceVo);
+        mv.setViewName("wap/goodsinfo/serviceAdmin");
+        return mv;
+    }
+	
+	 /**
+     * 打开编辑服务页面
+     * @return
+	 * @throws Exception 
+     */
+	@RequestMapping("/service/viewModifyService")
+    public  ModelAndView viewUpdateService(String serviceId,HttpSession session) throws Exception{
+		ServiceVo serviceVo = serviceService.queryServiceVoDetailsById(serviceId,1,null);
+		ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("wap/goodsinfo/addservice");
+        modelAndView.addObject("flag", 1);
+        modelAndView.addObject("info", serviceVo);
+        return  modelAndView;
+    }
+	 
+	/**
+     * 修改服务
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/service/updateService",produces = "text/html;charset=UTF-8")
+    public  String  updateService(HttpSession session, @RequestParam("service")String service) throws Exception {
+        JSONObject.DEFFAULT_DATE_FORMAT="yyyy-MM-dd";
+        ServiceInfo serviceInfo = JSONObject.parseObject(service, ServiceInfo.class);
+        if (isValidate){
+            FastValidate<ServiceInfo> serviceInfoFastValidate = new FastValidate<ServiceInfo>(serviceInfo);
+            //serviceBiref,
+            serviceInfoFastValidate.setReqiureList("serviceId,servicePic,serviceType,serviceTitle,serviceContent,serviceMeettime,serviceAttrinfo,serviceSteps,priceSets",true);
+            ValidateResult validateResult = serviceInfoFastValidate.validateObject(true);
+            if (!validateResult.validate){
+                validateResult.printAllMeassage();
+                return new JsonResult(false,"错误",validateResult.list).toJSON();
+            }
+            //TODO  
+            serviceInfo.setLogId(retrievalCurrentUserInfo(session).getLogId());
+	        
+		}
+        
+        try {
+            serviceService.modifyService(serviceInfo);
+        }catch (ExceptionWithMessage e){
+        	e.printStackTrace();
+            return  e.jsonResult.toJSON();
+        } catch (Exception e) {        	
+        	e.printStackTrace();
+            return  new JsonResult(false,"修改失败",null).toJSON();
+        }
+        return  new JsonResult(true,null,"/wap/goodsinfo/service/viewProviderService.html?serviceState=2").toJSON();
+    }
+	
+	
+    /**
+     * 查询服务
+     * @param session
+     * @param service
+     * @param require
+     * @param page
+     * @param pageSize
+     * @return
+     * @throws Exception 
+     */
+    @ResponseBody
+    @RequestMapping(value = "/service/queryProviderService",produces = "text/plain;charset=UTF-8")
+    public  String queryProviderService(HttpSession session,@RequestParam("service")String service,@RequestParam("require")String require,Integer page,Integer pageSize) throws Exception{
+    	if(retrievalCurrentUserInfo(session)==null){
+    		throw new Exception();
+    	}
+        if (FastValid.isEmp(page)){
+            page=1;
+            pageSize=10;
+        }
+        JSONObject.DEFFAULT_DATE_FORMAT="yyyy-MM-dd";
+        ServiceInfo serviceInfo = JSONObject.parseObject(service, ServiceInfo.class);
+        serviceInfo.setLogId(retrievalCurrentUserInfo(session).getLogId());
+        Map map = JSONObject.parseObject(require, Map.class);
+        RowBounds rowBounds = getRowBounds(page, pageSize);
+        try {
+            serviceService.queryServiceByReqiure(serviceInfo,map,rowBounds);
+        }catch (ExceptionWithMessage e){
+            return  e.jsonResult.toJSON();
+        } catch (Exception e) {
+            return  new JsonResult(false,null,null).toJSON();
+        }
+
+        return  new JsonResult(true,null,null).toJSON();
+    }
+
+    /**
+    *@description 查询服务详情 跳转至服务详情页面
+    *@param session
+    *@param serviceId
+    *@throws Exception
+    *@return ModelAndView
+    *@method queryServiceDetails
+     */
+    @ResponseBody
+    @RequestMapping("/service/queryServiceDetails")
+    public ModelAndView queryServiceDetails(HttpSession session, @RequestParam("serviceId") String serviceId,@RequestParam("priceType") Integer priceType)
+			throws Exception {
+		// 判断是否点赞 aBoolean：true 是  false 否
+		LogInfo logInfo = retrievalCurrentUserInfo(session);
+		Boolean aBoolean = false;
+		Boolean scRes=false;
+		if(logInfo != null){
+			ServiceToLoginfo serviceToLoginfo = new ServiceToLoginfo();
+			serviceToLoginfo.setServiceId(serviceId);
+			serviceToLoginfo.setLogId(logInfo.getLogId());
+			aBoolean = serviceToLoginfoService.select(serviceToLoginfo);
+			scRes=cartService.isExitCart(serviceId, logInfo.getLogId(), "1");
+		}
+
+    	PageRowBounds rb = getPageRowBounds(1, 6);
+		ServiceVo serviceVo = serviceService.queryServiceVoDetailsById(serviceId,priceType,null);
+		List<ServiceInfoVo> serviceVoTree=serviceService.queryServiceByType(rb, serviceVo.getTypeTree(), "SERVICE_MEETNUM","","","");
+		List<ProviderVo> providerVoTree =providerInfoService.queryProviderRecommend(getModule(session));
+		List<ServiceStep> serviceSteplist = serviceService.selectServiceSetById(serviceId);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/wap/goodsinfo/servicedetails");
+		modelAndView.addObject("serviceVo", serviceVo);
+		modelAndView.addObject("serviceVoTree", serviceVoTree);
+		modelAndView.addObject("providerVoTree", providerVoTree);
+		modelAndView.addObject("serviceSteplist", serviceSteplist);
+		modelAndView.addObject("aBoolean", aBoolean);
+		modelAndView.addObject("scRes", scRes);
+		return modelAndView;
+	}
+    
+    
+    /**
+     * @description 查询服务评价 
+     * @param session
+     * @param response
+     * @param page
+     * @param rows
+     * @param srLevel
+     * @param serviceId
+     * @throws Exception
+     */
+    @ResponseBody
+	@RequestMapping("/service/queryServiceRemark")
+	public void queryServiceRemark(HttpSession session,HttpServletResponse response,Integer page,Integer rows, String srLevel,String serviceId) throws Exception {
+    	
+    	
+    	ServiceRemarkVo serviceRemarkVo=new ServiceRemarkVo();
+    	
+    	int[] lev = null;
+		if (srLevel != null && srLevel.trim().length() > 0) {
+			String[] str = srLevel.split(",");
+			lev = new int[str.length];
+			for (int i = 0; i < str.length; i++) {
+
+				lev[i] = Integer.parseInt(str[i]);
+			}
+		}
+		serviceRemarkVo.setSrLevel(lev);
+		serviceRemarkVo.setServiceId(serviceId);
+		
+    	PageRowBounds rowBounds = getPageRowBounds(page, rows);
+		
+		List<ServiceRemarkVo> list = remarkService.queryServiceRemarkByServiceId(serviceRemarkVo, rowBounds);
+		Integer totalSize = remarkService.queryCountServiceRemarkByServiceId(serviceRemarkVo);
+		
+		FastPage<ServiceRemarkVo> record = new FastPage<ServiceRemarkVo>(list, totalSize, rowBounds);
+		
+		
+		JsonUtil.printByJSON(response, record);
+	}
+    
+    @ResponseBody
+	@RequestMapping("/service/queryCountRemark")
+	public void queryCountRemark(HttpSession session, HttpServletResponse response, String serviceId, Integer page,
+			Integer rows) throws Exception {
+
+		RemarkCountVo remarkCountVo = new RemarkCountVo();
+
+		remarkCountVo.setServiceId(serviceId);
+
+		List<RemarkCountVo> list = remarkService.queryCountRemark(remarkCountVo);
+
+		JsonUtil.printByJSON(response, list);
+	}
+
+	@RequestMapping("/service/queryAllCountServiceRemarkByTime")
+	public ModelAndView queryAllCountServiceRemarkByTime(HttpSession session) {
+		LogInfo logInfo=retrievalCurrentUserInfo(session);
+		ModelAndView modelAndView = new ModelAndView();
+		Integer[] serviceRemarkcount = remarkService.queryAllCountServiceRemarkByTime(logInfo.getLogId());
+		modelAndView.setViewName("/wap/goodsinfo/myremark");
+		modelAndView.addObject("serviceRemarkcount", serviceRemarkcount);
+		modelAndView.addObject("logId", logInfo.getLogId());
+		return modelAndView;
+	}
+
+	@RequestMapping("/service/queryServiceRemarkByLogId")
+	public ModelAndView queryServiceRemarkByLogId(HttpSession session) {
+		LogInfo logInfo=retrievalCurrentUserInfo(session);
+		Integer[] providerRemarkcount = remarkService.queryServiceRemarkByLogId(logInfo.getLogId());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/wap/goodsinfo/animaremarkslist");
+		modelAndView.addObject("providerRemarkcount", providerRemarkcount);
+		modelAndView.addObject("logId", logInfo.getLogId());
+		return modelAndView;
+	}
+
+	@ResponseBody
+	@RequestMapping("/service/queryServiceRemarkByLogIdSrLevel")
+	public void queryServiceRemarkByLogIdSrLevel(HttpSession session,HttpServletResponse response,String logId,String srLevel,Integer page,Integer rows) throws Exception {
+    	
+    	ServiceRemarkVo serviceRemarkVo = new ServiceRemarkVo();
+    	serviceRemarkVo.setLogId(logId);
+    	int[] lev = null;
+		if (srLevel != null && srLevel.trim().length() > 0) {
+			String[] str = srLevel.split(",");
+			lev = new int[str.length];
+			for (int i = 0; i < str.length; i++) {
+
+				lev[i] = Integer.parseInt(str[i]);
+			}
+		}
+		serviceRemarkVo.setSrLevel(lev);
+    	
+    	PageRowBounds rowBounds = getPageRowBounds(page, rows);
+		
+		List<ServiceRemarkVo> list = remarkService.queryServiceRemarkByLogIdSrLevel(serviceRemarkVo, rowBounds);
+		
+		Integer totalSize = remarkService.queryCountServiceRemarkByLogIdSrLevel(serviceRemarkVo);
+		
+		FastPage<ServiceRemarkVo> record = new FastPage<ServiceRemarkVo>(list, totalSize, rowBounds);
+		JsonUtil.printByJSON(response, record);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/service/queryCountRemarkLogIdSrLevel")
+	public void queryCountRemarkLogIdSrLevel(HttpSession session, HttpServletResponse response, String logId, Integer page,
+			Integer rows) throws Exception {
+
+		RemarkCountVo remarkCountVo = new RemarkCountVo();
+
+		remarkCountVo.setLogId(logId);
+
+		List<RemarkCountVo> list = remarkService.queryCountRemarkLogId(remarkCountVo);
+
+		JsonUtil.printByJSON(response, list);
+	}
+	
+	@ResponseBody             
+	@RequestMapping("/service/queryServiceRemarkByLogIdServiceId")
+	public void queryServiceRemarkByLogIdServiceId(HttpSession session, HttpServletResponse response,String logId, String srLevel, Integer page,
+			Integer rows) throws Exception {
+
+		ServiceRemarkVo serviceRemarkVo = new ServiceRemarkVo();
+
+		int[] lev = null;
+		if (srLevel != null && srLevel.trim().length() > 0) {
+			String[] str = srLevel.split(",");
+			lev = new int[str.length];
+			for (int i = 0; i < str.length; i++) {
+
+				lev[i] = Integer.parseInt(str[i]);
+			}
+		}
+		serviceRemarkVo.setLogId(logId);
+		serviceRemarkVo.setSrLevel(lev);
+
+		PageRowBounds rowBounds = getPageRowBounds(page, rows);
+
+		List<ServiceRemarkVo> list = remarkService.queryServiceRemarkByLogIdServiceId(serviceRemarkVo, rowBounds);
+
+		Integer totalSize = remarkService.queryCountServiceRemarkByLogIdServiceId(serviceRemarkVo);
+
+		FastPage<ServiceRemarkVo> record = new FastPage<ServiceRemarkVo>(list, totalSize, rowBounds);
+		
+		JsonUtil.printByJSON(response, record);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/service/queryCountRemarkLogIdServiceId")
+	public void queryCountRemarkLogIdServiceId(HttpSession session, HttpServletResponse response,String logId, Integer page,Integer rows) throws Exception {
+
+		RemarkCountVo remarkCountVo = new RemarkCountVo();
+
+		remarkCountVo.setLogId(logId);
+
+		List<RemarkCountVo> list = remarkService.queryCountRemarkLogIdServiceId(remarkCountVo);
+		
+		JsonUtil.printByJSON(response, list);
+	}
+	
+	@RequestMapping(value = "/service/queryServiceProvider")
+	public ModelAndView queryServiceProvider(HttpServletResponse response, HttpServletRequest request, HttpSession session,
+			Integer page) {
+		/*if (page == null) {
+			page = 1;
+		}
+		RowBounds rb = this.getRowBounds(page, 10);
+		Integer count = serviceMapper.selectNewServiceCount();
+		List<ServiceVo> list = serviceMapper.selectNewService(rb);
+		mv.addObject("list", list);
+		mv.addObject("count", count);
+		mv.addObject("pageNo", page);*/
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("wap/goodsinfo/serviceProvider");
+		return mv;
+	}
+
+	@RequestMapping(value = "/service/queryServiceProviderByAjax")
+	public void queryServiceProviderByAjax(HttpServletResponse response, HttpServletRequest request, HttpSession session,
+			Integer flag,Integer page) {
+		if (page == null) {
+			page = 1;
+		}
+		RowBounds rb = this.getRowBounds(page, 10);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if(flag==1){
+			String point = (String)session.getAttribute("point");
+			String lat = "29.608069";
+			String lng = "106.374488";
+			if(point!=null){
+				String[] points = point.split(",");
+				if(points!=null && points.length>0){
+					lat = points[1];
+					lng = points[0];
+				}
+			}
+			Integer count = serviceMapper.selectNewServiceCount();
+			List<ServiceInfoVo> list = serviceMapper.selectNewService(rb, lng, lat);
+			map.put("count", count);
+			map.put("list", list);
+			map.put("flag", flag);
+			map.put("pageNo", page);
+		}else if(flag==2){
+			Integer count = providerMapper.selectGoodProvidersCount();
+			List<ProviderInfo> list = providerMapper.selectGoodProviders(rb);
+			map.put("count", count);
+			map.put("list", list);
+			map.put("flag", flag);
+			map.put("pageNo", page);
+		}
+		JsonUtil.printByJSON(response, map);
+	}
+}

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.system.SysPlatformParaMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.system.SysPlatformPara">
+    <id column="SYS_PARA_ID" jdbcType="VARCHAR" property="sysParaId" />
+    <result column="SYS_PARA_NAME" jdbcType="VARCHAR" property="sysParaName" />
+    <result column="SYS_PARA_SPECIFIC" jdbcType="REAL" property="sysParaSpecific" />
+    <result column="SYS_PARA_REMARK" jdbcType="VARCHAR" property="sysParaRemark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SYS_PARA_ID, SYS_PARA_NAME, SYS_PARA_SPECIFIC, SYS_PARA_REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_platform_para
+    where SYS_PARA_ID = #{sysParaId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_platform_para
+    where SYS_PARA_ID = #{sysParaId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.system.SysPlatformPara">
+    insert into sys_platform_para (SYS_PARA_ID, SYS_PARA_NAME, SYS_PARA_SPECIFIC, 
+      SYS_PARA_REMARK)
+    values (#{sysParaId,jdbcType=VARCHAR}, #{sysParaName,jdbcType=VARCHAR}, #{sysParaSpecific,jdbcType=REAL}, 
+      #{sysParaRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.system.SysPlatformPara">
+    insert into sys_platform_para
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sysParaId != null">
+        SYS_PARA_ID,
+      </if>
+      <if test="sysParaName != null">
+        SYS_PARA_NAME,
+      </if>
+      <if test="sysParaSpecific != null">
+        SYS_PARA_SPECIFIC,
+      </if>
+      <if test="sysParaRemark != null">
+        SYS_PARA_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sysParaId != null">
+        #{sysParaId,jdbcType=VARCHAR},
+      </if>
+      <if test="sysParaName != null">
+        #{sysParaName,jdbcType=VARCHAR},
+      </if>
+      <if test="sysParaSpecific != null">
+        #{sysParaSpecific,jdbcType=REAL},
+      </if>
+      <if test="sysParaRemark != null">
+        #{sysParaRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.system.SysPlatformPara">
+    update sys_platform_para
+    <set>
+      <if test="sysParaName != null">
+        SYS_PARA_NAME = #{sysParaName,jdbcType=VARCHAR},
+      </if>
+      <if test="sysParaSpecific != null">
+        SYS_PARA_SPECIFIC = #{sysParaSpecific,jdbcType=REAL},
+      </if>
+      <if test="sysParaRemark != null">
+        SYS_PARA_REMARK = #{sysParaRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SYS_PARA_ID = #{sysParaId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.system.SysPlatformPara">
+    update sys_platform_para
+    set SYS_PARA_NAME = #{sysParaName,jdbcType=VARCHAR},
+      SYS_PARA_SPECIFIC = #{sysParaSpecific,jdbcType=REAL},
+      SYS_PARA_REMARK = #{sysParaRemark,jdbcType=VARCHAR}
+    where SYS_PARA_ID = #{sysParaId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,83 @@
+function del(id) {
+	alert("请确定是否删除平台消息！",null,function(){
+		$.ajax({
+			url : path + '/userinfo/removeMesByPrimaryKey.html',
+			type : 'post',
+			dataType : 'json',
+			data : {
+				smId : id
+			},
+			success : function(mes) {
+				alert(mes,"删除",function(){
+					window.location.reload();	
+				})
+			}
+		})
+	},function(){});
+	
+}
+var rows = 10;
+var pageDiv = 'pageDiv';
+var clickSwitch = true;
+$(function() {
+	selectCommonAjax(1,$("#smType").val());
+    $('body').bind('touchmove', function(e) {
+        if($(window).scrollTop()>=$(document).height()-$(window).height()){
+            if(clickSwitch){
+                clickSwitch = false;
+                $(".loading").text("加载中...");
+                var pageNo = ($("#ms"+$(".on").data('type')+" ul").length)/10+1;
+                selectCommonAjax(pageNo,$(".on").data('type'));
+            }
+        }
+    });
+	/*$(".loading").click(function(){
+		if(clickSwitch){
+			clickSwitch = false;
+			$(".loading").text("加载中...");
+			var pageNo = ($("#ms"+$(".on").data('type')+" ul").length)/10+1;
+			selectCommonAjax(pageNo,$(".on").data('type'));
+		}
+	})*/
+});
+function selectCommonAjax(pageNo,smType) {
+	$.ajax({
+		type : "post",
+		url : path + '/userinfo/queryAllSystemMesByAjax.html',
+		dataType : 'json',
+		data : {
+			'smType' : smType,
+			'page' :pageNo
+		},
+		success : function(res) {
+			showDiv(res.list,pageNo);
+			if(res.list.length<10){
+				clickSwitch = false;
+				$(".loading").text("");
+			}else{
+				clickSwitch = true;
+				/*$(".loading").text("加载更多");*/
+			}
+		}
+	});
+}
+function showDiv(res,pageNo) {
+	if(pageNo==1 && res.length>0){
+		$("#ms"+res[0]['smType']).empty();
+	}
+	for ( var i in res) {
+		var arr = res[i];
+		var smTitle = arr['smTitle'];
+		var smId = arr['smId'];
+		var smContent = arr['smContent'];
+		var smCreatetimeStr=arr['smCreatetimeStr'];
+		var innerTitle = '<ul>' + '<li>' + '<div class="news_title">' + smTitle
+				+ '</div>' + '<div class="news_time">'
+				+ '<a href="javascript:;" onclick="del(\'' + smId + '\')">'
+				+ '<img src="'+path+'/images/wrong.jpg">' + '</a>' + '</div>'
+				+ '<div class="news_content">' + '<p style="word-break:break-all">'+smContent+'</p>'
+				+ '<p>' + '<span>发出日期：'+smCreatetimeStr+'</span>' + '</p>'
+				+ '</div>' + '</li>' + '</ul>';
+		$("#ms"+arr['smType']).append(innerTitle);
+	}
+}

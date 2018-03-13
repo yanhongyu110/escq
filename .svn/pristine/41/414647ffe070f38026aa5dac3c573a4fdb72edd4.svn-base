@@ -1,0 +1,229 @@
+package com.jero.esc.po.userinfo;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class LogInfo implements Serializable {
+
+    /** . */
+	private static final long serialVersionUID = 1L;
+
+	private String logId;
+
+    private String logCell;
+
+    private String logEmail;
+
+    private String logName;
+
+    private String logPass;
+
+    private Date logCreatetime;
+
+    private Boolean logIsdelete;
+
+    private Integer logState;
+
+    private Integer logType;
+
+    private String logRegip;
+
+    private Boolean logIslog;
+
+    private String logComment;
+    
+    /** 父级logId */
+    private String parentId;
+    
+    //当前的微信openid
+    private String openId;
+    //登录方式 1:微信 2 qq
+    private String logMode;
+    
+    /**  
+	 * 获取 logMode  
+	 * @return logMode logMode  
+	 */
+	public String getLogMode() {
+		return logMode;
+	}
+	/**  
+	 * 设置 logMode  
+	 * @param logMode logMode  
+	 */
+	public void setLogMode(String logMode) {
+		this.logMode = logMode;
+	}
+	/**  
+	 * 获取 openId  
+	 * @return openId openId  
+	 */
+	public String getOpenId() {
+		return openId;
+	}
+	/**  
+	 * 设置 openId  
+	 * @param openId openId  
+	 */
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
+	/**  
+	 * 获取 parentId  
+	 * @return parentId parentId  
+	 */
+	public String getParentId() {
+		return parentId;
+	}
+	/**  
+	 * 设置 parentId  
+	 * @param parentId parentId  
+	 */
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+	//xhs
+    private String userWechat;
+    private String userPhoto;
+    private String userRealname;
+    public String getUserRealname() {
+		return userRealname;
+	}
+	public void setUserRealname(String userRealname) {
+		this.userRealname = userRealname;
+	}
+	private Float accPoint;
+    private Float accBalance;
+    
+    public String getUserWechat() {
+		return userWechat;
+	}
+	public void setUserWechat(String userWechat) {
+		this.userWechat = userWechat;
+	}
+	public String getUserPhoto() {
+		return userPhoto;
+	}
+	public void setUserPhoto(String userPhoto) {
+		this.userPhoto = userPhoto;
+	}
+	public Float getAccPoint() {
+		return accPoint;
+	}
+	public void setAccPoint(Float accPoint) {
+		this.accPoint = accPoint;
+	}
+	public Float getAccBalance() {
+		return accBalance;
+	}
+	public void setAccBalance(Float accBalance) {
+		this.accBalance = accBalance;
+	}
+    //xhs end
+
+   
+	public String getLogId() {
+        return logId;
+    }
+
+    
+
+	public void setLogId(String logId) {
+        this.logId = logId == null ? null : logId.trim();
+    }
+
+    public String getLogCell() {
+        return logCell;
+    }
+
+    public void setLogCell(String logCell) {
+        this.logCell = logCell == null ? null : logCell.trim();
+    }
+
+    public String getLogEmail() {
+        return logEmail;
+    }
+
+    public void setLogEmail(String logEmail) {
+        this.logEmail = logEmail == null ? null : logEmail.trim();
+    }
+
+    public String getLogName() {
+        return logName;
+    }
+
+    public void setLogName(String logName) {
+        this.logName = logName == null ? null : logName.trim();
+    }
+
+    public String getLogPass() {
+        return logPass;
+    }
+
+    public void setLogPass(String logPass) {
+        this.logPass = logPass == null ? null : logPass.trim();
+    }
+
+    public Date getLogCreatetime() {
+        return logCreatetime;
+    }
+
+    public void setLogCreatetime(Date logCreatetime) {
+        this.logCreatetime = logCreatetime;
+    }
+
+    public Boolean getLogIsdelete() {
+        return logIsdelete;
+    }
+
+    public void setLogIsdelete(Boolean logIsdelete) {
+        this.logIsdelete = logIsdelete;
+    }
+
+    public Integer getLogState() {
+        return logState;
+    }
+
+    public void setLogState(Integer logState) {
+        this.logState = logState;
+    }
+
+    public Integer getLogType() {
+        return logType;
+    }
+
+    public void setLogType(Integer logType) {
+        this.logType = logType;
+    }
+
+    public String getLogRegip() {
+        return logRegip;
+    }
+
+    public void setLogRegip(String logRegip) {
+        this.logRegip = logRegip == null ? null : logRegip.trim();
+    }
+
+    public Boolean getLogIslog() {
+        return logIslog;
+    }
+
+    public void setLogIslog(Boolean logIslog) {
+        this.logIslog = logIslog;
+    }
+
+    public String getLogComment() {
+        return logComment;
+    }
+
+    public void setLogComment(String logComment) {
+        this.logComment = logComment == null ? null : logComment.trim();
+    }
+    private  String company;
+    public String getCompany() {
+        return company;
+    }
+    public void setCompany(String company) {
+        this.company = company;
+    }
+}

@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>绑定账号</title>
+<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+<link rel="stylesheet" href="${webtxc}/css/public.css" />
+<link rel="stylesheet" href="${webtxc}/css/login.css" />
+
+</head>
+<style>
+.bd_phone{padding:30px 20px;text-align:center}
+.bd_phone h1{text-align:center;margin-bottom:50px;}
+.bd_phone ul{width:50%;margin:10px auto;overflow: hidden;}
+.bd_phone .bd_phone_input{width:99%;height:40px;border:1px solid #eee;color:#999;font-size:15px;}
+.bd_phone .bd_phone_yzm{width:50%;float:left;height:40px;border:1px solid #eee;color:#999;font-size:15px;}
+.bd_phone .bd_phone_yzms{width:47%;float:right;height:40px;border:1px solid #eee;color:#999;font-size:15px;}
+.phone_bang{border: 1px solid #f40;clear: both;width: 50%;margin: 0 auto;height: 40px;line-height: 40px;color:#f40;font-size:18px;    margin-top: 40px;}
+</style>
+<body>
+<%@include file="/WEB-INF/jsp/common/top.jsp"%>
+<div class="content">
+<div class="login">
+  <div class="bd_phone">
+    <h1>绑定手机号</h1>
+    <ul>
+    <li><input type="text" class="bd_phone_input" placeholder="手机号" /></li>
+    </ul>
+    <ul>
+    <li><input type="text" class="bd_phone_yzm" placeholder="验证码" /></li>
+    <li><input type="text" class="bd_phone_yzms" placeholder="验证码" /></li>
+    </ul>
+    <div class="phone_bang">绑定</div>
+  </div>
+  
+  </div>
+  </div>
+</body>
+</html>

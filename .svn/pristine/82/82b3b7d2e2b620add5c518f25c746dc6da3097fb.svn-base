@@ -1,0 +1,217 @@
+package com.jero.esc.controller.activity.qq;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+import com.alibaba.fastjson.JSON;
+import com.jero.esc.common.utils.FileUtil;
+import com.jero.esc.common.utils.HttpClientUtil;
+import com.jero.esc.common.utils.StringUtil;
+import com.jero.esc.mapper.pubinfo.CommonTypeMapper;
+import com.jero.esc.mapper.userinfo.LogInfoMapper;
+import com.jero.esc.mapper.userinfo.ProviderInfoMapper;
+import com.jero.esc.po.pubinfo.CommonType;
+import com.jero.esc.po.userinfo.LogInfo;
+import com.jero.esc.service.userinfo.ThirdPartyLoginService;
+import com.jero.esc.vo.userinfo.ProviderVo;
+import com.jero.esc.vo.userinfo.ThirdPartyLogin;
+
+/**
+ * 
+ * <pre>
+ * <b> qq第三方登录 .</b>
+ * <b>Description:</b> 
+ *    
+ * <b>Author:</b> yanhongyu
+ * <b>Date:</b> 2018-1-26上午10:47:49
+ * <b>Changelog:</b>
+ *   ----------------------------------------------------------------------------
+ *   Ver   Date                     Detail
+ *   ----------------------------------------------------------------------------
+ *   1.0   2018-1-26上午10:47:49         new file.
+ * </pre>
+ */
+@Controller
+@RequestMapping(value="/qqLogin")
+public class QqLogin {
+	private final static String APP_ID = "101459414";
+	private final static String APP_KEY = "2861170b09c1355aeec685815d34cfc2";
+	
+	@Autowired
+	private LogInfoMapper logInfoMapper;
+	@Autowired
+	private CommonTypeMapper commonTypeMapper;
+	@Autowired
+	private ProviderInfoMapper providerInfoMapper;
+	@Autowired
+	private ThirdPartyLoginService thirdPartyLoginService;
+	/**
+	 * 
+	 *<pre>
+	 *<b> 跳转qq登录页面 .</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2018-1-29 上午11:31:22
+	 *@return
+	 *</pre>
+	 */
+	@RequestMapping(value="/getCode")
+	public ModelAndView getCode(){
+//		String redirect_uri = URLEncoder.encode("http://www.jindaoj.com/qqLogin/qqLogin.html");
+		String redirect_uri = "http://www.jindaoj.com/qqLogin/qqLogin.html";
+		String url = "https://graph.qq.com/oauth2.0/authorize?"+
+				"response_type=code&client_id=" + APP_ID +
+				"&redirect_uri=" + redirect_uri +
+				"&state = 123456";
+		return new ModelAndView(new RedirectView(url));
+	}
+	@RequestMapping(value="/qqLogin")
+	public ModelAndView qqLogin(HttpSession session, HttpServletRequest request, String code, String state){
+		System.out.println("QQ登录开始");
+		ModelAndView temp = new ModelAndView();
+		try {
+//			String param = "grant_type=authorization_code"+
+//					"&client_id=" + APP_ID + 
+//					"&client_secret=" + APP_KEY + 
+//					"&code="+ code + 
+//					"&redirect_uri=http://www.jindaoj.com/qqLogin/qqLogin.html";
+//			String result = HttpRequest.sendGet("https://graph.qq.com/oauth2.0/token", param);
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("grant_type", "authorization_code"));
+			param.add(new BasicNameValuePair("client_id", APP_ID));
+			param.add(new BasicNameValuePair("client_secret", APP_KEY));
+			param.add(new BasicNameValuePair("code", code));
+			param.add(new BasicNameValuePair("redirect_uri", "http://www.jindaoj.com/qqLogin/qqLogin.html"));
+			String result = HttpClientUtil.sendUrlPost("https://graph.qq.com/oauth2.0/token", param);
+//			Map<String, Object> resultMap = JSON.parseObject(result);
+			Map<String, Object> resultMap = jiexiReturnStr(result);
+			for(String key : resultMap.keySet()){
+				System.out.println("key>>>>>>>>" + key);
+				System.out.println("value>>>>>>>>" + resultMap.get(key));
+			}
+			String access_token = (String) resultMap.get("access_token");
+			System.out.println("QQ登录  token 为 : " + access_token);
+			if(StringUtil.isNotEmpty(access_token)){
+//				String param1 = "access_token="+ access_token;
+//				String result1 = HttpRequest.sendGet("https://graph.qq.com/oauth2.0/me", param1);
+				List<NameValuePair> param1 = new ArrayList<NameValuePair>();
+				param1.add(new BasicNameValuePair("access_token", access_token));
+				String result1 = HttpClientUtil.sendUrlPost("https://graph.qq.com/oauth2.0/me", param1);
+		        int s = result1.indexOf("{");
+		        int e = result1.lastIndexOf("}") + 1;
+		        String json = result1.substring(s, e);
+				Map<String, Object> resultMap1 = JSON.parseObject(json);
+//				Map<String, Object> resultMap1 = jiexiReturnStr(result1);
+				String openid = (String) resultMap1.get("openid");
+				System.out.println("QQ登录  openid 为 : " + openid);
+				if(StringUtil.isNotEmpty(openid)){
+					//判断openid是否存在  存在直接登录
+					//判断时候已经存在,存在直接登录
+					ThirdPartyLogin login = thirdPartyLoginService.selectQQLog(openid);
+					if(login != null){
+						LogInfo logInfo = new LogInfo();
+						logInfo.setLogId(login.getLogId());
+						logInfo = logInfoMapper.selectLogInfoByLogId(logInfo);
+				        session.setAttribute("company",null);
+				        session.setAttribute("logInfo", logInfo);
+				        List<CommonType> commonTypes = commonTypeMapper.selectChainByFid("0");
+				        List<CommonType> types1=commonTypes.subList(0, 9);
+				        System.out.println(commonTypes.size());
+				        List<CommonType> types2=commonTypes.subList(9, commonTypes.size());
+				        List<ProviderVo> providerVos = providerInfoMapper.selectProviderByOrder(RowBounds.DEFAULT,"PI_MEETNUM DESC",null);
+				        temp.addObject("providerVos", providerVos);
+				        temp.addObject("types1", types1);
+				        temp.addObject("types2", types2);
+				        temp.setViewName("company/companySelect");
+						return temp;
+					}
+//					String param2 = "access_token="+access_token+"&oauth_consumer_key="+APP_ID+"&openid="+openid;
+//					String result2 = HttpRequest.sendGet("https://graph.qq.com/oauth2.0/token", param2);
+					List<NameValuePair> param2 = new ArrayList<NameValuePair>();
+					param2.add(new BasicNameValuePair("access_token", access_token));
+					param2.add(new BasicNameValuePair("oauth_consumer_key", APP_ID));
+					param2.add(new BasicNameValuePair("openid", openid));
+					String result2 = HttpClientUtil.sendUrlPost("https://graph.qq.com/user/get_user_info", param2);
+					Map<String, Object> resultMap2 = JSON.parseObject(result2);
+					String nickname = (String) resultMap2.get("nickname");//昵称
+					String figureurl_qq_1 = (String) resultMap2.get("figureurl_qq_1");//头像
+					String gender = (String) resultMap2.get("gender");//性别
+
+					if(StringUtil.isNotEmptys(nickname,figureurl_qq_1,gender)){
+						//保存图像到本地
+						figureurl_qq_1 = FileUtil.saveImg(figureurl_qq_1);
+						if(figureurl_qq_1 == null){
+							temp.setViewName("/userinfo/login");
+							return temp;
+						}
+						temp.addObject("type", "2");
+						temp.addObject("sex", gender);
+						temp.addObject("nickname", nickname);
+						temp.addObject("headimgurl", figureurl_qq_1);
+						temp.addObject("openid", openid);
+						temp.setViewName("/userinfo/bd_phone");
+					}else{
+						temp.setViewName("/userinfo/login");
+					}
+				}else{
+					temp.setViewName("/userinfo/login");
+				}
+			}else{
+				temp.setViewName("/userinfo/login");
+			}
+		} catch (Exception e) {
+			temp.setViewName("/userinfo/login");
+		}
+		System.out.println("QQ登录结束");
+		return temp;
+	}
+	
+	/**
+	 * 
+	 *<pre>
+	 *<b> 返回解析 .</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2018-1-29 下午2:31:57
+	 *@param result
+	 *@return
+	 *</pre>
+	 */
+	public Map<String, Object> jiexiReturnStr(String result){
+		Map<String , Object> map = new HashMap<String, Object>();
+		if(StringUtil.isNotEmpty(result)){
+			String[] arrayRe = result.split("&");
+			for(String s : arrayRe){
+				String[] dataArr = s.split("=");
+				map.put(dataArr[0], dataArr[1]);
+			}
+			return map;
+		}else{
+			return null;
+		}
+	}
+	public static void main(String[] args) {
+//		String str = "callback({"client_id":"101459414","openid":"1F2EF6145C120D85C365F74FCED7CD24"})";
+//		Map<String, Object> resultMap1 = JSON.parseObject(str);
+//		Map<String, Object> resultMap1 = jiexiReturnStr(result1);
+//		JSONObject jsonObject = new JSONObject(reString);
+//		String openid = jsonObject.getString("openid");
+//		System.out.println(openid);
+	}
+}

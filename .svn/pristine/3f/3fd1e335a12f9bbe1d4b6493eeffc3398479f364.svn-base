@@ -1,0 +1,228 @@
+package com.jero.esc.service.impl.saleinfo;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.alibaba.fastjson.JSONObject;
+import com.jero.esc.common.po.JsonResult;
+import com.jero.esc.common.po.PageRowBounds;
+import com.jero.esc.common.utils.MD5Util;
+import com.jero.esc.common.utils.UUIDUtil;
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import com.jero.esc.mapper.goodsinfo.ServiceInfoMapper;
+import com.jero.esc.mapper.saleinfo.OrderInfoBuyerMapper;
+import com.jero.esc.mapper.saleinfo.OrderInfoMapper;
+import com.jero.esc.mapper.userinfo.ProviderInfoMapper;
+import com.jero.esc.po.details.AccontPaymentDetails;
+import com.jero.esc.po.details.OrderDoneDetails;
+import com.jero.esc.po.goodsinfo.ServiceInfo;
+import com.jero.esc.po.pay.Payinfo;
+import com.jero.esc.po.userinfo.AccountInfo;
+import com.jero.esc.po.userinfo.LogInfo;
+import com.jero.esc.po.userinfo.ProviderInfo;
+import com.jero.esc.service.details.IAccountPaymentDetailsService;
+import com.jero.esc.service.details.IOrderDoneDetailsService;
+import com.jero.esc.service.saleinfo.IOrderInfoBuyerService;
+import com.jero.esc.vo.saleinfo.OrderInfo;
+
+/**
+ * @copyright 
+ * @author zengd
+ * @version 
+ * @date 2016年12月23日下午2:10:47 
+ * @description
+ */
+@Service
+public class OrderInfoBuyerService implements IOrderInfoBuyerService {
+
+	@Autowired
+	private OrderInfoBuyerMapper OrderInfoBuyerMapper;
+	@Autowired
+	private IAccountPaymentDetailsService  accountPaymentDetailsService;
+	@Autowired
+	private  OrderInfoMapper  orderInfoMapper;
+	@Autowired
+	private IOrderDoneDetailsService orderDoneDetailsService;
+	@Autowired
+	private ServiceInfoMapper serviceInfoMapper;
+	@Autowired
+	private ProviderInfoMapper providerInfoMapper;
+	
+	public List<OrderInfo> selectAll(PageRowBounds pageRowBounds,OrderInfo OrderInfo) {
+		return OrderInfoBuyerMapper.selectAll(pageRowBounds,OrderInfo);
+	}
+
+	public Integer totalNum(OrderInfo orderInfo) {
+		return OrderInfoBuyerMapper.totalNum(orderInfo);
+	}
+
+	public AccountInfo selectBalanceById(String logId) {
+		List<AccountInfo> selectBalanceById = OrderInfoBuyerMapper.selectBalanceById(logId);
+		return selectBalanceById.size()>0?selectBalanceById.get(0):null;
+	}
+	
+	@Transactional(rollbackFor=Exception.class)
+	public JsonResult validate(AccountInfo accountInfo,String orderPrice,String orderNo,Integer flag,String serviceTitle) throws ExceptionWithMessage {
+		JsonResult jr = new JsonResult();
+		String accPaypass = accountInfo.getAccPaypass();
+		try {
+			accPaypass = MD5Util.getMD5(accPaypass);
+			accountInfo.setAccPaypass(accPaypass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Float accBalance = null;
+		Integer se = null;
+		Integer pi = null;
+		if(flag == 1){
+			accBalance = this.selectBalanceById(accountInfo.getLogId()).getAccBalance();
+			accountInfo.setAccBalance(accBalance-Float.valueOf(orderPrice));
+		} else {
+			String orderSeller = this.selectById(orderNo).getOrderSeller();
+			accountInfo.setLogId(orderSeller);
+			accBalance = this.selectBalanceById(orderSeller).getAccBalance();
+			accountInfo.setAccBalance(accBalance+Float.valueOf(orderPrice));
+			
+			ProviderInfo providerInfo = providerInfoMapper.selectByLogId(orderSeller);
+			int i = providerInfo.getPiDealnum()+1;
+			pi = OrderInfoBuyerMapper.updateprioviderinfoById(orderSeller, i);
+			
+			ServiceInfo serviceInfo = serviceInfoMapper.selectByLogId(orderSeller,serviceTitle);
+			int n = serviceInfo.getServiceSuccessnum()+1;
+			se = OrderInfoBuyerMapper.updateServiceinfoById(orderSeller, n);
+		}
+		//  下面是根据 订单号   orderNo 确保唯一 查询  订单信息
+		com.jero.esc.po.saleinfo.OrderInfo currentOrderInfo = orderInfoMapper.selectByOrderNo(orderNo);
+		
+		Integer validate = OrderInfoBuyerMapper.validate(accountInfo);
+		Integer row = OrderInfoBuyerMapper.update(accountInfo);
+		Integer updateState = OrderInfoBuyerMapper.updateState(orderNo,flag);
+		if(row>0 && updateState>0&&validate>0){
+			if((flag != 1&&pi>0&&se>0) || (flag == 1)){
+				jr.setSuccess(true);
+				jr.setErrorMsg("支付成功");
+				if(flag == 1){
+					recordsOrderDoneAndPaymentDetails(currentOrderInfo,1);//1 表示支付
+				} else {
+					recordsOrderDoneAndPaymentDetails(currentOrderInfo,2); //2 表示确认支付
+				}
+				return jr;
+			}
+		} 
+		jr.setSuccess(false);
+		jr.setErrorMsg("密码错误");
+		throw new ExceptionWithMessage(jr);
+		
+	}
+
+	@Transactional(rollbackFor=Exception.class)
+	public JsonResult delete(String orderNo) throws ExceptionWithMessage {
+		JsonResult jr = new JsonResult();
+		Integer row = OrderInfoBuyerMapper.delete(orderNo);
+		if(row>0){
+			jr.setSuccess(true);
+			jr.setErrorMsg("删除成功");
+			return jr;
+		} 
+		jr.setSuccess(false);
+		jr.setErrorMsg("删除失败");
+		throw new ExceptionWithMessage(jr);
+	}
+
+	public OrderInfo selectById(String id) {
+		List<OrderInfo> selectById = OrderInfoBuyerMapper.selectById(id);
+		return selectById.size()>0?selectById.get(0):null;
+	}
+
+	public LogInfo getLogInfo(String id) {
+		List<LogInfo> logInfo = OrderInfoBuyerMapper.logInfo(id);
+		return logInfo.size()>0?logInfo.get(0):null;
+	}
+
+	@Override
+	public Integer modifyRefundMsgByOrderNo(OrderInfo orderInfo) {
+		orderInfo.setOrderRefundstate(1);
+		orderInfo.setOrderRefunddate(new Date());
+		return OrderInfoBuyerMapper.updateRefundMsgByOrderNo(orderInfo);
+	}
+
+	@Override
+	public Boolean selectPass(String logId) {
+		Boolean flag = true;
+		String selectPass = OrderInfoBuyerMapper.selectPass(logId);
+		if(selectPass == null){
+			flag = false;
+		} 
+		return flag;
+	}
+
+	private void recordsOrderDoneAndPaymentDetails(com.jero.esc.po.saleinfo.OrderInfo  orderInfo,Integer flag){
+		// 记录当前支付 操作明细
+		Payinfo payinfo =new Payinfo();
+		Date newDate = new Date();
+		
+		OrderDoneDetails orderDoneDetails = new OrderDoneDetails();
+		orderDoneDetails.setOddId(UUIDUtil.getUUID());
+		orderDoneDetails.setLogId(orderInfo.getOrderBuyer());
+			//将交易信息存为json数据存储
+			payinfo.setLogId(orderInfo.getOrderBuyer());
+			payinfo.setNonce_str("余额支付没有随机数");
+			payinfo.setOrderId(orderInfo.getOrderId());
+			payinfo.setOut_trade_no(orderInfo.getOrderNo());
+			payinfo.setSign("余额支付属于平台内部，没有支付密钥，");
+			payinfo.setTrade_type(5); // 贸易类型  1  支付宝 2 微信 3  银行卡 4 退款
+			payinfo.setTransaction_id("余额支付操作暂时不产生新的 贸易id");
+			String comment=JSONObject.toJSONString(payinfo);
+		orderDoneDetails.setOddComment(comment);
+		orderDoneDetails.setOddCreatetime(newDate);
+		orderDoneDetails.setOddInfo(3);// 表示  支付状态    3代表  已经取消  表示订单已经申请退款了
+		orderDoneDetails.setOddResult("支付成功");
+		orderDoneDetails.setOrderId(orderInfo.getOrderId());
+		orderDoneDetailsService.addOrderDoneDetail(orderDoneDetails);
+		if(flag == 1){
+			// 分别记录卖家或者买家的  相关支付信息
+			//  买家    buyer
+			AccontPaymentDetails buyerAccontPaymentDetails = new AccontPaymentDetails();
+			buyerAccontPaymentDetails.setApdId(UUIDUtil.getUUID());
+			buyerAccontPaymentDetails.setLogId(orderInfo.getOrderBuyer());
+			buyerAccontPaymentDetails.setApdIotype(2);// 2表示支出  1表示收入
+			buyerAccontPaymentDetails.setApdPaytype(5); // 1支付宝  ，2 微信 ， 3 银行卡 4  表示退款 5平台支付
+			buyerAccontPaymentDetails.setApdCreatetime(newDate);
+			buyerAccontPaymentDetails.setApdAmount(orderInfo.getOrderPrice());
+			buyerAccontPaymentDetails.setApdAdminorderno(orderInfo.getOrderNo());
+			try {accountPaymentDetailsService.addAccountIODetails(buyerAccontPaymentDetails);} catch (Exception e) {e.printStackTrace();}
+		} else {
+			// 卖家  seller
+			AccontPaymentDetails sellerAccontPaymentDetails = new AccontPaymentDetails();
+			sellerAccontPaymentDetails.setApdId(UUIDUtil.getUUID());
+			sellerAccontPaymentDetails.setLogId(orderInfo.getOrderSeller());
+			sellerAccontPaymentDetails.setApdIotype(1);// 2表示支出  1表示收入
+			sellerAccontPaymentDetails.setApdPaytype(5); // 1支付宝  ，2 微信 ， 3 银行卡 4表示退款
+			sellerAccontPaymentDetails.setApdCreatetime(newDate);
+			sellerAccontPaymentDetails.setApdAmount(orderInfo.getOrderPrice());
+			sellerAccontPaymentDetails.setApdAdminorderno(orderInfo.getOrderNo());
+			try {accountPaymentDetailsService.addAccountIODetails(sellerAccontPaymentDetails);
+			} catch (Exception e) {e.printStackTrace();}
+		}
+	}
+
+	@Transactional(rollbackFor=Exception.class)
+	public JsonResult updateRefundStatusByOrderNo(String orderId) throws ExceptionWithMessage {
+		JsonResult jr = new JsonResult();
+		Integer integer = OrderInfoBuyerMapper.updateRefundStatusByOrderNo(orderId);
+		if(integer > 0){
+			jr.setSuccess(true);
+			jr.setErrorMsg("申请成功");
+			return jr;
+		}
+		jr.setSuccess(false);
+		jr.setErrorMsg("申请失败");
+		throw new ExceptionWithMessage(jr);
+		
+	}
+	
+}

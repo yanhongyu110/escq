@@ -1,0 +1,213 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp" %>
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加服务</title>
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+		<meta name="apple-touch-fullscreen" content="yes">
+		<!-- 开启对web app程序的支持  -->
+		<meta content="telephone=no,email=no" name="format-detection">
+		<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+		<!--base css-->
+		<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    	<%@ include file="/WEB-INF/jsp/common/header.jsp" %>
+    	<%@ include file="/WEB-INF/jsp/common/easyui.jsp" %>
+    	<%@ include file="/WEB-INF/jsp/common/kindeditor.jsp" %>
+		<link rel="stylesheet" href="${webtxc}/css/wap/reset.css" />
+		<link rel="stylesheet" href="${webtxc}/css/wap/personer.css"/>
+		<link rel="stylesheet" href="${webtxc }/css/wap/layer.css" />		
+		<script src="${webtxc}/js/wap/reset.js"></script>
+		<script src="${webtxc}/js/wap/TouchSlide.js"></script>
+		<script src="${webtxc}/js/wap/layer.js"></script>		
+		<script type="text/javascript" src="${webtxc }/myjs/wap/goodsinfo/addservice.js?v=8123"></script>
+		<style>
+		.personer_mes .list_mes{height: auto;}
+			.upli{
+				text-align: center;
+				
+				border-radius: 3px;
+				margin: 10px 0px;
+				
+				position: relative;
+				background-position: center;
+				background-size: cover;
+			}
+			.upli:before{
+				content: "";
+				float: left;
+				display: inline-block;
+				padding-bottom: 70%;
+			}
+			.upli span{
+				line-height: 10px;
+				position: absolute;
+				left: 0px;
+				right: 0px;
+				top:50%;
+			}
+		</style>
+		<script>
+		var flag = '${flag }';
+		function openAllType(){
+			layer.open({
+				type: 2,
+				  area: ['420px', '240px'], //宽高
+				  shadeClose:true,
+				  content: path+'/wap/goodsinfo/getAllType.html',
+				  anim: 'up',
+				  shadeClose: true,
+				  shade: 'background-color: rgba(0,0,0,.3)'});
+			
+			$(".layui-layer").css({
+				'z-index': '19891015',
+				'overflow': 'scroll',
+				'width': '100%',
+				'height': '100%',
+				'left':'0px',
+				'top':'0%'
+			});
+			$(".layui-layer-content iframe").css({
+				'min-height':'500px',
+				'max-height':'600px'
+			})
+		}
+            $(function () {
+                $('.list_mes textarea').each(function () {
+                    $(this).css({    "line-height": "19px","padding": "0","width":'90%'});
+                });
+//			    $('.list_mes > li:nth-child(2)').css({"line-height": "2"})
+                $('.upli').each(function () {
+                    var li = $(this);
+                    li.css({});
+                    //li.find('img').get(0).style='vertical-align: middle;text-align: center;display: inline-block;width: 50px;height: 50px;border-radius:0;'
+                });
+            });
+		</script>
+	</head>
+
+	<body>
+		<!--wapper-->
+		<div class="wappers">
+			<div class="personer_top">
+				<c:if test="${flag==1 }" ><h3>发布服务</h3></c:if>
+				<c:if test="${flag==2 }"><h3>编辑服务</h3></c:if>
+				<span onclick="history.go(-1)" style="width:40px;height:50px;display:block;position:absolute;left:0;top:0;"></span>
+			</div>
+			<!--page-->
+				<div class="personer_mes">										
+					<ul class="list_mes">
+						<li style="display: none;" id="serviceId">${info.serviceId }</li>
+						<li class="info_title">服务名称</li>						
+						<li class="add_demends"><input name="servicetitle" type="text" placeholder="服务名称不能为空" value="${info.serviceTitle }"></li>
+					</ul>
+					<!-- <ul class="list_mes">
+						<li class="info_title">关键字</li>						
+						<li class="add_demends"><textarea name="servicekeywords" type="text" placeholder="关键字用'，'分隔，不能超过5个" ></textarea></li>
+						<script>
+							var serviceKeywords = '${info.serviceKeywords }';
+							serviceKeywords = serviceKeywords.substring(2,serviceKeywords.length-2);
+							$("textarea[name='servicekeywords']").html(serviceKeywords);
+						</script>
+					</ul> -->
+					<%-- <ul class="list_mes">
+						<li class="info_title">服务简介</li>						
+						<li class="add_demends"><textarea name="servicecontent" type="text" placeholder="请输入服务简介">${info.serviceBiref }</textarea></li>
+					</ul> --%>
+					<ul class="list_mes text_height">
+						<li class="info_title">服务介绍</li>						
+						<li class="add_demends "><textarea id="info_brief" name="servicebiref" placeholder="服务介绍不能为空">${info.serviceContent }</textarea></li>
+					</ul>
+					<ul class="list_mes ">
+						<li class="info_title">服务价格</li>		
+						<li style="display: none;" class="ppset">
+							<select name="psetdiscounttype">
+                                 <option selected value="1">普通服务</option>
+                             </select>
+                             <input type="hidden" name="psetpoint" value="0"/>
+						</li>				
+						<li class="add_demends pset"><input name="psetprice" type="text"  value="${info.psetPrice }"></li>
+					</ul>
+					<ul class="list_mes" >
+                    	<li class="info_title">封面上传</li>
+				        <li class="add_demendss add_imgs upli">
+				        	<c:if test="${info.servicePic == null }">
+				        		<p id="image1" style="text-align: center;display: inline-block;padding-top:20px;max-width: 100%;" ></p>
+				        	</c:if>
+				            <c:if test="${info.servicePic != null }">
+				            	<img src="${info.servicePic }" id="image1" style="display: inline-block;padding-top: 20px;max-width: 100%;" />
+				            </c:if>
+				            
+							<span>上传封面</span>
+				            <input class="mees" id="info_icon1" name="servicepic" type="hidden" value="${info.servicePic }"/>
+				        </li>
+                	</ul>
+                	<ul class="list_mes ">
+						<li class="info_title">服务时间</li>						
+						<li class="add_demends"><input name="servicemeettime" type="text" placeholder="请输入服务时长（小时）" value="${info.serviceMeettime }"></li>
+					</ul>
+					<ul class="list_mes">
+						<li class="info_title">服务类型</li>						
+						<li class="add_demends">
+	                        
+							<c:if test="${info.ctName ==null }"><div id="type" onclick="openAllType()" >全部类型</div></c:if>
+	                        <input  type="hidden" class="typeId serviceType" name="serviceType" value="${info.serviceType }" />
+						</li>
+					</ul>
+					<ul style="display: none">
+	                    <li class="mes">属性：</li>
+	                    <li>
+	                        <div class="param-main">
+	                            <a class="addrow" id="addrow" href="javascript:void(0)">属性添加</a>
+	                            <div class="param" style="display:none" id="template">
+	                                <input type="text" name="param"/>
+	                                <a class="addval" id="addval" href="javascript:void(0)">添加值</a>
+	                                <a class="delrow" id="delrow" href="javascript:void(0)">删除</a>
+	                            </div>
+	                            <div class="param">
+	                                <input type="text" name="param"/>
+	                                <a class="addval" id="addval" href="javascript:void(0)">添加值</a>
+	                                <a class="delrow" id="delrow" href="javascript:void(0)">删除</a>
+	                            </div>
+	                        </div>
+	                    </li>
+	                </ul>
+	
+	                <ul style="display: none">
+	                    <li class="mes">服务阶段：</li>
+	                    <li class="step">
+	                        <!-- <a class="addstep" id="addstep" href="javascript:void(0)">添加</a> -->
+	                        <div class="servicestep">
+	                            <span>阶段1</span><br>
+	                            名称：<input type="text" name="ssname" value="aasdasdasd"/><br>
+	                            价格：
+	                            <div class="ss steppset">
+	                                <div class="psetst">
+	                                    来源：<input type="text" name="psetdiscounttype" readonly/>
+	                                    价格：<input type="text" name="psetprice" readonly/>
+	                                    积分：<input type="text" name="psetpoint" readonly/>
+	                                </div>
+	                            </div>
+	                            描述：<br><textarea name="ssdescribe">dasdasd</textarea>
+	                        </div>
+	                    </li>
+	
+	                    <li class="zp_ts"></li>
+	
+	                </ul>
+	                <div class="personer_excit">
+					<div class="excit" id="servicesave">提交</div>
+				</div>
+				</div><!--end.personer_mes-->
+				
+				
+		</div>
+		<!--wapper end-->
+	<%@ include file="/WEB-INF/jsp/wap/common/bottom.jsp"%>
+	</body>
+
+</html>

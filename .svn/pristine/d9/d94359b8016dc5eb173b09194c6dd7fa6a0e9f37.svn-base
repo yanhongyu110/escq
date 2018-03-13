@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="optionalModuleName" class="ng-app:myApp">
+<head>
+    <!--[if lte IE 8]>
+    <script>
+        document.createElement('ng-include');
+        document.createElement('ng-pluralize');
+        document.createElement('ng-view');
+        // Optionally these for CSS
+        document.createElement('ng:include');
+        document.createElement('ng:pluralize');
+        document.createElement('ng:view');
+    </script>
+    <![endif]-->
+
+
+    <meta charset="utf-8">
+    <script src="angular/angular.min.js"></script>
+    <script src="angular/fastPage.js"></script>
+    <script src="angular/jquery-1.7.2.min.js"></script>
+    <style>
+        .red{
+            background-color: red;
+        }
+
+        .Tess{
+            transition: 300ms;
+        }
+
+    </style>
+</head>
+<body style="background-color: white;" ng-app="myApp" ng-controller="validateCtrl">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<page-config url="./pageTest" page-size="30" page="1" btn-size="7"></page-config>
+
+<div ng-repeat="i in page.list" >
+    {{i.name}}
+</div>
+
+<input page-input type="text"  ng-model="ss">
+<input type="button"  page-input-btn  value="sasas" >
+
+
+<input page-con="saas" type="text" value="sas" ng-model="ttts">
+
+
+<span ng-repeat="i in page.btnList"  page-index-btn  ng-style="i.index==page.page?{'background':'red'}:''" >
+{{i.index}}
+</span>
+
+
+
+<select page-size-select  >
+    <option value="5">5</option>
+    <option value="12">12</option>
+    <option value="30">30</option>
+</select>
+
+
+
+
+
+
+
+
+{{page.pageSize}}
+
+{{myForm.$valid}}
+
+{{pageInput}}
+{{page}}
+{{pageCon}}
+
+
+{{page.btnList.length}}
+
+<div id="sssss" style="overflow: hidden;width: 300px;color: red"></div>
+
+</body>
+<script>
+    angular.module("myApp",['fastPage']).controller("validateCtrl",function($scope){
+    })
+</script>
+</html>

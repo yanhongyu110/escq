@@ -1,0 +1,340 @@
+function getQueryString(name) { 
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	var r = window.location.search.substr(1).match(reg); 
+	if (r != null) return decodeURI(r[2]); return null; 
+}
+
+var money = getQueryString("money");
+var logId = getQueryString("logId");
+$(function(){
+	var isCookie=false;
+	if(loginfo==''){
+	//cookie 存储
+	if(window.localStorage){
+		isCookie=true;
+	}else{
+		isCookie=false;
+	}
+	var logUser=$.cookie('logUser');
+	var logToken=$.cookie('logToken');
+	delCookie('JSESSIONID');
+	$.cookie('JSESSIONID',logToken, { expires: 30, path: '/' });
+	if(logUser!=null&logUser!=''&logToken!=null&logToken!=''){
+		$.ajax({
+    		url: path + '/wap/main/loginByToken.html',
+            async: true,//请求是否异步，默认为异步
+            type: 'POST',
+            data:{
+            	'user':logUser,
+            	'token':logToken
+            },
+            success: function (result) {
+				/* alert(result+''); */
+
+            },
+            error: function (error) {
+                console.log(error);
+                //alert(error,"提示");
+            }
+    	})
+	}
+	}
+	var ua = navigator.userAgent.toLowerCase(); 
+	if(ua.match(/MicroMessenger/i)=="micromessenger") { 
+		if(getOpenIdOnCk()==null){
+			getOpenId();
+		}
+	}
+	/**
+	 * 验证表单 提现
+	 */
+	$("#form").validate({
+		rules : {
+			money : {
+				required : true,
+				digits : true,
+				min:1,
+				validatMoney:true
+			},
+			tranPwd :{
+				required : true,
+				rangelength:[6,20],
+				validatPwd : true
+			}
+		},
+		messages : {
+			money : {
+				required : "<em style='color: red;    font-size: 12px;font-style:normal'>必填</em>",
+				digits : "<em style='color: red;    font-size: 12px;font-style:normal'>请输入整数金额</em>",
+				min:"<em style='color: red;    font-size: 12px;font-style:normal'>提现金额最少为1元</em>",
+			},
+			tranPwd :{
+				required : "<em style='color: red;    font-size: 12px;font-style:normal'>必填</em>",
+				rangelength :"<em style='color: red;    font-size: 12px;font-style:normal'>请输入6至20位的交易密码</em>",
+			}
+		},
+		onfocusout : function(element) {
+			$(element).valid();
+		},
+		invalidHandler : function(form, validator) {
+			return false;
+		},
+		errorPlacement: function(error, element) { //错误信息位置设置方法
+			if(element.is('#money')){
+				error.appendTo($('#money1'));
+			}else if(element.is('#tranPwd')){
+				error.appendTo($('#tranPwd1'));
+			}
+		},
+	});
+	
+	//验证金额
+	$.validator.addMethod("validatMoney",
+			function(value, element) {
+				return parseInt(value) <= parseInt(getQueryString("money"));
+			}, "<em style='color: red;font-style:normal'>余额不足</em>");
+	
+	//验证支付密码
+	$.validator.addMethod("validatPwd",
+			function(value, element) {
+				var flag;
+				//判断密码是否正确
+				var pass=$.md5($("#tranPwd").val());
+				$.ajax({
+					type : "post",
+					dataType : "json",
+					url : path + "/wap/userinfo/validatePwd.html",
+				    async: false,
+					data : {
+						password : pass,
+						logId : logId
+					},
+					success : function(msg) {
+						if(msg.success){
+							flag = true;
+						}else{
+							flag = false;
+						}
+					},
+				});
+				return flag;
+				
+	}, "<em style='color: red;font-size: 12px;font-style:normal'>密码错误</em>");
+	
+	
+	/**
+	 * 验证表单 修改支付密码
+	 */
+	$("#formPwd").validate({
+		rules : {
+			xfjcheck : {
+				required : true,
+			},
+			newPass :{
+				required : true,
+				rangelength:[6,20],
+			},
+			confirmPass : {
+				required : true,
+				rangelength:[6,20],
+				equalTo : newPass
+			}
+		},
+		messages : {
+			xfjcheck : {
+				required : "<em style='color: red;font-size: 12px;font-style:normal'>必填</em>",
+			},
+			newPass :{
+				required : "<em style='color: red;font-size: 12px;font-style:normal'>必填</em>",
+				rangelength: "<em style='color : red;font-size: 12px; red;font-style:normal'>请输入6至20位的交易密码</em>",
+			},
+			confirmPass :{
+				required : "<em style='color : red;font-size: 12px; red;font-style:normal'>必填</em>",
+				rangelength: "<em style='color: red;font-size: 12px;font-style:normal'>请输入6至20位的交易密码</em>",
+				equalTo : "<em style='color : red;font-size: 12px; red;font-style:normal'>两次密码不一致</em>",
+			},
+		},
+		onfocusout : function(element) {
+			$(element).valid();
+		},
+		invalidHandler : function(form, validator) {
+			return false;
+		},
+		errorPlacement: function(error, element) { //错误信息位置设置方法
+			if(element.is('#xfjcheck')){
+				error.appendTo($('#xfjcheck1'));
+			}else if(element.is('#newPass')){
+				error.appendTo($('#newPass1'));
+			}else if(element.is('#confirmPass')){
+				error.appendTo($('#confirmPass1'));
+			}
+		},
+	});
+})
+function tixian(){
+	$('#tixian').attr("href","javascript:;");
+	var ua = navigator.userAgent.toLowerCase(); 
+	var isWeiXin;
+	if(ua.match(/MicroMessenger/i)=="micromessenger") { 
+		isWeiXin = 1;
+//		if(getOpenIdOnCk()==null){
+//			getOpenId()
+//			return;
+//		}
+	}
+		var tl = $("#form").validate().form();
+		var count = $('#count').val();
+		if (tl == true) {
+			$.ajax({
+				type : "get",
+				dataType : "json",
+				url : path + "/wap/details/tixian.html",
+				data : {
+					money : $('#money').val(),
+					isWeiXin : isWeiXin,
+					logId : logId,
+//					openId : getOpenIdOnCk()
+//					openId :'o5tP4vwJk0PPYVZRBLd9VPlRDkDw'
+				},
+				success : function(msg) {
+					alert(msg.errorMsg);
+					setTimeout(function() {
+						window.location.href=path+'/wap/details/AccountPaymentDetails/showIODetails.html?logId='+logId;
+					}, 2000);
+				},
+				error : function(){
+					alert("系统异常");
+					setTimeout(function() {
+						window.location.href=path+'/wap/details/AccountPaymentDetails/showIODetails.html?logId='+logId;
+					}, 2000);
+				}
+			});
+		}
+}
+
+/**
+ * 设置交易密码
+ */
+function forgetPassword(){
+	$('#account_edit_pay_pass').css("display","block");
+	$('#sub-btn').css("display","block");
+	$('#tixianDiv').css("display","none");
+}
+
+/**
+ * 重置交易密码
+ */
+function subMes(){
+	$('#sub').attr("onclick","");
+	var tl = $("#formPwd").validate().form();
+	if (tl) {
+		var newPass=$("#newPass").val();
+		var confirmPass =$("#confirmPass").val();
+		var pass=$.md5(newPass);
+		var checkCode=$('#xfjcheck').val();
+		$.ajax({
+			type : "post",
+			url : path + '/wap/userinfo/accountInfo/modifyPassById.html',
+			dataType : 'json',
+			data : {
+				'newPass' : newPass,
+				'logPass':pass,
+				'checkCode':checkCode,
+				'logId' : logId
+			},
+			success : function(jr) {
+				if(jr.errorCode=='2'){
+					alert("手机验证码出错！");
+				}else if(jr.errorCode=='3'){
+					alert('密码格式出错！');
+				}else if(jr.errorCode=='4'){
+					alert('修改支付密码出错！');
+				}else{
+					alert('支付密码修改成功！');
+					setTimeout(function() {
+						history.go(0);
+					}, 1000);
+				}
+			}
+		});
+	}
+	$('#sub').attr("onclick","subMes();");
+}
+
+function getValidate() {
+	var logCell = $('#logCell').val();
+	if (checkNull(logCell)) {
+		$('#message1').text('手机号不能为空');
+	} else if (!checkCell(logCell)) {
+		$('#message1').text('输入有效手机号码');
+	} else {
+		$.ajax({
+			type : "post",
+			url : path + '/userinfo//accountInfo/sendMes.html',
+			dataType : 'json',
+			data : {
+				'logCell' : logCell
+			},
+			success : function(res) {
+				if (res.success) {
+					timeOut(60);
+				} else {
+					if (res.errorCode == "1") {
+						$('#message1').text(res.errorMsg);
+					} else if (res.errorCode == "2") {
+						$('#message2').text(res.errorMsg);
+					}
+				}
+			}
+		});
+	}
+}
+
+function timeOut(i) {
+	if (i != 0) {
+		$("#getvalidate").unbind("click");
+		$('#getvalidate').html(i + 's可重新发送');
+		$('#getvalidate').css({
+			background : '#999',
+			border : '0px'
+		});
+		setTimeout(function() {
+			timeOut(i)
+		}, (1000));
+	} else {
+		$("#getvalidate").click(function() {
+			getValidate();
+		})
+		$('#getvalidate').html('获取验证码');
+		$('#getvalidate').css({
+			background : '#73C3ED',
+			border : '1px solid #73C3ED',
+			cursor: 'pointer'
+		});
+	}
+	i--;
+}
+
+/**
+ * 获取openid
+ */
+function getOpenId() {
+	var redirect_uri = encodeURIComponent("http://www.jindaoj.com/wap/userinfo/getWeichatOpenId.htm");
+	window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0c763640d4b8f08&redirect_uri="
+		+ redirect_uri
+			+ "&response_type=code&scope=snsapi_base&state="
+			+ encodeURIComponent("http://www.jindaoj.com/wap/userinfo/showWithDraw.html?money="+money+"&logId="+logId) + "#wechat_redirect";
+}
+
+function getOpenIdOnCk() {
+	var cookies = document.cookie.split(";");
+	if (cookies != null) {
+		for ( var i = 0; i < cookies.length; i++) {
+			var cs = cookies[i].split("=");
+			if (cs[0].trim() == "weichatOpenId") {
+				return cs[1];
+			}
+		}
+	}
+	return null;
+}

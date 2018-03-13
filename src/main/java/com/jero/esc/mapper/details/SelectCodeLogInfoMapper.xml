@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.SelectCodeLogInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.SelectCodeLogInfo">
+    <id column="SCLI_ID" jdbcType="VARCHAR" property="scliId" />
+    <result column="SCLI_CREATETIME" jdbcType="TIMESTAMP" property="scliCreatetime" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="SCLI_CONTENT" jdbcType="VARCHAR" property="scliContent" />
+    <result column="SCLI_COMMENT" jdbcType="VARCHAR" property="scliComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SCLI_ID, SCLI_CREATETIME, LOG_ID, SCLI_CONTENT, SCLI_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from select_code_log_info
+    where SCLI_ID = #{scliId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from select_code_log_info
+    where SCLI_ID = #{scliId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.SelectCodeLogInfo">
+    insert into select_code_log_info (SCLI_ID, SCLI_CREATETIME, LOG_ID, 
+      SCLI_CONTENT, SCLI_COMMENT)
+    values (#{scliId,jdbcType=VARCHAR}, #{scliCreatetime,jdbcType=TIMESTAMP}, #{logId,jdbcType=VARCHAR}, 
+      #{scliContent,jdbcType=VARCHAR}, #{scliComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.SelectCodeLogInfo">
+    insert into select_code_log_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="scliId != null">
+        SCLI_ID,
+      </if>
+      <if test="scliCreatetime != null">
+        SCLI_CREATETIME,
+      </if>
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="scliContent != null">
+        SCLI_CONTENT,
+      </if>
+      <if test="scliComment != null">
+        SCLI_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="scliId != null">
+        #{scliId,jdbcType=VARCHAR},
+      </if>
+      <if test="scliCreatetime != null">
+        #{scliCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="scliContent != null">
+        #{scliContent,jdbcType=VARCHAR},
+      </if>
+      <if test="scliComment != null">
+        #{scliComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.SelectCodeLogInfo">
+    update select_code_log_info
+    <set>
+      <if test="scliCreatetime != null">
+        SCLI_CREATETIME = #{scliCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logId != null">
+        LOG_ID = #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="scliContent != null">
+        SCLI_CONTENT = #{scliContent,jdbcType=VARCHAR},
+      </if>
+      <if test="scliComment != null">
+        SCLI_COMMENT = #{scliComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SCLI_ID = #{scliId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.SelectCodeLogInfo">
+    update select_code_log_info
+    set SCLI_CREATETIME = #{scliCreatetime,jdbcType=TIMESTAMP},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      SCLI_CONTENT = #{scliContent,jdbcType=VARCHAR},
+      SCLI_COMMENT = #{scliComment,jdbcType=VARCHAR}
+    where SCLI_ID = #{scliId,jdbcType=VARCHAR}
+  </update>
+</mapper>

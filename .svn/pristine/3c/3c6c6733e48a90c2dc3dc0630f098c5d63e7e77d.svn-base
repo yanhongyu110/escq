@@ -1,0 +1,68 @@
+.fastComment .fastComment01, .fastComment02{
+    float: left;
+    width: 28%;
+    height: 30px;
+    margin-right: 10px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    border-radius:2px;
+}
+.fastComment01{
+	border:1px solid #fb5a5a;
+	color:#fb5a5a;
+}
+.fastComment02{
+	border:1px solid #f8f8f8;
+	color:#7b7b7b;
+}
+.conta{
+	color:#666;
+	font-size: 14px;	    
+}
+.conta .le .po{
+	display: inline-block;
+    padding-left: 20px;
+    color: #666;
+    font-weight: normal;
+}
+.conta .ri p{
+	word-break: break-word;
+	font-size: 15px;
+	margin:0;
+	color:#333;
+	line-height: 20px;overflow: hidden;
+}
+.conta .ri{background:#fff;padding: 5px 10px 10px 10px;margin: 10px 0;}
+.say_more1{
+	padding:10px 0px;
+	position: relative;
+    margin-top: 14px;
+    margin-top:10px;      
+}
+.say_more1 hr{
+	margin-bottom: 10px;
+	margin-top: 5px;
+	border-top: 1px solid #73c3ed;
+	display:none
+}
+.confirm_box{
+	position: relative;
+    background: #fb5a5a;
+    color: #fff;
+    text-align: center;
+    height:35px;
+    line-height: 35px;
+    font-size: 16px;    
+    margin-top: 40px;
+}
+.pj_text{margin-top:20px;margin-left: 4%;}
+.pj_text h4{font-size:14px;font-weight:600;padding-bottom:20px}
+.service_pingjias_myd{float:left;width:20%;}
+.service_pingjias{display: block;padding:10px 0;padding-left: 10px;overflow: hidden;background: #fff;padding-bottom:20px}
+.pj_ts{padding-top:10px;color:#999;padding-bottom:10px}
+.le{font-weight:600;color: #333;padding-left:10px;}
+.lev{color:#999}
+.tt{color:#999}
+
+

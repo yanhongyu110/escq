@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.pubinfo.CommonInfoMapper">
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache"></cache>
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.pubinfo.CommonInfo">
+    <id column="CI_ID" jdbcType="VARCHAR" property="ciId" />
+    <result column="CI_TITLE" jdbcType="VARCHAR" property="ciTitle" />
+    <result column="CI_CONTENT" jdbcType="VARCHAR" property="ciContent" />
+    <result column="CI_POS" jdbcType="INTEGER" property="ciPos" />
+    <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" />
+    <result column="CI_CREATETIME" jdbcType="TIMESTAMP" property="ciCreatetime" />
+    <result column="CI_SORT" jdbcType="INTEGER" property="ciSort" />
+    <result column="CI_COMMENT" jdbcType="VARCHAR" property="ciComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CI_ID, CI_TITLE, CI_CONTENT, CI_POS, ADMIN_ID, CI_CREATETIME, CI_SORT, CI_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from common_info
+    where CI_ID = #{ciId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from common_info
+    where CI_ID = #{ciId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.pubinfo.CommonInfo">
+    insert into common_info (CI_ID, CI_TITLE, CI_CONTENT, 
+      CI_POS, ADMIN_ID, CI_CREATETIME, 
+      CI_SORT, CI_COMMENT)
+    values (#{ciId,jdbcType=VARCHAR}, #{ciTitle,jdbcType=VARCHAR}, #{ciContent,jdbcType=VARCHAR}, 
+      #{ciPos,jdbcType=INTEGER}, #{adminId,jdbcType=VARCHAR}, #{ciCreatetime,jdbcType=TIMESTAMP}, 
+      #{ciSort,jdbcType=INTEGER}, #{ciComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.pubinfo.CommonInfo">
+    insert into common_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ciId != null">
+        CI_ID,
+      </if>
+      <if test="ciTitle != null">
+        CI_TITLE,
+      </if>
+      <if test="ciContent != null">
+        CI_CONTENT,
+      </if>
+      <if test="ciPos != null">
+        CI_POS,
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="ciCreatetime != null">
+        CI_CREATETIME,
+      </if>
+      <if test="ciSort != null">
+        CI_SORT,
+      </if>
+      <if test="ciComment != null">
+        CI_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ciId != null">
+        #{ciId,jdbcType=VARCHAR},
+      </if>
+      <if test="ciTitle != null">
+        #{ciTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="ciContent != null">
+        #{ciContent,jdbcType=VARCHAR},
+      </if>
+      <if test="ciPos != null">
+        #{ciPos,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="ciCreatetime != null">
+        #{ciCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ciSort != null">
+        #{ciSort,jdbcType=INTEGER},
+      </if>
+      <if test="ciComment != null">
+        #{ciComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.pubinfo.CommonInfo">
+    update common_info
+    <set>
+      <if test="ciTitle != null">
+        CI_TITLE = #{ciTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="ciContent != null">
+        CI_CONTENT = #{ciContent,jdbcType=VARCHAR},
+      </if>
+      <if test="ciPos != null">
+        CI_POS = #{ciPos,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="ciCreatetime != null">
+        CI_CREATETIME = #{ciCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ciSort != null">
+        CI_SORT = #{ciSort,jdbcType=INTEGER},
+      </if>
+      <if test="ciComment != null">
+        CI_COMMENT = #{ciComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CI_ID = #{ciId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.pubinfo.CommonInfo">
+    update common_info
+    set CI_TITLE = #{ciTitle,jdbcType=VARCHAR},
+      CI_CONTENT = #{ciContent,jdbcType=VARCHAR},
+      CI_POS = #{ciPos,jdbcType=INTEGER},
+      ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      CI_CREATETIME = #{ciCreatetime,jdbcType=TIMESTAMP},
+      CI_SORT = #{ciSort,jdbcType=INTEGER},
+      CI_COMMENT = #{ciComment,jdbcType=VARCHAR}
+    where CI_ID = #{ciId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.saleinfo.OrderServiceMapper">
+
+    <resultMap id="BaseResultMap" type="com.jero.esc.po.saleinfo.OrderService">
+        <id column="OS_ID" jdbcType="VARCHAR" property="osId"/>
+        <result column="ORDER_ID" jdbcType="VARCHAR" property="orderId"/>
+        <result column="SERS_ID" jdbcType="VARCHAR" property="sersId"/>
+        <result column="OS_GOODS_NUM" jdbcType="REAL" property="osGoodsNum"/>
+        <result column="SS_ID" jdbcType="VARCHAR" property="ssId"/>
+        <result column="OS_COMMENT" jdbcType="VARCHAR" property="osComment"/>
+        <result column="OS_ATTRS" jdbcType="VARCHAR" property="osAttrs"/>
+        <result column="OS_SOURCE" jdbcType="VARCHAR" property="osSource"/>
+        <result column="OS_PRICE" jdbcType="REAL" property="osPrice"/>
+        <result column="OS_POINT" jdbcType="REAL" property="osPoint"/>
+        <result column="OS_SETPS" jdbcType="VARCHAR" property="osSetps"/>
+        <association property="serviceSnapshot" column="SERS_ID" resultMap="com.jero.esc.mapper.goodsinfo.ServiceSnapshotMapper.BaseResultMap"/>
+    </resultMap>
+    
+    <resultMap type="com.jero.esc.vo.saleinfo.OrderService" id="OrderInfoBuyerMap">
+		<!-- 订单商品表 -->
+		<id column="OS_ID" jdbcType="VARCHAR" property="osId"/>
+		<result column="ORDER_ID" jdbcType="VARCHAR" property="orderId"/>
+		<result column="OS_SERS_ID" jdbcType="VARCHAR" property="oSersId"/>
+		<result column="OS_GOODS_NUM" jdbcType="FLOAT" property="osGoodsNum"/>
+		<result column="SS_ID" jdbcType="VARCHAR" property="ssId"/>
+		<result column="OS_COMMENT" jdbcType="VARCHAR" property="osComment"/>
+		<result column="OS_ATTRS" jdbcType="VARCHAR" property="osAttrs"/>
+		<result column="OS_SOURCE" jdbcType="VARCHAR" property="osSource"/>
+		<result column="OS_PRICE" jdbcType="FLOAT" property="osPrice"/>
+		<result column="OS_POINT" jdbcType="FLOAT" property="osPoint"/>
+		<result column="OS_SETPS" jdbcType="VARCHAR" property="osSetps"/>
+		<result column="OS_SERVICETITLE" jdbcType="VARCHAR" property="osServicetitle"/>
+		<!-- 服务信息快照表 -->
+		<result column="SERS_ID" jdbcType="VARCHAR" property="sersId"/>		
+		<result column="SERS_INFO" jdbcType="VARCHAR" property="sersInfo"/>		
+		<result column="SERS_CHOOSE" jdbcType="VARCHAR" property="sersChoose"/>		
+		<result column="SERS_PRICE" jdbcType="VARCHAR" property="sersPrice"/>		
+		<result column="SERS_PERPRICE" jdbcType="VARCHAR" property="sersPerprice"/>		
+		<result column="SERS_CREATETIME" jdbcType="TIMESTAMP" property="sersCreatetime"/>		
+		<result column="SERS_COMMENT" jdbcType="VARCHAR" property="sersComment"/>		
+	</resultMap>
+
+    <resultMap id="withRemark" type="com.jero.esc.po.saleinfo.OrderService" extends="BaseResultMap">
+        <id column="OS_ID" jdbcType="VARCHAR" property="osId"/>
+        <result column="ORDER_ID" jdbcType="VARCHAR" property="orderId"/>
+        <result column="SERS_ID" jdbcType="VARCHAR" property="sersId"/>
+        <result column="OS_GOODS_NUM" jdbcType="REAL" property="osGoodsNum"/>
+        <result column="SS_ID" jdbcType="VARCHAR" property="ssId"/>
+        <result column="OS_COMMENT" jdbcType="VARCHAR" property="osComment"/>
+        <result column="OS_ATTRS" jdbcType="VARCHAR" property="osAttrs"/>
+        <result column="OS_SOURCE" jdbcType="VARCHAR" property="osSource"/>
+        <result column="OS_PRICE" jdbcType="REAL" property="osPrice"/>
+        <result column="OS_POINT" jdbcType="REAL" property="osPoint"/>
+        <result column="OS_SETPS" jdbcType="VARCHAR" property="osSetps"/>
+        <association property="serviceRemark" column="ORDER_ID" resultMap="com.jero.esc.mapper.goodsinfo.ServiceRemarkMapper.BaseResultMap"/>
+        <association property="orderInfo" column="OS_ID" resultMap="com.jero.esc.mapper.saleinfo.OrderInfoMapper.BaseResultMap"/>
+    </resultMap>
+	
+    <sql id="Base_Column_List">
+	    OS_ID, ORDER_ID, SERS_ID, OS_GOODS_NUM, SS_ID, OS_COMMENT, OS_ATTRS, OS_SOURCE, OS_PRICE,OS_POINT,OS_SETPS
+	</sql>
+
+
+    <sql id="where">
+
+    </sql>
+
+
+    <select id="selectByOrderId" resultMap="OrderInfoBuyerMap">
+        SELECT OS_ID, ORDER_ID, o.SERS_ID AS OS_SERS_ID, OS_GOODS_NUM, SS_ID, OS_COMMENT, OS_ATTRS, OS_SOURCE, OS_PRICE,OS_POINT,OS_SETPS,
+			s.SERS_ID,SERS_INFO,SERS_CHOOSE,SERS_PRICE,SERS_PERPRICE,SERS_CREATETIME,SERS_COMMENT
+			FROM ORDER_SERVICE o JOIN SERVICE_SNAPSHOT s ON o.SERS_ID=s.SERS_ID
+        where ORDER_ID = #{orderId}
+    </select>
+    
+    
+    	
+ 	 <select id="selectListByOrderId" resultMap="OrderInfoBuyerMap">
+        SELECT OS_ID, ORDER_ID,SERS_ID, OS_GOODS_NUM, SS_ID, OS_COMMENT, OS_ATTRS, OS_SOURCE, OS_PRICE,OS_POINT,OS_SETPS
+			FROM ORDER_SERVICE 
+        where ORDER_ID = #{orderId}
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from order_service
+        where OS_ID = #{osId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByOrderServiceWithRemark" resultMap="withRemark">
+        SELECT
+        *
+        FROM
+        order_service AS A
+        INNER JOIN order_info AS D ON A.ORDER_ID = D.ORDER_ID
+        INNER JOIN service_snapshot AS C ON A.SERS_ID = C.SERS_ID
+        LEFT JOIN service_remark AS B ON B.SR_ORDER = A.OS_ID
+        where A.OS_ID = #{osId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="countByExample" resultType="java.lang.Integer">
+        select
+        COUNT(OS_ID)
+        FROM
+        order_service
+        INNER JOIN order_info ON order_service.ORDER_ID = order_info.ORDER_ID
+        <where>
+            1=1
+            <if test="osId != null" >
+                AND OS_ID=#{osId}
+            </if>
+            <if test="orderId != null" >
+                AND ORDER_ID=#{orderId}
+            </if>
+            <if test="sersId != null" >
+                AND SERS_ID=#{sersId}
+            </if>
+            <if test="osGoodsNum != null" >
+                AND OS_GOODS_NUM=#{osGoodsNum}
+            </if>
+            <if test="ssId != null" >
+                AND SS_ID=#{ssId}
+            </if>
+            <if test="osComment != null" >
+                AND OS_COMMENT=#{osComment}
+            </if>
+            <if test="osAttrs != null" >
+                AND OS_ATTRS=#{osAttrs}
+            </if>
+            <if test="osSource != null" >
+                AND OS_SOURCE=#{osSource}
+            </if>
+            <if test="osPrice != null" >
+                AND OS_PRICE=#{osPrice}
+            </if>
+            <if test="osPoint != null" >
+                AND OS_POINT=#{osPoint}
+            </if>
+            <if test="osSetps != null" >
+                AND OS_SETPS=#{osSetps}
+            </if>
+            <if test="orderInfo != null" >
+                <if test="orderInfo.orderId != null " >
+                    AND ORDER_ID=#{orderInfo.orderId}
+                </if>
+                <if test="orderInfo.orderBuyer != null" >
+                    AND ORDER_BUYER=#{orderInfo.orderBuyer}
+                </if>
+                <if test="orderInfo.orderSeller != null" >
+                    AND ORDER_SELLER=#{orderInfo.orderSeller}
+                </if>
+                <if test="orderInfo.orderCreatetime != null" >
+                    AND ORDER_CREATETIME=#{orderInfo.orderCreatetime}
+                </if>
+                <if test="orderInfo.orderNo != null" >
+                    AND ORDER_NO=#{orderInfo.orderNo}
+                </if>
+                <if test="orderInfo.orderState != null" >
+                    AND ORDER_STATE=#{orderInfo.orderState}
+                </if>
+                <if test="orderInfo.orderMeettime != null" >
+                    AND ORDER_MEETTIME=#{orderInfo.orderMeettime}
+                </if>
+                <if test="orderInfo.orderPerson != null" >
+                    AND ORDER_PERSON=#{orderInfo.orderPerson}
+                </if>
+                <if test="orderInfo.orderPersoncell != null" >
+                    AND ORDER_PERSONCELL=#{orderInfo.orderPersoncell}
+                </if>
+                <if test="orderInfo.orderArea != null" >
+                    AND ORDER_AREA=#{orderInfo.orderArea}
+                </if>
+                <if test="orderInfo.orderAddr != null" >
+                    AND ORDER_ADDR=#{orderInfo.orderAddr}
+                </if>
+                <if test="orderInfo.orderRequest != null" >
+                    AND ORDER_REQUEST=#{orderInfo.orderRequest}
+                </if>
+                <if test="orderInfo.orderIsbill != null" >
+                    AND ORDER_ISBILL=#{orderInfo.orderIsbill}
+                </if>
+                <if test="orderInfo.orderBilladdr != null" >
+                    AND ORDER_BILLADDR=#{orderInfo.orderBilladdr}
+                </if>
+                <if test="orderInfo.orderBillcontent != null" >
+                    AND ORDER_BILLCONTENT=#{orderInfo.orderBillcontent}
+                </if>
+                <if test="orderInfo.orderAq != null" >
+                    AND ORDER_AQ=#{orderInfo.orderAq}
+                </if>
+                <if test="orderInfo.orderConfirmtime != null" >
+                    AND ORDER_CONFIRMTIME=#{orderInfo.orderConfirmtime}
+                </if>
+                <if test="orderInfo.orderBuyerrepaycontent != null" >
+                    AND ORDER_BUYERREPAYCONTENT=#{orderInfo.orderBuyerrepaycontent}
+                </if>
+                <if test="orderInfo.orderSellerrepaycontent != null" >
+                    AND ORDER_SELLERREPAYCONTENT=#{orderInfo.orderSellerrepaycontent}
+                </if>
+                <if test="orderInfo.orderAdminrepaycontent != null" >
+                    AND ORDER_ADMINREPAYCONTENT=#{orderInfo.orderAdminrepaycontent}
+                </if>
+                <if test="orderInfo.orderComment != null" >
+                    AND ORDER_COMMENT=#{orderInfo.orderComment}
+                </if>
+                <if test="orderInfo.orderPrice != null" >
+                    AND ORDER_PRICE=#{orderInfo.orderPrice}
+                </if>
+                <if test="orderInfo.orderPoint != null" >
+                    AND ORDER_POINT=#{orderInfo.orderPoint}
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order_service
+    where OS_ID = #{osId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.jero.esc.po.saleinfo.OrderService">
+    insert into order_service (OS_ID, ORDER_ID, SERS_ID, 
+      OS_GOODS_NUM, SS_ID, OS_COMMENT, 
+      OS_ATTRS, OS_SOURCE, OS_PRICE, 
+      OS_POINT,OS_SETPS)
+    values (#{osId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{sersId,jdbcType=VARCHAR}, 
+      #{osGoodsNum,jdbcType=REAL}, #{ssId,jdbcType=VARCHAR}, #{osComment,jdbcType=VARCHAR}, 
+      #{osAttrs,jdbcType=VARCHAR}, #{osSource,jdbcType=VARCHAR}, #{osPrice,jdbcType=REAL}, 
+      #{osPoint,jdbcType=REAL},#{osSetps})
+  </insert>
+    <insert id="insertSelective" parameterType="com.jero.esc.po.saleinfo.OrderService">
+        insert into order_service
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="osId != null">
+                OS_ID,
+            </if>
+            <if test="orderId != null">
+                ORDER_ID,
+            </if>
+            <if test="sersId != null">
+                SERS_ID,
+            </if>
+            <if test="osGoodsNum != null">
+                OS_GOODS_NUM,
+            </if>
+            <if test="ssId != null">
+                SS_ID,
+            </if>
+            <if test="osComment != null">
+                OS_COMMENT,
+            </if>
+            <if test="osAttrs != null">
+                OS_ATTRS,
+            </if>
+            <if test="osSource != null">
+                OS_SOURCE,
+            </if>
+            <if test="osPrice != null">
+                OS_PRICE,
+            </if>
+            <if test="osPoint != null">
+                OS_POINT,
+            </if>
+            <if test="osSetps != null">
+                OS_SETPS,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="osId != null">
+                #{osId,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="sersId != null">
+                #{sersId,jdbcType=VARCHAR},
+            </if>
+            <if test="osGoodsNum != null">
+                #{osGoodsNum,jdbcType=REAL},
+            </if>
+            <if test="ssId != null">
+                #{ssId,jdbcType=VARCHAR},
+            </if>
+            <if test="osComment != null">
+                #{osComment,jdbcType=VARCHAR},
+            </if>
+            <if test="osAttrs != null">
+                #{osAttrs,jdbcType=VARCHAR},
+            </if>
+            <if test="osSource != null">
+                #{osSource,jdbcType=VARCHAR},
+            </if>
+            <if test="osPrice != null">
+                #{osPrice,jdbcType=REAL},
+            </if>
+            <if test="osPoint != null">
+                #{osPoint,jdbcType=REAL},
+            </if>
+            <if test="osSetps != null">
+                #{osSetps},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.saleinfo.OrderService">
+        update order_service
+        <set>
+            <if test="orderId != null">
+                ORDER_ID = #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="sersId != null">
+                SERS_ID = #{sersId,jdbcType=VARCHAR},
+            </if>
+            <if test="osGoodsNum != null">
+                OS_GOODS_NUM = #{osGoodsNum,jdbcType=REAL},
+            </if>
+            <if test="ssId != null">
+                SS_ID = #{ssId,jdbcType=VARCHAR},
+            </if>
+            <if test="osComment != null">
+                OS_COMMENT = #{osComment,jdbcType=VARCHAR},
+            </if>
+            <if test="osAttrs != null">
+                OS_ATTRS = #{osAttrs,jdbcType=VARCHAR},
+            </if>
+            <if test="osSource != null">
+                OS_SOURCE = #{osSource,jdbcType=VARCHAR},
+            </if>
+            <if test="osPrice != null">
+                OS_PRICE = #{osPrice,jdbcType=REAL},
+            </if>
+            <if test="osPoint != null">
+                OS_POINT = #{osPoint,jdbcType=REAL},
+            </if>
+            <if test="osSetps != null">
+                OS_SETPS=#{osSetps},
+            </if>
+        </set>
+        where OS_ID = #{osId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.saleinfo.OrderService">
+    update order_service
+    set ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      SERS_ID = #{sersId,jdbcType=VARCHAR},
+      OS_GOODS_NUM = #{osGoodsNum,jdbcType=REAL},
+      SS_ID = #{ssId,jdbcType=VARCHAR},
+      OS_COMMENT = #{osComment,jdbcType=VARCHAR},
+      OS_ATTRS = #{osAttrs,jdbcType=VARCHAR},
+      OS_SOURCE = #{osSource,jdbcType=VARCHAR},
+      OS_PRICE = #{osPrice,jdbcType=REAL},
+      	OS_SETPS=#{osSetps},
+      OS_POINT = #{osPoint,jdbcType=REAL}
+    where OS_ID = #{osId,jdbcType=VARCHAR}
+  </update>
+</mapper>

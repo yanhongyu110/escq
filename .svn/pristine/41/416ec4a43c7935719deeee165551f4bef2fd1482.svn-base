@@ -1,0 +1,71 @@
+.fastComment .fastComment01, .fastComment02{
+    float: left;
+    width: 28%;
+    height: 30px;
+    margin-right: 10px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    border-radius:2px;
+}
+.fastComment01{
+	border:1px solid #73C3ED;
+	color:#73C3ED;
+}
+.fastComment02{
+	border:1px solid #eee;
+	color:#7b7b7b;
+}
+.conta{
+	color:#666;
+	    font-size: 14px;
+	        margin-top: 20px;
+}
+.conta .le .po{
+	display: inline-block;
+    padding-left: 20px;
+    color: #666;
+    font-weight: normal;
+}
+.conta .ri p{
+	word-break: break-word;
+	font-size: 15px;
+	margin: 10px 0;
+	color:#333;
+	padding:10px;
+	background:#eee;line-height: 20px;overflow: hidden;
+}
+.say_more1{
+	padding:15px;
+	position: relative;
+    margin-top: 14px;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    margin-top:10px
+}
+.say_more1 hr{
+	margin-bottom: 10px;
+	margin-top: 5px;
+	border-top: 1px solid #73c3ed;
+}
+.confirm_box{
+	position: relative;
+    background: #fb5a5a;
+    color: #fff;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    border-radius: 4px;
+    margin-top: 40px;
+}
+.pj_text{margin-top:20px;    margin-left: 4%;}
+.pj_text h4{font-size:14px;font-weight:600;padding-bottom:20px}
+.service_pingjias_myd{float:left;width:20%;}
+.service_pingjias{display: block;padding:10px 0;    overflow: hidden;    background: #fff;padding-bottom:20px}
+.pj_ts{padding-top:10px;color:#999;padding-bottom:10px}
+.le{font-weight:600;    color: #333;}
+.lev{color:#999}
+.tt{color:#999}
+
+

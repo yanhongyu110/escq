@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.UserActionMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.UserAction">
+    <id column="UA_ID" jdbcType="VARCHAR" property="uaId" />
+    <result column="UA_CONTENT" jdbcType="VARCHAR" property="uaContent" />
+    <result column="UA_TYPE" jdbcType="INTEGER" property="uaType" />
+    <result column="UA_CREATETIME" jdbcType="TIMESTAMP" property="uaCreatetime" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="UA_COMMENT" jdbcType="VARCHAR" property="uaComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    UA_ID, UA_CONTENT, UA_TYPE, UA_CREATETIME, LOG_ID, UA_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_action
+    where UA_ID = #{uaId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user_action
+    where UA_ID = #{uaId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.UserAction">
+    insert into user_action (UA_ID, UA_CONTENT, UA_TYPE, 
+      UA_CREATETIME, LOG_ID, UA_COMMENT
+      )
+    values (#{uaId,jdbcType=VARCHAR}, #{uaContent,jdbcType=VARCHAR}, #{uaType,jdbcType=INTEGER}, 
+      #{uaCreatetime,jdbcType=TIMESTAMP}, #{logId,jdbcType=VARCHAR}, #{uaComment,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.UserAction">
+    insert into user_action
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uaId != null">
+        UA_ID,
+      </if>
+      <if test="uaContent != null">
+        UA_CONTENT,
+      </if>
+      <if test="uaType != null">
+        UA_TYPE,
+      </if>
+      <if test="uaCreatetime != null">
+        UA_CREATETIME,
+      </if>
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="uaComment != null">
+        UA_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uaId != null">
+        #{uaId,jdbcType=VARCHAR},
+      </if>
+      <if test="uaContent != null">
+        #{uaContent,jdbcType=VARCHAR},
+      </if>
+      <if test="uaType != null">
+        #{uaType,jdbcType=INTEGER},
+      </if>
+      <if test="uaCreatetime != null">
+        #{uaCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="uaComment != null">
+        #{uaComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.UserAction">
+    update user_action
+    <set>
+      <if test="uaContent != null">
+        UA_CONTENT = #{uaContent,jdbcType=VARCHAR},
+      </if>
+      <if test="uaType != null">
+        UA_TYPE = #{uaType,jdbcType=INTEGER},
+      </if>
+      <if test="uaCreatetime != null">
+        UA_CREATETIME = #{uaCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logId != null">
+        LOG_ID = #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="uaComment != null">
+        UA_COMMENT = #{uaComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UA_ID = #{uaId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.UserAction">
+    update user_action
+    set UA_CONTENT = #{uaContent,jdbcType=VARCHAR},
+      UA_TYPE = #{uaType,jdbcType=INTEGER},
+      UA_CREATETIME = #{uaCreatetime,jdbcType=TIMESTAMP},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      UA_COMMENT = #{uaComment,jdbcType=VARCHAR}
+    where UA_ID = #{uaId,jdbcType=VARCHAR}
+  </update>
+</mapper>

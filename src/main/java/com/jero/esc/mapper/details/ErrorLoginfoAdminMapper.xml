@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.ErrorLoginfoAdminMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.ErrorLoginfoAdmin">
+    <id column="ELA_ID" jdbcType="VARCHAR" property="elaId" />
+    <result column="ELA_INFO" jdbcType="VARCHAR" property="elaInfo" />
+    <result column="ELA_CREATETIME" jdbcType="TIMESTAMP" property="elaCreatetime" />
+    <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" />
+    <result column="ELA_COMMENT" jdbcType="VARCHAR" property="elaComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ELA_ID, ELA_INFO, ELA_CREATETIME, ADMIN_ID, ELA_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from error_loginfo_admin
+    where ELA_ID = #{elaId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from error_loginfo_admin
+    where ELA_ID = #{elaId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.ErrorLoginfoAdmin">
+    insert into error_loginfo_admin (ELA_ID, ELA_INFO, ELA_CREATETIME, 
+      ADMIN_ID, ELA_COMMENT)
+    values (#{elaId,jdbcType=VARCHAR}, #{elaInfo,jdbcType=VARCHAR}, #{elaCreatetime,jdbcType=TIMESTAMP}, 
+      #{adminId,jdbcType=VARCHAR}, #{elaComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.ErrorLoginfoAdmin">
+    insert into error_loginfo_admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="elaId != null">
+        ELA_ID,
+      </if>
+      <if test="elaInfo != null">
+        ELA_INFO,
+      </if>
+      <if test="elaCreatetime != null">
+        ELA_CREATETIME,
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="elaComment != null">
+        ELA_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="elaId != null">
+        #{elaId,jdbcType=VARCHAR},
+      </if>
+      <if test="elaInfo != null">
+        #{elaInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="elaCreatetime != null">
+        #{elaCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="elaComment != null">
+        #{elaComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.ErrorLoginfoAdmin">
+    update error_loginfo_admin
+    <set>
+      <if test="elaInfo != null">
+        ELA_INFO = #{elaInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="elaCreatetime != null">
+        ELA_CREATETIME = #{elaCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="elaComment != null">
+        ELA_COMMENT = #{elaComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ELA_ID = #{elaId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.ErrorLoginfoAdmin">
+    update error_loginfo_admin
+    set ELA_INFO = #{elaInfo,jdbcType=VARCHAR},
+      ELA_CREATETIME = #{elaCreatetime,jdbcType=TIMESTAMP},
+      ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      ELA_COMMENT = #{elaComment,jdbcType=VARCHAR}
+    where ELA_ID = #{elaId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.system.SysAuthorityToResourceMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.system.SysAuthorityToResourceKey">
+    <id column="ATR_AUTHORITY" jdbcType="INTEGER" property="atrAuthority" />
+    <id column="ATR_RESOURCE" jdbcType="INTEGER" property="atrResource" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.jero.esc.po.system.SysAuthorityToResourceKey">
+    delete from sys_authority_to_resource
+    where ATR_AUTHORITY = #{atrAuthority,jdbcType=INTEGER}
+      and ATR_RESOURCE = #{atrResource,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.system.SysAuthorityToResourceKey">
+    insert into sys_authority_to_resource (ATR_AUTHORITY, ATR_RESOURCE)
+    values (#{atrAuthority,jdbcType=INTEGER}, #{atrResource,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.system.SysAuthorityToResourceKey">
+    insert into sys_authority_to_resource
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="atrAuthority != null">
+        ATR_AUTHORITY,
+      </if>
+      <if test="atrResource != null">
+        ATR_RESOURCE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="atrAuthority != null">
+        #{atrAuthority,jdbcType=INTEGER},
+      </if>
+      <if test="atrResource != null">
+        #{atrResource,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

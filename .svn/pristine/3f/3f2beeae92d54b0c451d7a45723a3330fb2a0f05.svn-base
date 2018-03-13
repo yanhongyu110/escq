@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>index</title>
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+		<meta name="apple-touch-fullscreen" content="yes">
+		<!-- 开启对web app程序的支持  -->
+		<meta content="telephone=no,email=no" name="format-detection">
+		<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+		<!--base css-->
+		<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<script src="js/reset.js"></script>
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/bd.js"></script>
+		<script src="js/TouchSlide.js"></script>
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+
+		<SCRIPT type=text/javascript>
+			var selectListShow = 0;
+			$(function() {
+				$("#type,.searchselectbtn").click(function() {
+					if(selectListShow) {
+						$("#selectTypeList").slideUp("fast");
+						selectListShow = 0;
+					} else {
+						$("#selectTypeList").slideDown("fast");
+						selectListShow = 1;
+					}
+					return false;
+				});
+				$("body").click(function() {
+					if(selectListShow) {
+						$("#selectTypeList").slideUp("fast");
+						selectListShow = 0;
+					}
+				});
+				$(".searchselect li").click(function() {
+					$("#type").text($(this).text());
+					$("#type").attr("typename", $(this).attr("typename"));
+					$(this).parent().hide();
+				});
+
+			});
+		</SCRIPT>
+		<style>
+			.swiper-container {
+				height: 7rem;
+				margin-top: 20px;
+			}
+			
+			.swiper-slide {
+				background-position: center;
+				background-size: cover;
+				height: 7rem;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--wapper-->
+		<div class="wapper">
+			<!--page-->
+			<div id="page">
+				<!--头部-->
+				<div class="header">
+					<div class="loimg"><img src="images/logo.png"></div>
+					<div class="phone"><img src="images/400.png"></div>
+					
+
+					<!--<div class="new">
+						<a>12</a>
+					</div>-->
+				</div>
+				<div class="box-lanrenzhijia">
+					
+					<div class="searchContainer">
+						<div class="searchselect">
+							<SPAN id="type" typename="song">找专家<i class="allow_down"></i></SPAN>
+							<A class="searchselectbtn" href="javascript:;"></A>
+							<ul id="selectTypeList">
+								<li typename="song">
+									<A class="current" href="javascript:;">找专家</A>
+								</li>
+								<li typename="singer">
+									<A href="javascript:;">找服务</A>
+								</li>
+
+								<li class="last"></li>
+							</ul>
+						</div>
+						<INPUT id="key" class="k_ss" type="text" value="产品经理">
+						<A class="searchbtn" id="searchbtn" href="javascript:;"><img src="images/seaicon.png"></A>
+					</div>
+				</div>
+
+				<!--头部 end-->
+				<!--content-->
+				<div class="content have_bg">
+					<!--slide-->
+					<div id="focus" class="focus">
+						<div class="bd">
+							<ul id="Gallery" class="gallery">
+								<li>
+									<a href=""><img src="images/ind1.jpg">
+									</a>
+								</li>
+								<li>
+									<a href=""><img src="images/ind2.jpg">
+									</a>
+								</li>
+								<li>
+									<a href=""><img src="images/ind5.jpg">
+									</a>
+								</li>
+								<li>
+									<a href=""><img src="images/ind4.jpg">
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="hd">
+							<ul>
+							</ul>
+						</div>
+					</div>
+					<script>
+						/*banner滚动图片*/
+						TouchSlide({
+							slideCell: "#focus",
+							titCell: ".hd ul", // 开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+							mainCell: ".bd ul",
+							effect: "leftLoop",
+							autoPlay: true, // 自动播放
+							autoPage: true, // 自动分页
+							delayTime: 200, // 毫秒；切换效果持续时间（执行一次效果用多少毫秒）
+							interTime: 2500, // 毫秒；自动运行间隔（隔多少毫秒后执行下一个效果）
+							switchLoad: "_src" // 切换加载，真实图片路径为"_src"
+						});
+					</script>
+					<!--slide end-->
+					<!--list-img-->
+					<div class="list-img p-t-35 p-b-35 bag-fff">
+						<div class="list-imgone">
+							<a href=""><img src="images/lisimg1.png" alt="" /><span>策划</span></a>
+							<a href="peixun_list.html"><img src="images/lisimg2.png" alt="" /><span>市场调研</span></a>
+							<a href="daoshi_list.html"><img src="images/lisimg3.png" alt="" /><span>产品设计</span></a>
+							<a href="zige_list.html"><img src="images/lisimg4.png" alt="" /><span>美工设计</span></a>
+
+						</div>
+						<div class="list-imgone">
+							<a href="zige_list.html"><img src="images/lisimg5.png" alt="" /><span>技术开发</span></a>
+							<a href="video_page.html"><img src="images/lisimg6.png" alt="" /><span>网站测试</span></a>
+							<a href="about.html"><img src="images/lisimg7.png" alt="" /><span>网站运营</span></a>
+							<a href="zige_list.html"><img src="images/lisimg8.png" alt="" /><span>更多</span></a>
+						</div>
+					</div>
+					<!--list-img end-->
+
+					<!--图-->
+					<div class="m-t-20 m-b-35">
+						<a href="daoshi_page.html"><img src="images/001.jpg" alt="" width="100%" /></a>
+					</div>
+					<!--图 end-->
+					<div class="b_title">
+						<h2>发现您身边的海量专家</h2>
+						<h4>超过8千位行业达人专属服务，求教专家达人解惑或与达人切磋</h4>
+					</div>
+					<!--end.b_title-->
+
+					<div class="service_zj">
+						<ul>
+							<li>
+								<img src="images/expert01.jpg" />
+								<h3>陈小肖</h3>
+								<p>高级资深产品经理</p>
+							</li>
+							<li class="img_right">
+								<img src="images/expert02.jpg" />
+								<h3>陈小肖</h3>
+								<p>高级资深美工设计</p>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<img src="images/expert03.jpg" />
+								<h3>陈小肖</h3>
+								<p>高级资深产品经理</p>
+							</li>
+							<li class="img_right">
+								<img src="images/expert04.jpg" />
+								<h3>陈小肖</h3>
+								<p>高级资深美工设计</p>
+							</li>
+						</ul>
+
+					</div>
+					<!--end.service_zj-->
+					<div class="more">
+						<a class="btn">发现更多专家</a>
+					</div>
+					<div class="b_title">
+						<h2>知识学堂 寻求服务 心得分享</h2>
+						<h4>有效满足个性化需求 , 让服务响应更及时！</h4>
+					</div>
+					<!--end.b_title-->
+					<div class="service">
+						<ul>
+							<li>
+								<img src="images/fw_01.jpg">
+								<h3>营销型网站策划</h3>
+								<font>￥1200</font>
+							</li>
+							<li class="img_right">
+								<img src="images/fw_03.jpg">
+								<h3>营销型网站策划</h3>
+								<font>￥1200</font>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<img src="images/fw_01.jpg">
+								<h3>营销型网站策划</h3>
+								<font>￥1200</font>
+							</li>
+							<li class="img_right">
+								<img src="images/fw_03.jpg">
+								<h3>营销型网站策划</h3>
+								<font>￥1200</font>
+							</li>
+						</ul>
+					</div>
+					<!--end.service-->
+
+					<div class="more">
+						<a class="btn">发现更多专家</a>
+					</div>
+					<div class="inslide p-t-40 p-b-40 bag-f8f8f8">
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide" style="background-image:url('images/zs01.jpg')">
+
+								</div>
+								<div class="swiper-slide" style="background-image:url('images/zs02.jpg')"></div>
+								<div class="swiper-slide" style="background-image:url('images/zs03.jpg')"></div>
+								<div class="swiper-slide" style="background-image:url('images/zs04.jpg')"></div>
+
+							</div>
+							<!-- Add Pagination -->
+
+							<!-- Add Arrows -->
+							<div class="swiper-button-prev swiper-button-black"></div>
+							<div class="swiper-button-next swiper-button-black"></div>
+						</div>
+					</div>
+
+					<script>
+						var swiper = new Swiper('.swiper-container', {
+							effect: 'flip',
+							grabCursor: true,
+							nextButton: '.swiper-button-next',
+							prevButton: '.swiper-button-prev'
+						});
+					</script>
+					<div class="contact">
+						<h3>400-023-8862</h3>
+						<div class="btns">联系我们</div>
+						<h2>首页 / 关于我们 / 常见问题 / 服务保障</h2>
+						<h1>登录 | 注册</h1>
+						<p>重庆捷路科技有限公司 Copyright © 2015 ECJia(ecjia.com) <br> 地址：重庆市渝北区文一西路崇义路口公元里7幢6楼
+						</p>
+					</div>
+					<div class="footer">
+						<ul class="footer_nav">
+							<li class="footer-home">主页</li>
+
+							<li class="footer-like">发现</li>
+							<li class="footer-gr">我的</li>
+						</ul>
+					</div>
+
+				</div>
+				<!--content end-->
+
+			</div>
+			<!--page end-->
+		</div>
+		<!--wapper end-->
+
+	</body>
+
+</html>

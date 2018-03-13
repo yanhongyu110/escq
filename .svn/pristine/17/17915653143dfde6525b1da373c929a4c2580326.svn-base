@@ -1,0 +1,83 @@
+var n = 1;
+var state = 2;
+var liindex;
+
+$(function(){
+	$('.title-list li').click(function() {
+		state = $(this).data("id");
+		window.location.href = path + '/wap/goodsinfo/service/viewProviderService.html?page=1&serviceState='+state;
+	});
+	
+	state = getUrlParam('serviceState');
+	if(state==null){
+		state=2;
+	}
+	if(state == 2)
+		liindex = 0;
+	if(state == 3)
+		liindex = 1;
+	if(state == 1)
+		liindex = 2;
+	if(state == 4)
+		liindex = 3;
+	var liWidth = $('.title-list li').width();
+	$('.my_date_bt .title-list p').stop(false, true).animate({
+		'left': liindex * liWidth + 'px'
+	}, 300);
+	$('.title-list li').removeClass('on').eq(liindex).addClass('on');
+	
+	// $('.pagination').jqPagination({
+	// 	  link_string : '/?page={page_number}',
+	// 	  current_page: page, //设置当前页 默认为1
+	// 	  max_page : maxPage, //设置最大页 默认为1
+	// 	  page_string : '当前第{current_page}页,共{max_page}页',
+	// 	  paged : function(n) {
+	// 	      window.location.href = path + '/wap/goodsinfo/service/viewProviderService.html?page='+n+'&serviceState='+state;
+	//       }
+	// });
+
+
+    $('body').bind('touchmove', function(e) {
+        if($(window).scrollTop()>=$(document).height()-$(window).height()){
+            if(maxPage > page) {
+                n++;
+                window.location.href = path + '/wap/goodsinfo/service/viewProviderService.html?page='+n+'&serviceState='+state;
+            }
+        }
+    });
+
+	/*$('.jiaz').on('click',function () {
+		n++;
+        window.location.href = path + '/wap/goodsinfo/service/viewProviderService.html?page='+n+'&serviceState='+state;
+    });*/
+
+
+});
+
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    if (r != null) return unescape(r[2]); return null; //返回参数值
+}
+
+function del(id){
+	alert("确认删除吗？","提示",function(){
+		$.ajax({
+			url: path + "/wap/goodsinfo/service/deleteService.html",
+			type:'post',
+			dataType:'json',
+			data:{
+				'serviceId':id
+			},
+			success:function(res){
+				if(res.success){
+					alert(res.errorMsg,"",function(){
+						window.location.href = path + '/wap/goodsinfo/service/viewProviderService.html?page='+n+'&serviceState='+state;
+					});
+				} else {
+					alert(res.errorMsg);
+				}
+			}
+		});
+	},function(){return false;});
+}

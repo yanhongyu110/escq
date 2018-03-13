@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>注册</title>
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+		<meta name="apple-touch-fullscreen" content="yes">
+		<!-- 开启对web app程序的支持  -->
+		<meta content="telephone=no,email=no" name="format-detection">
+		<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+		<!--base css-->
+		<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="../css/login.css" />
+		<script src="js/reset.js"></script>
+		<script src="js/TouchSlide.js"></script>
+	</head>
+
+	<body>
+		<!--wapper-->
+		<div class="wapper">
+			<!--page-->
+			<div id="page">
+				<div class="personer_top">
+					<h3>注册</h3>
+				</div>
+				<!--end.personer_top-->
+				<div class="login">
+					<ul class="login_dl">
+						<li>手机号</li>
+						<li class="log_input"><input type="text" value="请输入正确的手机号"></li>
+					</ul>
+					<ul class="login_dl">
+						<li>验证码</li>
+						<li class="yyz"><input type="text" value="请输入正确的验证码"></li>
+						<li class="yzm"><img src="../images/getImgCode.png"></li>
+					</ul>
+					<ul class="login_dl">
+						<li>密码</li>
+						<li class="log_input"><input type="text" value="密码（6-20数字，字母，非空格）"></li>
+					</ul>
+					<ul class="login_dl">
+						<li>手机验证码</li>
+						<li class="yyz"><input type="text" value="请输入正确的验证码"></li>
+						<li class="yzm"><input  class="hq" type="text" value="获取验证码"></li>
+					</ul>
+					<div class="agrees_zc">
+									<label><input type="checkbox">我已阅读并同意</label>
+									<a>《近到家互联网专家平台服务协议》</a>
+								</div>
+				</div>
+				<!--end.login-->
+				<div class="personer_excit">
+					<div class="excit">注册</div>
+					
+				</div>
+				<!--end.personer_excit-->
+				<div class="p_bttom">
+					<p align="center">已有账号？ <a>立即登录</a></p>
+
+					<div class="dl_qt">
+						
+						<a class="qq_dl"></a>
+						<a class="wx_dl"></a>
+					</div>
+				</div>
+			</div>
+			<!--page end-->
+		</div>
+		<!--wapper end-->
+
+	</body>
+
+</html>

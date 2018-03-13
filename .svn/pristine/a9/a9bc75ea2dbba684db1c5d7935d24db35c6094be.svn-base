@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>提示框效果</title>
+<meta name="keywords" content=",SweetAlert" />
+<meta name="description" content="" />
+
+<link rel="stylesheet" type="text/css" href="sweetalert.css"/>
+
+</head>
+<body>
+
+<div class="demo">
+
+	<div class="demo_1">
+		基本示例：<button>点击这里</button> 
+	</div>
+	<div class="demo_2">
+		提示成功：<button>点击这里</button> 
+	</div>
+	<div class="demo_3">
+		提示失败：<button>点击这里</button> 
+	</div>
+	<div class="demo_4">
+		提示确认：<button>点击这里</button> 
+	</div>
+
+
+</div>
+		
+<script type="text/javascript" src="jquery.js"></script> 
+<script type="text/javascript" src="sweetalert.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$(".demo_1 button").click(function() {
+		swal("这是一个信息提示框!");
+	});
+	$(".demo_2 button").click(function() {
+		swal("Good!", "弹出了一个操作成功的提示框", "success");
+	});
+	$(".demo_3 button").click(function() {
+		swal("OMG!", "弹出了一个错误提示框", "error");
+	});
+	$(".demo_4 button").click(function() {
+		swal({
+			title: "您确定要删除吗？",
+			text: "您确定要删除这条数据？",
+			type: "warning",
+			showCancelButton: true,
+			closeOnConfirm: false,
+			confirmButtonText: "是的，我要删除",
+			confirmButtonColor: "#ec6c62"
+		}, function() {
+			$.ajax({
+				url: "do.php",
+				type: "DELETE"
+			}).done(function(data) {
+				swal("操作成功!", "已成功删除数据！", "success");
+			}).error(function(data) {
+				swal("OMG", "删除操作失败了!", "error");
+			});
+		});
+	});
+
+
+
+	
+});
+</script>
+</body>
+</html>
+

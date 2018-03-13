@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.MegDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.MegDetails">
+    <id column="MD_ID" jdbcType="VARCHAR" property="mdId" />
+    <result column="SM_ID" jdbcType="VARCHAR" property="smId" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="MD_CREATETIME" jdbcType="TIMESTAMP" property="mdCreatetime" />
+    <result column="MD_ISDELETE" jdbcType="BIT" property="mdIsdelete" />
+    <result column="MD_COMMENT" jdbcType="VARCHAR" property="mdComment" />
+    <result column="MD_OPERATORID" jdbcType="VARCHAR" property="operatorId" />
+    <result column="MD_OPERATORTYPE" jdbcType="VARCHAR" property="operatorType" />
+    <result column="MD_TYPE" jdbcType="VARCHAR" property="mdType" />
+    <result column="MD_ISSEE" jdbcType="VARCHAR" property="mdIsSee" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    MD_ID, SM_ID, LOG_ID, MD_CREATETIME, MD_ISDELETE, MD_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from meg_details
+    where MD_ID = #{mdId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from meg_details
+    where MD_ID = #{mdId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.MegDetails">
+    insert into meg_details (MD_ID, SM_ID, LOG_ID, 
+      MD_CREATETIME, MD_ISDELETE, MD_COMMENT, MD_OPERATORID, MD_OPERATORTYPE, MD_TYPE
+      )
+    values (#{mdId,jdbcType=VARCHAR}, #{smId,jdbcType=VARCHAR}, #{logId,jdbcType=VARCHAR}, 
+      #{mdCreatetime,jdbcType=TIMESTAMP}, #{mdIsdelete,jdbcType=BIT}, #{mdComment,jdbcType=VARCHAR}, #{operatorId,jdbcType=VARCHAR}, #{operatorType,jdbcType=VARCHAR}, #{mdType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.MegDetails">
+    insert into meg_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mdId != null">
+        MD_ID,
+      </if>
+      <if test="smId != null">
+        SM_ID,
+      </if>
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="mdCreatetime != null">
+        MD_CREATETIME,
+      </if>
+      <if test="mdIsdelete != null">
+        MD_ISDELETE,
+      </if>
+      <if test="mdComment != null">
+        MD_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mdId != null">
+        #{mdId,jdbcType=VARCHAR},
+      </if>
+      <if test="smId != null">
+        #{smId,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="mdCreatetime != null">
+        #{mdCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mdIsdelete != null">
+        #{mdIsdelete,jdbcType=BIT},
+      </if>
+      <if test="mdComment != null">
+        #{mdComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.MegDetails">
+    update meg_details
+    <set>
+      <if test="smId != null">
+        SM_ID = #{smId,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        LOG_ID = #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="mdCreatetime != null">
+        MD_CREATETIME = #{mdCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mdIsdelete != null">
+        MD_ISDELETE = #{mdIsdelete,jdbcType=BIT},
+      </if>
+      <if test="mdComment != null">
+        MD_COMMENT = #{mdComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MD_ID = #{mdId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.MegDetails">
+    update meg_details
+    set SM_ID = #{smId,jdbcType=VARCHAR},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      MD_CREATETIME = #{mdCreatetime,jdbcType=TIMESTAMP},
+      MD_ISDELETE = #{mdIsdelete,jdbcType=BIT},
+      MD_COMMENT = #{mdComment,jdbcType=VARCHAR}
+    where MD_ID = #{mdId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateMegIsSee" parameterType="String">
+	UPDATE meg_details MEG
+	 SET MD_ISSEE='1'
+	WHERE MEG.LOG_ID=#{logId,jdbcType=VARCHAR}
+	AND (MEG.MD_ISSEE!='1' OR MEG.MD_ISSEE IS NULL);
+  </update>
+  
+  <select id="selectListByLogId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from meg_details
+    where LOG_ID = #{logId,jdbcType=VARCHAR} AND (MD_ISSEE!='1' OR MD_ISSEE IS NULL) 
+  </select>
+</mapper>

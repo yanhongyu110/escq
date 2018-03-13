@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.jero.esc.mapper.userinfo.LogInfoMapper">
+
+    <!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache" ></cache>-->
+
+ <resultMap id="BaseResultMap" type="com.jero.esc.po.userinfo.LogInfo"> 
+  <id column="LOG_ID" jdbcType="VARCHAR" property="logId" /> 
+  <result column="LOG_CELL" jdbcType="VARCHAR" property="logCell" /> 
+  <result column="LOG_EMAIL" jdbcType="VARCHAR" property="logEmail" /> 
+  <result column="LOG_NAME" jdbcType="VARCHAR" property="logName" /> 
+  <result column="LOG_PASS" jdbcType="VARCHAR" property="logPass" /> 
+  <result column="LOG_CREATETIME" jdbcType="TIMESTAMP" property="logCreatetime" /> 
+  <result column="LOG_ISDELETE" jdbcType="BIT" property="logIsdelete" /> 
+  <result column="LOG_STATE" jdbcType="INTEGER" property="logState" /> 
+  <result column="LOG_TYPE" jdbcType="INTEGER" property="logType" /> 
+  <result column="LOG_REGIP" jdbcType="VARCHAR" property="logRegip" /> 
+  <result column="LOG_ISLOG" jdbcType="BIT" property="logIslog" /> 
+  <result column="LOG_COMMENT" jdbcType="VARCHAR" property="logComment" /> 
+  <result column="USER_REALNAME" jdbcType="VARCHAR" property="userRealname" />
+  <result column="USER_WECHAT" jdbcType="VARCHAR" property="userWechat" /> 
+  <result column="USER_PHOTO" jdbcType="VARCHAR" property="userPhoto" /> 
+  <result column="ACC_POINT" jdbcType="FLOAT" property="accPoint" /> 
+  <result column="ACC_BALANCE" jdbcType="FLOAT" property="accBalance" />
+  <result column="COMPANY" jdbcType="VARCHAR" property="company" /> 
+ </resultMap>
+
+ <select id="selectLogInfoLogCell" resultType="Integer"> SELECT COUNT(1) FROM LOG_INFO 
+  <where>
+    LOG_CELL = #{logCell} 
+  </where> </select>
+
+ <select id="selectLogInfoLogCelll" resultMap="BaseResultMap"> SELECT * FROM LOG_INFO 
+  <where>
+    LOG_CELL = #{logCell} 
+  </where> </select> 
+ <select id="selectLogInfoLogName" resultType="Integer"> SELECT COUNT(1) FROM LOG_INFO 
+  <where>
+    LOG_NAME = #{logName} 
+  </where> </select> 
+ <update id="updatePassByCell" parameterType="com.jero.esc.po.userinfo.LogInfo">
+   UPDATE log_info 
+  <set> 
+   <if test="log.logPass != null">
+     LOG_PASS = #{log.logPass,jdbcType=VARCHAR},
+   </if> 
+  </set> WHERE LOG_CELL = #{log.logCell,jdbcType=VARCHAR}
+ </update> 
+ <select id="selectLogInfoLogin" resultMap="BaseResultMap">
+     SELECT USER_INFO.LOG_ID,COMPANY, LOG_CELL, COMPANY,LOG_EMAIL, LOG_NAME, LOG_PASS, LOG_CREATETIME, LOG_ISDELETE, LOG_STATE, LOG_TYPE, LOG_REGIP, LOG_ISLOG, LOG_COMMENT, USER_WECHAT,USER_PHOTO, USER_REALNAME,ACC_POINT,ACC_BALANCE FROM LOG_INFO INNER JOIN USER_INFO ON USER_INFO.LOG_ID = LOG_INFO.LOG_ID INNER JOIN ACCOUNT_INFO ON ACCOUNT_INFO.LOG_ID = LOG_INFO.LOG_ID
+  <where>
+    (LOG_CELL = #{log.logName} or LOG_EMAIL = #{log.logName} or LOG_NAME = #{log.logName}) AND LOG_PASS = #{log.logPass} AND LOG_ISDELETE = 'false'
+  </where>
+ </select>
+ <select id="selectLogInfoByLogId" resultMap="BaseResultMap">
+ SELECT USER_INFO.LOG_ID,COMPANY, LOG_CELL, LOG_EMAIL, LOG_NAME, LOG_PASS, LOG_CREATETIME, LOG_ISDELETE, LOG_STATE, LOG_TYPE, LOG_REGIP, LOG_ISLOG, LOG_COMMENT, USER_WECHAT,USER_PHOTO, USER_REALNAME, ACC_POINT,ACC_BALANCE FROM LOG_INFO INNER JOIN USER_INFO ON USER_INFO.LOG_ID = LOG_INFO.LOG_ID INNER JOIN ACCOUNT_INFO ON ACCOUNT_INFO.LOG_ID = LOG_INFO.LOG_ID
+  <where>
+    LOG_INFO.LOG_ID = #{logId} AND LOG_ISDELETE = 'false' 
+  </where>
+ </select>
+ <sql id="Base_Column_List">
+  LOG_ID, LOG_CELL, LOG_EMAIL, LOG_NAME, LOG_PASS, LOG_CREATETIME, LOG_ISDELETE, LOG_STATE, LOG_TYPE, LOG_REGIP, LOG_ISLOG, LOG_COMMENT,COMPANY
+ </sql> 
+ <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap"> select 
+  <include refid="Base_Column_List" /> from log_info where LOG_ID = #{logId,jdbcType=VARCHAR} </select> 
+ <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+   delete from log_info where LOG_ID = #{logId,jdbcType=VARCHAR} 
+ </delete> 
+ <insert id="insert" parameterType="com.jero.esc.po.userinfo.LogInfo">
+  insert into log_info (LOG_ID, LOG_CELL, LOG_EMAIL, LOG_NAME, LOG_PASS, LOG_CREATETIME, LOG_ISDELETE, LOG_STATE, LOG_TYPE, LOG_REGIP, LOG_ISLOG, LOG_COMMENT ,COMPANY) values (#{logId,jdbcType=VARCHAR}, #{logCell,jdbcType=VARCHAR}, #{logEmail,jdbcType=VARCHAR}, #{logName,jdbcType=VARCHAR}, #{logPass,jdbcType=VARCHAR}, #{logCreatetime,jdbcType=TIMESTAMP}, #{logIsdelete,jdbcType=BIT}, #{logState,jdbcType=INTEGER}, #{logType,jdbcType=INTEGER}, #{logRegip,jdbcType=VARCHAR}, #{logIslog,jdbcType=BIT}, #{logComment,jdbcType=VARCHAR} ,#{company})
+ </insert> 
+ <insert id="insertSelective" parameterType="com.jero.esc.po.userinfo.LogInfo">
+   insert into log_info 
+  <trim prefix="(" suffix=")" suffixOverrides=","> 
+   <if test="logId != null">
+     LOG_ID, 
+   </if> 
+   <if test="logCell != null">
+     LOG_CELL, 
+   </if> 
+   <if test="logEmail != null">
+     LOG_EMAIL, 
+   </if> 
+   <if test="logName != null">
+     LOG_NAME, 
+   </if> 
+   <if test="logPass != null">
+     LOG_PASS, 
+   </if> 
+   <if test="logCreatetime != null">
+     LOG_CREATETIME, 
+   </if> 
+   <if test="logIsdelete != null">
+     LOG_ISDELETE, 
+   </if> 
+   <if test="logState != null">
+     LOG_STATE, 
+   </if> 
+   <if test="logType != null">
+     LOG_TYPE, 
+   </if> 
+   <if test="logRegip != null">
+     LOG_REGIP, 
+   </if> 
+   <if test="logIslog != null">
+     LOG_ISLOG, 
+   </if> 
+   <if test="logComment != null">
+     LOG_COMMENT, 
+   </if>  
+   <if test="company != null">
+     COMPANY, 
+   </if>
+  </trim> 
+  <trim prefix="values (" suffix=")" suffixOverrides=","> 
+   <if test="logId != null">
+     #{logId,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="logCell != null">
+     #{logCell,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="logEmail != null">
+     #{logEmail,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="logName != null">
+     #{logName,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="logPass != null">
+     #{logPass,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="logCreatetime != null">
+     #{logCreatetime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="logIsdelete != null">
+     #{logIsdelete,jdbcType=BIT}, 
+   </if> 
+   <if test="logState != null">
+     #{logState,jdbcType=INTEGER}, 
+   </if> 
+   <if test="logType != null">
+     #{logType,jdbcType=INTEGER}, 
+   </if> 
+   <if test="logRegip != null">
+     #{logRegip,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="logIslog != null">
+     #{logIslog,jdbcType=BIT}, 
+   </if> 
+   <if test="logComment != null">
+     #{logComment,jdbcType=VARCHAR}, 
+   </if>  
+   <if test="company != null">
+     #{company}, 
+   </if>
+  </trim> 
+ </insert> 
+ <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.userinfo.LogInfo">
+   update log_info 
+  <set> 
+   <if test="logCell != null">
+     LOG_CELL = #{logCell,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="logEmail != null">
+     LOG_EMAIL = #{logEmail,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="logName != null">
+     LOG_NAME = #{logName,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="logPass != null">
+     LOG_PASS = #{logPass,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="logCreatetime != null">
+     LOG_CREATETIME = #{logCreatetime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="logIsdelete != null">
+     LOG_ISDELETE = #{logIsdelete,jdbcType=BIT}, 
+   </if> 
+   <if test="logState != null">
+     LOG_STATE = #{logState,jdbcType=INTEGER}, 
+   </if> 
+   <if test="logType != null">
+     LOG_TYPE = #{logType,jdbcType=INTEGER}, 
+   </if> 
+   <if test="logRegip != null">
+     LOG_REGIP = #{logRegip,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="logIslog != null">
+     LOG_ISLOG = #{logIslog,jdbcType=BIT}, 
+   </if> 
+   <if test="logComment != null">
+     LOG_COMMENT = #{logComment,jdbcType=VARCHAR}, 
+   </if>  
+   <if test="company != null">
+     COMPANY = #{company}, 
+   </if>
+  </set> where LOG_ID = #{logId,jdbcType=VARCHAR} 
+ </update> 
+ <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.userinfo.LogInfo">
+  update log_info set LOG_CELL = #{logCell,jdbcType=VARCHAR}, LOG_EMAIL = #{logEmail,jdbcType=VARCHAR}, LOG_NAME = #{logName,jdbcType=VARCHAR}, LOG_PASS = #{logPass,jdbcType=VARCHAR}, LOG_CREATETIME = #{logCreatetime,jdbcType=TIMESTAMP}, LOG_ISDELETE = #{logIsdelete,jdbcType=BIT}, LOG_STATE = #{logState,jdbcType=INTEGER}, LOG_TYPE = #{logType,jdbcType=INTEGER}, LOG_REGIP = #{logRegip,jdbcType=VARCHAR}, LOG_ISLOG = #{logIslog,jdbcType=BIT}, LOG_COMMENT = #{logComment,jdbcType=VARCHAR} , COMPANY = #{company} where LOG_ID = #{logId,jdbcType=VARCHAR}
+ </update> 
+ 
+  <insert id="addExtension" parameterType="com.jero.esc.po.userinfo.LogInfo">
+   insert into extension 
+  <trim prefix="(" suffix=")" suffixOverrides=","> 
+   <if test="parentId != null">
+     parentUserId, 
+   </if> 
+   <if test="logId != null">
+     childUserId, 
+   </if> 
+  </trim> 
+  <trim prefix="values (" suffix=")" suffixOverrides=","> 
+   <if test="parentId != null">
+     #{parentId,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="logId != null">
+     #{logId,jdbcType=VARCHAR}, 
+   </if> 
+  </trim> 
+ </insert> 
+ <!-- 查询推广关系 -->
+ <select id="selectFenXiao" parameterType="com.jero.esc.po.userinfo.LogInfo" resultType="com.jero.esc.po.userinfo.FenXiao">
+ 	SELECT * FROM fenxiao where openId='${openId}'
+ </select>
+  <!-- 删除推广关系 -->
+ <delete id="deleteFenXiao" parameterType="com.jero.esc.po.userinfo.FenXiao">
+   delete from fenxiao where openId = #{openId,jdbcType=VARCHAR} 
+ </delete> 
+</mapper>

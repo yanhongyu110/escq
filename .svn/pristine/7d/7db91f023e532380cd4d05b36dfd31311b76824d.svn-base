@@ -1,0 +1,12 @@
+label.invalid {
+    color: red;
+    position: absolute;
+    margin-left: 30px;
+    line-height: 30px;
+}
+label.valid {
+    color: #03ff00;
+    position: absolute;
+    margin-left: 30px;
+    line-height: 30px;
+}

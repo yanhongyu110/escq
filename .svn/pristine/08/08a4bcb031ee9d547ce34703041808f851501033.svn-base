@@ -1,0 +1,248 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>入驻条件</title>
+		<link href="${webtxc}/css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="${webtxc}/css/personal.css" />
+		<link rel="stylesheet" href="${webtxc}/css/public.css" />
+		<script type="text/javascript" src="${webtxc}/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="${webtxc}/js/tab.js"></script>
+
+	</head>
+	<style>
+		.b_nav {
+			display: none
+		}
+	</style>
+
+	<body>
+		<%@include file="/WEB-INF/jsp/common/top.jsp"%>
+
+		<div class="help_center">
+			<div class="title cf">
+				<ul class="title-list fr cf ">
+					<li class="on">我是需求者</li>
+					<li>我是服务者</li>
+
+				</ul>
+			</div>
+			<div class="product-wrap">
+				<!--案例1-->
+				<div class="product show">
+
+					<div class="content_help">
+
+						<div class="help_main cle">
+							<div class="fl help_left">
+								<div class="titles">
+									<h4>我是需求者</h4>
+								</div>
+								<ul class="menu" id="left_bar">
+									<li class="col">
+										<h3>入驻相关</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=311">入驻条件</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=312">服务商入驻流程</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>服务管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=321">发布服务</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=322">审核流程</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=323">服务发布规范</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>交易管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=331">如何预约</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=332">如何付款</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>财务管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=341">资金管理</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=342">充值提现</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>账户管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=351">资料修改</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=352">修改支付密码</a>
+											</li>
+
+										</ul>
+									</li>
+								</ul>
+							</div>
+							<div class="help_right">
+								<h3 class="help_title">入驻相关</h3>
+								<div class="help_content">
+									<h4>如何使用「近到家」？</h4>
+									<p>注册：需求者验证自己的手机号码，并填写个人介绍；<br><br>
+									发起约见：根据自己的问题找到适合的专家，点击“立即约见”按钮发出申请，并在申请中写明自己的问题和个人的相关情况。清晰明确的问题描述和个人介绍将有助于专家判断自己能否帮到你；<br><br>
+									等待行家确认：服务者收到需求者的约见申请后，可能会与需求者做进一步简单交流，并最终决定是否接受；<br><br>
+									选择约见时间地点：服务者接受约见后，会给出1-3个时间和地点选项，请学员在其中选择，如果学员因故不能从中选择，也可与服务者协商；<br><br>
+									需求者付款：确定时间地点后，需求者支付费用，并开通私信；<br><br>
+									约见完成后，服务者会标注已见过，如24小时需求者无异议则，则表示需求者认可已经见过，需求者可以对服务者做出评价。</p>
+									
+									<h4>需求者能否取消约见？</h4>
+									<p>可以，学员在见面前24小时以上通知行家或「服务者」客服取消约见，如学员已经付款，可全额退款。<br><br>见面前24小时以内，即使取消约见，也会影响服务者的日程安排，因此需求者取消约见，也不能退款。<br><br>如需求者不通知服务者，也不通知「近到家平台」，直接爽约，将不能获得退款，「近到家平台」还会在需求者的信誉历史中做记录，影响需求者未来约见其他服务者。</p>
+								    <h4>服务者会拒绝需求者的约见吗？</h4>
+								    <p>服务者可以拒绝需求者的约见。服务者的时间和精力有限，因此会根据需求者的问题选择是否见面。<br><br>请需求者在申请约见时，尽可能清晰、具体地描述自己的问题，以及个人背景情况，这会提高约见成功的几率。</p>
+								    <h4>见面的时间地点如何选择？</h4>
+								    <p>服务者在确认接受约见前，会提供几个时间和地点的选项，请需求者在其中选择。需求者也可以与服务者进行协商。<br><br>我们建议双方约见在咖啡馆，相对比较安全和安静。</p>
+								    <h4>需求者可以变更见面的时间、地点吗？</h4>
+								    <p>可以，需求者在见面前24小时以上通知服务者，双方协商一致，可以变更见面的时间、地点。<br><br>但见面前24小时以内变更见面时间，会影响行家的日程安排，因此除非服务者同意，不能变更时间。即双方仍需要按照之前约定的时间地点见面。</p>
+								    <h4>见面迟到怎么办？</h4>
+								    <p>如果其中一方见面迟到，在不影响对方后续安排的情况下，面谈时间顺延。<br><br>如果迟到时间大于30分钟，则视为原计划约见已经完成。（双方协商一致的以协商结果为最终结果）</p>
+								    <h4>见面时可以录音录像么？</h4>
+								    <p>在约见的过程中，任一方如需录音、录像或采取其他方式记录约见经过，必须在取得对方同意后方可进行。（任何未经对方许可的记录行为，不能作为后期发起投诉的证据证明，且不知情方以及在行平台保留对侵权方追究法律责任的权利。）</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!--案例2-->
+				<div class="product">
+
+					<div class="content_help">
+
+						<div class="help_main cle">
+							<div class="fl help_left">
+								<div class="titles">
+									<h4>我是服务者</h4>
+								</div>
+								<ul class="menu" id="left_bar">
+									<li class="col">
+										<h3>入驻相关</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=311">入驻条件</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=312">服务商入驻流程</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>服务管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=321">发布服务</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=322">审核流程</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=323">服务发布规范</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>交易管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=331">如何预约</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=332">如何付款</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>财务管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=341">资金管理</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=342">充值提现</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>账户管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=351">资料修改</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=352">修改支付密码</a>
+											</li>
+
+										</ul>
+									</li>
+								</ul>
+							</div>
+							<div class="help_right">
+								<h3 class="help_title">入驻相关</h3>
+								<div class="help_content">
+									<h4>如何使用「近到家」？</h4>
+									<p>注册：需求者验证自己的手机号码，并填写个人介绍；<br><br>
+									发起约见：根据自己的问题找到适合的专家，点击“立即约见”按钮发出申请，并在申请中写明自己的问题和个人的相关情况。清晰明确的问题描述和个人介绍将有助于专家判断自己能否帮到你；<br><br>
+									等待行家确认：服务者收到需求者的约见申请后，可能会与需求者做进一步简单交流，并最终决定是否接受；<br><br>
+									选择约见时间地点：服务者接受约见后，会给出1-3个时间和地点选项，请学员在其中选择，如果学员因故不能从中选择，也可与服务者协商；<br><br>
+									需求者付款：确定时间地点后，需求者支付费用，并开通私信；<br><br>
+									约见完成后，服务者会标注已见过，如24小时需求者无异议则，则表示需求者认可已经见过，需求者可以对服务者做出评价。</p>
+									
+									<h4>需求者能否取消约见？</h4>
+									<p>可以，学员在见面前24小时以上通知行家或「服务者」客服取消约见，如学员已经付款，可全额退款。<br><br>见面前24小时以内，即使取消约见，也会影响服务者的日程安排，因此需求者取消约见，也不能退款。<br><br>如需求者不通知服务者，也不通知「近到家平台」，直接爽约，将不能获得退款，「近到家平台」还会在需求者的信誉历史中做记录，影响需求者未来约见其他服务者。</p>
+								    <h4>服务者会拒绝需求者的约见吗？</h4>
+								    <p>服务者可以拒绝需求者的约见。服务者的时间和精力有限，因此会根据需求者的问题选择是否见面。<br><br>请需求者在申请约见时，尽可能清晰、具体地描述自己的问题，以及个人背景情况，这会提高约见成功的几率。</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+			<!--end.product-wrap-->
+		</div>
+
+		<%@include file="/WEB-INF/jsp/common/bottom.jsp"%>
+
+	</body>
+
+</html>

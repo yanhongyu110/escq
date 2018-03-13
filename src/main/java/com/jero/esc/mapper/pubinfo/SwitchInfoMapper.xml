@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.jero.esc.mapper.pubinfo.SwitchInfoMapper"> 
+ <resultMap id="BaseResultMap" type="com.jero.esc.po.pubinfo.SwitchInfo"> 
+  <id column="SWITCH_ID" jdbcType="VARCHAR" property="switchId" /> 
+  <result column="SWITCH_NAME" jdbcType="VARCHAR" property="switchName" /> 
+  <result column="SWITCH_POS" jdbcType="INTEGER" property="switchPos" /> 
+  <result column="SWITCH_IMG" jdbcType="VARCHAR" property="switchImg" /> 
+  <result column="SWITCH_CREATETIME" jdbcType="TIMESTAMP" property="switchCreatetime" /> 
+  <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" /> 
+  <result column="SWITCH_COMMENT" jdbcType="VARCHAR" property="switchComment" />
+  <result column="COMPANY" jdbcType="VARCHAR" property="company" /> 
+ </resultMap> 
+ <sql id="Base_Column_List">
+  SWITCH_ID, SWITCH_NAME, SWITCH_POS, SWITCH_IMG, SWITCH_CREATETIME, switch_info.ADMIN_ID, SWITCH_COMMENT,switch_info.COMPANY
+ </sql> 
+ <select id="selectPicByPosition" resultMap="BaseResultMap"> 
+  select 
+  <include refid="Base_Column_List" /> from switch_info
+     LEFT JOIN common_type ON common_type.CT_ID = switch_info.COMPANY
+  <where>
+    SWITCH_POS = #{switchPos}
+      AND switch_info.COMPANY=#{company}
+  </where> </select> 
+ <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap"> select 
+  <include refid="Base_Column_List" /> from switch_info where SWITCH_ID = #{switchId,jdbcType=VARCHAR} </select> 
+ <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+   delete from switch_info where SWITCH_ID = #{switchId,jdbcType=VARCHAR} 
+ </delete> 
+ <insert id="insert" parameterType="com.jero.esc.po.pubinfo.SwitchInfo">
+  insert into switch_info (SWITCH_ID, SWITCH_NAME, SWITCH_POS, SWITCH_IMG, SWITCH_CREATETIME, ADMIN_ID, SWITCH_COMMENT,COMPANY) values (#{switchId,jdbcType=VARCHAR}, #{switchName,jdbcType=VARCHAR}, #{switchPos,jdbcType=INTEGER}, #{switchImg,jdbcType=VARCHAR}, #{switchCreatetime,jdbcType=TIMESTAMP}, #{adminId,jdbcType=VARCHAR}, #{switchComment,jdbcType=VARCHAR},#{company})
+ </insert> 
+ <insert id="insertSelective" parameterType="com.jero.esc.po.pubinfo.SwitchInfo">
+   insert into switch_info 
+  <trim prefix="(" suffix=")" suffixOverrides=","> 
+   <if test="switchId != null">
+     SWITCH_ID, 
+   </if> 
+   <if test="switchName != null">
+     SWITCH_NAME, 
+   </if> 
+   <if test="switchPos != null">
+     SWITCH_POS, 
+   </if> 
+   <if test="switchImg != null">
+     SWITCH_IMG, 
+   </if> 
+   <if test="switchCreatetime != null">
+     SWITCH_CREATETIME, 
+   </if> 
+   <if test="adminId != null">
+     ADMIN_ID, 
+   </if> 
+   <if test="switchComment != null">
+     SWITCH_COMMENT, 
+   </if>  
+   <if test="company != null">
+     COMPANY, 
+   </if>
+  </trim> 
+  <trim prefix="values (" suffix=")" suffixOverrides=","> 
+   <if test="switchId != null">
+     #{switchId,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="switchName != null">
+     #{switchName,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="switchPos != null">
+     #{switchPos,jdbcType=INTEGER}, 
+   </if> 
+   <if test="switchImg != null">
+     #{switchImg,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="switchCreatetime != null">
+     #{switchCreatetime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="adminId != null">
+     #{adminId,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="switchComment != null">
+     #{switchComment,jdbcType=VARCHAR}, 
+   </if>  
+   <if test="company != null">
+     #{company}, 
+   </if>
+  </trim> 
+ </insert> 
+ <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.pubinfo.SwitchInfo">
+   update switch_info 
+  <set> 
+   <if test="switchName != null">
+     SWITCH_NAME = #{switchName,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="switchPos != null">
+     SWITCH_POS = #{switchPos,jdbcType=INTEGER}, 
+   </if> 
+   <if test="switchImg != null">
+     SWITCH_IMG = #{switchImg,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="switchCreatetime != null">
+     SWITCH_CREATETIME = #{switchCreatetime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="adminId != null">
+     ADMIN_ID = #{adminId,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="switchComment != null">
+     SWITCH_COMMENT = #{switchComment,jdbcType=VARCHAR}, 
+   </if>  
+   <if test="company != null">
+     COMPANY = #{company}, 
+   </if>
+  </set> where SWITCH_ID = #{switchId,jdbcType=VARCHAR} 
+ </update> 
+ <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.pubinfo.SwitchInfo">
+  update switch_info set SWITCH_NAME = #{switchName,jdbcType=VARCHAR}, SWITCH_POS = #{switchPos,jdbcType=INTEGER}, SWITCH_IMG = #{switchImg,jdbcType=VARCHAR}, SWITCH_CREATETIME = #{switchCreatetime,jdbcType=TIMESTAMP}, ADMIN_ID = #{adminId,jdbcType=VARCHAR}, SWITCH_COMMENT = #{switchComment,jdbcType=VARCHAR} , COMPANY = #{company} where SWITCH_ID = #{switchId,jdbcType=VARCHAR}
+ </update> 
+</mapper>

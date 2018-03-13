@@ -1,0 +1,29 @@
+
+.param-main,.pset,.ss{border: 1px solid #ddd;overflow: hidden;}
+.param-main a{ text-decoration:none;}
+.param-main .param,.pset .psetsg,.steppset .psetst{ width: 595px; height: 60px; float: left;}
+.param-main input{ width: 75px; margin-left: 10px; float: left; line-height: 30px; margin-top: 12px; padding-right: 10px;}
+.param-main .param a.addval,.pset .addrowpset{ font-size: 12px; height: 30px; width: 40px; display: block; background: #ddd; float: left; margin-top: 12px; margin-left: 10px; line-height: 30px; text-align: center; border-radius: 3px; color: #000;}
+.param-main .param a.delrow{ font-size: 12px; float: left; margin-top: 10px; margin-left: 10px; line-height: 32px; color: #f00;}
+.param-main .param a.delrow:hover{ text-decoration: underline; color: #666;}
+.param-main a.addrow{ font-size: 12px; height: 30px; width: 60px; display: block; background: #ddd; float: left; margin-top: 10px; margin-left: 10px;line-height: 30px; text-align: center; border-radius: 3px; color: #000;}
+.param-main .param a.addval:hover,.param-main a.addrow:hover,.pset .addrowpset:hover{ background: #999; color: #fff;}
+.param-main .param a.delval{ font-size: 12px; height: 15px; width: 15px; display: block; background: #ddd; float: left; margin-top: 20px; margin-left: -18px; line-height: 16px; text-align: center; border-radius: 50%; color: #f00;}
+.param-main .param a.delval:hover{ background: #f00; color: #fff;}
+
+
+.step{ width:595px; height: auto; border:1px solid #ddd;}
+.addstep{ width: 60px; height: 30px; display: block; background: #ddd; text-align: center; line-height: 30px; border-radius: 3px; font-size: 12px; color: #000; margin: 10px; text-decoration: none;}
+.addstep:hover{ background: #999; color: #fff;}
+.servicestep{ width: 575px; height: auto; line-height: 50px; padding-left: 15px; padding-bottom: 15px; float: left;}
+.servicestep input{ width: 180px; margin: 0 15px; padding: 0 5px; border:1px solid #ddd; line-height: 30px;}
+.servicestep textarea{ margin-left: 55px; margin-top: -40px; width: 455px; height: 130px; padding: 10px; font-size: 14px; border:1px solid #ddd;}
+.servicestep span{ color: #666; font-size: 16px; font-weight: bold;}
+
+.pset .addrowpset{ text-decoration: none;}
+.pset .psetsg,.steppset .psetst{overflow: hidden;padding:10px; overflow:hidden;    background: #fff;height:50px;line-height:50px;}
+.pset .psetsg input,.steppset .psetst input{  width: 70px; margin-left: 10px;margin-right:15px;}
+.pset .psetsg .delrowpset{font-size: 12px;color:#f00;text-decoration: none;}
+.pset .psetsg .delrowpset:hover{text-decoration: underline; color: #666;}
+
+.steppset{ margin-left:55px;height: 70px;width:450px;}

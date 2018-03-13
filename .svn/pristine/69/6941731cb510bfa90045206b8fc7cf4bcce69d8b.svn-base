@@ -1,0 +1,611 @@
+package com.jero.esc.controller.wap.userinfo;
+
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.jero.esc.common.controller.BaseController;
+import com.jero.esc.common.po.JsonResult;
+import com.jero.esc.common.utils.CheckCode;
+import com.jero.esc.common.utils.ImagesCode;
+import com.jero.esc.common.utils.JsonUtil;
+import com.jero.esc.common.utils.MD5Util;
+import com.jero.esc.common.utils.StringUtil;
+import com.jero.esc.common.utils.UUIDUtil;
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import com.jero.esc.mapper.map.WxAdminMapper;
+import com.jero.esc.mapper.userinfo.LogInfoMapper;
+import com.jero.esc.po.map.WxAdminExample;
+import com.jero.esc.po.userinfo.LogInfo;
+import com.jero.esc.service.userinfo.ILogInfoService;
+
+/**
+ * @copyright 上善云图信息技术有限公司
+ * @author zqy
+ * @version v1.0 （版本号）
+ * @date 2016年12月8日
+ * @description
+ */
+@Controller
+@RequestMapping(value = "/wap/userinfo")
+public class WapLogInfoController extends BaseController {
+	private Logger log = Logger.getLogger(getClass());
+
+	@Autowired
+	private ILogInfoService logInfoService;
+
+	@Autowired
+	private WxAdminMapper wxAdminMapper;
+
+	@Autowired
+	private LogInfoMapper logInfoMapper;
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 用户注册
+	 * @param response
+	 * @param request
+	 * @param session
+	 * @param logInfo
+	 * @param checkCode
+	 * @param logPass
+	 * @return void
+	 * @method register
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/logInfo/register",produces = "text/html;charset=UTF-8")
+	@Transactional(rollbackFor = Exception.class)
+	public String register(String provider,HttpServletResponse response, HttpServletRequest request, HttpSession session, LogInfo logInfo,
+			String checkCode, String savelogPass, String imagesCode, String flag,Boolean isBang,String parentId) {
+		JsonResult jr = new JsonResult();
+		if (checkCode == null || checkCode.isEmpty()) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("手机验证码不能为空");
+			jr.setErrorCode("2");
+			return jr.toJSON();
+		}
+		if ( !isBang &&(logInfo.getLogPass() == null || logInfo.getLogPass().isEmpty())) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("密码不能为空");
+			jr.setErrorCode("3");
+			return jr.toJSON();
+		}
+		if (flag == null || flag.isEmpty()) {
+			if (imagesCode == null || imagesCode.isEmpty()) {
+				jr.setSuccess(false);
+				jr.setErrorMsg("验证码不能为空");
+				jr.setErrorCode("5");
+				JsonUtil.printByJSON(response, jr);
+				return jr.toJSON();
+			}
+		}
+		if ( !isBang  &&(flag == null || flag.isEmpty())) {
+			if (savelogPass.length() < 6 || savelogPass.length() > 20) {
+				jr.setSuccess(false);
+				jr.setErrorMsg("密码必须在6至20位之间");
+				jr.setErrorCode("3");
+				JsonUtil.printByJSON(response, jr);
+				return jr.toJSON();
+			}
+
+		}
+		if (flag == null || flag.isEmpty()) {
+			if (session.getAttribute("code") == null) {
+				jr.setSuccess(false);
+				jr.setErrorMsg("验证码不对");
+				jr.setErrorCode("2");
+				JsonUtil.printByJSON(response, jr);
+				return jr.toJSON();
+			}
+
+		}
+
+		if (flag == null || flag.isEmpty()) {
+			if (!ImagesCode.validateImagesCode(session, imagesCode)) {
+				jr.setSuccess(false);
+				jr.setErrorMsg("验证码不对");
+				jr.setErrorCode("2");
+				JsonUtil.printByJSON(response, jr);
+				return jr.toJSON();
+			}
+
+		}
+
+//		if (session.getAttribute("checkCode") == null) {
+//			jr.setSuccess(false);
+//			jr.setErrorMsg("您未获取手机验证码");
+//			jr.setErrorCode("2");
+//			JsonUtil.printByJSON(response, jr);
+//			return jr.toJSON();
+//		}
+//		if (!checkCode.equals(session.getAttribute("checkCode").toString())) {
+//			jr.setSuccess(false);
+//			jr.setErrorMsg("手机验证码错误");
+//			jr.setErrorCode("2");
+//			return jr.toJSON();
+//		}
+
+		/*
+		 * if(logInfo.getLogName().length() < 2 || logInfo.getLogName().length()
+		 * > 6){ jr.setSuccess(false); jr.setErrorMsg("用户名必须在2至6位之间");
+		 * jr.setErrorCode("2"); JsonUtil.printByJSON(response, jr); return; }
+		 */
+		/*
+		 * if(logInfoService.selectLogInfoLogName(logInfo.getLogName()) > 0){
+		 * jr.setSuccess(false); jr.setErrorMsg("用户名已经注册过");
+		 * jr.setErrorCode("2"); JsonUtil.printByJSON(response, jr); return; }
+		 */
+
+
+		//如果是wap登陆
+		/*if ((int)session.getAttribute("wxFlag")==1){*/
+
+
+			try {
+				logInfo.setLogId(UUIDUtil.getUUID());
+				logInfo.setLogCell(session.getAttribute("logCell").toString());
+				logInfo.setLogCreatetime(new Date());
+				logInfo.setLogIsdelete(false);
+				logInfo.setLogState(1);
+				if(provider!=null&provider!=""){
+					logInfo.setLogComment(provider);
+				}
+				String temp=session.getAttribute("logCell").toString();
+//				session.setMaxInactiveInterval(30*60);
+				logInfo.setLogName("jdj"+temp.substring(5));
+				logInfo.setLogType(1);
+				logInfo.setLogRegip(getRequestIP(request));
+				logInfo.setLogIslog(true);
+				logInfo.setLogPass(MD5Util.getMD5(logInfo.getLogPass()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.error("注册密码加密错误" + e);
+			}
+			try {
+				String company=getModule(session);
+				logInfo.setCompany(company);
+				//判断是否通过扫码注册
+				if(StringUtil.isNotEmpty(parentId)){
+					logInfo.setParentId(parentId);
+					//添加推广关系
+					int i = logInfoService.addExtension(logInfo);
+					if(i<=0){
+						jr.setSuccess(false);
+						jr.setErrorMsg("系统异常");
+					}
+				}
+				jr = logInfoService.addLogInfo(logInfo);
+				session.setAttribute("logInfo", logInfo);
+			} catch (ExceptionWithMessage e) {
+				e.printStackTrace();
+				jr = e.jsonResult;
+			}
+			return  jr.toJSON();
+
+
+		/*}else {
+
+
+
+			WxMpOAuth2AccessToken wxMpOAuth2AccessToken = (WxMpOAuth2AccessToken)session.getAttribute("token_");
+			WxMpUser wxMpUser=(WxMpUser)session.getAttribute("user_");
+			WxAdminExample wxAdminExample = new WxAdminExample();
+			wxAdminExample.or().andWxAdminOpenidEqualTo(wxMpUser.getOpenId());
+			List<WxAdmin> i = wxAdminMapper.selectByExample(wxAdminExample);
+			if (i!=null&&i.size()>0){
+				jr.setSuccess(false);
+				jr.setErrorMsg("非法登录");
+				return  jr.toJSON();
+			}
+
+
+
+			WxAdmin wxAdmin = new WxAdmin();
+			try {
+				//第一次登录
+				wxAdmin.setWxAdminId(UUIDUtil.getUUID());
+				wxAdmin.setWxAdminCreatetim(new Date());
+				wxAdmin.setWxAdminUpdatetime(new Date());
+				wxAdmin.setWxAdminOpenid(wxMpUser.getOpenId());
+				wxAdmin.setWxAdminToken(JSON.toJSONString(wxMpOAuth2AccessToken));
+				wxAdmin.setWxAdminRToken(wxMpOAuth2AccessToken.getRefreshToken());
+				wxAdmin.setWxAdminTimeout(wxMpOAuth2AccessToken.getExpiresIn());
+
+				List<LogInfo> logInfos = logInfoMapper.selectLogInfoLogCelll(logInfo.getLogCell());
+
+				if (logInfos!=null&&logInfos.size()>=1){
+					wxAdmin.setWxAdminLog(logInfos.get(0).getLogId());
+				}else {
+					logInfo.setLogComment(session.getAttribute("jihema")!=null?(String)session.getAttribute("jihema"):null);
+					logInfo.setLogId(UUIDUtil.getUUID());
+					logInfo.setLogCell(session.getAttribute("logCell").toString());
+					logInfo.setLogCreatetime(new Date());
+					logInfo.setLogIsdelete(false);
+					logInfo.setLogState(1);
+					logInfo.setLogType(1);
+					logInfo.setLogName(wxMpUser.getNickname());
+					logInfo.setUserPhoto(wxMpUser.getHeadImgUrl());
+					logInfo.setLogRegip(getRequestIP(request));
+					logInfo.setLogIslog(true);
+					logInfo.setLogPass(MD5Util.getMD5(logInfo.getLogPass()));
+					logInfoService.addLogInfo(logInfo);
+					wxAdmin.setWxAdminLog(logInfo.getLogId());
+				}
+
+				wxAdminMapper.insert(wxAdmin);
+				jr.setSuccess(true);
+				session.setAttribute("logInfo",logInfo);
+				session.setAttribute("wxUser",wxMpUser);
+				session.setMaxInactiveInterval(30*60);
+				session.removeAttribute("token_");
+				session.removeAttribute("user_");
+			} catch (Exception e) {
+				jr.setSuccess(false);
+				jr.setErrorMsg("注册失败");
+			}
+			return  jr.toJSON();
+		}*/
+
+
+	}
+
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 跳转注册页面
+	 * @return ModelAndView
+	 * @method jumpRegister
+	 */
+	@RequestMapping(value = "/logInfo/jumpRegister")
+	public ModelAndView jumpRegister() {
+		return new ModelAndView("wap/userinfo/register");
+	}
+	@RequestMapping(value="/logInfo/jumpJdjerweima")
+	public ModelAndView jumpJdjerweima(){
+		return new ModelAndView("wap/userinfo/jdjerweima");
+	}
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 获取验证码
+	 * @param response
+	 * @param request
+	 * @param session
+	 * @return void
+	 * @method getImagesCode
+	 */
+	@RequestMapping(value = "/logInfo/getImagesCode")
+	public void getImagesCode(HttpServletResponse response, HttpServletRequest request, HttpSession session) {
+		try {
+			ImagesCode.getImagesCode(response, request, session);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("获取图片验证码异常" + e);
+		}
+	}
+
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 注册时获取手机验证码
+	 * @param response
+	 * @param request
+	 * @param session
+	 * @param imageCode
+	 * @param logCell
+	 * @return void
+	 * @method validateLoginName
+	 */
+	@RequestMapping(value = "/logInfo/validateLoginName")
+	public void validateLoginName(HttpServletResponse response, HttpServletRequest request, HttpSession session,
+			String logCell) {
+		JsonResult jr = new JsonResult();
+
+		if (logCell == null || logCell.isEmpty()) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("手机号不能为空");
+			jr.setErrorCode("1");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$");
+		Matcher m = p.matcher(logCell);
+		if (false == m.matches()) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("手机号格式不正确");
+			jr.setErrorCode("1");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+
+
+		List<LogInfo> logInfo = logInfoMapper.selectLogInfoLogCelll(logCell);
+		WxAdminExample wxAdminExample = new WxAdminExample();
+		wxAdminExample.or().andWxAdminLogEqualTo((logInfo==null||logInfo.size()<=0||logInfo.get(0)==null)?"":logInfo.get(0).getLogId());
+		int i = wxAdminMapper.countByExample(wxAdminExample);
+
+		if (logInfo.size() > 0&&i>0) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("您已经注册过，请重新进入微信公众号");
+			jr.setErrorCode("1");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		 else if (i==0&&logInfo.size()>0){
+			jr.setSuccess(false);
+			jr.setErrorMsg("您已经注册过，您的微信将绑定到这个手机");
+			jr.setErrorCode("3");
+			String param = "您正在进行近到家互联网专家平台注册,";
+			try {
+				CheckCode.getCheckCode(session, logCell, param);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+        else if (i==0&&logInfo.size()==0){
+            jr.setSuccess(true);
+            String param = "您正在进行近到家互联网专家平台注册,";
+            try {
+                CheckCode.getCheckCode(session, logCell, param);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            JsonUtil.printByJSON(response, jr);
+            return;
+        }else {
+            log.error("用户获取验证码异常" );
+            jr.setSuccess(false);
+            jr.setErrorMsg("获取验证码异常,请联系网站客服");
+            jr.setErrorCode("1");
+            JsonUtil.printByJSON(response, jr);
+        }
+	}
+
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 跳转登录页面
+	 * @return ModelAndView
+	 * @method jumpLogin
+	 */
+	@RequestMapping(value = "/logInfo/jumpLogin")
+	public ModelAndView jumpLogin( HttpServletRequest request) {
+		ModelAndView  mav  =  new ModelAndView("wap/userinfo/login");
+		String menuTag = request.getParameter("menuTag");
+		mav.addObject("menuTag",menuTag);
+		return mav;
+	}
+
+	@RequestMapping(value = "/logInfo/login")
+	public void login(HttpServletResponse response, HttpServletRequest request, HttpSession session, LogInfo logInfo) {
+		JsonResult jr = new JsonResult();
+		if (logInfo.getLogName() == null || "".equals(logInfo.getLogName())) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("账号不能为空");
+			jr.setErrorCode("1");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		if (logInfo.getLogPass() == null || "".equals(logInfo.getLogPass())) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("密码不能为空");
+			jr.setErrorCode("2");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		try {
+			logInfo.setLogPass(MD5Util.getMD5(logInfo.getLogPass()));
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("登录密码加密错误" + e);
+		}
+		LogInfo logInfoRes = logInfoService.queryLogInfoLogin(logInfo);
+		if (logInfoRes == null || logInfoRes.getLogCell() == null || logInfoRes.getLogCell().isEmpty()) {
+			jr.setSuccess(false);
+			jr.setErrorCode("2");
+			jr.setErrorMsg("用户名或者密码错误");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		if (logInfoRes.getLogState() == 0) {
+			jr.setSuccess(false);
+			jr.setErrorCode("2");
+			jr.setErrorMsg("您的账号已经被冻结,请联系客服");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		session.setAttribute("logInfo", logInfoRes);
+//		session.setMaxInactiveInterval(43200*60);
+		String sessionid=session.getId();
+		jr.setObj(sessionid);
+		//jr.setObj(logInfoRes);
+		jr.setSuccess(true);
+		jr.setErrorMsg("登录成功");
+		JsonUtil.printByJSON(response, jr);
+	}
+
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2017年1月3日
+	 * @description 退出登录
+	 * @param session
+	 * @return ModelAndView
+	 * @method logOut
+	 */
+	@RequestMapping(value = "/logInfo/logOut")
+	public ModelAndView logOut(HttpSession session) {
+		session.invalidate();
+		ModelAndView mav  = new ModelAndView("/wap/userinfo/login");
+		mav.addObject("menuTag","4");
+		return mav;
+	}
+
+	/**
+	 * 
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月26日
+	 * @description 跳转忘记密码页面
+	 * @return ModelAndView
+	 * @method jumpForgetPass
+	 */
+	@RequestMapping(value = "/logInfo/jumpForgetPass")
+	public ModelAndView jumpForgetPass() {
+		return new ModelAndView("wap/userinfo/forgetPass");
+	}
+
+	/**
+	 * 
+	 * @version v1.0 (版本号)
+	 * @date 2017年1月8日
+	 * @description 获取手机验证码（忘记密码）
+	 * @param response
+	 * @param request
+	 * @param session
+	 * @param logCell
+	 *            void
+	 * @method validateLoginCell
+	 */
+	@RequestMapping(value = "/logInfo/validateLoginCell")
+	public void validateLoginCell(HttpServletResponse response, HttpServletRequest request, HttpSession session,
+			String logCell) {
+		JsonResult jr = new JsonResult();
+		if (logCell == null || logCell.isEmpty()) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("手机号不能为空");
+			jr.setErrorCode("1");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		int res = logInfoService.selectLogInfoLogCell(logCell);
+		if (res <= 0) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("用户不存在");
+			jr.setErrorCode("2");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+
+		Pattern p = Pattern.compile("^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\\d{8})$");
+		Matcher m = p.matcher(logCell);
+		if (false == m.matches()) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("手机号格式不正确");
+			jr.setErrorCode("1");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		try {
+			String param = "您正在进行近到家互联网专家平台密码修改";
+			CheckCode.getCheckCode(session, logCell, param);
+			jr.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("用户获取验证码异常" + e);
+			jr.setSuccess(false);
+			jr.setErrorMsg("获取验证码异常,请联系网站客服");
+			jr.setErrorCode("1");
+		}
+		JsonUtil.printByJSON(response, jr);
+	}
+
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2017年1月8日
+	 * @description 忘记密码，通过手机号码修改密码
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param checkCode
+	 * @param logPass
+	 * @param newPass
+	 * @param logCell
+	 *            void
+	 * @method modifyPassByCell
+	 */
+	@RequestMapping(value = "/logInfo/modifyPassByCell")
+	public void modifyPassByCell(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+			String checkCode, String logPass, String newPass, String logCell) {
+		JsonResult jr = new JsonResult();
+
+		if (logCell == null || logCell.isEmpty()) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("手机号不能为空");
+			jr.setErrorCode("1");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		Pattern p = Pattern.compile("^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\\d{8})$");
+		Matcher m = p.matcher(logCell);
+		if (false == m.matches()) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("手机号格式不正确");
+			jr.setErrorCode("1");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		if (checkCode == null || checkCode.isEmpty()) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("手机验证码不能为空");
+			jr.setErrorCode("2");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		if (logPass == null || logPass.isEmpty()) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("密码不能为空");
+			jr.setErrorCode("3");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+
+		if (newPass.length() < 6 || newPass.length() > 20) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("密码必须在6至20位之间");
+			jr.setErrorCode("3");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+
+		if (session.getAttribute("checkCode") == null) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("您未获取手机验证码");
+			jr.setErrorCode("2");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		if (!checkCode.equals(session.getAttribute("checkCode").toString())) {
+			jr.setSuccess(false);
+			jr.setErrorMsg("手机验证码错误");
+			jr.setErrorCode("2");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		LogInfo logInfo = new LogInfo();
+		logInfo.setLogCell(logCell);
+		try {
+			logInfo.setLogPass(MD5Util.getMD5(logPass));
+		} catch (Exception e) {
+			jr.setErrorMsg("修改密码加密错误！");
+			e.printStackTrace();
+		}
+		logInfoService.modifyPassByCell(logInfo);
+
+		JsonUtil.printByJSON(response, jr);
+
+	}
+}

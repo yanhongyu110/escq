@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.PriceSetMapper">
+    <resultMap id="BaseResultMap" type="com.jero.esc.po.details.PriceSet">
+        <id column="PSET_ID" jdbcType="VARCHAR" property="psetId"/>
+        <result column="PSET_DISCOUNT_TYPE" jdbcType="INTEGER" property="psetDiscountType"/>
+        <result column="PSET_POINT_TYPE" jdbcType="INTEGER" property="psetPointType"/>
+        <result column="PSET_PRICE" jdbcType="REAL" property="psetPrice"/>
+        <result column="PSET_POINT" jdbcType="REAL" property="psetPoint"/>
+        <result column="PSET_CREATE_TIME" jdbcType="TIMESTAMP" property="psetCreateTime"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="logId"/>
+        <result column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId"/>
+        <result column="PSET_COMMENT" jdbcType="VARCHAR" property="psetComment"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    PSET_ID, PSET_DISCOUNT_TYPE, PSET_POINT_TYPE, PSET_PRICE, PSET_POINT, PSET_CREATE_TIME, 
+    LOG_ID, SERVICE_ID, PSET_COMMENT
+  </sql>
+
+
+    <select id="selectPriceSetByService" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM PRICE_SET
+        WHERE
+        SERVICE_ID = #{serviceId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectPriceSetBySource" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM PRICE_SET
+        WHERE
+        PSET_DISCOUNT_TYPE = #{psetDiscountType,jdbcType=INTEGER}
+        AND SERVICE_ID = #{serviceId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectPriceSetByPrice" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM PRICE_SET
+        WHERE
+        PSET_PRICE = #{servicePrice,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from price_set
+        where PSET_ID = #{psetId,jdbcType=VARCHAR}
+    </select>
+    <select id="countByServiceId" resultType="java.lang.Integer">
+    SELECT
+    COUNT(PSET_ID)
+    FROM
+    price_set
+    WHERE
+    SERVICE_ID=#{value}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from price_set
+    where PSET_ID = #{psetId,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByServiceId">
+     delete from price_set
+    where SERVICE_ID = #{value}
+  </delete>
+    <insert id="insert" parameterType="com.jero.esc.po.details.PriceSet">
+    insert into price_set (PSET_ID, PSET_DISCOUNT_TYPE, PSET_POINT_TYPE, 
+      PSET_PRICE, PSET_POINT, PSET_CREATE_TIME, 
+      LOG_ID, SERVICE_ID, PSET_COMMENT
+      )
+    values (#{psetId,jdbcType=VARCHAR}, #{psetDiscountType,jdbcType=INTEGER}, #{psetPointType,jdbcType=INTEGER}, 
+      #{psetPrice,jdbcType=REAL}, #{psetPoint,jdbcType=REAL}, #{psetCreateTime,jdbcType=TIMESTAMP}, 
+      #{logId,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, #{psetComment,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.jero.esc.po.details.PriceSet">
+        insert into price_set
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="psetId != null">
+                PSET_ID,
+            </if>
+            <if test="psetDiscountType != null">
+                PSET_DISCOUNT_TYPE,
+            </if>
+            <if test="psetPointType != null">
+                PSET_POINT_TYPE,
+            </if>
+            <if test="psetPrice != null">
+                PSET_PRICE,
+            </if>
+            <if test="psetPoint != null">
+                PSET_POINT,
+            </if>
+            <if test="psetCreateTime != null">
+                PSET_CREATE_TIME,
+            </if>
+            <if test="logId != null">
+                LOG_ID,
+            </if>
+            <if test="serviceId != null">
+                SERVICE_ID,
+            </if>
+            <if test="psetComment != null">
+                PSET_COMMENT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="psetId != null">
+                #{psetId,jdbcType=VARCHAR},
+            </if>
+            <if test="psetDiscountType != null">
+                #{psetDiscountType,jdbcType=INTEGER},
+            </if>
+            <if test="psetPointType != null">
+                #{psetPointType,jdbcType=INTEGER},
+            </if>
+            <if test="psetPrice != null">
+                #{psetPrice,jdbcType=REAL},
+            </if>
+            <if test="psetPoint != null">
+                #{psetPoint,jdbcType=REAL},
+            </if>
+            <if test="psetCreateTime != null">
+                #{psetCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="logId != null">
+                #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceId != null">
+                #{serviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="psetComment != null">
+                #{psetComment,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertListSelective">
+        <foreach collection="list" item="i" separator=";">
+            insert into price_set
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="i.psetId != null">
+                    PSET_ID,
+                </if>
+                <if test="i.psetDiscountType != null">
+                    PSET_DISCOUNT_TYPE,
+                </if>
+                <if test="i.psetPointType != null">
+                    PSET_POINT_TYPE,
+                </if>
+                <if test="i.psetPrice != null">
+                    PSET_PRICE,
+                </if>
+                <if test="i.psetPoint != null">
+                    PSET_POINT,
+                </if>
+                <if test="i.psetCreateTime != null">
+                    PSET_CREATE_TIME,
+                </if>
+                <if test="i.logId != null">
+                    LOG_ID,
+                </if>
+                <if test="i.serviceId != null">
+                    SERVICE_ID,
+                </if>
+                <if test="i.psetComment != null">
+                    PSET_COMMENT,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="i.psetId != null">
+                    #{i.psetId,jdbcType=VARCHAR},
+                </if>
+                <if test="i.psetDiscountType != null">
+                    #{i.psetDiscountType,jdbcType=INTEGER},
+                </if>
+                <if test="i.psetPointType != null">
+                    #{i.psetPointType,jdbcType=INTEGER},
+                </if>
+                <if test="i.psetPrice != null">
+                    #{i.psetPrice,jdbcType=REAL},
+                </if>
+                <if test="i.psetPoint != null">
+                    #{i.psetPoint,jdbcType=REAL},
+                </if>
+                <if test="psetCreateTime != null">
+                    #{i.psetCreateTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="i.logId != null">
+                    #{i.logId,jdbcType=VARCHAR},
+                </if>
+                <if test="i.serviceId != null">
+                    #{i.serviceId,jdbcType=VARCHAR},
+                </if>
+                <if test="i.psetComment != null">
+                    #{i.psetComment,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.PriceSet">
+        update price_set
+        <set>
+            <if test="psetDiscountType != null">
+                PSET_DISCOUNT_TYPE = #{psetDiscountType,jdbcType=INTEGER},
+            </if>
+            <if test="psetPointType != null">
+                PSET_POINT_TYPE = #{psetPointType,jdbcType=INTEGER},
+            </if>
+            <if test="psetPrice != null">
+                PSET_PRICE = #{psetPrice,jdbcType=REAL},
+            </if>
+            <if test="psetPoint != null">
+                PSET_POINT = #{psetPoint,jdbcType=REAL},
+            </if>
+            <if test="psetCreateTime != null">
+                PSET_CREATE_TIME = #{psetCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="logId != null">
+                LOG_ID = #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceId != null">
+                SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="psetComment != null">
+                PSET_COMMENT = #{psetComment,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where PSET_ID = #{psetId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.PriceSet">
+    update price_set
+    set PSET_DISCOUNT_TYPE = #{psetDiscountType,jdbcType=INTEGER},
+      PSET_POINT_TYPE = #{psetPointType,jdbcType=INTEGER},
+      PSET_PRICE = #{psetPrice,jdbcType=REAL},
+      PSET_POINT = #{psetPoint,jdbcType=REAL},
+      PSET_CREATE_TIME = #{psetCreateTime,jdbcType=TIMESTAMP},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+      PSET_COMMENT = #{psetComment,jdbcType=VARCHAR}
+    where PSET_ID = #{psetId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,14 @@
+package esc;
+
+import java.util.Date;
+
+import com.jero.esc.common.utils.DateUtil;
+
+public class test {
+	public static void main(String[] args) {
+		String str = "E:/service/tomcat7/service704/webapps/esc/files/image";
+
+		String nowDate = DateUtil.dateToFull1StringDate(new Date());
+		System.out.println(str);
+	}
+}

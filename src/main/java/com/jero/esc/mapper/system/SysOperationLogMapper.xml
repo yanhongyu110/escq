@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.system.SysOperationLogMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.system.SysOperationLog">
+    <id column="SYS_OPLOG_ID" jdbcType="VARCHAR" property="sysOplogId" />
+    <result column="SYS_OPLOG_USER_NAME" jdbcType="VARCHAR" property="sysOplogUserName" />
+    <result column="SYS_OPLOG_DATE" jdbcType="TIMESTAMP" property="sysOplogDate" />
+    <result column="SYS_OPLOG_CONT" jdbcType="VARCHAR" property="sysOplogCont" />
+    <result column="SYS_OPLOG_ISDELETE" jdbcType="BIT" property="sysOplogIsdelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SYS_OPLOG_ID, SYS_OPLOG_USER_NAME, SYS_OPLOG_DATE, SYS_OPLOG_CONT, SYS_OPLOG_ISDELETE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_operation_log
+    where SYS_OPLOG_ID = #{sysOplogId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_operation_log
+    where SYS_OPLOG_ID = #{sysOplogId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.system.SysOperationLog">
+    insert into sys_operation_log (SYS_OPLOG_ID, SYS_OPLOG_USER_NAME, SYS_OPLOG_DATE, 
+      SYS_OPLOG_CONT, SYS_OPLOG_ISDELETE)
+    values (#{sysOplogId,jdbcType=VARCHAR}, #{sysOplogUserName,jdbcType=VARCHAR}, #{sysOplogDate,jdbcType=TIMESTAMP}, 
+      #{sysOplogCont,jdbcType=VARCHAR}, #{sysOplogIsdelete,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.system.SysOperationLog">
+    insert into sys_operation_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sysOplogId != null">
+        SYS_OPLOG_ID,
+      </if>
+      <if test="sysOplogUserName != null">
+        SYS_OPLOG_USER_NAME,
+      </if>
+      <if test="sysOplogDate != null">
+        SYS_OPLOG_DATE,
+      </if>
+      <if test="sysOplogCont != null">
+        SYS_OPLOG_CONT,
+      </if>
+      <if test="sysOplogIsdelete != null">
+        SYS_OPLOG_ISDELETE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sysOplogId != null">
+        #{sysOplogId,jdbcType=VARCHAR},
+      </if>
+      <if test="sysOplogUserName != null">
+        #{sysOplogUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="sysOplogDate != null">
+        #{sysOplogDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysOplogCont != null">
+        #{sysOplogCont,jdbcType=VARCHAR},
+      </if>
+      <if test="sysOplogIsdelete != null">
+        #{sysOplogIsdelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.system.SysOperationLog">
+    update sys_operation_log
+    <set>
+      <if test="sysOplogUserName != null">
+        SYS_OPLOG_USER_NAME = #{sysOplogUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="sysOplogDate != null">
+        SYS_OPLOG_DATE = #{sysOplogDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysOplogCont != null">
+        SYS_OPLOG_CONT = #{sysOplogCont,jdbcType=VARCHAR},
+      </if>
+      <if test="sysOplogIsdelete != null">
+        SYS_OPLOG_ISDELETE = #{sysOplogIsdelete,jdbcType=BIT},
+      </if>
+    </set>
+    where SYS_OPLOG_ID = #{sysOplogId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.system.SysOperationLog">
+    update sys_operation_log
+    set SYS_OPLOG_USER_NAME = #{sysOplogUserName,jdbcType=VARCHAR},
+      SYS_OPLOG_DATE = #{sysOplogDate,jdbcType=TIMESTAMP},
+      SYS_OPLOG_CONT = #{sysOplogCont,jdbcType=VARCHAR},
+      SYS_OPLOG_ISDELETE = #{sysOplogIsdelete,jdbcType=BIT}
+    where SYS_OPLOG_ID = #{sysOplogId,jdbcType=VARCHAR}
+  </update>
+</mapper>

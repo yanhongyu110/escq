@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.checkinfo.ProviderCheckInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.checkinfo.ProviderCheckInfo">
+    <id column="PCI_ID" jdbcType="VARCHAR" property="pciId" />
+    <result column="PCI_IMAGE" jdbcType="VARCHAR" property="pciImage" />
+    <result column="PCI_EADUCATE" jdbcType="VARCHAR" property="pciEaducate" />
+    <result column="PCI_CREDENTIALS" jdbcType="VARCHAR" property="pciCredentials" />
+    <result column="PCI_OTHERS" jdbcType="VARCHAR" property="pciOthers" />
+    <result column="PCI_INTRODUCE" jdbcType="VARCHAR" property="pciIntroduce" />
+    <result column="PCI_STATE" jdbcType="INTEGER" property="pciState" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="PCI_COMMENT" jdbcType="VARCHAR" property="pciComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    PCI_ID, PCI_IMAGE, PCI_EADUCATE, PCI_CREDENTIALS, PCI_OTHERS, PCI_INTRODUCE, PCI_STATE, 
+    LOG_ID, PCI_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from provider_check_info
+    where PCI_ID = #{pciId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from provider_check_info
+    where PCI_ID = #{pciId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.checkinfo.ProviderCheckInfo">
+    insert into provider_check_info (PCI_ID, PCI_IMAGE, PCI_EADUCATE, 
+      PCI_CREDENTIALS, PCI_OTHERS, PCI_INTRODUCE, 
+      PCI_STATE, LOG_ID, PCI_COMMENT
+      )
+    values (#{pciId,jdbcType=VARCHAR}, #{pciImage,jdbcType=VARCHAR}, #{pciEaducate,jdbcType=VARCHAR}, 
+      #{pciCredentials,jdbcType=VARCHAR}, #{pciOthers,jdbcType=VARCHAR}, #{pciIntroduce,jdbcType=VARCHAR}, 
+      #{pciState,jdbcType=INTEGER}, #{logId,jdbcType=VARCHAR}, #{pciComment,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.checkinfo.ProviderCheckInfo">
+    insert into provider_check_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pciId != null">
+        PCI_ID,
+      </if>
+      <if test="pciImage != null">
+        PCI_IMAGE,
+      </if>
+      <if test="pciEaducate != null">
+        PCI_EADUCATE,
+      </if>
+      <if test="pciCredentials != null">
+        PCI_CREDENTIALS,
+      </if>
+      <if test="pciOthers != null">
+        PCI_OTHERS,
+      </if>
+      <if test="pciIntroduce != null">
+        PCI_INTRODUCE,
+      </if>
+      <if test="pciState != null">
+        PCI_STATE,
+      </if>
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="pciComment != null">
+        PCI_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pciId != null">
+        #{pciId,jdbcType=VARCHAR},
+      </if>
+      <if test="pciImage != null">
+        #{pciImage,jdbcType=VARCHAR},
+      </if>
+      <if test="pciEaducate != null">
+        #{pciEaducate,jdbcType=VARCHAR},
+      </if>
+      <if test="pciCredentials != null">
+        #{pciCredentials,jdbcType=VARCHAR},
+      </if>
+      <if test="pciOthers != null">
+        #{pciOthers,jdbcType=VARCHAR},
+      </if>
+      <if test="pciIntroduce != null">
+        #{pciIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="pciState != null">
+        #{pciState,jdbcType=INTEGER},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="pciComment != null">
+        #{pciComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.checkinfo.ProviderCheckInfo">
+    update provider_check_info
+    <set>
+      <if test="pciImage != null">
+        PCI_IMAGE = #{pciImage,jdbcType=VARCHAR},
+      </if>
+      <if test="pciEaducate != null">
+        PCI_EADUCATE = #{pciEaducate,jdbcType=VARCHAR},
+      </if>
+      <if test="pciCredentials != null">
+        PCI_CREDENTIALS = #{pciCredentials,jdbcType=VARCHAR},
+      </if>
+      <if test="pciOthers != null">
+        PCI_OTHERS = #{pciOthers,jdbcType=VARCHAR},
+      </if>
+      <if test="pciIntroduce != null">
+        PCI_INTRODUCE = #{pciIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="pciState != null">
+        PCI_STATE = #{pciState,jdbcType=INTEGER},
+      </if>
+      <if test="pciComment != null">
+        PCI_COMMENT = #{pciComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LOG_ID = #{logId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.checkinfo.ProviderCheckInfo">
+    update provider_check_info
+    set PCI_IMAGE = #{pciImage,jdbcType=VARCHAR},
+      PCI_EADUCATE = #{pciEaducate,jdbcType=VARCHAR},
+      PCI_CREDENTIALS = #{pciCredentials,jdbcType=VARCHAR},
+      PCI_OTHERS = #{pciOthers,jdbcType=VARCHAR},
+      PCI_INTRODUCE = #{pciIntroduce,jdbcType=VARCHAR},
+      PCI_STATE = #{pciState,jdbcType=INTEGER},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      PCI_COMMENT = #{pciComment,jdbcType=VARCHAR}
+    where PCI_ID = #{pciId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByLogId" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from  provider_check_info
+    WHERE   LOG_ID = #{logId,jdbcType=VARCHAR}
+  </select>
+  <select id="countByExample" resultType="java.lang.Integer">
+    select
+    Count(PCI_ID)
+    from provider_check_info
+    <where>
+      1=1
+      <if test="pciImage != null">
+       AND PCI_IMAGE = #{pciImage,jdbcType=VARCHAR},
+      </if>
+      <if test="pciEaducate != null">
+        AND PCI_EADUCATE = #{pciEaducate,jdbcType=VARCHAR},
+      </if>
+      <if test="pciCredentials != null">
+        AND PCI_CREDENTIALS = #{pciCredentials,jdbcType=VARCHAR},
+      </if>
+      <if test="pciOthers != null">
+        AND PCI_OTHERS = #{pciOthers,jdbcType=VARCHAR},
+      </if>
+      <if test="pciIntroduce != null">
+        AND PCI_INTRODUCE = #{pciIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="pciState != null">
+        AND PCI_STATE = #{pciState,jdbcType=INTEGER},
+      </if>
+      <if test="logId != null">
+        AND LOG_ID = #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="pciComment != null">
+        AND PCI_COMMENT = #{pciComment,jdbcType=VARCHAR},
+      </if>
+    </where>
+  </select>
+  <select id="countByLogId" resultType="java.lang.Integer">
+    select
+    Count(PCI_ID)
+    from provider_check_info
+    <where>
+       LOG_ID = #{logId,jdbcType=VARCHAR},
+    </where>
+  </select>
+</mapper>

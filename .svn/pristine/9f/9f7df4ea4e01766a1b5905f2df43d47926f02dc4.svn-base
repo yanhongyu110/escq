@@ -1,0 +1,20 @@
+package com.jero.esc.controller.activity.balance;
+
+/**
+ * 
+ * <pre>
+ * <b> 活动 .</b>
+ * <b>Description:</b> 
+ *    发布需求或者服务冲余额
+ * <b>Author:</b> yanhongyu
+ * <b>Date:</b> 2017-12-21上午9:23:45
+ * <b>Changelog:</b>
+ *   ----------------------------------------------------------------------------
+ *   Ver   Date                     Detail
+ *   ----------------------------------------------------------------------------
+ *   1.0   2017-12-21上午9:23:45         new file.
+ * </pre>
+ */
+public class ReleaseSendMoney {
+
+}

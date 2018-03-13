@@ -1,0 +1,226 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>专家基本信息</title>
+		<meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="0">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+		<meta name="apple-touch-fullscreen" content="yes">
+		<!-- 开启对web app程序的支持  -->
+		<meta content="telephone=no,email=no" name="format-detection">
+		<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+		<!--base css-->
+		<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+		<%@ include file="/WEB-INF/jsp/common/header.jsp" %>
+    	<%@ include file="/WEB-INF/jsp/common/anima.jsp" %>
+    	<%@ include file="/WEB-INF/jsp/common/kindeditor.jsp" %>
+		<script type="text/javascript" src="${webtxc}/js/personal_tab.js"></script>
+    	<script type="text/javascript" src="${webtxc}/js/jquery.citysh.js?val=14d3"></script>
+    	<script type="text/javascript" src="${webtxc}/js/validate.js?val=123"></script>
+    	<script type="text/javascript" src="${webtxc}/js/personal_menu.js"></script>
+    	<link rel="stylesheet" type="text/css" href="${webtxc}/map/wapmap.css?v=1323">
+    	<script type="text/javascript" src="${webtxc}/map/map.js?val=1222343"></script>
+    	<script type="text/javascript" src="${webtxc}/myjs/wap/checkinfo/providerinfo.js?val=125"></script>
+		<link rel="stylesheet" href="${webtxc}/css/wap/reset.css" />
+		<link rel="stylesheet" href="${webtxc}/css/wap/personer.css?val=1ddd3" />
+		
+		<link rel="stylesheet" type="text/css" href="${webtxc}/css/dialog.css">
+		<link rel="stylesheet" type="text/css" href="${webtxc}/css/mobile-select-area.css">
+		<script type="text/javascript" src="${webtxc}/js/dialog.js"></script>
+		<script type="text/javascript" src="${webtxc}/js/mobile-select-area.js"></script>
+		<script src="${webtxc}/vue/vue.min.js"></script>
+		<script>
+            $(function () {
+                $.post(path+'/company/companyListAjax.html',{},function (r) {
+                    var app=new Vue({
+                        el:'#orz_com',
+                        data:{
+                            piCom:'${providerInfo.piCom}',
+                            piCompany:'${providerInfo.piCompany}',
+                            list:r.list
+                        },
+                        methods:{
+                            select:function (res) {
+                                this.piCompany= res.compName;
+                            }
+                        }
+                    })
+                },'json')
+            })
+		</script>
+	</head>
+
+	<body style="background:#fff">
+		<!--wapper-->
+		<div class="wapper">
+			<!--page-->
+			<div id="page">
+				<div class="personer_top">
+					<h3>专家认证</h3>
+					<span onclick="history.go(-1)" style="width:40px;height:50px;display:block;position:absolute;left:0;top:0;"></span>
+				</div>
+				
+				<div class="personer_mes">
+					
+					<div class="personer_mes_zl">
+						<ul class="personer_mes_zl_ms item">
+							<li>真实姓名</li>
+							<li class="mes_input"><%--  ${providerInfo.userRealName} --%>
+								<input type="text" class="piRealname"  name="piRealname" value="${providerInfo.piRealname}" />
+							</li>
+							<span class="personer_mes_ts"></span>
+						</ul>
+						<ul class="personer_mes_zl_ms item" id="orz_com">
+							<li>任职机构 </li>
+							<li style="width: 70%;">
+								<select name="piCom"  v-model="piCom">
+									<option v-for="it in list" :value="it.compId" v-text="it.compName" @click="select(it)"></option>
+								</select>
+								<input  class="mees" type="hidden" v-model="piCompany" name="piCompany" placeholder="请填写您的任职机构" >
+							</li>
+							<span class="personer_mes_ts"></span>
+						</ul>
+						<ul class="personer_mes_zl_ms item">
+							<li>任职职位</li>
+							<li class="mes_input">
+								<input type="text" class="piPosition"  name="piPosition" value="${providerInfo.piPosition}" />
+							</li>
+							<span class="personer_mes_ts"></span>
+						</ul>
+						<ul class="personer_mes_zl_ms item">
+							<li>工作年限</li>
+							<li class="mes_input">
+								<input type="text" class="piWorkyear"  name="piWorkyear" value="${providerInfo.piWorkyear}" />
+							</li>
+							<span class="personer_mes_ts"></span>
+						</ul>
+						<ul class="personer_mes_zl_ms item">
+							<li>联系方式</li>
+							<li class="mes_input">
+								<input type="text" class="piCell"  name="piCell" value="${providerInfo.piCell}" />
+							</li>
+							<span class="personer_mes_ts"></span>
+						</ul>
+						<ul class="personer_mes_zl_ms item">
+							<li>邮箱</li>
+							<li class="mes_input">
+								<input type="text" class="piEmail" name="piEmail" value="${providerInfo.piEmail}"  />
+							</li>
+							<span class="personer_mes_ts"></span>
+						</ul>
+						<ul class="personer_mes_zl_ms item">
+							<li>关键字</li>
+							<li class="mes_input">
+								<input type="text" class="piKeywords"  name="piKeywords" value="${providerInfo.piKeywords}"  />
+							</li>
+							<span class="personer_mes_ts"></span>
+						</ul>
+						  <ul class="personer_mes_zl_ms item">
+                            <li>常驻城市</li>
+                            <li class="mes_input">
+								<input type="text" id="piArea"  placeholder="点击进行选择"  class="piArea" name="piArea" value="${providerInfo.piArea}"  />
+									<script>
+									var selectArea = new MobileSelectArea();
+									selectArea.init({ trigger: '#piArea', data:  path+'/js/data.json', default: 0 });
+									
+								</script>
+							</li>
+							<span class="personer_mes_ts"></span>
+                        </ul>
+						<ul class="personer_mes_zl_ms item">
+							<li>所在地址</li>
+							<li class="mes_input" style="width:41%"><input type="text" class="mees piAddr"  name="piAddr"  value="${providerInfo.piAddr}" placeholder="点击右边搜索框添加" readonly="readonly" ></li>
+                            <li><input type="button" value="点击定位"  map-start map-click="sss"></li>
+							<span class="personer_mes_ts"></span>
+						</ul>
+						<div class="personer_excit">
+					<div class="excit">下一步</div>
+				</div>
+					</div>
+					<div class="personer_mes_zl have_padding_bottom ">
+		
+						<ul class="personer_media item">
+							<li class="shz_mc">生活照片<span class="personer_mes_ts"></span></li>
+							<li class="shz_img s_shz" ><img class="personer_sc upload imgUrl"  src="${providerInfo.piPhoto}"></img></li>
+							<input type="hidden" class="piPhoto imgUrls"  name="piPhoto" value="${providerInfo.piPhoto}" />
+						</ul>
+						<%-- <ul class="personer_media item">
+							<li>视频封面<span class="personer_mes_ts"></span></li>
+							<img class="personer_sc upload imgUrl"></img>
+							<input type="hidden" class="piComment imgUrls"  name="piComment" value="${providerInfo.piComment}" />
+						</ul>
+						  <ul class="personer_media item">
+                            <li>介绍视频<span class="personer_mes_ts"></span></li>
+                            <li class="expert_mp ex_sp" >
+                            	<div id="mediadiv" class="ex_zxs"></div>
+                                <a  id="media" ></a>
+                               <input type="hidden"  readonly="readonly"  id="mediaUpload" class="piVideo" name="piVideo" value="${ providerInfo.piVideo}" rows="5"/>
+                            </li> 
+                            
+                            <li class="zp_ts">注：大小为<span>100M</span>以内</li>
+                             <li  id="media" class="personer_sc" style="width: 70%;" ><div id="mediadiv" style="height:100%" ></div> </li>
+                            <input type="hidden"    id="mediaUpload" class="piVideo" name="piVideo" value="${providerInfo.piVideo}" />
+                            
+                        </ul>
+                        <ul class="personer_media item">
+							<li style="line-height: 60px;width: 80%;">一句话描述 <span class="personer_mes_ts"></span></li>
+							<textarea  class="piBrief "  name="piBrief" placeholder="一句话描述（不超过30个字）"  >${providerInfo.piBrief}</textarea> 
+							<!-- <span class="personer_mes_ts">*选填</span> -->
+						</ul> --%>
+						<ul class="personer_media item">
+							<li class="per_jies">个人介绍<span class="personer_mes_ts"></span></li>
+							<li class="per_textarea s_shz" ><textarea class="piContent " name="piContent" placeholder="对自己进行简单的介绍，，，（不超过300字）">${providerInfo.piContent}</textarea></li>
+							<!-- <span class="personer_mes_ts">*选填</span> -->
+						</ul>
+						<div class="personer_excit">
+							<div class="excit" style="background:#ccc;margin-bottom:10px">上一步</div>
+							<div > <button class="excit" type="button" >保存</button></div>
+						</div>
+						
+               			 <input id="pointt" name="pointt" type="hidden" ng-model="point">
+					</div>
+				</div>
+				<!--end.personer_mes-->
+				
+				<!--end.personer_excit-->
+			</div>
+			<!--page end-->
+		</div>
+		<!--wapper end-->
+<%-- <%@ include file="/WEB-INF/jsp/wap/common/bottom.jsp"%> --%>
+	</body>
+	<script type="text/javascript">
+	
+	
+	
+	$('#pointt').val('${providerInfo.point}');
+	var piArea='${providerInfo.piArea}';
+	piArea=piArea.replace(/-/gm,' ');
+	$("#piArea").val(piArea);
+	function sss(value) {
+        $('[map]').hide()
+        $(".piAddr").val(value.address);
+        var m={}
+        m.pointLat=value.point.lat;
+        m.pointLng=value.point.lng
+        $("[name=pointt]").val(JSON.stringify(m));
+        console.log(value);
+    }
+	 
+	 
+	/* //将视频url赋给视频div
+	if('${providerInfo.piVideo}'==''){
+      $('#mediadiv').html('<video controls="" width="100%" height="100%">'
+     +'<source src="${providerInfo.piVideo}">'
+     +'<embed id="myembed" src="${providerInfo.piVideo}"  width="100%" height="100%" autostart="0" loop="0" />'
+     +'</video>');} */
+	</script>
+
+</html>

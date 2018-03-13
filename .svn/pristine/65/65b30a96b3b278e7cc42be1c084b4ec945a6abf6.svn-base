@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.userinfo.UserInfoMapper">
+		<update id="updateByLogIdSelective" parameterType="com.jero.esc.po.userinfo.UserInfo">
+		update user_info
+		<set>
+			<if test="userRealname != null">
+				USER_REALNAME = #{userRealname,jdbcType=VARCHAR},
+			</if>
+			<if test="userWechat != null">
+				USER_WECHAT = #{userWechat,jdbcType=VARCHAR},
+			</if>
+			<if test="userPhoto != null">
+				USER_PHOTO = #{userPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="userComment != null">
+				USER_COMMENT = #{userComment,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where LOG_ID = #{logId,jdbcType=VARCHAR}
+	</update>
+
+	<resultMap id="BaseResultMap" type="com.jero.esc.po.userinfo.UserInfo">
+		<id column="USER_ID" jdbcType="VARCHAR" property="userId" />
+		<result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+		<result column="USER_REALNAME" jdbcType="VARCHAR" property="userRealname" />
+		<result column="USER_WECHAT" jdbcType="VARCHAR" property="userWechat" />
+		<result column="USER_PHOTO" jdbcType="VARCHAR" property="userPhoto" />
+		<result column="USER_COMMENT" jdbcType="VARCHAR" property="userComment" />
+	</resultMap>
+
+	<resultMap type="com.jero.esc.vo.userinfo.UserInfoVo" id="userLogMesMap">
+		<!-- 用户基本信息表 -->
+		<id column="USER_ID" jdbcType="VARCHAR" property="userId" />
+		<result column="LOG_ID" jdbcType="VARCHAR" property="userLogId" />
+		<result column="USER_REALNAME" jdbcType="VARCHAR" property="userRealName" />
+		<result column="USER_WECHAT" jdbcType="VARCHAR" property="userWechat" />
+		<result column="USER_PHOTO" jdbcType="VARCHAR" property="userPhoto" />
+		<result column="USER_COMMENT" jdbcType="VARCHAR" property="userComment" />
+		<!-- 用户登录信息表 -->
+		<result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+		<result column="LOG_CELL" jdbcType="VARCHAR" property="logCell" />
+		<result column="LOG_EMAIL" jdbcType="VARCHAR" property="logEmail" />
+		<result column="LOG_NAME" jdbcType="VARCHAR" property="logName" />
+		<result column="LOG_PASS" jdbcType="VARCHAR" property="logPass" />
+		<result column="LOG_CREATETIME" jdbcType="TIMESTAMP" property="logCreatetime" />
+		<result column="LOG_ISDELETE" jdbcType="BIT" property="logIsdelete" />
+		<result column="LOG_STATE" jdbcType="INTEGER" property="logState" />
+		<result column="LOG_TYPE" jdbcType="INTEGER" property="logType" />
+		<result column="LOG_REGIP" jdbcType="VARCHAR" property="logRegip" />
+		<result column="LOG_ISLOG" jdbcType="BIT" property="logIslog" />
+		<result column="LOG_COMMENT" jdbcType="VARCHAR" property="logComment" />
+		<result column="LOG_MODE" jdbcType="VARCHAR" property="logMode" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		USER_ID, LOG_ID, USER_REALNAME, USER_WECHAT, USER_PHOTO,
+		USER_COMMENT
+	</sql>
+
+
+	<sql id="User_Log_List">
+		user_info.USER_ID,
+		user_info.LOG_ID,
+		user_info.USER_REALNAME,
+		user_info.USER_WECHAT,
+		user_info.USER_PHOTO,
+		user_info.USER_COMMENT,
+		log_info.LOG_ID,
+		log_info.LOG_CELL,
+		log_info.LOG_EMAIL,
+		log_info.LOG_NAME,
+		log_info.LOG_PASS,
+		log_info.LOG_CREATETIME,
+		log_info.LOG_ISDELETE,
+		log_info.LOG_STATE,
+		log_info.LOG_TYPE,
+		log_info.LOG_REGIP,
+		log_info.LOG_ISLOG,
+		log_info.LOG_COMMENT,
+		log_info.LOG_MODE
+	</sql>
+	<!-- 通过登录信息查询个人基本信息 -->
+	<select id="selectUserinfoByLogId" parameterType="string"
+		resultMap="userLogMesMap">
+		SELECT
+		<include refid="User_Log_List" />
+		FROM user_info INNER JOIN
+		log_info ON log_info.LOG_ID =
+		user_info.LOG_ID
+		<where>
+			log_info.LOG_ID=#{logId}
+		</where>
+	</select>
+	<!-- 修改个人信息 -->
+	<update id="updateUserinfoById" parameterType="com.jero.esc.vo.userinfo.UserInfoVo">
+		UPDATE
+		user_info INNER JOIN
+		log_info ON log_info.LOG_ID =
+		user_info.LOG_ID
+		set
+		USER_WECHAT =
+		#{userWechat,jdbcType=VARCHAR},
+		USER_PHOTO =
+		#{userPhoto,jdbcType=VARCHAR},
+		LOG_NAME = #{logName,jdbcType=VARCHAR}
+		<where>
+			user_info.LOG_ID = #{logId,jdbcType=VARCHAR}
+		</where>
+
+
+	</update>
+
+	<update id="updatePassByPrimaryKey" parameterType="com.jero.esc.po.userinfo.LogInfo">
+		UPDATE log_info
+		SET
+		LOG_PASS=#{logPass}
+		WHERE
+		LOG_ID = #{logId}
+	</update>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user_info
+		where USER_ID = #{userId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		user_info
+		where USER_ID = #{userId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jero.esc.po.userinfo.UserInfo">
+		insert into user_info
+		(USER_ID, LOG_ID, USER_REALNAME,
+		USER_WECHAT, USER_PHOTO, USER_COMMENT
+		)
+		values (#{userId,jdbcType=VARCHAR}, #{logId,jdbcType=VARCHAR},
+		#{userRealname,jdbcType=VARCHAR},
+		#{userWechat,jdbcType=VARCHAR},
+		#{userPhoto,jdbcType=VARCHAR}, #{userComment,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.jero.esc.po.userinfo.UserInfo">
+		insert into user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				USER_ID,
+			</if>
+			<if test="logId != null">
+				LOG_ID,
+			</if>
+			<if test="userRealname != null">
+				USER_REALNAME,
+			</if>
+			<if test="userWechat != null">
+				USER_WECHAT,
+			</if>
+			<if test="userPhoto != null">
+				USER_PHOTO,
+			</if>
+			<if test="userComment != null">
+				USER_COMMENT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="logId != null">
+				#{logId,jdbcType=VARCHAR},
+			</if>
+			<if test="userRealname != null">
+				#{userRealname,jdbcType=VARCHAR},
+			</if>
+			<if test="userWechat != null">
+				#{userWechat,jdbcType=VARCHAR},
+			</if>
+			<if test="userPhoto != null">
+				#{userPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="userComment != null">
+				#{userComment,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.userinfo.UserInfo">
+		update user_info
+		<set>
+			<if test="logId != null">
+				LOG_ID = #{logId,jdbcType=VARCHAR},
+			</if>
+			<if test="userRealname != null">
+				USER_REALNAME = #{userRealname,jdbcType=VARCHAR},
+			</if>
+			<if test="userWechat != null">
+				USER_WECHAT = #{userWechat,jdbcType=VARCHAR},
+			</if>
+			<if test="userPhoto != null">
+				USER_PHOTO = #{userPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="userComment != null">
+				USER_COMMENT = #{userComment,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where USER_ID = #{userId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jero.esc.po.userinfo.UserInfo">
+		update user_info
+		set LOG_ID = #{logId,jdbcType=VARCHAR},
+		USER_REALNAME =
+		#{userRealname,jdbcType=VARCHAR},
+		USER_WECHAT =
+		#{userWechat,jdbcType=VARCHAR},
+		USER_PHOTO =
+		#{userPhoto,jdbcType=VARCHAR},
+		USER_COMMENT =
+		#{userComment,jdbcType=VARCHAR}
+		where USER_ID =
+		#{userId,jdbcType=VARCHAR}
+	</update>
+</mapper>

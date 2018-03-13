@@ -1,0 +1,91 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+	<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>发布需求</title>
+		<link href="${webtxc}/css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="${webtxc}/css/public.css" />
+		<link rel="stylesheet" href="${webtxc}/css/service.css" />
+</head>
+<body>
+<%@include file="/WEB-INF/jsp/common/top.jsp"%>
+
+
+    <div class="content">
+      <div class="service_fabu">
+      <h2>发布需求</h2>
+      <h3>发布你的需求，坐等服务商上门</h3>
+       
+        <ul>
+         <li>
+           <div class="xuqiu_img"></div>
+           <div class="xuqiu_title">
+           <h3>需求发布后</h3>
+           <p>1小时内收到服务商响应</p>
+           </div>
+         </li>
+         <li>
+           <div class="xuqiu_img2"></div>
+           <div class="xuqiu_title">
+           <h3>每个需求</h3>
+           <p>平均有10个服务商参与</p>
+           </div>
+         </li>
+         <li>
+           <div class="xuqiu_img3"></div>
+           <div class="xuqiu_title">
+           <h3>95%以上的需求</h3>
+           <p>得到了圆满解决</p>
+           </div>
+         </li>
+         <li>
+           <div class="xuqiu_img4"></div>
+           <div class="xuqiu_title">
+           <h3>所有需求</h3>
+           <p>平台不收取任何佣金</p>
+           </div>
+         </li>
+        </ul>              
+       </div>
+       
+ <div class="zbj-grid">
+ <h2>发布需求流程</h2>
+<div class="pub-steps ">
+<ul class="list-unstyled clearfix">
+<li id="pub-step-1-nav" class="header-step step-on ">
+<span class="step-deco"></span>
+<span class="step-val">1</span>
+<span class="step-title">选择类目</span>
+</li>
+<li id="pub-step-2-nav" class="header-step  step-next">
+<span class="step-deco"></span>
+<span class="step-val">2</span>
+<span class="step-title">描述您的需求</span>
+</li>
+<li id="pub-step-3-nav" class="header-step  step-next">
+<span class="step-deco"></span>
+<span class="step-val">3</span>
+<span class="step-title">设置需求赏金</span>
+</li>
+<li id="pub-step-4-nav" class="header-step  step-next">
+<span class="step-deco"></span>
+<span class="step-val">4</span>
+<span class="step-title">确认需求，并支付赏金</span>
+</li>
+</ul>
+</div></div>
+       
+       <div class="service_fabu_btn">
+  <a class="service_fabu_btn_fb">立即发布需求</a>
+</div>
+
+	</div>
+<%@include file="/WEB-INF/jsp/common/bottom.jsp"%>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+function getQueryString(name) { 
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	var r = window.location.search.substr(1).match(reg); 
+	if (r != null) return decodeURI(r[2]); return null; 
+}
+
+var money = getQueryString("money");
+$(function(){
+	var ua = navigator.userAgent.toLowerCase(); 
+	if(ua.match(/MicroMessenger/i)=="micromessenger") { 
+		if(getOpenIdOnCk()==null){
+			getOpenId();
+		}
+	}
+	/**
+	 * 验证表单
+	 */
+	$("#form").validate({
+		rules : {
+			money : {
+				required : true,
+				digits : true,
+				min:1,
+				validatMoney:true
+			},
+		},
+		messages : {
+			money : {
+				required : "<em style='color: red;font-style:normal'>必填</em>",
+				digits : "<em style='color: red;font-style:normal'>请输入整数金额</em>",
+				min:"<em style='color: red;font-style:normal'>提现金额最少为1元</em>",
+			},
+		},
+		onfocusout : function(element) {
+			$(element).valid();
+		},
+		invalidHandler : function(form, validator) { // 不通过回调
+			return false;
+		}
+	});
+	
+	
+	$.validator.addMethod("validatMoney",
+			function(value, element) {
+				return parseInt(value) <= parseInt(getQueryString("money"));
+			}, "<em style='color: red;font-style:normal'>余额不足</em>");
+	
+
+	
+	
+})
+function tixian(){
+	var ua = navigator.userAgent.toLowerCase(); 
+	var isWeiXin;
+	if(ua.match(/MicroMessenger/i)=="micromessenger") { 
+		isWeiXin = 1;
+		if(getOpenIdOnCk()==null){
+			getOpenId()
+		}
+	}
+		var tl = $("#form").validate().form();
+		var count = $('#count').val();
+		if (tl == true) {
+			$.ajax({
+				type : "get",
+				dataType : "json",
+				url : path + "/wap/details/tixian.html",
+				data : {
+					money : $('#money').val(),
+					isWeiXin : isWeiXin,
+					logId : logId,
+					openId : getOpenIdOnCk()
+//					openId :'o5tP4vwJk0PPYVZRBLd9VPlRDkDw'
+				},
+				success : function(msg) {
+					alert(msg.errorMsg);
+					setTimeout(function() {
+						window.location.href=path+'/wap/main/view.html';
+					}, 2000);
+				},
+				error : function(){
+					alert("系统异常");
+					setTimeout(function() {
+						window.location.href=path+'/wap/main/view.html';
+					}, 2000);
+				}
+			});
+		}
+}
+
+/**
+ * 获取openid
+ */
+function getOpenId() {
+	var redirect_uri = encodeURIComponent("http://www.jindaoj.com/wap/userinfo/getWeichatOpenId.htm");
+	window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0c763640d4b8f08&redirect_uri="
+		+ redirect_uri
+			+ "&response_type=code&scope=snsapi_base&state="
+			+ encodeURIComponent("http://www.jindaoj.com/wap/userinfo/showWithDraw.html?money="+money) + "#wechat_redirect";
+}
+
+function getOpenIdOnCk() {
+	var cookies = document.cookie.split(";");
+	if (cookies != null) {
+		for ( var i = 0; i < cookies.length; i++) {
+			var cs = cookies[i].split("=");
+			if (cs[0].trim() == "weichatOpenId") {
+				return cs[1];
+			}
+		}
+	}
+	return null;
+}

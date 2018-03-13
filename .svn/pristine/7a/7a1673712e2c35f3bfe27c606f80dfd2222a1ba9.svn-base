@@ -1,0 +1,24 @@
+/**
+ * Created by TJH  2017/6/16
+ */
+
+(function ($) {
+
+    $(function(){
+
+        $(".list_mes_father").on("click", function () {
+            /* console.log($(this).next());
+             console.log($(this).next().is(":visible"));*/
+            if( $(this).next(".list_mes_son").is(":visible")){
+                $(this).next(".list_mes_son").slideUp(100);
+            }else{
+                $(this).next(".list_mes_son").slideDown(100);
+            }
+        });
+
+
+    });
+
+
+})(jQuery);
+

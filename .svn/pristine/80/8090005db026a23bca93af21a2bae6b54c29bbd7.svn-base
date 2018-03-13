@@ -1,0 +1,38 @@
+body{ padding: 0; margin: 0; background: #eee;font-family: Helvetica, Microsoft YaHei, sans-serif;}
+ul,li{ margin: 0; padding: 0;}
+body * {text-shadow: none;}
+h1,h2,h3,h4,h5,h6{ margin: 0; padding: 0;}
+.personer_top{ margin: 0; padding: 0; height: 50px; background:#464857 ; border-bottom: 1px solid #ccc; height: 50px; line-height: 50px;}
+.personer_top h3{ text-align: center; font-size: 16px; color: #fff; background: url(../images/fh.png) no-repeat 15px 0px;}
+.login{ clear: both; margin-top:20px; padding:10px 20px; background: #fff;}
+.login .login_dl{ clear: both; overflow: hidden; border-bottom: 1px solid #ddd; height: 50px; line-height: 50px;}
+.login .login_dl li{ float: left; width:25%; list-style: none;}
+.login .login_dl:last-child{ border: 0;}
+.login .login_dl input{ border: 0; font-family: "微软雅黑"; color: #999; outline: none;}
+.login .login_dl .log_input{ width: 75%;}
+.login .login_dl .log_input input{ width: 100%;}
+.login .login_dl .login_dl_zd { width: 50%; font-size: 14px; color: #666;}
+.login .login_dl .login_dl_zd input{display: inline-block;vertical-align: middle;width: 15px;height: 15px;border: 1px solid #DADADA;}
+.login .login_dl .forget{ width: 50%; text-align: right; font-size: 14px; color: #666;}
+.p_bttom{ clear: both; padding: 20px;}
+.p_bttom .dl_qt{ width:80px; margin:0 auto;color: #999; font-size: 14px; }
+.p_bttom .dl_qt .qq_dl{ background: url(../images/qq.png) #73c3ed ; width: 30px; height:30px; border-radius: 50%; display: block;}
+.p_bttom .dl_qt a{ float: left;}
+.p_bttom .dl_qt .wx_dl{ margin-left: 10px; background: url(../images/wx.png) #71c96a ; width: 30px; height:30px; border-radius: 50%; display: block;}
+.p_bttom .dl_qt .dl_fs{ padding-top: 5px; padding-right: 20px; color: #999;}
+.p_bttom p a{ color: #FB5A5A;}
+
+.login_dl .yzm{ width: 20%; float: right;text-align: center; }
+.login_dl .yzm input{ color: #fff; font-size: 12px;}
+.login_dl .hq{ background:#ccc; color: #fff;  height:30px; line-height:30px; padding-left:10px;}
+.login .login_dl .yyz{ width: 50%;}
+.login_dl .yzm img{ margin-top: 10px;}
+.agrees_zc{ clear: both; margin-top: 20px; padding-bottom: 10px; font-size: 12px; color: #666; }
+.agrees_zc a{  cursor: pointer;}
+.agrees_zc a:hover{ color: #FB5A5A; text-decoration: underline;}
+.agrees_zc input{margin-right: 10px;vertical-align:middle;width: 15px;height: 15px;border: 1px solid #DADADA; padding-left: 0; margin-left: 0; font-size: 12px;}
+
+
+
+.personer_excit{clear: both; margin: 30px 20px;}
+.personer_excit .excit{ height: 40px; line-height: 40px; background: #FB5A5A; color: #fff; font-size: 16px; text-align: center; border-radius: 4px;}

@@ -1,0 +1,393 @@
+package com.jero.esc.service.impl.goodsinfo;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.jero.esc.common.utils.UUIDUtil;
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import com.jero.esc.common.utils.fastvalidate.FastValid;
+import com.jero.esc.mapper.goodsinfo.ServiceInfoMapper;
+import com.jero.esc.mapper.goodsinfo.ServiceRemarkMapper;
+import com.jero.esc.mapper.goodsinfo.ServiceSnapshotMapper;
+import com.jero.esc.mapper.saleinfo.OrderInfoMapper;
+import com.jero.esc.mapper.saleinfo.OrderServiceMapper;
+import com.jero.esc.mapper.userinfo.ProviderInfoMapper;
+import com.jero.esc.po.goodsinfo.ServiceInfo;
+import com.jero.esc.po.goodsinfo.ServiceRemark;
+import com.jero.esc.po.saleinfo.OrderInfo;
+import com.jero.esc.po.saleinfo.OrderService;
+import com.jero.esc.po.userinfo.ProviderInfo;
+import com.jero.esc.service.goodsinfo.IRemarkService;
+import com.jero.esc.vo.goodsinfo.RemarkCountVo;
+import com.jero.esc.vo.goodsinfo.ServiceRemarkVo;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by blazh on 2016/12/29.
+ */
+@Service
+public class RemarkService implements IRemarkService {
+
+	@Autowired
+	private OrderServiceMapper orderServiceMapper;
+
+	@Autowired
+	private OrderInfoMapper orderInfoMapper;
+
+	@Autowired
+	private ServiceRemarkMapper serviceRemarkMapper;
+
+	@Autowired
+	private ProviderInfoMapper providerInfoMapper;
+
+	@Autowired
+	private ServiceInfoMapper serviceInfoMapper;
+
+	@Autowired
+	private ServiceSnapshotMapper serviceSnapshotMapper;
+
+	/**
+	 * 根据订单商品id得到商品与评价
+	 *
+	 * @param orderService
+	 * @return
+	 */
+	@Override
+	public OrderService getOrderServiceWithRemark(OrderService orderService) throws Exception {
+
+		if (FastValid.isEmp(orderService.getBox(), orderService.getOsId())) {
+			throw new ExceptionWithMessage("参数非法");
+		}
+
+		// 验证是不是买家或者是卖家
+		OrderInfo orderInfo = new OrderInfo();
+		OrderInfo orderInfo1 = new OrderInfo();
+		orderInfo.setOrderBuyer(orderService.getBox().toString());
+		orderInfo1.setOrderSeller(orderService.getBox().toString());
+
+		OrderService orderService1 = new OrderService();
+		OrderService orderService2 = new OrderService();
+		orderService1.setOsId(orderService.getOsId());
+		orderService1.setOrderInfo(orderInfo);
+		orderService2.setOsId(orderService.getOsId());
+		orderService2.setOrderInfo(orderInfo1);
+
+		if (orderServiceMapper.countByExample(orderService1) <= 0
+				&& orderServiceMapper.countByExample(orderService2) <= 0) {
+			throw new ExceptionWithMessage("不是属于你的订单");
+		}
+
+		OrderService orderService3 = orderServiceMapper.selectByOrderServiceWithRemark(orderService);
+
+		return orderService3;
+	}
+
+	/**
+	 * 评价
+	 *
+	 * @param serviceRemark
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean addRemark(ServiceRemark serviceRemark) throws Exception {
+
+		if (FastValid.isEmp(serviceRemark.getBox(), serviceRemark.getSrOrder(), serviceRemark.getLogId()
+				)) {
+			throw new ExceptionWithMessage("参数非法");
+		}
+
+		// 订单所有者判断
+		OrderInfo orderInfo = new OrderInfo();
+		OrderInfo orderInfo1 = new OrderInfo();
+		orderInfo.setOrderBuyer(serviceRemark.getLogId());
+		orderInfo1.setOrderSeller(serviceRemark.getLogId());
+
+		OrderService orderService1 = new OrderService();
+		OrderService orderService2 = new OrderService();
+		orderService1.setOsId(serviceRemark.getSrOrder());
+		orderService1.setOrderInfo(orderInfo);
+		orderService2.setOsId(serviceRemark.getSrOrder());
+		orderService2.setOrderInfo(orderInfo1);
+
+		if (orderServiceMapper.countByExample(orderService1) <= 0
+				&& orderServiceMapper.countByExample(orderService2) <= 0) {
+			throw new ExceptionWithMessage("不是属于你的订单");
+		}
+
+		OrderService orderService = new OrderService();
+		orderService.setOsId(serviceRemark.getSrOrder());
+		OrderService orderService3 = orderServiceMapper.selectByOrderServiceWithRemark(orderService);
+		ServiceRemark serviceRemark1 = orderService3.getServiceRemark();
+
+		// 查到对应的评价表 验证添加动作的合法性
+		if (FastValid.isEmp(serviceRemark1.getSrContent(), serviceRemark1.getSrAppendcontent())) {
+			if ((!serviceRemark.getLogId().equals(orderService3.getOrderInfo().getOrderBuyer())&&!serviceRemark.getLogId().equals(orderService3.getOrderInfo().getOrderSeller()))
+					) {
+				throw new ExceptionWithMessage("错误的添加操作");
+			}
+
+
+            // 服务的评价更新
+            ServiceInfo serviceInfo = new ServiceInfo();
+            serviceInfo.setServiceId(orderService3.getServiceInfo().getServiceId());
+            ServiceInfo serviceInfo1 = serviceInfoMapper.selectByPrimaryKey(serviceInfo.getServiceId());// 重新获得最新的服务状态
+            JSONObject jsonObject = JSONObject.parseObject(serviceInfo1.getServiceRemark());
+            JSONObject jsonObject1 = new JSONObject();
+
+
+            // 服务商的评价更新
+            String orderSeller = orderService3.getOrderInfo().getOrderSeller();
+            ProviderInfo providerInfo = providerInfoMapper.selectByLogId(orderSeller);
+            JSONObject jsonObject2 = JSONObject.parseObject(providerInfo.getPiRemark());
+            JSONObject jsonObject3 = new JSONObject();
+
+
+
+            if (serviceRemark1.getSrContent() == null) {
+				ServiceRemark serviceRemark2 = new ServiceRemark();
+				serviceRemark2.setSrContent(serviceRemark.getBox().toString());
+				serviceRemark2.setSrRemark(serviceRemark.getSrRemark());
+				serviceRemark2.setSrLevel(serviceRemark.getSrLevel());
+				serviceRemark2.setSrCreatetime(new Date());
+				serviceRemark2.setLogId(serviceRemark.getLogId());
+				serviceRemark2.setSrId(UUIDUtil.getUUID());
+				serviceRemark2.setServiceId(serviceSnapshotMapper.selectByPrimaryKey(orderService3.getSersId()).getServiceId());
+				serviceRemark2.setSrOrder(serviceRemark.getSrOrder());
+				if (serviceRemarkMapper.insertSelective(serviceRemark2) <= 0) {
+					throw new ExceptionWithMessage("添加评价失败");
+				}
+                jsonObject1.put("total", jsonObject.getFloat("total") + serviceRemark.getSrRemark());
+                jsonObject1.put("count", (jsonObject.getInteger("count") + 1) + "");
+                jsonObject3.put("total", jsonObject2.getFloat("total") + serviceRemark.getSrRemark());
+                jsonObject3.put("count", (jsonObject2.getInteger("count") + 1) + "");
+			} else {
+				ServiceRemark serviceRemark2 = new ServiceRemark();
+				serviceRemark2.setSrId(serviceRemark1.getSrId());
+				serviceRemark2.setSrRemark(serviceRemark.getSrRemark());
+				serviceRemark2.setSrLevel(serviceRemark.getSrLevel());
+				serviceRemark2.setSrAppendcontent(serviceRemark.getBox().toString());
+				serviceRemark2.setSrAppendtime(new Date());
+				if (serviceRemarkMapper.updateByPrimaryKeySelective(serviceRemark2) <= 0) {
+                    throw new ExceptionWithMessage("添加追平失败");
+                }
+                jsonObject1.put("total", jsonObject.getFloat("total") + serviceRemark.getSrRemark()-serviceRemark1.getSrRemark());
+                jsonObject1.put("count", jsonObject.getInteger("count"));
+                jsonObject3.put("total", jsonObject2.getFloat("total") + serviceRemark.getSrRemark()-serviceRemark1.getSrRemark());
+                jsonObject3.put("count", jsonObject2.getInteger("count"));
+            }
+
+            //更新服务
+            serviceInfo.setServiceRemark(jsonObject1.toJSONString());
+            serviceInfo.setServiceMark(  jsonObject1.getInteger("count")==0?0.0f:(jsonObject1.getFloat("total")/(float)jsonObject1.getInteger("count")));
+            if (serviceInfoMapper.updateByPrimaryKeySelective(serviceInfo) <= 0) {
+                throw new ExceptionWithMessage("服务评价更新失败");
+            }
+
+            //更新服务商
+			providerInfo.setPiRemark(jsonObject3.toJSONString());
+            providerInfo.setPiMark( jsonObject3.getInteger("count")==0?0.0f:(jsonObject3.getFloat("total")/(float)jsonObject3.getInteger("count")));
+			if (providerInfoMapper.updateByPrimaryKeySelective(providerInfo) <= 0) {
+				throw new ExceptionWithMessage("服务商评价更新失败");
+			}
+
+
+
+		} else if (FastValid.isEmp(serviceRemark1.getSrResponseappendcontent(),
+				serviceRemark1.getSrResponsecontent())) {
+			if (!serviceRemark.getLogId().equals(orderService3.getOrderInfo().getOrderSeller())) {
+				throw new ExceptionWithMessage("错误的添加操作");
+			}
+			if (serviceRemark1.getSrResponsecontent() == null) {
+				ServiceRemark serviceRemark2 = new ServiceRemark();
+				serviceRemark2.setSrId(serviceRemark1.getSrId());
+				serviceRemark2.setSrResponsecontent(serviceRemark.getBox().toString());
+				serviceRemark2.setSrResponsetime(new Date());
+				if (serviceRemarkMapper.updateByPrimaryKeySelective(serviceRemark2) <= 0) {
+					throw new ExceptionWithMessage("回复失败");
+				}
+			} else {
+				ServiceRemark serviceRemark2 = new ServiceRemark();
+				serviceRemark2.setSrId(serviceRemark1.getSrId());
+				serviceRemark2.setSrResponseappendcontent(serviceRemark.getBox().toString());
+				serviceRemark2.setSrResponseappendtime(new Date());
+				if (serviceRemarkMapper.updateByPrimaryKeySelective(serviceRemark2) <= 0) {
+					throw new ExceptionWithMessage("再次回复失败");
+				}
+			}
+
+		}
+
+		return true;
+	}
+
+	/**
+	 * 修改评价
+	 *
+	 * @param serviceRemark
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public Boolean modifyRemark(ServiceRemark serviceRemark) throws Exception {
+		return null;
+	}
+
+	@Override
+	public List<ServiceRemarkVo> queryServiceRemarkByServiceId(ServiceRemarkVo serviceRemarkVo, RowBounds rowBounds)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return serviceRemarkMapper.selectServiceRemarkByServiceId(serviceRemarkVo, rowBounds);
+	}
+
+	@Override
+	public Integer queryCountServiceRemarkByServiceId(ServiceRemarkVo serviceRemarkVo) throws Exception {
+		// TODO Auto-generated method stub
+		return serviceRemarkMapper.selectCountServiceRemarkByServiceId(serviceRemarkVo);
+	}
+
+	@Override
+	public List<RemarkCountVo> queryCountRemark(RemarkCountVo remarkCountVo) throws Exception {
+		// TODO Auto-generated method stub
+		return serviceRemarkMapper.selectCountRemark(remarkCountVo);
+	}
+
+	public Integer[] queryAllCountServiceRemarkByTime(String logId) {
+		Integer k, e;
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		for (int i = 0; i <= 3; i++) {
+			for (int j = 0; j <= 4; j++) {
+				k = i;
+				e = j + 1;
+				if (i >= 3) {
+					k = null;
+				}
+				if (j >= 4) {
+					e = null;
+				}
+				list.add(serviceRemarkMapper.selectCountServiceRemarkByTime(logId, k, e));
+			}
+		}
+		return list.toArray(new Integer[list.size()]);
+	}
+
+	@Override
+	public Integer[] queryCountServiceRemarkByTime(String logId, Integer srLevel, Integer createtime) {
+		// TODO 自动生成的方法存根
+		 serviceRemarkMapper.selectCountServiceRemarkByTime(logId, srLevel, createtime + 1);
+		return null;
+	}
+
+	@Override
+	public Integer[] queryServiceRemarkByLogId(String logId) {
+		Integer k, e;
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		for (int i = 0; i <= 3; i++) {
+			for (int j = 0; j <= 4; j++) {
+				k = i;
+				e = j + 1;
+				if (i >= 3) {
+					k = null;
+				}
+				if (j >= 4) {
+					e = null;
+				}
+				list.add(serviceRemarkMapper.selectServiceRemarkByLogId(logId, k, e));
+			}
+		}
+		return list.toArray(new Integer[list.size()]);
+	}
+	@Override
+	public List<ServiceRemarkVo> queryServiceRemarkByLogIdSrLevel(ServiceRemarkVo serviceRemarkVo, RowBounds rowBounds)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return serviceRemarkMapper.queryServiceRemarkByLogIdSrLevel(serviceRemarkVo, rowBounds);
+	}
+
+
+
+
+
+
+
+
+	@Override
+	public Integer queryCountServiceRemarkByLogIdSrLevel(ServiceRemarkVo serviceRemarkVo) throws Exception {
+		// TODO Auto-generated method stub
+		return serviceRemarkMapper.queryCountServiceRemarkByLogIdSrLevel(serviceRemarkVo);
+	}
+
+
+
+
+
+
+
+
+	@Override
+	public List<RemarkCountVo> queryCountRemarkLogId(RemarkCountVo remarkCountVo) throws Exception {
+		// TODO Auto-generated method stub
+		return serviceRemarkMapper.selectCountRemarkLogId(remarkCountVo);
+	}
+
+
+
+
+
+
+
+
+	@Override
+	public List<ServiceRemarkVo> queryServiceRemarkByLogIdServiceId(ServiceRemarkVo serviceRemarkVo,
+			RowBounds rowBounds) throws Exception {
+		// TODO Auto-generated method stub
+		return serviceRemarkMapper.selectServiceRemarkByLogIdServiceId(serviceRemarkVo, rowBounds);
+	}
+
+
+
+
+
+
+
+
+	@Override
+	public Integer queryCountServiceRemarkByLogIdServiceId(ServiceRemarkVo serviceRemarkVo) throws Exception {
+		// TODO Auto-generated method stub
+		return serviceRemarkMapper.selectCountServiceRemarkByLogIdServiceId(serviceRemarkVo);
+	}
+
+
+
+
+
+
+
+
+	@Override
+	public List<RemarkCountVo> queryCountRemarkLogIdServiceId(
+			RemarkCountVo remarkCountVo) throws Exception {
+		// TODO Auto-generated method stub
+		return serviceRemarkMapper.selectCountRemarkByLogIdServiceId(remarkCountVo);
+	}
+
+
+
+
+
+
+
+
+
+
+}
+
+

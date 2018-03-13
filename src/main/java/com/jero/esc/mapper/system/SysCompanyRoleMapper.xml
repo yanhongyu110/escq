@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.system.SysCompanyRoleMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.system.SysCompanyRole">
+    <id column="COMPANY_ROLE_ID" jdbcType="VARCHAR" property="companyRoleId" />
+    <result column="COMPANY_ROLE_NAME" jdbcType="VARCHAR" property="companyRoleName" />
+    <result column="COMPANY_ROLE_STATUS" jdbcType="INTEGER" property="companyRoleStatus" />
+    <result column="COMPANY_ROLE_REMARK" jdbcType="VARCHAR" property="companyRoleRemark" />
+    <result column="COMPANY_ROLE_COMPANYID" jdbcType="VARCHAR" property="companyRoleCompanyid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    COMPANY_ROLE_ID, COMPANY_ROLE_NAME, COMPANY_ROLE_STATUS, COMPANY_ROLE_REMARK, COMPANY_ROLE_COMPANYID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_company_role
+    where COMPANY_ROLE_ID = #{companyRoleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_company_role
+    where COMPANY_ROLE_ID = #{companyRoleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.system.SysCompanyRole">
+    insert into sys_company_role (COMPANY_ROLE_ID, COMPANY_ROLE_NAME, COMPANY_ROLE_STATUS, 
+      COMPANY_ROLE_REMARK, COMPANY_ROLE_COMPANYID
+      )
+    values (#{companyRoleId,jdbcType=VARCHAR}, #{companyRoleName,jdbcType=VARCHAR}, #{companyRoleStatus,jdbcType=INTEGER}, 
+      #{companyRoleRemark,jdbcType=VARCHAR}, #{companyRoleCompanyid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.system.SysCompanyRole">
+    insert into sys_company_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="companyRoleId != null">
+        COMPANY_ROLE_ID,
+      </if>
+      <if test="companyRoleName != null">
+        COMPANY_ROLE_NAME,
+      </if>
+      <if test="companyRoleStatus != null">
+        COMPANY_ROLE_STATUS,
+      </if>
+      <if test="companyRoleRemark != null">
+        COMPANY_ROLE_REMARK,
+      </if>
+      <if test="companyRoleCompanyid != null">
+        COMPANY_ROLE_COMPANYID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="companyRoleId != null">
+        #{companyRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRoleName != null">
+        #{companyRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRoleStatus != null">
+        #{companyRoleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="companyRoleRemark != null">
+        #{companyRoleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRoleCompanyid != null">
+        #{companyRoleCompanyid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.system.SysCompanyRole">
+    update sys_company_role
+    <set>
+      <if test="companyRoleName != null">
+        COMPANY_ROLE_NAME = #{companyRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRoleStatus != null">
+        COMPANY_ROLE_STATUS = #{companyRoleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="companyRoleRemark != null">
+        COMPANY_ROLE_REMARK = #{companyRoleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRoleCompanyid != null">
+        COMPANY_ROLE_COMPANYID = #{companyRoleCompanyid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where COMPANY_ROLE_ID = #{companyRoleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.system.SysCompanyRole">
+    update sys_company_role
+    set COMPANY_ROLE_NAME = #{companyRoleName,jdbcType=VARCHAR},
+      COMPANY_ROLE_STATUS = #{companyRoleStatus,jdbcType=INTEGER},
+      COMPANY_ROLE_REMARK = #{companyRoleRemark,jdbcType=VARCHAR},
+      COMPANY_ROLE_COMPANYID = #{companyRoleCompanyid,jdbcType=VARCHAR}
+    where COMPANY_ROLE_ID = #{companyRoleId,jdbcType=VARCHAR}
+  </update>
+</mapper>

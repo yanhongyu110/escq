@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.system.SysAuthorityMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.system.SysAuthority">
+    <id column="AUTHORITY_ID" jdbcType="INTEGER" property="authorityId" />
+    <result column="AUTHORITY_NAME" jdbcType="VARCHAR" property="authorityName" />
+    <result column="AUTHORITY_PARENT" jdbcType="INTEGER" property="authorityParent" />
+    <result column="AUTHORITY_ISLEAF" jdbcType="BIT" property="authorityIsleaf" />
+    <result column="AUTHORITY_REMARK" jdbcType="VARCHAR" property="authorityRemark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    AUTHORITY_ID, AUTHORITY_NAME, AUTHORITY_PARENT, AUTHORITY_ISLEAF, AUTHORITY_REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_authority
+    where AUTHORITY_ID = #{authorityId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_authority
+    where AUTHORITY_ID = #{authorityId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.system.SysAuthority">
+    insert into sys_authority (AUTHORITY_ID, AUTHORITY_NAME, AUTHORITY_PARENT, 
+      AUTHORITY_ISLEAF, AUTHORITY_REMARK)
+    values (#{authorityId,jdbcType=INTEGER}, #{authorityName,jdbcType=VARCHAR}, #{authorityParent,jdbcType=INTEGER}, 
+      #{authorityIsleaf,jdbcType=BIT}, #{authorityRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.system.SysAuthority">
+    insert into sys_authority
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="authorityId != null">
+        AUTHORITY_ID,
+      </if>
+      <if test="authorityName != null">
+        AUTHORITY_NAME,
+      </if>
+      <if test="authorityParent != null">
+        AUTHORITY_PARENT,
+      </if>
+      <if test="authorityIsleaf != null">
+        AUTHORITY_ISLEAF,
+      </if>
+      <if test="authorityRemark != null">
+        AUTHORITY_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="authorityId != null">
+        #{authorityId,jdbcType=INTEGER},
+      </if>
+      <if test="authorityName != null">
+        #{authorityName,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityParent != null">
+        #{authorityParent,jdbcType=INTEGER},
+      </if>
+      <if test="authorityIsleaf != null">
+        #{authorityIsleaf,jdbcType=BIT},
+      </if>
+      <if test="authorityRemark != null">
+        #{authorityRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.system.SysAuthority">
+    update sys_authority
+    <set>
+      <if test="authorityName != null">
+        AUTHORITY_NAME = #{authorityName,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityParent != null">
+        AUTHORITY_PARENT = #{authorityParent,jdbcType=INTEGER},
+      </if>
+      <if test="authorityIsleaf != null">
+        AUTHORITY_ISLEAF = #{authorityIsleaf,jdbcType=BIT},
+      </if>
+      <if test="authorityRemark != null">
+        AUTHORITY_REMARK = #{authorityRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AUTHORITY_ID = #{authorityId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.system.SysAuthority">
+    update sys_authority
+    set AUTHORITY_NAME = #{authorityName,jdbcType=VARCHAR},
+      AUTHORITY_PARENT = #{authorityParent,jdbcType=INTEGER},
+      AUTHORITY_ISLEAF = #{authorityIsleaf,jdbcType=BIT},
+      AUTHORITY_REMARK = #{authorityRemark,jdbcType=VARCHAR}
+    where AUTHORITY_ID = #{authorityId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,128 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="UTF-8">
+		<title>申请退款</title>
+		<meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="0">
+		<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+		<link rel="stylesheet" href="${webtxc}/css/public.css" />
+		<link rel="stylesheet" href="${webtxc}/css/personal.css" />
+		<script type="text/javascript" src="${webtxc}/myjs/saleinfo/personal_tab.js"></script>
+		<script type="text/javascript" src="${webtxc}/myjs/saleinfo/personal_menu.js"></script>
+</head>
+<body>
+<c:set var="istop" value="true" />
+			<%@include file="/WEB-INF/jsp/common/top.jsp"%>
+			<!--end.personal-->
+			<div class="content">
+				<%@ include file="/WEB-INF/jsp/common/left.jsp"%>
+				<div class="content-right">
+					<div class="expert_mes">
+						<h2>申请退款</h2>
+						
+						<div class="status_icon">
+							<p class="progress_bar max-line"></p>
+							<div class="status_progress status_one on">
+								<div class="steps">1
+									<div class="stripeL"></div>
+									<div class="stripeR"></div>
+								</div>
+								<div class="status_text">申请退款</div>
+							</div>
+							<div class="status_progress  status_two  on ">
+								<div class="steps">2
+									<div class="stripeL"></div>
+									<div class="stripeR"></div>
+								</div>
+								<div class="status_text">专家同意</div>
+							</div>
+							<div class="status_progress status_three">
+								<div class="steps">3
+									<div class="stripeL"></div>
+									<div class="stripeR"></div>
+								</div>
+								<div class="status_text">平台处理</div>
+							</div>
+							<div class="status_progress status_four">
+								<div class="steps">4
+									<div class="stripeL"></div>
+									<div class="stripeR"></div>
+								</div>
+								<div class="status_text">退款完成</div>
+							</div>
+							
+						</div><!--end.status_icon-->
+						<div class="my_zh">
+							<div class="my_zh_title" >
+								<div class="my_zh_title_left">
+									
+									<h4>专家同意退款后，平台将托管资金转入您的账户余额，如专家不同意，平台将干预处理</h4>
+								</div>
+
+							</div>
+						</div>
+						<!--end.my_zh-->
+						<div class="note_message refound">
+							<div class="fw_pj">
+							<table cellpadding="0" cellspacing="0" border="0">
+								<tr>
+									<td>2016-12-14 </td>
+									<td>订单号：2016080623566</td>
+									<td>状态</td>
+									<td>金额</td>
+									<td>备注</td>
+								</tr>
+								<tr>
+									<td class="fw_pj_img"><img src="${webtxc}/images/fw_01.jpg" width="150"></td>
+									<td class="fw_pj_title">互联网产品 项目运营实战<br>重庆/江北<br>约2小时</td>
+									<td>交易完成</td>
+									<td><span>￥299.00</span></td>
+									<td class="bz">尺寸不符合</td>
+								</tr>
+							</table>
+						    </div>
+						    <div class="money ">
+						    	<h3>退款金额：<span>￥299.00</span></h3>
+						    </div>
+							
+							<ul>
+								<li>退款理由：</li>
+								<li>
+									<textarea cols="48" rows="7">退款理由...</textarea>
+								</li>
+								<li class="zp_ts">字数不超过<span>200</span>个字。</li>
+							</ul>
+							<ul>
+								<li>专家说明：</li>
+								<li>
+									<textarea cols="48" rows="7">退款理由...</textarea>
+								</li>
+								<li class="fll">专家同意退款时，可不填写说明，当专家不同意的时候，必须填写专家说明。</li>
+							</ul>
+							
+							<ul>
+								
+								<li>
+									<div class="mes_btn_wc ">同意退款</div>
+									<div class="mes_btn_qx">不同意退款</div>
+								</li>
+								
+							</ul>
+							
+							
+						</div>
+						
+					</div><!--end.expert_mes-->
+					
+					
+				</div>
+				
+			</div>
+
+</body>
+</html>

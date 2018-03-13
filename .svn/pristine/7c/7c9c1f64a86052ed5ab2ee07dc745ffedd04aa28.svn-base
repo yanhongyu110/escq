@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.PointPaymentDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.PointPaymentDetails">
+    <id column="PPD_ID" jdbcType="VARCHAR" property="ppdId" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="PPD_IOTYPE" jdbcType="INTEGER" property="ppdIotype" />
+    <result column="PPD_CREATETIME" jdbcType="TIMESTAMP" property="ppdCreatetime" />
+    <result column="PPD_AMOUNT" jdbcType="INTEGER" property="ppdAmount" />
+    <result column="PPD_DEALTYPE" jdbcType="INTEGER" property="ppdDealtype" />
+    <result column="PPD_ADMINORDERNO" jdbcType="VARCHAR" property="ppdAdminorderno" />
+    <result column="PPD_DEALNO" jdbcType="VARCHAR" property="ppdDealno" />
+    <result column="PPD_COMMENT" jdbcType="VARCHAR" property="ppdComment" />
+  </resultMap>
+  
+  <select id="selectPointIODetailsById" resultMap="BaseResultMap">
+  	SELECT
+	point_payment_details.PPD_ID,
+	point_payment_details.LOG_ID,
+	point_payment_details.PPD_IOTYPE,
+	point_payment_details.PPD_CREATETIME,
+	point_payment_details.PPD_AMOUNT,
+	point_payment_details.PPD_DEALTYPE,
+	point_payment_details.PPD_ADMINORDERNO,
+	point_payment_details.PPD_DEALNO,
+	point_payment_details.PPD_COMMENT
+	FROM
+	point_payment_details
+	<where>
+		LOG_ID = #{logId}
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+			AND point_payment_details.PPD_CREATETIME BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime == null">
+			AND point_payment_details.PPD_CREATETIME &gt; #{startTime}
+		</if>
+		<if test="endTime != null and endTime != '' and startTime == null">
+			AND point_payment_details.PPD_CREATETIME &lt; #{endTime}
+		</if>
+	</where>
+	ORDER BY point_payment_details.PPD_CREATETIME DESC
+  </select>
+  <select id="selectPointIODetailsCountById" resultType="int">
+  	SELECT
+	COUNT(*)
+	FROM
+	point_payment_details
+	<where>
+		LOG_ID = #{logId}
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+			AND point_payment_details.PPD_CREATETIME BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime == null">
+			AND point_payment_details.PPD_CREATETIME &gt; #{startTime}
+		</if>
+		<if test="endTime != null and endTime != '' and startTime == null">
+			AND point_payment_details.PPD_CREATETIME &lt; #{endTime}
+		</if>
+	</where>
+  </select>
+  
+  <select id="selectPointIOByIdYear" resultType="hashmap">
+  	SELECT
+	SUM(case when PPD_IOTYPE=1 then PPD_AMOUNT else 0 end) as PPD_INAMOUNT,
+	SUM(case when PPD_IOTYPE=2 then PPD_AMOUNT else 0 end) as PPD_OUTAMOUNT,
+	YEAR(PPD_CREATETIME) AS YEAR
+	FROM
+	point_payment_details
+	<where>
+		LOG_ID = #{logId}
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+			AND point_payment_details.PPD_CREATETIME BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime == null">
+			AND point_payment_details.PPD_CREATETIME &gt; #{startTime}
+		</if>
+		<if test="endTime != null and endTime != '' and startTime == null">
+			AND point_payment_details.PPD_CREATETIME &lt; #{endTime}
+		</if>
+	</where>
+	GROUP BY YEAR(point_payment_details.PPD_CREATETIME)
+	ORDER BY PPD_CREATETIME DESC
+  </select>
+  <select id="selectPointIOCountByIdYear" resultType="int">
+  	SELECT COUNT(*)
+  	FROM(
+	  	SELECT
+		SUM(case when PPD_IOTYPE=1 then PPD_AMOUNT else 0 end) as PPD_INAMOUNT,
+		SUM(case when PPD_IOTYPE=2 then PPD_AMOUNT else 0 end) as PPD_OUTAMOUNT,
+		YEAR(PPD_CREATETIME)
+		FROM
+		point_payment_details
+		<where>
+		LOG_ID = #{logId}
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+			AND point_payment_details.PPD_CREATETIME BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime == null">
+			AND point_payment_details.PPD_CREATETIME &gt; #{startTime}
+		</if>
+		<if test="endTime != null and endTime != '' and startTime == null">
+			AND point_payment_details.PPD_CREATETIME &lt; #{endTime}
+		</if>
+		</where>
+		GROUP BY YEAR(point_payment_details.PPD_CREATETIME)
+		ORDER BY PPD_CREATETIME DESC
+	) A
+  </select>
+  
+  <select id="selectPointIOByIdMonth" resultType="hashmap">
+  	SELECT
+	SUM(case when PPD_IOTYPE=1 then PPD_AMOUNT else 0 end) as PPD_INAMOUNT,
+	SUM(case when PPD_IOTYPE=2 then PPD_AMOUNT else 0 end) as PPD_OUTAMOUNT,
+	YEAR(PPD_CREATETIME) AS YEAR,
+	MONTH(PPD_CREATETIME) AS MONTH
+	FROM
+	point_payment_details
+	<where>
+		LOG_ID = #{logId}
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+			AND point_payment_details.PPD_CREATETIME BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime == null">
+			AND point_payment_details.PPD_CREATETIME &gt; #{startTime}
+		</if>
+		<if test="endTime != null and endTime != '' and startTime == null">
+			AND point_payment_details.PPD_CREATETIME &lt; #{endTime}
+		</if>
+	</where>
+	GROUP BY MONTH(point_payment_details.PPD_CREATETIME),
+	YEAR(point_payment_details.PPD_CREATETIME)
+	ORDER BY PPD_CREATETIME DESC
+  </select>
+  <select id="selectPointIOCountByIdMonth" resultType="int">
+  	SELECT COUNT(*)
+  	FROM(
+	  	SELECT
+		SUM(case when PPD_IOTYPE=1 then PPD_AMOUNT else 0 end) as PPD_INAMOUNT,
+		SUM(case when PPD_IOTYPE=2 then PPD_AMOUNT else 0 end) as PPD_OUTAMOUNT,
+		YEAR(PPD_CREATETIME) AS YEAR,
+		MONTH(PPD_CREATETIME) AS MONTH
+		FROM
+		point_payment_details
+		<where>
+		LOG_ID = #{logId}
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+			AND point_payment_details.PPD_CREATETIME BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime == null">
+			AND point_payment_details.PPD_CREATETIME &gt; #{startTime}
+		</if>
+		<if test="endTime != null and endTime != '' and startTime == null">
+			AND point_payment_details.PPD_CREATETIME &lt; #{endTime}
+		</if>
+		</where>
+		GROUP BY MONTH(point_payment_details.PPD_CREATETIME),
+		YEAR(point_payment_details.PPD_CREATETIME)
+		ORDER BY PPD_CREATETIME DESC
+	) A
+  </select>
+  
+  <select id="selectPointIOByIdDay" resultType="hashmap">
+  	SELECT
+	SUM(case when PPD_IOTYPE=1 then PPD_AMOUNT else 0 end) as PPD_INAMOUNT,
+	SUM(case when PPD_IOTYPE=2 then PPD_AMOUNT else 0 end) as PPD_OUTAMOUNT,
+	YEAR(PPD_CREATETIME) AS YEAR,
+	MONTH(PPD_CREATETIME) AS MONTH,
+	DAY(PPD_CREATETIME) AS DAY
+	FROM
+	point_payment_details
+	<where>
+		LOG_ID = #{logId}
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+			AND point_payment_details.PPD_CREATETIME BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime == null">
+			AND point_payment_details.PPD_CREATETIME &gt; #{startTime}
+		</if>
+		<if test="endTime != null and endTime != '' and startTime == null">
+			AND point_payment_details.PPD_CREATETIME &lt; #{endTime}
+		</if>
+	</where>
+	GROUP BY DAY(point_payment_details.PPD_CREATETIME),
+	YEAR(point_payment_details.PPD_CREATETIME),
+	MONTH(point_payment_details.PPD_CREATETIME)
+	ORDER BY PPD_CREATETIME DESC
+  </select>
+  <select id="selectPointIOCountByIdDay" resultType="int">
+  	SELECT COUNT(*)
+  	FROM(
+	  	SELECT
+		SUM(case when PPD_IOTYPE=1 then PPD_AMOUNT else 0 end) as PPD_INAMOUNT,
+		SUM(case when PPD_IOTYPE=2 then PPD_AMOUNT else 0 end) as PPD_OUTAMOUNT,
+		YEAR(PPD_CREATETIME) AS YEAR,
+		MONTH(PPD_CREATETIME) AS MONTH,
+		DAY(PPD_CREATETIME) AS DAY
+		FROM
+		point_payment_details
+		<where>
+		LOG_ID = #{logId}
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+			AND point_payment_details.PPD_CREATETIME BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime == null">
+			AND point_payment_details.PPD_CREATETIME &gt; #{startTime}
+		</if>
+		<if test="endTime != null and endTime != '' and startTime == null">
+			AND point_payment_details.PPD_CREATETIME &lt; #{endTime}
+		</if>
+		</where>
+		GROUP BY DAY(point_payment_details.PPD_CREATETIME),
+		YEAR(point_payment_details.PPD_CREATETIME),
+		MONTH(point_payment_details.PPD_CREATETIME)
+		ORDER BY PPD_CREATETIME DESC
+	) A
+  </select>
+  
+  <select id="selectPointInAmountById" resultType="int">
+  	SELECT 
+  	SUM(PPD_AMOUNT) 
+  	FROM point_payment_details
+ 	<where>
+ 		PPD_IOTYPE = 1
+ 		AND LOG_ID = #{logId}
+ 		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+			AND point_payment_details.PPD_CREATETIME BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime == null">
+			AND point_payment_details.PPD_CREATETIME &gt; #{startTime}
+		</if>
+		<if test="endTime != null and endTime != '' and startTime == null">
+			AND point_payment_details.PPD_CREATETIME &lt; #{endTime}
+		</if>
+ 	</where>
+  </select>
+  
+  <select id="selectPointOutAmountById" resultType="int">
+  	SELECT 
+  	SUM(PPD_AMOUNT) 
+  	FROM point_payment_details
+ 	<where>
+ 		PPD_IOTYPE = 2
+ 		AND LOG_ID = #{logId}
+ 		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+			AND point_payment_details.PPD_CREATETIME BETWEEN #{startTime} AND #{endTime}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime == null">
+			AND point_payment_details.PPD_CREATETIME &gt; #{startTime}
+		</if>
+		<if test="endTime != null and endTime != '' and startTime == null">
+			AND point_payment_details.PPD_CREATETIME &lt; #{endTime}
+		</if>
+ 	</where>
+  </select>
+  
+  <sql id="Base_Column_List">
+    PPD_ID, LOG_ID, PPD_IOTYPE, PPD_CREATETIME, PPD_AMOUNT, PPD_DEALTYPE, PPD_ADMINORDERNO, 
+    PPD_DEALNO, PPD_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from point_payment_details
+    where PPD_ID = #{ppdId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from point_payment_details
+    where PPD_ID = #{ppdId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.PointPaymentDetails">
+    insert into point_payment_details (PPD_ID, LOG_ID, PPD_IOTYPE, 
+      PPD_CREATETIME, PPD_AMOUNT, PPD_DEALTYPE, 
+      PPD_ADMINORDERNO, PPD_DEALNO, PPD_COMMENT
+      )
+    values (#{ppdId,jdbcType=VARCHAR}, #{logId,jdbcType=VARCHAR}, #{ppdIotype,jdbcType=INTEGER}, 
+      #{ppdCreatetime,jdbcType=TIMESTAMP}, #{ppdAmount,jdbcType=INTEGER}, #{ppdDealtype,jdbcType=INTEGER}, 
+      #{ppdAdminorderno,jdbcType=VARCHAR}, #{ppdDealno,jdbcType=VARCHAR}, #{ppdComment,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.PointPaymentDetails">
+    insert into point_payment_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ppdId != null">
+        PPD_ID,
+      </if>
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="ppdIotype != null">
+        PPD_IOTYPE,
+      </if>
+      <if test="ppdCreatetime != null">
+        PPD_CREATETIME,
+      </if>
+      <if test="ppdAmount != null">
+        PPD_AMOUNT,
+      </if>
+      <if test="ppdDealtype != null">
+        PPD_DEALTYPE,
+      </if>
+      <if test="ppdAdminorderno != null">
+        PPD_ADMINORDERNO,
+      </if>
+      <if test="ppdDealno != null">
+        PPD_DEALNO,
+      </if>
+      <if test="ppdComment != null">
+        PPD_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ppdId != null">
+        #{ppdId,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="ppdIotype != null">
+        #{ppdIotype,jdbcType=INTEGER},
+      </if>
+      <if test="ppdCreatetime != null">
+        #{ppdCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ppdAmount != null">
+        #{ppdAmount,jdbcType=INTEGER},
+      </if>
+      <if test="ppdDealtype != null">
+        #{ppdDealtype,jdbcType=INTEGER},
+      </if>
+      <if test="ppdAdminorderno != null">
+        #{ppdAdminorderno,jdbcType=VARCHAR},
+      </if>
+      <if test="ppdDealno != null">
+        #{ppdDealno,jdbcType=VARCHAR},
+      </if>
+      <if test="ppdComment != null">
+        #{ppdComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.PointPaymentDetails">
+    update point_payment_details
+    <set>
+      <if test="logId != null">
+        LOG_ID = #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="ppdIotype != null">
+        PPD_IOTYPE = #{ppdIotype,jdbcType=INTEGER},
+      </if>
+      <if test="ppdCreatetime != null">
+        PPD_CREATETIME = #{ppdCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ppdAmount != null">
+        PPD_AMOUNT = #{ppdAmount,jdbcType=INTEGER},
+      </if>
+      <if test="ppdDealtype != null">
+        PPD_DEALTYPE = #{ppdDealtype,jdbcType=INTEGER},
+      </if>
+      <if test="ppdAdminorderno != null">
+        PPD_ADMINORDERNO = #{ppdAdminorderno,jdbcType=VARCHAR},
+      </if>
+      <if test="ppdDealno != null">
+        PPD_DEALNO = #{ppdDealno,jdbcType=VARCHAR},
+      </if>
+      <if test="ppdComment != null">
+        PPD_COMMENT = #{ppdComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PPD_ID = #{ppdId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.PointPaymentDetails">
+    update point_payment_details
+    set LOG_ID = #{logId,jdbcType=VARCHAR},
+      PPD_IOTYPE = #{ppdIotype,jdbcType=INTEGER},
+      PPD_CREATETIME = #{ppdCreatetime,jdbcType=TIMESTAMP},
+      PPD_AMOUNT = #{ppdAmount,jdbcType=INTEGER},
+      PPD_DEALTYPE = #{ppdDealtype,jdbcType=INTEGER},
+      PPD_ADMINORDERNO = #{ppdAdminorderno,jdbcType=VARCHAR},
+      PPD_DEALNO = #{ppdDealno,jdbcType=VARCHAR},
+      PPD_COMMENT = #{ppdComment,jdbcType=VARCHAR}
+    where PPD_ID = #{ppdId,jdbcType=VARCHAR}
+  </update>
+</mapper>

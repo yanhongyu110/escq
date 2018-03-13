@@ -1,0 +1,140 @@
+package com.jero.esc.service.impl.demand;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jero.esc.common.po.JsonResult;
+import com.jero.esc.common.utils.UUIDUtil;
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import com.jero.esc.mapper.demand.DemandMapper;
+import com.jero.esc.mapper.pubinfo.CommonTypeMapper;
+import com.jero.esc.po.pubinfo.CommonType;
+import com.jero.esc.service.demand.IDemandService;
+import com.jero.esc.vo.demand.Demand;
+import com.jero.esc.vo.demand.DemandVo;
+
+@Service
+public class DemandService implements IDemandService{
+
+	@Autowired
+	private DemandMapper demandMapper;
+
+	@Autowired
+	private CommonTypeMapper commonTypeMapper;
+
+
+	@Override
+	public List<Demand> takeList(String search,String typeTree, String order, RowBounds rowBounds) {
+		return demandMapper.selectList(search,typeTree,order,rowBounds);
+	}
+	@Override
+	public List<DemandVo> takeList1(String search,String typeTree, String order, RowBounds rowBounds) {
+		return demandMapper.selectList1(search,typeTree,order,rowBounds);
+	}
+
+	@Override
+	public int takeListCount(String search,String typeTree, String com) {
+		return demandMapper.selectListCount(search,typeTree,com);
+	}
+
+	@Override
+	public List<Demand> takeTopByCount(Integer top, String module) {
+		return demandMapper.selectTop(top,module);
+	}
+	@Override
+	public List<DemandVo> takeTopByCount1(Integer top, String module) {
+		return demandMapper.selectTop1(top,module);
+	}
+
+
+	@Override
+	@Transactional(rollbackFor=ExceptionWithMessage.class)
+	public JsonResult addDemand(Demand demand, String id) {
+		demand.setDemId(UUIDUtil.getUUID());
+		demand.setDemCreatetime(new Date());
+		demand.setDemState(1);
+		demand.setDemIsdelete(false);
+		demand.setDemLogid(id);
+		addTree(demand);
+		
+		int i = demandMapper.insert(demand);
+		if(i > 0){
+			return new JsonResult(true, "发布成功", null);
+		}
+		return new JsonResult(false, "发布失败", null);
+	}
+
+	private  void addTree(Demand demand){
+        String typeTree="";
+        CommonType commonType = commonTypeMapper.selectByPrimaryKey(demand.getDemType()+"");
+        typeTree+=commonType.getCtId();
+        CommonType f=commonType.getCommonType();
+        while (f!=null){
+            typeTree= f.getCtId()+","+typeTree;
+            f=f.getCommonType();
+        }
+        demand.setDemTypetree(typeTree);
+    }
+
+	@Override
+	public List<DemandVo> selectAll(RowBounds rowBounds, Demand demand) {
+		return demandMapper.selectAll2(rowBounds, demand);
+	}
+
+	@Override
+	public int count(Demand demand) {
+		// TODO Auto-generated method stub
+		return demandMapper.count(demand);
+	}
+
+	@Override
+	public Demand selectById(String id) {
+		// TODO Auto-generated method stub
+		return demandMapper.selectById(id);
+	}
+	
+	@Override
+	public DemandVo selectDemandVoById(String id) {
+		// TODO Auto-generated method stub
+		return demandMapper.selectDemandVoById(id);
+	}
+
+	@Override
+	@Transactional(rollbackFor=ExceptionWithMessage.class)
+	public JsonResult updateById(Demand demand) {
+		demand.setDemCreatetime(new Date());
+		
+		int i = demandMapper.updateById(demand);
+		if(i > 0){
+			return new JsonResult(true, "修改成功", null);
+		}
+		return new JsonResult(false, "修改失败", null);
+	}
+
+	@Override
+	public List<Demand> selectAll1(RowBounds rowBounds, Demand demand) {
+		// TODO Auto-generated method stub
+		return demandMapper.selectAll1(rowBounds, demand);
+	}
+
+	@Override
+	public int count1(Demand demand) {
+		// TODO Auto-generated method stub
+		return demandMapper.count1(demand);
+	}
+
+	@Override
+	public List<Demand> selectOthers(Demand demand) {
+		// TODO Auto-generated method stub
+		return demandMapper.selectOthers(demand);
+	}
+	@Override
+	public List<Demand> selectDemandByLogId(RowBounds rowBounds, String logId) {
+		return demandMapper.selectDemandByLogId(rowBounds, logId);
+	}
+}

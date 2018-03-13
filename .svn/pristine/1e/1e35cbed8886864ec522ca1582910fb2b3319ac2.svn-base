@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.jero.esc.mapper.userinfo.AdminInfoMapper"> 
+ <resultMap id="BaseResultMap" type="com.jero.esc.po.userinfo.AdminInfo"> 
+  <id column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" /> 
+  <result column="ADMIN_NAME" jdbcType="VARCHAR" property="adminName" /> 
+  <result column="ADMIN_PASS" jdbcType="VARCHAR" property="adminPass" /> 
+  <result column="ADMIN_REALNAME" jdbcType="VARCHAR" property="adminRealname" /> 
+  <result column="ADMIN_CREATETIME" jdbcType="TIMESTAMP" property="adminCreatetime" /> 
+  <result column="ADMIN_CREATER" jdbcType="VARCHAR" property="adminCreater" /> 
+  <result column="ADMIN_CELL" jdbcType="VARCHAR" property="adminCell" /> 
+  <result column="ADMIN_COMMENT" jdbcType="VARCHAR" property="adminComment" />
+  <result column="COMPANY" jdbcType="VARCHAR" property="company" /> 
+ </resultMap> 
+ <sql id="Base_Column_List">
+  ADMIN_ID, ADMIN_NAME, ADMIN_PASS, ADMIN_REALNAME, ADMIN_CREATETIME, ADMIN_CREATER, ADMIN_CELL, ADMIN_COMMENT,COMPANY
+ </sql> 
+ <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap"> select 
+  <include refid="Base_Column_List" /> from admin_info where ADMIN_ID = #{adminId,jdbcType=VARCHAR} </select> 
+ <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+   delete from admin_info where ADMIN_ID = #{adminId,jdbcType=VARCHAR} 
+ </delete> 
+ <insert id="insert" parameterType="com.jero.esc.po.userinfo.AdminInfo">
+  insert into admin_info (ADMIN_ID, ADMIN_NAME, ADMIN_PASS, ADMIN_REALNAME, ADMIN_CREATETIME, ADMIN_CREATER, ADMIN_CELL, ADMIN_COMMENT,COMPANY) values (#{adminId,jdbcType=VARCHAR}, #{adminName,jdbcType=VARCHAR}, #{adminPass,jdbcType=VARCHAR}, #{adminRealname,jdbcType=VARCHAR}, #{adminCreatetime,jdbcType=TIMESTAMP}, #{adminCreater,jdbcType=VARCHAR}, #{adminCell,jdbcType=VARCHAR}, #{adminComment,jdbcType=VARCHAR},#{company})
+ </insert> 
+ <insert id="insertSelective" parameterType="com.jero.esc.po.userinfo.AdminInfo">
+   insert into admin_info 
+  <trim prefix="(" suffix=")" suffixOverrides=","> 
+   <if test="adminId != null">
+     ADMIN_ID, 
+   </if> 
+   <if test="adminName != null">
+     ADMIN_NAME, 
+   </if> 
+   <if test="adminPass != null">
+     ADMIN_PASS, 
+   </if> 
+   <if test="adminRealname != null">
+     ADMIN_REALNAME, 
+   </if> 
+   <if test="adminCreatetime != null">
+     ADMIN_CREATETIME, 
+   </if> 
+   <if test="adminCreater != null">
+     ADMIN_CREATER, 
+   </if> 
+   <if test="adminCell != null">
+     ADMIN_CELL, 
+   </if> 
+   <if test="adminComment != null">
+     ADMIN_COMMENT, 
+   </if>  
+   <if test="company != null">
+     COMPANY, 
+   </if>
+  </trim> 
+  <trim prefix="values (" suffix=")" suffixOverrides=","> 
+   <if test="adminId != null">
+     #{adminId,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="adminName != null">
+     #{adminName,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="adminPass != null">
+     #{adminPass,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="adminRealname != null">
+     #{adminRealname,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="adminCreatetime != null">
+     #{adminCreatetime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="adminCreater != null">
+     #{adminCreater,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="adminCell != null">
+     #{adminCell,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="adminComment != null">
+     #{adminComment,jdbcType=VARCHAR}, 
+   </if>  
+   <if test="company != null">
+     #{company}, 
+   </if>
+  </trim> 
+ </insert> 
+ <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.userinfo.AdminInfo">
+   update admin_info 
+  <set> 
+   <if test="adminName != null">
+     ADMIN_NAME = #{adminName,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="adminPass != null">
+     ADMIN_PASS = #{adminPass,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="adminRealname != null">
+     ADMIN_REALNAME = #{adminRealname,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="adminCreatetime != null">
+     ADMIN_CREATETIME = #{adminCreatetime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="adminCreater != null">
+     ADMIN_CREATER = #{adminCreater,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="adminCell != null">
+     ADMIN_CELL = #{adminCell,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="adminComment != null">
+     ADMIN_COMMENT = #{adminComment,jdbcType=VARCHAR}, 
+   </if>  
+   <if test="company != null">
+     COMPANY = #{company}, 
+   </if>
+  </set> where ADMIN_ID = #{adminId,jdbcType=VARCHAR} 
+ </update> 
+ <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.userinfo.AdminInfo">
+  update admin_info set ADMIN_NAME = #{adminName,jdbcType=VARCHAR}, ADMIN_PASS = #{adminPass,jdbcType=VARCHAR}, ADMIN_REALNAME = #{adminRealname,jdbcType=VARCHAR}, ADMIN_CREATETIME = #{adminCreatetime,jdbcType=TIMESTAMP}, ADMIN_CREATER = #{adminCreater,jdbcType=VARCHAR}, ADMIN_CELL = #{adminCell,jdbcType=VARCHAR}, ADMIN_COMMENT = #{adminComment,jdbcType=VARCHAR} , COMPANY = #{company} where ADMIN_ID = #{adminId,jdbcType=VARCHAR}
+ </update> 
+</mapper>

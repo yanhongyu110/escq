@@ -1,0 +1,237 @@
+package com.jero.esc.controller.appapi.userinfo;
+
+import com.jero.esc.common.appapi.AppBaseController;
+import com.jero.esc.common.appapi.AppJsonResult;
+import com.jero.esc.common.controller.BaseController;
+import com.jero.esc.common.po.JsonResult;
+import com.jero.esc.common.shiro.realms.SignToken;
+import com.jero.esc.common.shiro.realms.TokenDao;
+import com.jero.esc.common.utils.*;
+import com.jero.esc.common.utils.exception.AppException;
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import com.jero.esc.common.utils.fastvalidate.FastValid;
+import com.jero.esc.mapper.bizinfo.CompanyInfoMapper;
+import com.jero.esc.mapper.userinfo.LogInfoMapper;
+import com.jero.esc.po.bizinfo.CompanyInfo;
+import com.jero.esc.po.shiro.Apptoken;
+import com.jero.esc.po.userinfo.LogInfo;
+import com.jero.esc.service.userinfo.ILogInfoService;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+@Controller("appLogInfoController")
+@RequestMapping(value = "/appapi/userinfo")
+public class LogInfoController extends AppBaseController {
+
+
+
+	@Autowired
+	CompanyInfoMapper companyInfoMapper;
+
+	@Autowired
+	ILogInfoService logInfoService;
+
+
+
+	Map<String,String> tokenChange(Apptoken apptoken){
+		HashMap<String, String> map = new HashMap<>();
+		map.put("token",apptoken.getApptokenId());
+		map.put("secret",apptoken.getApptokenToken());
+		map.put("appid",apptoken.getApptokenLog());
+		map.put("expires",apptoken.getApptokenEndtime().getTime()+"");
+		return  map;
+	}
+
+
+	//登陆
+	@ResponseBody
+	@RequestMapping(value = "/logInfo", method = RequestMethod.POST)
+	public Object logInfo() {
+		LogInfo logInfo = new LogInfo();
+		logInfo.setLogId(logId());
+		LogInfo logInfo1 = super.logInfoMapper.selectLogInfoByLogId(logInfo);
+		return AppJsonResult.success(logInfo1);
+	}
+
+
+	//登陆
+	@ResponseBody
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public Object loggin(String admin,  String pass,String checkCode) {
+		if (FastValid.isEmp(admin,pass,checkCode)){
+			return  AppJsonResult.error("参数缺失");
+		}
+
+
+		if (!checkCode.equals(tokenDao.takeByCell(admin))){
+			return  AppJsonResult.error("验证码出错");
+		}
+
+		LogInfo logInfo = new LogInfo();
+		logInfo.setLogName(admin);
+		logInfo.setLogPass(pass);
+		SignToken signToken = new SignToken(logInfo);
+		Subject subject = SecurityUtils.getSubject();
+		try {
+			subject.login(signToken);
+			Apptoken token = signToken.getApptoken();
+			return AppJsonResult.success(tokenChange(token));
+		}catch (AuthenticationException e) {
+			Throwable cause = e.getCause();
+			if (cause instanceof AppException){
+				return  ((AppException) cause).getAppJsonResult().Json();
+			}
+			return AppJsonResult.error("登录失败");
+		}
+	}
+
+
+	//token认证
+	@ResponseBody
+	@RequestMapping(value = "/validateToken", method = RequestMethod.POST)
+	public Object  validateToken(String token){
+		AppJsonResult appJsonResult = new AppJsonResult();
+		appJsonResult.setSuccess(false);
+		if (StringUtils.isBlank(token)){
+			return AppJsonResult.error("参数不对");
+		}
+		Apptoken take = tokenDao.take(token);
+		if (take==null||take.getApptokenEndtime().getTime()<new Date().getTime()){
+			appJsonResult.setErrorMsg("token失效或者过期");
+		}
+		appJsonResult.setSuccess(true);
+		final Map<String, String> stringStringMap = tokenChange(take);
+		appJsonResult.setResult(new HashMap<String,String>(){{
+			put("expires",stringStringMap.get("expires"));
+		}});
+		return appJsonResult.Json();
+	}
+
+
+	//注册
+	@ResponseBody
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public Object register(HttpServletRequest request, @RequestParam String admin, @RequestParam String pass, @RequestParam String checkCode) {
+
+		AppJsonResult jr = new AppJsonResult();
+		jr.setSuccess(false);
+
+		if (checkCode == null || checkCode.isEmpty()) {
+			jr.setErrorMsg("手机验证码不能为空");
+			return jr.Json();
+		}
+		if (pass == null || pass.isEmpty()) {
+			jr.setErrorMsg("密码不能为空");
+			return jr.Json();
+		}
+
+//		if (pass.length() < 6 || pass.length() > 20) {
+//			jr.setErrorMsg("密码必须在6至20位之间");
+//			return jr.Json();
+//		}
+		
+
+		if (checkCode == null || checkCode.isEmpty()) {
+			jr.setErrorMsg("验证码不能为空");
+			return jr.Json();
+		}
+
+		if (!checkCode.equals(tokenDao.takeByCell(admin))){
+			return  AppJsonResult.error("验证码出错");
+		}
+
+//		CompanyInfo companyInfo = companyInfoMapper.selectByPrimaryKey(comId);
+//		if (companyInfo == null) {
+//			jr.setErrorMsg("公司ID无效");
+//			return jr.Json();
+//		}
+
+
+		LogInfo logInfo = new LogInfo();
+		logInfo.setLogId(UUIDUtil.getUUID());
+		logInfo.setLogCell(admin);
+		logInfo.setLogCreatetime(new Date());
+		logInfo.setLogIsdelete(false);
+		logInfo.setLogState(1);
+
+		logInfo.setLogName("jdj" + logInfo.getLogCell().substring(5));
+		logInfo.setLogType(1);
+		logInfo.setLogRegip(getRequestIP(request));
+		logInfo.setLogIslog(true);
+		try {
+			logInfo.setLogPass(MD5Util.getMD5(pass));
+		} catch (Exception e) {}
+//		logInfo.setCompany(comId);
+		try {
+			logInfoService.addLogInfo(logInfo);
+		} catch (ExceptionWithMessage exceptionWithMessage) {
+			jr.setErrorMsg(exceptionWithMessage.jsonResult.getErrorMsg());
+			jr.setResult(exceptionWithMessage.jsonResult.getObj());
+			return jr.Json();
+		}
+		logInfo.setLogName(logInfo.getLogCell());
+		SignToken signToken = new SignToken(logInfo);
+		Subject subject = SecurityUtils.getSubject();
+		try {
+			subject.login(signToken);
+			Apptoken token = (Apptoken) subject.getPrincipal();
+			jr.setSuccess(true);
+			jr.setResult(tokenChange(token));
+//			jr.setIslogin(true);
+			return jr.Json();
+		} catch (AuthenticationException e) {
+			AppJsonResult appJsonResult = new AppJsonResult();
+			appJsonResult.setSuccess(false);
+			appJsonResult.setErrorMsg("登陆失败");
+//			appJsonResult.setIslogin(false);
+			return appJsonResult.Json();
+		}
+
+	}
+
+
+	@ResponseBody
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public String logout(String appid) {
+		AppJsonResult jsonResult = new AppJsonResult();
+		jsonResult.setSuccess(false);
+		if (StringUtils.isBlank(appid)){
+			jsonResult.setErrorMsg("参数不对");
+		}
+
+		List<Apptoken> apptokens = tokenDao.takeByLog(appid);
+		for (Apptoken apptoken : apptokens) {
+			tokenDao.delete(apptoken.getApptokenId());
+		}
+
+		tokenDao.deleteByLog(appid);
+
+		AppJsonResult appJsonResult = new AppJsonResult();
+		appJsonResult.setSuccess(true);
+//		appJsonResult.setIslogin(false);
+		return appJsonResult.Json();
+	}
+
+
+}

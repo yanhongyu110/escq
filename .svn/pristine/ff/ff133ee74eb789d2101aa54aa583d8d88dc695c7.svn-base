@@ -1,0 +1,152 @@
+package com.jero.esc.service.impl.details;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jero.esc.common.po.JsonResult;
+import com.jero.esc.common.utils.DateUtil;
+import com.jero.esc.common.utils.StringUtil;
+import com.jero.esc.common.utils.UUIDUtil;
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import com.jero.esc.common.weixin.WeiXinMain;
+import com.jero.esc.common.weixin.WeixinDraw;
+import com.jero.esc.common.weixin.result.TransfersResult;
+import com.jero.esc.mapper.details.AccontPaymentDetailsMapper;
+import com.jero.esc.po.details.AccontPaymentDetails;
+import com.jero.esc.po.userinfo.AccountInfo;
+import com.jero.esc.service.details.IAccountPaymentDetailsService;
+import com.jero.esc.service.userinfo.IAccountInfoService;
+
+@Service
+public class AccountPaymentDetailsService implements IAccountPaymentDetailsService{
+	@Autowired
+	private AccontPaymentDetailsMapper accontPaymentDetailsMapper;
+	@Autowired
+	private IAccountInfoService accountInfoService;
+	
+	
+	@Override
+	public Integer queryAccountAmountById(String logId,String startTime,String endTime) {
+		Integer comein = accontPaymentDetailsMapper.selectAccountInAmountById(logId,startTime,endTime);
+		Integer comeout = accontPaymentDetailsMapper.selectAccountInAmountById(logId,startTime,endTime);
+		return comein - comeout;
+	}
+
+	@Override
+	public List<AccontPaymentDetails> queryAccountIOByIdYear(RowBounds rb,String logId, String startTime, String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIOByIdYear(rb,logId, startTime, endTime);
+	}
+
+	@Override
+	public List<AccontPaymentDetails> queryAccountIOByIdMonth(RowBounds rb,String logId, String startTime, String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIOByIdMonth(rb,logId, startTime, endTime);
+	}
+
+	@Override
+	public List<AccontPaymentDetails> queryAccountIOByIdDay(RowBounds rb,String logId, String startTime, String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIOByIdDay(rb,logId, startTime, endTime);
+	}
+
+	@Override
+	public HashMap<String, Object> queryAccountIODetailsById(RowBounds rb,String logId,String startTime,String endTime) {
+		List<AccountInfo> accList = accountInfoService.queryBalanceById(logId);
+		List<AccontPaymentDetails> apdList =  accontPaymentDetailsMapper.selectAccountIODetailsById(rb,logId,startTime,endTime);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("accList", accList);
+		map.put("apdList", apdList);
+		return map;
+	}
+
+	@Override
+	public Integer queryAccountIODetailsCountById(String logId,String startTime,String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIODetailsCountById(logId,startTime,endTime);
+	}
+
+	@Override
+	public Integer queryAccountIOCountByIdYear(String logId, String startTime, String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIOCountByIdYear(logId, startTime, endTime);
+	}
+
+	@Override
+	public Integer queryAccountIOCountByIdMonth(String logId, String startTime, String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIOCountByIdMonth(logId, startTime, endTime);
+	}
+
+	@Override
+	public Integer queryAccountIOCountByIdDay(String logId, String startTime, String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIOCountByIdDay(logId, startTime, endTime);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Integer addAccountIODetails(AccontPaymentDetails accontPaymentDetails) throws Exception{
+		accontPaymentDetails.setApdCreatetime(new Date());
+		accontPaymentDetails.setApdId(UUIDUtil.getUUID());
+		Integer res = accontPaymentDetailsMapper.insertSelective(accontPaymentDetails);
+		if(res>0){
+			return res;
+		}
+		throw new ExceptionWithMessage("添加失败",null);
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	public JsonResult withDraw(String logId, String money, String openId) {
+		try {
+			if(StringUtil.isNotEmpty(logId)){
+				if(StringUtil.isInteger(money)){
+					//调用微信企业支付
+//					WeixinDraw weixin = new WeixinDraw();
+//					Map<String, String> map = weixin.transfer("o5tP4v0LMeCnKzawLbuiAmDd8pAA", Integer.parseInt(money+"00"), "近到家公众平台提现", DateUtil.getPayMentId());
+					
+
+						WeixinDraw weixin = new WeixinDraw();
+						Map<String, String> map = weixin.transfer(openId, Integer.valueOf(money+"00"), "近到家公众平台提现", DateUtil.getPayMentId());
+//						TransfersResult result = WeiXinMain.sendTransfersXml(openId, money+"00");
+//						if("SUCCESS".equals(result.getResult_code())){
+						if("SUCCESS".equals(map.get("state"))){
+							Map<String, String> parameter = new HashMap<String, String>();
+							parameter.put("money", money);
+							parameter.put("logId", logId);
+							Integer i = accontPaymentDetailsMapper.withDraw(parameter);
+							if(i > 0){
+								//添加消费记录
+								AccontPaymentDetails accontPaymentDetails = new AccontPaymentDetails();
+								accontPaymentDetails.setApdCreatetime(new Date());
+								accontPaymentDetails.setApdId(UUIDUtil.getUUID());
+								accontPaymentDetails.setApdAdminorderno(map.get("payment_no"));
+								accontPaymentDetails.setApdAmount(Float.valueOf(100/100));
+								accontPaymentDetails.setApdIotype(2);
+								accontPaymentDetails.setApdPaytype(2);
+								accontPaymentDetails.setLogId(logId);
+								Integer res = accontPaymentDetailsMapper.insertSelective(accontPaymentDetails);	
+								if(res > 0){
+									return new JsonResult(true, "提现成功", map);
+								}else{
+									return new JsonResult(false, "系统异常,添加交易记录失败", res);
+								}
+							}else{
+								return new JsonResult(false, "提现失败", null);
+							}
+						}else{
+							return new JsonResult(false, map.get("err_code_des"), map);
+						}
+			
+				}else{
+					return new JsonResult(false, "请输入正确的金额", null);
+				}
+			}else{
+				return new JsonResult(false, "登录超时", null);
+			}
+		} catch (Exception e) {
+			return new JsonResult(false, "系统异常", null);
+		}
+	}
+}

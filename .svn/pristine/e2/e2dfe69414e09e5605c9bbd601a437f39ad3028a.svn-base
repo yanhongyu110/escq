@@ -1,0 +1,101 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE>
+<html>
+<head>
+	<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+		<meta charset="UTF-8">
+		<title>专家达人</title>
+		<link href="${webtxc}/css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="${webtxc}/css/public.css" />
+		<link rel="stylesheet" href="${webtxc}/css/service.css" />
+		<link rel="stylesheet" href="${webtxc}/css/page.css" />
+		<script type="text/javascript" src="${webtxc}/js/jquery.citys.js"></script>
+		<script type="text/javascript">
+		var jsonList1 = ${jsonList1};
+		var jsonList2 = ${jsonList2};
+		var jsonList3 = ${jsonList3};
+		var jsonList4 = ${jsonList4};
+		var count = ${count};
+		</script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".click_all").click(function() {
+					$(".sv_seach_zhanshi").toggle();
+				});
+			});
+		</script>
+		<script type="text/javascript" src="${webtxc}/myjs/goodsinfo/videoList.js?v=2017032601"></script>
+		<style type="text/css">
+		    .popWindow {
+		        background-color:#000;
+		        width: 100%;
+		        height: 100%;
+		        left: 0;
+		        top: 0;
+		        filter: alpha(opacity=50);
+		        opacity: 0.5;
+		        z-index: 1;
+		        position: absolute;
+				
+		    }
+		    .nav_dh .z_fl .b_nav{display:none}
+		</style>
+	</head>
+<body>
+	<div id="popWindow" class="popWindow" style="display: none;"></div>
+
+
+	<c:if test="${sessionScope.module!=null}">
+		<%@include file="/WEB-INF/jsp/common/top.jsp" %>
+	</c:if>
+	<c:if test="${sessionScope.module==null}">
+		<%@include file="/WEB-INF/jsp/common/top.jsp" %>
+	</c:if>
+
+
+
+
+	<div class="bannerResource" ></div>
+	<div class="content">
+				<div class="sv_sx">
+					<ul>
+						<li class="ss_gg">共搜到
+							<font id="allcount">${count}</font>个结果！</li>
+						<li class="sv_sx_zz">
+							<a style="color: #FB5A5A;border: 1px solid #FB5A5A;" class="no_bg">综合排序</a>
+							<a>约见最多</a>
+							<a>口碑最好</a>
+						</li>
+					</ul>
+				</div>
+				<!--end.sv_sx-->
+				<div class="expert_sp">
+					<ul style="margin-top: 20px;" id="mmyul1">
+					</ul>
+					<div style="clear: both;"></div>
+					<ul style="margin-top: 20px;" id="mmyul2">
+					</ul>
+					<div style="clear: both;"></div>
+					<ul style="margin-top: 20px;" id="mmyul3">
+					</ul>
+					<div style="clear: both;"></div>
+					<ul style="margin-top: 20px;" id="mmyul4">
+					</ul>
+				</div>
+                <div id="pageDiv" class="jogger"></div>
+			</div>
+			<%@include file="/WEB-INF/jsp/common/bottom.jsp"%>
+			<div class="p_tan" id="myvideodiv" style="width:800px;height:450px; display: none;position: fixed;left: 750px;top: 300px;z-index: 555;">
+				<div class="t_title">
+           			<div class="t_title_left" data="title">视频</div>
+           			<div style="float: right;margin-right: 10px;font-size: 36px;cursor: pointer;" onclick="hideVideo()">&times</div>
+        		</div>
+				<video width="100%" height="90%" id="myvideoo" src="" controls="controls" autoplay="autoplay"></video>
+			</div>
+			<script>
+
+</script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>服务详情</title>
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+		<meta name="apple-touch-fullscreen" content="yes">
+		<!-- 开启对web app程序的支持  -->
+		<meta content="telephone=no,email=no" name="format-detection">
+		<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+		<!--base css-->
+		<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/index.css" />
+
+		<script src="js/reset.js"></script>
+		<script src="js/TouchSlide.js"></script>
+
+		<script src="js/jquery.min.js"></script>
+		<script>
+			$(function() {
+				//设计案例切换
+				$('.title-list li').click(function() {
+					var liindex = $('.title-list li').index(this);
+					$(this).addClass('on').siblings().removeClass('on');
+					$('.service_content div.service_content_pj').eq(liindex).fadeIn(150).siblings('div.service_content_pj').hide();
+					var liWidth = $('.title-list li').width();
+					$('.wap_service_xq .title-list p').stop(false, true).animate({
+						'left': liindex * liWidth + 'px'
+					}, 300);
+				});
+
+				//设计案例hover效果
+				$('.service_content .service_content_pj li').hover(function() {
+					$(this).css("border-color", "#ff6600");
+					$(this).find('p > a').css('color', '#ff6600');
+				}, function() {
+					$(this).css("border-color", "#fafafa");
+					$(this).find('p > a').css('color', '#666666');
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<!--wapper-->
+		<div class="wapper">
+			<!--page-->
+			<div id="page">
+				<div class="service_main">
+					<div class="service_main_img">
+						<img src="images/img_xq.jpg" />
+						<div class="service_main_img_ms">
+							<span>关注300人</span> <span>约见200人</span> <span>900人想见</span>
+						</div>
+					</div>
+					<!--end.service_main_img-->
+					<div class="service_main_introduce">
+
+						<div class="wap_service_xq">
+							<div class="title cf">
+								<ul class="title-list fr cf ">
+									<li class="on">服务详情</li>
+									<li>专家推荐</li>
+									
+									<p></p>
+								</ul>
+							</div>
+							<div class="service_content ">
+								<div class="service_content_pj show ">
+									<div class="service_content_jianjie ">
+										<div class="service_main_introduce_img">
+											<img src="images/img_cs.jpg" />
+										</div>
+										<div class="service_main_introduce_title">
+											<h3>创业团队如何最有效最低成本地利用设计资源</h3>
+											<p>陈向东/高级产品经理</p>
+											<p>价格：<b>￥122.00</b></p>
+											<p>服务时间：每天9：00-18：00</p>
+											<!--<div class="gm_xq">
+												<span class="pay">购买服务</span>
+												<span class="sc">收藏服务</span>
+											</div>-->
+										</div>
+										<!--end.service_main_introduce_title-->
+
+										<div class="s_jianjie">
+											<p>服务介绍：参与过多款娱乐产品的的方案 界面设计及APP界面设计，熟悉项目开发交互流程，有着丰富的UI设计和培训经验。。
+												<a>查看详细>></a>
+											</p>
+										</div>
+										<!--end.s_jianjie-->
+
+										<div class="service_content_img">
+											<ul>
+												<li><img src="images/fw_01.jpg" /></li>
+												<li><img src="images/fw_03.jpg" /></li>
+												<li><img src="images/fw_04.jpg"></li>
+											</ul>
+											<ul>
+												<li><img src="images/zs_img.jpg" /></li>
+												<li><img src="images/zs_img.jpg" /></li>
+											</ul>
+
+										</div>
+										<div class="service_content_pj_list">
+										<div class="service_content_pj_list_img">
+											<img src="images/img01.jpg" />
+										</div>
+										<div class="service_content_pj_list_title">
+											<h3>王肖肖</h3>
+											<p>本科用dw的时候感觉自己好low,原来工具不是重点，重点是专研本科用dw的时候感觉自己好low,原来工具不是重点，重点是专研不是重点</p>
+											<span>时间：2016-12-02</span>
+											
+										</div>
+									</div>
+									<!--end.service_content_pj_list-->
+									<div class="service_content_pj_list">
+										<div class="service_content_pj_list_img">
+											<img src="images/img02.jpg" />
+										</div>
+										<div class="service_content_pj_list_title">
+											<h3>王肖肖</h3>
+											<p>本科用dw的时候感觉自己好low,原来工具不是重点，重点是专研本科用dw的时候感觉自己好low,原来工具不是重点，重点是专研不是重点</p>
+											<span>时间：2016-12-02</span>
+											
+										</div>
+									</div>
+									<!--end.service_content_pj_list-->
+									<div class="service_content_pj_list">
+										<div class="service_content_pj_list_img">
+											<img src="images/txx.png" />
+										</div>
+										<div class="service_content_pj_list_title">
+											<h3>王肖肖</h3>
+											<p>本科用dw的时候感觉自己好low,原来工具不是重点，重点是专研本科用dw的时候感觉自己好low,原来工具不是重点，重点是专研不是重点</p>
+											<span>时间：2016-12-02</span>
+											
+										</div>
+									</div>
+									<!--end.service_content_pj_list-->
+
+									</div>
+									<!--end.service_content_jianjie-->
+									
+									<div class="service_content_img_pay">
+
+										<div class="ds">打赏</div>
+										<div class="pl">评论</div>
+										<div class="goumai">购买</div>
+									</div>
+									<!--end.service_content_img_pay-->
+									<div class="expert_qt"><h4>其他相关服务</h4></div>
+									<div class="service_content_jianjie ">
+										<div class="service_main_introduce_img">
+											<img src="images/img_cs.jpg" />
+										</div>
+										<div class="service_main_introduce_title">
+											<h3>创业团队如何最有效最低成本地利用设计资源</h3>
+											<p>陈向东/高级产品经理</p>
+											<p>价格：<b>￥122.00</b></p>
+											<p>服务时间：每天9：00-18：00</p>
+											
+										</div>
+										<!--end.service_main_introduce_title-->
+
+										<div class="s_jianjie">
+											<p>服务介绍：参与过多款娱乐产品的的方案 界面设计及APP界面设计，熟悉项目开发交互流程，有着丰富的UI设计和培训经验。。
+												<a>查看详细>></a>
+											</p>
+										</div>
+										<!--end.s_jianjie-->
+
+										<div class="service_content_img">
+											<ul>
+												<li><img src="images/fw_01.jpg" /></li>
+												<li><img src="images/fw_03.jpg" /></li>
+												<li><img src="images/fw_04.jpg"></li>
+											</ul>
+											<ul>
+												<li><img src="images/zs_img.jpg" /></li>
+												<li><img src="images/zs_img.jpg" /></li>
+											</ul>
+
+										</div>
+										
+
+									</div>
+									<!--end.service_content_jianjie-->
+									
+									<div class="service_content_img_pay">
+
+										<div class="ds">打赏</div>
+										<div class="pl">评论</div>
+										<div class="goumai">购买</div>
+									</div>
+									<!--end.service_content_img_pay-->
+									
+									
+
+								</div>
+								<!--end.service_content_pj-->
+								<div class="service_content_pj">
+									<div class="expert_qt">
+										
+										<div class="service_list">
+											<div class="service_list_img">
+												<img src="images/fw_01.jpg" />
+											</div>
+											<div class="service_list_title">
+												<h3>营销型网站策划</h3>
+												<font>高级资深策划</font>
+												<b>￥120.00</b>
+												<span>112人约见</span>
+											</div>
+										</div>
+										<!--end.service_list-->
+										<div class="service_list">
+											<div class="service_list_img">
+												<img src="images/fw_02.jpg" />
+											</div>
+											<div class="service_list_title">
+												<h3>营销型网站策划</h3>
+												<font>高级资深策划</font>
+												<b>￥120.00</b>
+												<span>112人约见</span>
+											</div>
+										</div>
+										<!--end.service_list-->
+										<div class="service_list">
+											<div class="service_list_img">
+												<img src="images/fw_03.jpg" />
+											</div>
+											<div class="service_list_title">
+												<h3>营销型网站策划</h3>
+												<font>高级资深策划</font>
+												<b>￥120.00</b>
+												<span>112人约见</span>
+											</div>
+										</div>
+										<!--end.service_list-->
+									</div>
+									<!--end.expert_qt-->
+									
+
+								</div>
+								<!--end.service_content_pj-->
+								
+
+							</div>
+							<!--end.service_content-->
+
+						</div>
+						<!--end.wap_service_xq-->
+					</div>
+					<!--end.service_main_introduce-->
+				</div>
+				<!--end.service_main-->
+
+				
+
+			</div>
+			<!--page end-->
+		</div>
+		<!--wapper end-->
+
+	</body>
+
+</html>

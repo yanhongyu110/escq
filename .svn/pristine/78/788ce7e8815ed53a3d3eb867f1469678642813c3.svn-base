@@ -1,0 +1,236 @@
+<%@ page import="com.alibaba.fastjson.JSON" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+
+	<meta charset="UTF-8">
+	<title>个人中心</title>
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+	<meta name="apple-touch-fullscreen" content="yes">
+	<!-- 开启对web app程序的支持  -->
+	<meta content="telephone=no,email=no" name="format-detection">
+	<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+	<!--base css-->
+	<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+
+	<link rel="stylesheet" href="${webtxc}/css/wap/reset.css" />
+	<link rel="stylesheet" href="${webtxc}/css/wap/personer.css?v=1234" />
+	<link rel="stylesheet" href="${webtxc}/css/wap/personerAdmin.css?v=1233" />
+	<script src="${webtxc}/js/wap/reset.js"></script>
+	<script src="${webtxc}/js/wap/TouchSlide.js"></script>
+    <script type="text/javascript" src="${webtxc}/jquery/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="${webtxc }/js/wap/common.js?v=12312"></script>
+	<script type="text/javascript" src="${webtxc }/js/wap/jquery.qrcode.js" ></script>
+    <script type="text/javascript" src="${webtxc }/js/wap/qrcode.js" ></script> 
+    <script type="text/javascript" src="${webtxc }/js/wap/utf.js" ></script>
+	<script type="text/javascript" src="${webtxc }/myjs/wap/userinfo/personerAdmin.js"></script>
+</head>
+
+<body>
+<!--wapper-->
+<div class="wapper" style="border:0">
+	<!--page-->
+	<div id="page">
+
+		<div class="personer_mes">
+			<ul class="list_phto">
+				<li class="list_phto_img">
+					<img src="${user.userPhoto}" onclick="window.location.href=path+'/wap/userinfo/providerdetails/preProviderFromUser.html?type=true'">
+					 <!--<p class="xg_photo_img" onclick="window.location.href=path+'/wap/userinfo/jumpModifyUserInfoPage.html?info=1'">修改头像</p>-->
+				</li>
+				<li class="list_title">
+				   <p>${user.logName} <a class="xiugai_mes" onclick="window.location.href=path+'/wap/userinfo/jumpmodifyUserInfo.html'"><img src="${webtxc }/images/wap/xiugai.png"></a></p>
+                    <!--<br><span>${user.userRealName}</span>-->
+                    
+                   <%-- <c:if test="${user.userRealName ==null}"><span class="xiugai_mes" onclick="window.location.href=path+'/wap/checkinfo/perosonCheckName/viewAddPersonCheck.html'">实名认证</span></c:if>
+                   <c:if test="${user.userRealName !=null}"><span class="xiugai_mes_on" onclick="window.location.href=path+'/wap/checkinfo/perosonCheckName/viewAddPersonCheck.html'">已实名认证</span></c:if> --%>
+                   <%--<br><span>0人约见</span>--%>
+                    <c:if test="${sessionScope.logInfo.logType==1 }"><span class="xiugai_mes" onclick="window.location.href=path+'/wap/checkinfo/providerCheck/getCheckInfo.html'">服务商认证</span></c:if>
+                   <c:if test="${sessionScope.logInfo.logType==2 }"><span class="xiugai_mes_on" >服务商已认证</span></c:if>
+                </li>
+				<li class="shiming"><img src="${webtxc }/images/wap/ewm.jpg" onclick="openErweima()"></li>
+			</ul>
+			<div class="provide_list">
+			<div class="provide_list_demd" onclick="window.location.href=path+'/wap/demand/gotoDemandListAdmin.html'">
+			需求列表
+			</div>
+				<c:if test="${sessionScope.logInfo.logType==2 }">
+			<div class="provide_list_service" onclick="window.location.href=path+'/wap/goodsinfo/service/viewProviderService.html'">
+			服务列表
+			</div>
+			</c:if>
+			<div class="provide_list_demand" onclick="window.location.href=path+'/wap/saleinfo/orderInfoBuyer/orderView.html'">
+			预约订单
+			</div>
+			</div>
+
+			<%--<ul class="list_mes have_margin have_border">--%>
+				<%--<li class="home"><a href="personer_home.html">我的主页</a></li>--%>
+				<%--<li class="mm"><img src="../images/more.png"></li>--%>
+			<%--</ul>--%>
+
+			<%-- 我的账户 --%>
+			<ul class="list_mes clearfix list_mes_father have_border" <%--onclick="window.location.href=path+'/wap/details/AccountPaymentDetails/showIODetails.html'"--%>>
+				<li class="money" onclick="window.location.href=path+'/wap/details/AccountPaymentDetails/showIODetails.html'">我的账户</li>
+				<li class="mm" onclick="window.location.href=path+'/wap/details/AccountPaymentDetails/showIODetails.html'"></li>
+			</ul>
+			<!--  
+			<div class="list_mes_son" style="display: none;">
+				<ul class="list_mes clearfix"  onclick="window.location.href=path+'/wap/details/AccountPaymentDetails/showIODetails.html'"><li>我的账户</li></ul>
+				<ul class="list_mes clearfix"><li>我的评价</li></ul>
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/details/AccountPaymentDetails/showIODetails.html'"><li>修改密码</li></ul>
+			</div>-->
+
+			<%-- 我的预约 --%>
+			<!-- 
+            <ul class="list_mes clearfix list_mes_father" <%--onclick="window.location.href=path+'/wap/saleinfo/orderInfoBuyer/orderView.html'"--%>>
+				<li class="yy" onclick="window.location.href=path+'/wap/saleinfo/orderInfoBuyer/orderView.html'">我的预约</li>
+				<li class="mm" onclick="window.location.href=path+'/wap/saleinfo/orderInfoBuyer/orderView.html'"></li>
+			</ul> -->
+			<!-- 
+			<div class="list_mes_son"  style="display: none">
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/saleinfo/orderInfoBuyer/orderView.html'"><li>发出的预约</li><li class="mm"></li></ul>
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/saleinfo/orderInfoSeller/viewOrder.html'"><li>收到的预约</li><li class="mm"></li></ul>
+			</div> -->
+			<c:if test="${sessionScope.logInfo.logType==1 }">
+			<ul class="list_mes clearfix list_mes_father" onclick="window.location.href=path+'/wap/checkinfo/providerCheck/getCheckInfo.html'">
+				<li class="fusrz">服务商认证</li>
+				<li class="mm"></li>
+			</ul>
+			</c:if>
+			<%--专家资料--%>
+			<c:if test="${sessionScope.logInfo.logType==2 }">
+			<!-- <ul class="list_mes clearfix list_mes_father" >
+				<li class="zj" onclick="window.location.href=path+'/wap/checkinfo/providerCheck/getCheck.html'">认证资料</li>
+				<li class="mm"></li>
+			</ul> -->
+			<ul class="list_mes clearfix list_mes_father" >
+				<li class="setting" onclick="window.location.href=path+'/wap/checkinfo/providerCheck/getBasic.html'">基本资料</li>
+				<li class="mm"></li>
+			</ul>
+			
+			<!-- 
+			<div class="list_mes_son"  style="display: none">
+				
+				
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/checkinfo/providerCheck/getBasic.html'"><li>基本信息</li></ul>
+				<%--<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/goodsinfo/service/viewProviderService.html'"><li>咨询主题</li></ul>-->
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/goodsinfo/service/viewAddService.html'"><li>添加主题</li></ul>
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/userinfo/providerRecommend/jumpProviderRecommend.html'"><li>推荐资料</li></ul>
+				<%-- <ul class="list_mes clearfix"><li>档期管理</li><li class="mm"><img src="${webtxc}/images/wap/more.png"></li></ul> --%>
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/goodsinfo/service/queryServiceRemarkByLogId.html'"><li>服务评价</li></ul>
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/bizinfo/focus/focuUsers.html'"><li>查看关注</li></ul>
+				<%-- <ul class="list_mes clearfix"><li>我的推荐</li><li class="mm"><img src="${webtxc}/images/wap/more.png"></li></ul> --%>
+			</div>
+			 -->
+			</c:if>
+			<ul class="list_mes clearfix list_mes_father" >
+				<li class="zp" onclick="window.location.href=path+'/wap/goodsinfo/service/queryServiceRemarkByLogId.html'">服务评价</li>
+				<li class="mm"></li>
+			</ul>
+			<ul class="list_mes clearfix list_mes_father" >
+				<li class="guanzhu" onclick="window.location.href=path+'/wap/bizinfo/focus/showFocusList.html'">我的关注</li>
+				<li class="mm"></li>
+			</ul>
+			<!-- 
+			<ul class="list_mes clearfix list_mes_father" >
+				<li class="heart" onclick="window.location.href=path+'/wap/goodsinfo/cart/showCartList.html'">我的心愿</li>
+				<li class="mm"></li>
+			</ul> -->
+			<ul class="list_mes clearfix list_mes_father" >
+				<li class="souc" onclick="window.location.href=path+'/wap/bizinfo/collectUtod/myCollects.html'">我的收藏</li>
+				<li class="mm"></li>
+			</ul>
+			<%-- 系统消息 --%>
+			<ul class="list_mes clearfix list_mes_father">
+				<li class="news" onclick="window.location.href=path+'/wap/userinfo/queryAllSystemMes.html?smType=2'">系统消息</li>
+				<li class="mm" onclick="window.location.href=path+'/wap/userinfo/queryAllSystemMes.html?smType=2'"></li>
+			</ul>
+			<!-- 
+			<div class="list_mes_son"  style="display: none">
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/userinfo/queryAllSystemMes.html?smType=2'"><li>系统消息</li></ul>
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/userinfo/queryAllSystemMes.html?smType=1'"><li>平台消息</li></ul>
+			</div> -->
+
+			<%-- 我的关注 --%>
+			<!-- 
+			<ul class="list_mes clearfix list_mes_father">
+				<li class="heart">我的关注</li>
+				<li class="mm"><img src="${webtxc}/images/more.png"></li>
+			</ul>
+			<div class="list_mes_son"  style="display: none">
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/goodsinfo/cart/showCartList.html'"><li>心愿单</li></ul>
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/bizinfo/focus/showFocusList.html'"><li>关注表</li></ul>
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/bizinfo/collectUtod/myCollects.html'"><li>收藏夹</li></ul>
+			</div>
+             -->
+			<%-- 基本设置 --%>
+			<!-- 
+			<ul class="list_mes clearfix list_mes_father">
+				<li class="setting" onclick="window.location.href=path+'/wap/userinfo/jumpmodifyUserInfo.html'">个人资料</li>
+				<li class="mm"><img src="${webtxc}/images/more.png"></li>
+			</ul> -->
+			<!-- 
+			<div class="list_mes_son"  style="display: none">
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/userinfo/jumpmodifyUserInfo.html'"><li>个人资料</li></ul>
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/checkinfo/perosonCheckName/viewAddPersonCheck.html'"><li>实名认证</li></ul>
+				<ul class="list_mes clearfix" onclick="window.location.href=path+'/wap/userinfo/logInfo/jumpForgetPass.html'"><li>修改密码</li></ul>
+			</div>
+             -->
+
+			<%-- 用户需求 --%>
+			<!-- 
+			<ul class="list_mes clearfix list_mes_father">
+				<li class="zp"  onclick="window.location.href=path+'/wap/demand/gotoDemandListAdmin.html'">我的需求</li>
+				<li class="mm"><img src="${webtxc}/images/more.png"></li>
+			</ul> -->
+			
+
+
+			<c:if test="${sessionScope.wxFlag==1}">
+				<div class="personer_excit" >
+					<div class="excit" id="logout1" onclick="window.location.href=path+'/wap/userinfo/logInfo/logOut.html'">退出登录</div>
+				</div>
+			</c:if>
+
+
+			<%--<ul class="list_mes">--%>
+				<%--<li class="souc">我的收藏</li>--%>
+				<%--<li class="mm"><img src="../images/more.png"></li>--%>
+			<%--</ul>--%>
+            <%----%>
+
+			<%--<ul class="list_mes">--%>
+				<%--<li class="zp">我的作品</li>--%>
+				<%--<li class="mm"><img src="../images/more.png"></li>--%>
+			<%--</ul>--%>
+			
+
+
+			<%--<ul class="list_mes">--%>
+				<%--<li class="news">系统消息</li>--%>
+				<%--<li class="mm"><img src="../images/more.png"></li>--%>
+			<%--</ul>--%>
+
+			<%--<ul class="list_mes have_margin have_border">--%>
+				<%--<li class="setting">系统设置</li>--%>
+				<%--<li class="mm"><img src="../images/more.png"></li>--%>
+			<%--</ul>--%>
+		<!-- 二维码 -->
+		<style>
+		.s_ewm{display:none;background:#fff;width:100%;margin:0 auto;text-align: center;}
+		.s_ewm p{padding:10px 0;}
+		</style>
+		</div><!--end.personer_mes-->
+	</div>
+	<!--page end-->
+</div>
+<!--wapper end-->
+<%@ include file="/WEB-INF/jsp/wap/common/bottom.jsp"%>
+</body>
+
+</html>

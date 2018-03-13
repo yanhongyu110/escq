@@ -1,0 +1,33 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html>
+<html>
+<body>
+	<head>
+		<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>下载</title>
+		<link rel="stylesheet" href="${webtxc }/css/wap/index.css" />
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+
+			});
+			$(function(){
+				var ua = navigator.userAgent.toLowerCase();
+			    if(ua.match(/MicroMessenger/i)!="micromessenger") {
+			    	window.location.href=path+'/apk/app-release.apk';
+			    }
+			    
+			})
+		</script>
+	</head>
+	
+	<body>
+	<div class="down_img"></div>
+	<div class="down_loading">点击右上方按钮选择“在浏览器打开”后自动开始下载</div> 
+	</body>
+	
+</html>

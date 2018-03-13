@@ -1,0 +1,65 @@
+package com.jero.esc.po.details;
+
+import java.util.Date;
+
+public class MegDetails {
+    private String mdId;
+
+    private String smId;
+
+    private String logId;
+
+    private Date mdCreatetime;
+
+    private Boolean mdIsdelete;
+
+    private String mdComment;
+
+    public String getMdId() {
+        return mdId;
+    }
+
+    public void setMdId(String mdId) {
+        this.mdId = mdId == null ? null : mdId.trim();
+    }
+
+    public String getSmId() {
+        return smId;
+    }
+
+    public void setSmId(String smId) {
+        this.smId = smId == null ? null : smId.trim();
+    }
+
+    public String getLogId() {
+        return logId;
+    }
+
+    public void setLogId(String logId) {
+        this.logId = logId == null ? null : logId.trim();
+    }
+
+    public Date getMdCreatetime() {
+        return mdCreatetime;
+    }
+
+    public void setMdCreatetime(Date mdCreatetime) {
+        this.mdCreatetime = mdCreatetime;
+    }
+
+    public Boolean getMdIsdelete() {
+        return mdIsdelete;
+    }
+
+    public void setMdIsdelete(Boolean mdIsdelete) {
+        this.mdIsdelete = mdIsdelete;
+    }
+
+    public String getMdComment() {
+        return mdComment;
+    }
+
+    public void setMdComment(String mdComment) {
+        this.mdComment = mdComment == null ? null : mdComment.trim();
+    }
+}

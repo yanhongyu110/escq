@@ -1,0 +1,36 @@
+package com.jero.esc.service.userinfo;
+
+import com.jero.esc.vo.userinfo.ThirdPartyLogin;
+
+
+public interface ThirdPartyLoginService {
+	
+	/**
+	 * 
+	 *<pre>
+	 *<b> 添加 .</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2018-1-17 上午10:34:38
+	 *@param login
+	 *</pre>
+	 */
+	public void addthirdPartyLogin(ThirdPartyLogin login);
+
+	
+	/**
+	 * 
+	 *<pre>
+	 *<b> 根据openid .</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2018-1-17 上午10:55:44
+	 *@param openid
+	 *@return
+	 *</pre>
+	 */
+	public ThirdPartyLogin selectLog(String openid);
+
+}

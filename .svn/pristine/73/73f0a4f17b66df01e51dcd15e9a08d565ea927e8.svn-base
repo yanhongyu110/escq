@@ -1,0 +1,260 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jsp/common/common.jsp" %>
+<!DOCTYPE html>
+<head>
+    <title>咨询主题</title>
+    <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
+    <%@ include file="/WEB-INF/jsp/common/kindeditor.jsp" %>
+    <%@ include file="/WEB-INF/jsp/common/easyui.jsp" %>
+    <link rel="stylesheet" href="${webtxc}/css/public.css"/>
+    <link rel="stylesheet" href="${webtxc}/css/personal.css"/>
+    <link rel="stylesheet" href="${webtxc}/css/goodsinfo/goodsinfo.css"/>
+    <script type="text/javascript" src="${webtxc}/js/personal_tab.js"></script>
+    <script type="text/javascript" src="${webtxc}/js/personal_menu.js"></script>
+    <script type="text/javascript" src="${webtxc}/myjs/goodsinfo/addservice.js?v=2226343434433333353333443255444"></script>
+</head>
+<body>
+<c:set var="istop" value="true" />
+<%@include file="/WEB-INF/jsp/common/top.jsp" %>
+<!-- start.content -->
+<div class="content">
+    <%@ include file="/WEB-INF/jsp/common/left.jsp" %>
+    <div class="content-right">
+        <div class="expert_mes">
+            <h2>咨询主题</h2>
+            <ul class="note_message ">
+                <ul>
+                    <li class="mes">主题名称：</li>
+                    <li><input class="mees" name="servicetitle" placeholder="请输入相关信息"></li>
+
+                    <li class="zp_ts">字数不低于<span>5</span>个字</li>
+                </ul>
+                <ul>
+                    <li class="mes">主题关键字：</li>
+                    <li>
+                        <textarea name="servicekeywords" cols="48" rows="4" placeholder="请输入关键词..."></textarea>
+                    </li>
+
+                    <li class="zp_ts" ><span>(选填)</span>请填写此主题的关键字，以逗号（，）分隔，最多<span>5</span>个关键字，如：话题咨询，互联网产品<b></b></li>
+                </ul>
+                <ul>
+                    <li class="mes">主题简介：</li>
+                    <li>
+                        <textarea name="servicecontent" cols="48" rows="9" placeholder="一句话介绍自己吧..."></textarea>
+                    </li>
+                    <li class="zp_ts" ><span>(选填)</span>字数不超过<span>200</span>个字。</li>
+                    <li class="qt_more">
+                        <a><b>看看别人家都怎么写文案</b></a>
+                        <a>【荐】王小二 互联网产品经理..</a>
+                        <a>【荐】王小二 互联网产品经理..</a>
+                        <a>【荐】王小二 互联网产品经理..</a>
+                        <a>【荐】王小二 互联网产品经理..</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="mes">主题介绍：</li>
+                    <li>
+                        <textarea id="info_brief" name="servicebiref" cols="48" rows="9"></textarea>
+                    </li>
+                </ul>
+
+                <%--<ul style="height:60px;">--%>
+                <%--<li class="mes">见面时长：</li>--%>
+                <%--<li>--%>
+                <%--<input class="mees" name="servicemeetnum" value="请输入见面时长,如:12">--%>
+                <%--</li>--%>
+
+                <%--<li class="zp_ts">如小时左右/次</li>--%>
+
+                <%--</ul>--%>
+
+
+                <ul >
+                    <li class="mes">咨询费用：</li>
+                    <li>
+                        <div class="pset">
+                            <a class="addrowpset" id="addrowpset" href="javascript:void(0)" style="display: none">添加</a>
+                            <div class="psetsg" style="display:none;" id="psetsg">
+                                来源：<select name="psetdiscounttype">
+                                            <option selected value="1">普通服务</option>
+                                            <%--<option  value="2">积分服务</option>--%>
+                                        </select>
+                                价格：<input type="text" class="" name="psetprice"/>
+                                积分：<input type="text" name="psetpoint"/>
+                                <a class="delrowpset" href="javascript:void(0)">删除</a>
+                            </div>
+                            <div class="psetsg ppset">
+                                来源：<select name="psetdiscounttype">
+                                            <option selected value="1">普通服务</option>
+                                            <%--<option  value="2">积分服务</option>--%>
+                                        </select>
+                                价格：<input type="text" name="psetprice"/>
+                               <!--  积分： --><input type="hidden" name="psetpoint" value="0"/>
+                                <a class="delrowpset" href="javascript:void(0)" style="display: none">删除</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul >
+                    <li class="mes">封面上传：</li>
+                 
+        <li class="sc_img">
+            <img src="${webtxc}/images/zp.png" id="image1" style="text-align: center;display: inline-block;padding-top: 30px" />
+            <br>
+            <input class="mees" id="info_icon1" name="servicepic" type="hidden"/>
+            <span>上传封面</span>
+        </li>
+                    <li>
+
+                        <%--<input type="button" class="button" id="imgBtn" value="选择图片" style="width:72px"/>--%>
+                        <%--</li>--%>
+
+                    <li class="zp_ts">注：大小为1M以内</li>
+
+                </ul>
+
+                <ul>
+                    <li class="mes">服务时间：</li>
+                    <li>
+                        <input class="mees" name="servicemeettime" placeholder="请输入服务时长（小时）">
+                    </li>
+                    <li class="zp_ts">（小时）</li>
+                </ul>
+
+                <ul>
+                    <li class="mes">类型：</li>
+                    <li>
+                        <select class="mess" name="serviceType"  id="tree">
+                        </select>
+                        <script>
+                            (function () {
+                                if (!Array.prototype.map) {
+                                    Array.prototype.map = function (callback, thisArg) {
+                                        var T, A, k;
+                                        if (this == null) {
+                                            throw new TypeError(" this is null or not defined");
+                                        }
+                                        var O = Object(this);
+                                        var len = O.length >>> 0;
+                                        if (typeof callback !== "function") {
+                                            throw new TypeError(callback + " is not a function");
+                                        }
+                                        if (thisArg) {
+                                            T = thisArg;
+                                        }
+                                        A = new Array(len);
+                                        k = 0;
+                                        while (k < len) {
+                                            var kValue, mappedValue;
+                                            if (k in O) {
+                                                kValue = O[k];
+                                                mappedValue = callback.call(T, kValue, k, O);
+                                                A[k] = mappedValue;
+                                            }
+                                            k++;
+                                        }
+                                        return A;
+                                    };
+                                }
+                            })()
+                            $(function () {
+                                $('#tree').combotree({
+                                    url: path + "/pubinfo/getTree.html?type=1&includes="+'${includes}',
+                                    height: "30",
+                                    width:279,
+                                    onClick: function (node) {
+                                        $('#tree').val(node.id);  // alert node text property when clicked
+                                    },
+                                    loadFilter: function (data) {
+                                        var big = {}
+                                        var genList = function (data, obj) {
+                                            var l = []
+                                            data.map(function (it, index) {
+                                                if ( (obj.ctId == null&&it.ctFid=="0")  || obj.ctId == it.ctFid) {
+                                                    it.id=it.ctId;
+                                                    it.text=it.ctName;
+                                                    var c = genList(it.children, it);
+                                                    l.push(c)
+                                                }
+                                            })
+                                            obj.state='open'
+                                            if (l.length != 0) {
+                                                obj.children = l;
+                                                return obj;
+                                            } else {
+                                                obj.state='close'
+                                                return obj;
+                                            }
+                                        };
+                                        var ff = genList(data, big).children;
+                                        
+                                        console.log(JSON.stringify(ff))
+                                        return ff;
+                                    }
+                                })
+                            })
+                        </script>
+
+                    </li>
+                </ul>
+
+                <ul style="display: none">
+                    <li class="mes">属性：</li>
+                    <li>
+                        <div class="param-main">
+                            <a class="addrow" id="addrow" href="javascript:void(0)">属性添加</a>
+                            <div class="param" style="display:none" id="template">
+                                <input type="text" name="param"/>
+                                <a class="addval" id="addval" href="javascript:void(0)">添加值</a>
+                                <a class="delrow" id="delrow" href="javascript:void(0)">删除</a>
+                            </div>
+                            <div class="param">
+                                <input type="text" name="param"/>
+                                <a class="addval" id="addval" href="javascript:void(0)">添加值</a>
+                                <a class="delrow" id="delrow" href="javascript:void(0)">删除</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul style="display: none">
+                    <li class="mes">服务阶段：</li>
+                    <li class="step">
+                        <!-- <a class="addstep" id="addstep" href="javascript:void(0)">添加</a> -->
+                        <div class="servicestep">
+                            <span>阶段1</span><br>
+                            名称：<input type="text" name="ssname" value="aasdasdasd"/><br>
+                            价格：
+                            <div class="ss steppset">
+                                <div class="psetst">
+                                    来源：<input type="text" name="psetdiscounttype" readonly/>
+                                    价格：<input type="text" name="psetprice" readonly/>
+                                    积分：<input type="text" name="psetpoint" readonly/>
+                                </div>
+                            </div>
+                            描述：<br><textarea name="ssdescribe">dasdasd</textarea>
+                        </div>
+                    </li>
+
+                    <li class="zp_ts"></li>
+
+                </ul>
+
+
+                <div class="mes_btn">
+                    <a class="mes_bc" id="servicesave">保存</a>
+
+                </div>
+
+        </div>
+
+    </div><!--end.expert_mes-->
+</div>
+<!--end.content-right-->
+</div>
+<!--end.content-->
+<%@include file="/WEB-INF/jsp/common/bottom.jsp" %>
+</body>
+
+</html>

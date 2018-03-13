@@ -1,0 +1,47 @@
+.footer_nav li{
+    transition: background 0.5s;
+    -moz-transition:background 0.5s; /* Firefox 4 */
+    -webkit-transition: background 0.5s; /* Safari 鍜�Chrome */
+    -o-transition: background 0.5s; /* Opera */
+}
+
+.footer_nav .footer-home.on{
+    background: url(../../images/wap/homes_on.png) no-repeat center 3px;
+    color: #fc393f;
+    vertical-align: top;
+    background-size: 20px 20px;
+    padding-top: 4px;
+}
+
+.footer_nav .footer-like.on{
+    background: url(../../images/wap/fw_on.png) no-repeat center 0px;
+    color: #fc393f;
+    vertical-align: top;
+    background-size: 24px 24px;
+    padding-top: 4px;
+}
+
+.footer_nav .footer-fab.on{
+    background: url(../../images/wap/fabux_on.png) no-repeat center 0px;
+    vertical-align: top;
+    background-size: 35px 35px;
+    padding-top: 16px;
+    margin-top: 0;
+    color: #fc393f;
+}
+
+
+.footer_nav .footer-fuwu.on{
+    background: url(../../images/wap/like_on.png) no-repeat center 3px;
+    color: #fc393f;
+    vertical-align: top;
+    background-size: 20px 20px;
+    padding-top: 4px;
+}
+.footer_nav .footer-gr.on{
+    background: url(../../images/wap/gr_center_on.png) no-repeat center 3px;
+    color: #fc393f;
+    vertical-align: top;
+    background-size: 20px 20px;
+    padding-top: 4px;
+}

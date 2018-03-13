@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.saleinfo.OrderInfoBuyerMapper">
+	<resultMap type="com.jero.esc.po.userinfo.LogInfo" id="logInfoMap">
+		<id column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+		<result column="LOG_CELL" jdbcType="VARCHAR" property="logCell" />
+		<result column="LOG_EMAIL" jdbcType="VARCHAR" property="logEmail" />
+		<result column="LOG_NAME" jdbcType="VARCHAR" property="logName" />
+		<result column="LOG_PASS" jdbcType="VARCHAR" property="logPass" />
+		<result column="LOG_CREATETIME" jdbcType="TIMESTAMP" property="logCreatetime" />
+		<result column="LOG_ISDELETE" jdbcType="BIT" property="logIsdelete" />
+		<result column="LOG_STATE" jdbcType="INTEGER" property="logState" />
+		<result column="LOG_TYPE" jdbcType="INTEGER" property="logType" />
+		<result column="LOG_REGIP" jdbcType="VARCHAR" property="logRegip" />
+		<result column="LOG_ISLOG" jdbcType="BIT" property="logIslog" />
+		<result column="LOG_COMMENT" jdbcType="VARCHAR" property="logComment" />
+	</resultMap>
+	
+	<resultMap id="accountInfoMap" type="com.jero.esc.po.userinfo.AccountInfo">
+	    <id column="ACC_ID" jdbcType="VARCHAR" property="accId" />
+	    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+	    <result column="ACC_BALANCE" jdbcType="REAL" property="accBalance" />
+	    <result column="ACC_BLOCKBALANCE" jdbcType="REAL" property="accBlockbalance" />
+	    <result column="ACC_POINT" jdbcType="REAL" property="accPoint" />
+	    <result column="ACC_PAYPASS" jdbcType="VARCHAR" property="accPaypass" />
+	  	<result column="ACC_DEFAULTCARD" jdbcType="VARCHAR" property="accDefaultcard" />
+	  	<result column="ACC_COMMENT" jdbcType="VARCHAR" property="accComment" />
+	</resultMap>
+	
+	<resultMap id="BaseResultMap" type="com.jero.esc.vo.saleinfo.OrderInfo">
+        <id column="ORDER_ID" jdbcType="VARCHAR" property="orderId"/>
+        <result column="ORDER_BUYER" jdbcType="VARCHAR" property="orderBuyer"/>
+        <result column="ORDER_SELLER" jdbcType="VARCHAR" property="orderSeller"/>
+        <result column="ORDER_CREATETIME" jdbcType="TIMESTAMP" property="orderCreatetime"/>
+        <result column="ORDER_NO" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="ORDER_STATE" jdbcType="INTEGER" property="orderState"/>
+        <result column="ORDER_MEETTIME" jdbcType="TIMESTAMP" property="orderMeettime"/>
+        <result column="ORDER_PERSON" jdbcType="VARCHAR" property="orderPerson"/>
+        <result column="ORDER_PERSONCELL" jdbcType="VARCHAR" property="orderPersoncell"/>
+        <result column="ORDER_AREA" jdbcType="VARCHAR" property="orderArea"/>
+        <result column="ORDER_ADDR" jdbcType="VARCHAR" property="orderAddr"/>
+        <result column="ORDER_REQUEST" jdbcType="VARCHAR" property="orderRequest"/>
+        <result column="ORDER_ISBILL" jdbcType="BIT" property="orderIsbill"/>
+        <result column="ORDER_BILLADDR" jdbcType="VARCHAR" property="orderBilladdr"/>
+        <result column="ORDER_BILLCONTENT" jdbcType="VARCHAR" property="orderBillcontent"/>
+        <result column="ORDER_AQ" jdbcType="VARCHAR" property="orderAq"/>
+        <result column="ORDER_CONFIRMTIME" jdbcType="TIMESTAMP" property="orderConfirmtime"/>
+        <result column="ORDER_BUYERREPAYCONTENT" jdbcType="VARCHAR" property="orderBuyerrepaycontent"/>
+        <result column="ORDER_SELLERREPAYCONTENT" jdbcType="VARCHAR" property="orderSellerrepaycontent"/>
+        <result column="ORDER_ADMINREPAYCONTENT" jdbcType="VARCHAR" property="orderAdminrepaycontent"/>
+        <result column="ORDER_COMMENT" jdbcType="VARCHAR" property="orderComment"/>
+        <result column="ORDER_PRICE" jdbcType="REAL" property="orderPrice"/>
+        <result column="ORDER_POINT" jdbcType="REAL" property="orderPoint"/>
+        <result column="ORDER_REFUNDSTATE" jdbcType="INTEGER" property="orderRefundstate"/>
+        <result column="ORDER_REFUNDPRICE" jdbcType="REAL" property="orderRefundprice"/>
+        <result column="ORDER_REFUNDDATE" jdbcType="TIMESTAMP" property="orderRefunddate"/>
+        <result column="OS_SERVICETITLE" jdbcType="VARCHAR" property="osServicetitle"/>
+        <result column="ORDER_ISDELETE" jdbcType="BIT" property="orderIsdelete"/>
+        <collection property="orderService" ofType="OrderService" select="com.jero.esc.mapper.saleinfo.OrderServiceMapper.selectByOrderId" column="ORDER_ID" />
+    </resultMap>
+	
+	<select id="selectById" resultMap="BaseResultMap">
+		SELECT ORDER_INFO.ORDER_ID, ORDER_BUYER, ORDER_SELLER, ORDER_CREATETIME, ORDER_NO, ORDER_STATE, ORDER_MEETTIME, 
+		    ORDER_PERSON, ORDER_PERSONCELL, ORDER_AREA, ORDER_ADDR, ORDER_REQUEST, ORDER_ISBILL, 
+		    ORDER_BILLADDR, ORDER_BILLCONTENT, ORDER_AQ, ORDER_CONFIRMTIME, ORDER_BUYERREPAYCONTENT, 
+		    ORDER_SELLERREPAYCONTENT, ORDER_ADMINREPAYCONTENT, ORDER_COMMENT,ORDER_PRICE,ORDER_POINT,ORDER_ISDELETE,
+		    ORDER_REFUNDSTATE,ORDER_REFUNDPRICE,ORDER_REFUNDDATE
+		    FROM ORDER_INFO JOIN ORDER_SERVICE on ORDER_INFO.ORDER_ID = ORDER_SERVICE.ORDER_ID
+		WHERE ORDER_NO = #{value}
+	</select>
+	
+	<select id="selectAll" resultMap="BaseResultMap" useCache="false">
+	SELECT * FROM (
+		SELECT ORDER_INFO.ORDER_ID, ORDER_BUYER, ORDER_SELLER, ORDER_CREATETIME, ORDER_NO, ORDER_STATE, ORDER_MEETTIME, 
+		    ORDER_PERSON, ORDER_PERSONCELL, ORDER_AREA, ORDER_ADDR, ORDER_REQUEST, ORDER_ISBILL, 
+		    ORDER_BILLADDR, ORDER_BILLCONTENT, ORDER_AQ, ORDER_CONFIRMTIME, ORDER_BUYERREPAYCONTENT, 
+		    ORDER_SELLERREPAYCONTENT, ORDER_ADMINREPAYCONTENT, ORDER_COMMENT,ORDER_PRICE,ORDER_POINT,ORDER_ISDELETE,
+		    ORDER_REFUNDSTATE,ORDER_REFUNDPRICE,ORDER_REFUNDDATE
+		    FROM ORDER_INFO JOIN ORDER_SERVICE 
+		    <where>
+		    	ORDER_BUYER = #{orderBuyer}
+		    	AND ORDER_ISDELETE = 0
+		    	<if test="title!=null and title!=''">
+		    		AND (OS_SERVICETITLE LIKE concat(concat("%",#{title}),"%") or ORDER_NO = #{title})
+		    	</if>
+		    	<if test="orderState!=null">
+		    		AND ORDER_STATE = #{orderState}
+		    	</if>
+		    	<if test="orderIsbill!=null">
+		    		AND ORDER_ISBILL = #{orderIsbill}
+		    	</if>
+		    	<if test="startDate!=null">
+		    		AND ORDER_CREATETIME &gt; #{startDate}
+		    	</if>
+		    	<if test="endDate!=null">
+		    		AND ORDER_CREATETIME &lt; #{endDate}
+		    	</if>
+		    </where>
+		    GROUP BY ORDER_INFO.ORDER_ID
+		    ) A ORDER BY ORDER_CREATETIME DESC
+	</select>
+	
+	<select id="totalNum" resultType="Integer">
+		SELECT COUNT(*)  FROM ORDER_INFO
+		<where>
+			ORDER_BUYER = #{orderBuyer}
+			AND ORDER_ISDELETE = 0
+			<if test="title!=null and title!=''">
+	    		AND ORDER_NO = #{title}
+	    	</if>
+	    	<if test="orderState!=null">
+	    		AND ORDER_STATE = #{orderState}
+	    	</if>
+	    	<if test="orderIsbill!=null">
+	    		AND ORDER_ISBILL = #{orderIsbill}
+	    	</if>
+	    	<if test="startDate!=null">
+	    		AND ORDER_CREATETIME &gt; #{startDate}
+	    	</if>
+	    	<if test="endDate!=null">
+	    		AND ORDER_CREATETIME &lt; #{endDate}
+	    	</if>
+		</where>
+	</select>
+	
+	<select id="validate" resultType="Integer">
+		SELECT COUNT(*) FROM ACCOUNT_INFO WHERE ACC_PAYPASS = #{accPaypass}
+	</select>
+	
+	<select id="selectPass" resultType="String">
+		SELECT ACC_PAYPASS FROM ACCOUNT_INFO WHERE LOG_ID = #{logId}
+	</select>
+	
+	<update id="delete">
+		UPDATE ORDER_INFO SET ORDER_ISDELETE = 1 WHERE ORDER_NO = #{orderNo}
+	</update>
+	
+	<select id="selectBalanceById" resultMap="accountInfoMap">
+	  	SELECT
+		account_info.ACC_ID,
+		account_info.LOG_ID,
+		account_info.ACC_BALANCE,
+		account_info.ACC_BLOCKBALANCE,
+		account_info.ACC_POINT,
+		account_info.ACC_PAYPASS,
+		account_info.ACC_DEFAULTCARD,
+		account_info.ACC_COMMENT
+		FROM
+		account_info
+		<where>
+			LOG_ID = #{logId}
+		</where>
+	</select>
+	
+	<update id="update" parameterType="com.jero.esc.po.userinfo.AccountInfo">
+		UPDATE account_info SET ACC_BALANCE = #{accBalance} WHERE LOG_ID = #{logId}
+	</update>
+	
+	<update id="updateState">
+		UPDATE ORDER_INFO 
+		<set>
+			<if test="flag==1">
+			 	ORDER_STATE = 4
+			</if>
+			<if test="flag==2">
+			 	ORDER_STATE = 5
+			</if>
+			<if test="flag==3">
+			 	ORDER_STATE = 3
+			</if>
+		</set> 
+		WHERE ORDER_NO = #{orderNo}
+	</update>
+	
+	<select id="logInfo" resultMap="logInfoMap">
+		SELECT LOG_ID, LOG_CELL, LOG_EMAIL, LOG_NAME, LOG_PASS, LOG_CREATETIME,LOG_ISDELETE, LOG_STATE,
+			LOG_TYPE, LOG_REGIP, LOG_ISLOG, LOG_COMMENT
+		FROM log_info WHERE LOG_ID = #{id}
+	</select>
+	
+	<update id="updateRefundMsgByOrderNo" >
+		UPDATE ORDER_INFO SET 
+		ORDER_REFUNDSTATE = #{orderRefundstate},
+		ORDER_REFUNDPRICE = #{orderRefundprice},
+		ORDER_BUYERREPAYCONTENT = #{orderBuyerrepaycontent},
+		ORDER_REFUNDDATE = #{orderRefunddate}
+		WHERE ORDER_NO = #{orderNo}
+	</update>
+	
+	<update id="updateRefundStatusByOrderNo">
+		UPDATE ORDER_INFO SET ORDER_REFUNDSTATE = "6" WHERE ORDER_NO = #{orderNo}
+	</update>
+	
+	<update id="updateServiceinfoById">
+		update service_info set SERVICE_SUCCESSNUM = #{i} where LOG_ID = #{id}
+	</update>
+	
+	<update id="updateprioviderinfoById">
+		update provider_info set PI_DEALNUM = #{i} where LOG_ID = #{id}
+	</update>
+</mapper>

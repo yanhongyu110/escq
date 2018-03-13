@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.userinfo.ProviderCollectionMapper">
+    <resultMap id="BaseResultMap" type="com.jero.esc.po.userinfo.ProviderCollection">
+        <id column="PC_ID" jdbcType="VARCHAR" property="pcId"/>
+        <result column="PC_PID" jdbcType="VARCHAR" property="pcPid"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="logId"/>
+        <result column="PC_CREATETIME" jdbcType="TIMESTAMP" property="pcCreatetime"/>
+        <result column="PC_ISDELETE" jdbcType="BIT" property="pcIsdelete"/>
+        <result column="PC_COMMENT" jdbcType="VARCHAR" property="pcComment"/>
+        <association property="providerInfo" resultMap="com.jero.esc.mapper.userinfo.ProviderInfoMapper.BaseResultMap"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    PC_ID, PC_PID, LOG_ID, PC_CREATETIME, PC_ISDELETE, PC_COMMENT
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from provider_collection
+        where PC_ID = #{pcId,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="countByExample" resultType="java.lang.Integer">
+        select
+        COUNT (PC_ID)
+        from provider_collection
+        <where>
+            1=1
+            <if test="pcId != null">
+                AND PC_ID=#{pcId}
+            </if>
+            <if test="pcPid != null">
+                AND PC_PID=#{pcPid}
+            </if>
+            <if test="logId != null">
+                AND LOG_ID=#{logId}
+            </if>
+            <if test="pcCreatetime != null">
+                AND PC_CREATETIME=#{pcCreatetime}
+            </if>
+            <if test="pcIsdelete != null">
+                AND PC_ISDELETE=#{pcIsdelete}
+            </if>
+            <if test="pcComment != null">
+                AND PC_COMMENT=#{pcComment}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectByRequire" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        PROVIDER_COLLECTION
+        INNER JOIN PROVIDER_INFO ON PROVIDER_COLLECTION.PC_PID = PROVIDER_INFO.PI_ID
+      <where>
+          1=1
+          AND PROVIDER_COLLECTION.LOG_ID=#{logId}
+          AND PC_ISDELETE=false
+          <if test="box.name != null">
+              AND PI_REALNAME LIKE  CONCAT('%','${box.name}','%' )
+          </if>
+      </where>
+        AND PROVIDER_COLLECTION.LOG_ID
+        ORDER BY
+        PROVIDER_COLLECTION.PC_CREATETIME DESC
+    </select>
+
+
+    <select id="countByRequire" resultType="java.lang.Integer">
+        SELECT
+        COUNT(PC_ID)
+        FROM
+        PROVIDER_COLLECTION
+        INNER JOIN PROVIDER_INFO ON PROVIDER_COLLECTION.PC_PID = PROVIDER_INFO.PI_ID
+        <where>
+            1=1
+            AND PROVIDER_COLLECTION.LOG_ID=#{logId}
+            AND PC_ISDELETE=false
+            <if test="box.name != null">
+                AND PI_REALNAME LIKE  CONCAT('%','${box.name}','%' )
+            </if>
+        </where>
+        AND PROVIDER_COLLECTION.LOG_ID
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from provider_collection
+    where PC_ID = #{pcId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.jero.esc.po.userinfo.ProviderCollection">
+    insert into provider_collection (PC_ID, PC_PID, LOG_ID, 
+      PC_CREATETIME, PC_ISDELETE, PC_COMMENT
+      )
+    values (#{pcId,jdbcType=VARCHAR}, #{pcPid,jdbcType=VARCHAR}, #{logId,jdbcType=VARCHAR}, 
+      #{pcCreatetime,jdbcType=TIMESTAMP}, #{pcIsdelete,jdbcType=BIT}, #{pcComment,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.jero.esc.po.userinfo.ProviderCollection">
+        insert into provider_collection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pcId != null">
+                PC_ID,
+            </if>
+            <if test="pcPid != null">
+                PC_PID,
+            </if>
+            <if test="logId != null">
+                LOG_ID,
+            </if>
+            <if test="pcCreatetime != null">
+                PC_CREATETIME,
+            </if>
+            <if test="pcIsdelete != null">
+                PC_ISDELETE,
+            </if>
+            <if test="pcComment != null">
+                PC_COMMENT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pcId != null">
+                #{pcId,jdbcType=VARCHAR},
+            </if>
+            <if test="pcPid != null">
+                #{pcPid,jdbcType=VARCHAR},
+            </if>
+            <if test="logId != null">
+                #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="pcCreatetime != null">
+                #{pcCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pcIsdelete != null">
+                #{pcIsdelete,jdbcType=BIT},
+            </if>
+            <if test="pcComment != null">
+                #{pcComment,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.userinfo.ProviderCollection">
+        update provider_collection
+        <set>
+            <if test="pcPid != null">
+                PC_PID = #{pcPid,jdbcType=VARCHAR},
+            </if>
+            <if test="logId != null">
+                LOG_ID = #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="pcCreatetime != null">
+                PC_CREATETIME = #{pcCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pcIsdelete != null">
+                PC_ISDELETE = #{pcIsdelete,jdbcType=BIT},
+            </if>
+            <if test="pcComment != null">
+                PC_COMMENT = #{pcComment,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where PC_ID = #{pcId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.userinfo.ProviderCollection">
+    update provider_collection
+    set PC_PID = #{pcPid,jdbcType=VARCHAR},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      PC_CREATETIME = #{pcCreatetime,jdbcType=TIMESTAMP},
+      PC_ISDELETE = #{pcIsdelete,jdbcType=BIT},
+      PC_COMMENT = #{pcComment,jdbcType=VARCHAR}
+    where PC_ID = #{pcId,jdbcType=VARCHAR}
+  </update>
+</mapper>

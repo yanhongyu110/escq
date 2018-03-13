@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.userinfo.ProviderRecommendMapper">
+	<resultMap id="BaseResultMap" type="com.jero.esc.po.userinfo.ProviderRecommend">
+		<id column="PR_ID" jdbcType="VARCHAR" property="prId" />
+		<result column="PR_DETAILS" jdbcType="VARCHAR" property="prDetails" />
+		<result column="PR_PHOTO" jdbcType="VARCHAR" property="prPhoto" />
+		<result column="PR_CREATETIME" jdbcType="TIMESTAMP" property="prCreatetime" />
+		<result column="PR_STATE" jdbcType="INTEGER" property="prState" />
+		<result column="PR_SORT" jdbcType="INTEGER" property="prSort" />
+		<result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+		<result column="PR_COMMENT" jdbcType="VARCHAR" property="prComment" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		PR_ID, PR_DETAILS, PR_PHOTO, PR_CREATETIME, PR_STATE,
+		PR_SORT, LOG_ID,
+		PR_COMMENT
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from provider_recommend
+		where PR_ID = #{prId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectBylogId" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from provider_recommend
+		where LOG_ID = #{logId,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		provider_recommend
+		where LOG_ID = #{logId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jero.esc.po.userinfo.ProviderRecommend">
+		insert into provider_recommend
+		(PR_ID, PR_DETAILS, PR_PHOTO,
+		PR_CREATETIME, PR_STATE, PR_SORT,
+		LOG_ID,
+		PR_COMMENT)
+		values (#{prId,jdbcType=VARCHAR},
+		#{prDetails,jdbcType=VARCHAR},
+		#{prPhoto,jdbcType=VARCHAR},
+		#{prCreatetime,jdbcType=TIMESTAMP}, #{prState,jdbcType=INTEGER},
+		#{prSort,jdbcType=INTEGER},
+		#{logId,jdbcType=VARCHAR},
+		#{prComment,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.jero.esc.po.userinfo.ProviderRecommend">
+		insert into provider_recommend
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="prId != null">
+				PR_ID,
+			</if>
+			<if test="prDetails != null">
+				PR_DETAILS,
+			</if>
+			<if test="prPhoto != null">
+				PR_PHOTO,
+			</if>
+			<if test="prCreatetime != null">
+				PR_CREATETIME,
+			</if>
+			<if test="prState != null">
+				PR_STATE,
+			</if>
+			<if test="prSort != null">
+				PR_SORT,
+			</if>
+			<if test="logId != null">
+				LOG_ID,
+			</if>
+			<if test="prComment != null">
+				PR_COMMENT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="prId != null">
+				#{prId,jdbcType=VARCHAR},
+			</if>
+			<if test="prDetails != null">
+				#{prDetails,jdbcType=VARCHAR},
+			</if>
+			<if test="prPhoto != null">
+				#{prPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="prCreatetime != null">
+				#{prCreatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="prState != null">
+				#{prState,jdbcType=INTEGER},
+			</if>
+			<if test="prSort != null">
+				#{prSort,jdbcType=INTEGER},
+			</if>
+			<if test="logId != null">
+				#{logId,jdbcType=VARCHAR},
+			</if>
+			<if test="prComment != null">
+				#{prComment,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.userinfo.ProviderRecommend">
+		update provider_recommend
+		<set>
+			<if test="prDetails != null">
+				PR_DETAILS = #{prDetails,jdbcType=VARCHAR},
+			</if>
+			<if test="prPhoto != null">
+				PR_PHOTO = #{prPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="prCreatetime != null">
+				PR_CREATETIME = #{prCreatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="prState != null">
+				PR_STATE = #{prState,jdbcType=INTEGER},
+			</if>
+			<if test="prSort != null">
+				PR_SORT = #{prSort,jdbcType=INTEGER},
+			</if>
+			<if test="logId != null">
+				LOG_ID = #{logId,jdbcType=VARCHAR},
+			</if>
+			<if test="prComment != null">
+				PR_COMMENT = #{prComment,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where PR_ID = #{prId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateStateBylogId" parameterType="com.jero.esc.po.userinfo.ProviderRecommend">
+		update provider_recommend
+		<set>
+			<if test="prState != null">
+				PR_STATE = #{prState,jdbcType=INTEGER},
+			</if>
+		</set>
+		where LOG_ID = #{logId,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.jero.esc.po.userinfo.ProviderRecommend">
+		update
+		provider_recommend
+		set PR_DETAILS = #{prDetails,jdbcType=VARCHAR},
+		PR_PHOTO = #{prPhoto,jdbcType=VARCHAR},
+		PR_CREATETIME =
+		#{prCreatetime,jdbcType=TIMESTAMP},
+		PR_STATE =
+		#{prState,jdbcType=INTEGER},
+		PR_SORT = #{prSort,jdbcType=INTEGER},
+		LOG_ID = #{logId,jdbcType=VARCHAR},
+		PR_COMMENT =
+		#{prComment,jdbcType=VARCHAR}
+		where PR_ID = #{prId,jdbcType=VARCHAR}
+	</update>
+</mapper>

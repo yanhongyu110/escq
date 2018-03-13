@@ -1,0 +1,195 @@
+package com.jero.esc.controller.activity.redpacket;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.security.KeyStore;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import javax.net.ssl.SSLContext;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
+import org.apache.http.util.EntityUtils;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+import org.jdom.input.SAXBuilder;
+import org.xml.sax.InputSource;
+
+import com.jero.esc.controller.activity.WeixinDraw;
+
+public class WeChatUtils {
+	private SendRedPack sendRedPack = new SendRedPack();
+	
+	
+	/**
+     * 生成签名
+     * */
+    public String createSendRedPackOrderSign(SendRedPack redPacket){
+	       StringBuffer sign = new StringBuffer();
+	        sign.append("act_name=").append(redPacket.getAct_name());
+	        sign.append("&client_ip=").append(redPacket.getClient_ip());
+	        sign.append("&mch_billno=").append(redPacket.getMch_billno());
+	        sign.append("&mch_id=").append(redPacket.getMch_id());
+	        sign.append("&nonce_str=").append(redPacket.getNonce_str());
+	        sign.append("&re_openid=").append(redPacket.getRe_openid());
+	        sign.append("&remark=").append(redPacket.getRemark());
+	        sign.append("&send_name=").append(redPacket.getSend_name());
+	        sign.append("&total_amount=").append(redPacket.getTotal_amount());
+	        sign.append("&total_num=").append(redPacket.getTotal_num());
+	        sign.append("&wishing=").append(redPacket.getWishing());
+	        sign.append("&wxappid=").append(redPacket.getWxappid());
+	        sign.append("&key=").append("jindaojia20171129D123C654DDE6AC1");
+        return DigestUtils.md5Hex(sign.toString()).toUpperCase();
+    }
+    
+    
+    /**
+     * 发送请求
+     * */
+    @SuppressWarnings({ "deprecation" })
+	private String ssl(String url,String data){
+        StringBuffer message = new StringBuffer();
+        try {
+            String mchId = "1486272382";
+            KeyStore keyStore  = KeyStore.getInstance("PKCS12");
+//            String certFilePath = "E:\\service\\tomcat7\\service704\\webapps\\esc\\apiclient\\apiclient_cert.p12";
+//            // linux下
+//            if ("/".equals(File.separator)) {
+//                certFilePath = "//usr//local//certs//apiclient_cert.p12";
+//            }
+//            FileInputStream instream = new FileInputStream(new File(certFilePath));
+			InputStream configFile = WeixinDraw.class.getResourceAsStream("weixin.config.xml");
+			SAXReader reader = new SAXReader();
+			Document doc = reader.read(configFile);
+			Element config = doc.getRootElement();
+            FileInputStream instream = new FileInputStream(new File(config.elementTextTrim("cert_path"))); // 从配置文件里读取证书的路径信息
+            keyStore.load(instream, mchId.toCharArray());
+
+			instream.close();
+			SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, mchId.toCharArray()).build();
+			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, new String[] { "TLSv1" }, null, SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+			CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+			HttpPost httpost = new HttpPost(url); //
+			httpost.addHeader("Connection", "keep-alive");
+			httpost.addHeader("Accept", "*/*");
+			httpost.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+			httpost.addHeader("Host", "api.mch.weixin.qq.com");
+			httpost.addHeader("X-Requested-With", "XMLHttpRequest");
+			httpost.addHeader("Cache-Control", "max-age=0");
+			httpost.addHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) ");
+			httpost.setEntity(new StringEntity(data, "UTF-8"));
+			CloseableHttpResponse response = httpclient.execute(httpost);
+			HttpEntity entity = response.getEntity();
+
+			
+			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+			
+			StringReader read = new StringReader(jsonStr.toString());
+			// 创建新的输入源SAX 解析器将使用 InputSource 对象来确定如何读取 XML 输入
+			InputSource source = new InputSource(read);
+			// 创建一个新的SAXBuilder
+			SAXBuilder sb = new SAXBuilder();
+			// 通过输入源构造一个Document
+			org.jdom.Document doc1;
+			doc1 = (org.jdom.Document) sb.build(source);
+
+			org.jdom.Element root = doc1.getRootElement();// 指向根节点
+			List<org.jdom.Element> list = root.getChildren();
+			Map map1 = new TreeMap();
+			if (list != null && list.size() > 0) {
+				for (org.jdom.Element element : list) {
+					System.out.println("key是：" + element.getName()
+							+ "，值是：" + element.getText());
+					map1.put(element.getName(), element.getText());
+				}
+			}
+            
+            
+            
+//            SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, mchId.toCharArray()).build();
+//            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, new String[] { "TLSv1" }, null, SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+//            CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+//            HttpPost httpost = new HttpPost(url);
+//            httpost.addHeader("Connection", "keep-alive");
+//            httpost.addHeader("Accept", "*/*");
+//            httpost.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+//            httpost.addHeader("Host", "api.mch.weixin.qq.com");
+//            httpost.addHeader("X-Requested-With", "XMLHttpRequest");
+//            httpost.addHeader("Cache-Control", "max-age=0");
+//            httpost.addHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) ");
+//            httpost.setEntity(new StringEntity(data, "UTF-8"));
+//            System.out.println("executing request" + httpost.getRequestLine());
+//            CloseableHttpResponse response = httpclient.execute(httpost);
+//            try {
+//                HttpEntity entity = response.getEntity();
+//                System.out.println("----------------------------------------");
+//                System.out.println(response.getStatusLine());
+//                if (entity != null) {
+//                    System.out.println("Response content length: " + entity.getContentLength());
+//                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(entity.getContent(),"UTF-8"));
+//                    String text;
+//                    while ((text = bufferedReader.readLine()) != null) {
+//                        message.append(text);
+//                    }
+//                }
+//                EntityUtils.consume(entity);
+            } catch (IOException e) {
+                e.printStackTrace();
+                /* } finally {
+                response.close();
+            }*/
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        } 
+        return message.toString();
+    }
+    
+    /**
+     * 发送现金红包 4      * @return String   
+     * @throws
+     */
+    public Map<String, String> sendRedPack(String re_openid) throws Exception{
+        sendRedPack.setRe_openid(re_openid);
+        String sign = createSendRedPackOrderSign(sendRedPack);
+        sendRedPack.setSign(sign);
+        
+        XMLUtil xmlUtil= new XMLUtil();
+        xmlUtil.xstream().alias("xml", sendRedPack.getClass());
+//        String xml = xmlUtil.xstream().toXML(sendRedPack);
+        String xml = this.getEntityToXml(sign, sendRedPack);
+        String response = ssl("https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack", xml);
+        Map<String, String> map = xmlUtil.parseXml(response);
+        return map;
+    }
+    
+    public String getEntityToXml(String sign,SendRedPack redPacket){
+		String data = "<xml><nonce_str>";
+		data += redPacket.getNonce_str() + "</nonce_str><mch_billno>"; // APPID
+		data += redPacket.getMch_billno() + "</mch_billno><mch_id>"; // 商户ID
+		data += redPacket.getMch_id() + "</mch_id><wxappid>"; // 随机字符串
+		data += redPacket.getWxappid() + "</wxappid><send_name>"; // 订单号
+		data += redPacket.getSend_name() + "</send_name><re_openid>"; // 是否强制实名验证
+		data += redPacket.getRe_openid() + "</re_openid><total_amount>"; // 是否强制实名验证
+		data += redPacket.getTotal_amount() + "</total_amount><total_num>"; // 是否强制实名验证
+		data += redPacket.getTotal_num() + "</total_num><wishing>"; // 是否强制实名验证
+		data += redPacket.getWishing() + "</wishing><client_ip>"; // 是否强制实名验证
+		data += redPacket.getClient_ip() + "</client_ip><act_name>"; // 是否强制实名验证
+		data += redPacket.getAct_name() + "</act_name><remark>"; // 是否强制实名验证
+		data += redPacket.getRemark() + "</remark><sign>"; // 是否强制实名验证
+		data += sign + "</sign></xml>";// 签名
+		return data;
+    }
+}

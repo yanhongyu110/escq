@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.BrowsHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.BrowsHistory">
+    <id column="BH_ID" jdbcType="VARCHAR" property="bhId" />
+    <result column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId" />
+    <result column="BH_PERSON" jdbcType="VARCHAR" property="bhPerson" />
+    <result column="BH_TIME" jdbcType="TIMESTAMP" property="bhTime" />
+    <result column="BH_ISDELETE" jdbcType="BIT" property="bhIsdelete" />
+    <result column="BH_COMMENT" jdbcType="VARCHAR" property="bhComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    BH_ID, SERVICE_ID, BH_PERSON, BH_TIME, BH_ISDELETE, BH_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from brows_history
+    where BH_ID = #{bhId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from brows_history
+    where BH_ID = #{bhId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.BrowsHistory">
+    insert into brows_history (BH_ID, SERVICE_ID, BH_PERSON, 
+      BH_TIME, BH_ISDELETE, BH_COMMENT
+      )
+    values (#{bhId,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, #{bhPerson,jdbcType=VARCHAR}, 
+      #{bhTime,jdbcType=TIMESTAMP}, #{bhIsdelete,jdbcType=BIT}, #{bhComment,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.BrowsHistory">
+    insert into brows_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bhId != null">
+        BH_ID,
+      </if>
+      <if test="serviceId != null">
+        SERVICE_ID,
+      </if>
+      <if test="bhPerson != null">
+        BH_PERSON,
+      </if>
+      <if test="bhTime != null">
+        BH_TIME,
+      </if>
+      <if test="bhIsdelete != null">
+        BH_ISDELETE,
+      </if>
+      <if test="bhComment != null">
+        BH_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bhId != null">
+        #{bhId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null">
+        #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="bhPerson != null">
+        #{bhPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="bhTime != null">
+        #{bhTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bhIsdelete != null">
+        #{bhIsdelete,jdbcType=BIT},
+      </if>
+      <if test="bhComment != null">
+        #{bhComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.BrowsHistory">
+    update brows_history
+    <set>
+      <if test="serviceId != null">
+        SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="bhPerson != null">
+        BH_PERSON = #{bhPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="bhTime != null">
+        BH_TIME = #{bhTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bhIsdelete != null">
+        BH_ISDELETE = #{bhIsdelete,jdbcType=BIT},
+      </if>
+      <if test="bhComment != null">
+        BH_COMMENT = #{bhComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BH_ID = #{bhId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.BrowsHistory">
+    update brows_history
+    set SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+      BH_PERSON = #{bhPerson,jdbcType=VARCHAR},
+      BH_TIME = #{bhTime,jdbcType=TIMESTAMP},
+      BH_ISDELETE = #{bhIsdelete,jdbcType=BIT},
+      BH_COMMENT = #{bhComment,jdbcType=VARCHAR}
+    where BH_ID = #{bhId,jdbcType=VARCHAR}
+  </update>
+</mapper>

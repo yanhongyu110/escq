@@ -1,0 +1,24 @@
+# MYSQL DB Connection information
+#database.driverClassName=oracle.jdbc.driver.OracleDriver
+#database.url=jdbc:oracle:thin:@192.168.0.124:1521:orcl
+#database.username=GYGZGAS
+#database.password=cdqj555
+database.driverClassName=com.mysql.jdbc.Driver
+#database.url=jdbc:mysql://192.167.10.228:3306/escs?useUnicode=true&amp;characterEncoding=UTF-8
+#database.url=jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=UTF-8
+
+#database.url=jdbc:mysql://120.77.201.134:3306/escs?useUnicode=true&amp;characterEncoding=UTF-8&allowMultiQueries=true
+#database.url=jdbc:mysql://192.167.10.228:3306/escs?useUnicode=true&amp;characterEncoding=UTF-8&allowMultiQueries=true
+#database.username=root
+#database.password=k+PvSIyVe+EetG4xGvqvRQ==
+
+database.url=jdbc:mysql://139.224.198.52:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&allowMultiQueries=true
+database.username=esc
+database.password=MicL0d0zkmhD4ays6+kAOg==
+#database.url=jdbc:mysql://192.168.1.171:3306/escq?useUnicode=true&amp;characterEncoding=UTF-8&allowMultiQueries=true
+#database.username=escq
+#database.password=4TtO0br8VPQpHNZkVkeBPw==
+
+#database.url=jdbc:mysql://localhost:3306/esc?useUnicode=true&amp;characterEncoding=UTF-8&allowMultiQueries=true
+#database.username=root
+#database.password=ZsqowpaEfXm0iHJsb9hK+g==

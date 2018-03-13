@@ -1,0 +1,241 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jsp/common/common.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <title>我的预约</title>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+    <meta name="apple-touch-fullscreen" content="yes">
+    <!-- 开启对web app程序的支持  -->
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+    <!--base css-->
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes"/>
+    <link rel="stylesheet" href="${webtxc }/css/wap/reset.css"/>
+    <link rel="stylesheet" href="${webtxc }/css/wap/personer.css"/>
+    <link rel="stylesheet" href="${webtxc}/css/page.css"/>
+    <link rel="stylesheet" href="${webtxc}/css/wap/paging.css"/>
+
+
+    <style type="text/css">
+        :after, :before {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .clearfix:after, .clearfix:before {
+            display: table;
+            content: " ";
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .my_date_bt .title-list li {
+            width: 50%;;
+        }
+
+        .my_date_bt .title-list p {
+            width: 50%;;
+        }
+
+        .my_date_bt .title .son-title-list {
+            list-style: none;;
+            margin-left: 10px;
+        }
+
+        .my_date_bt .title .son-title-list li {
+            list-style: none;
+            float: left;
+            /*width: 25%;*/
+            margin-right: 10px;;
+            text-align: center;
+            cursor: pointer;
+            padding: 5px 0px;
+            font-size: 14px;
+        }
+
+        .my_date_bt .title .son-title-list li .active {
+            color: #fb5a5a;
+            border: 1px solid #fb5a5a;
+        }
+
+        .my_date_bt .title .son-title-list li a {
+            display: inline-block;
+            margin: 0 auto;;
+            border: 1px solid #eee;
+            padding:3px 5px;
+        }
+
+        #page {
+            padding-bottom: 70px;
+        }
+
+        .personer_mes {
+            padding-bottom: 10px !important;
+        }
+
+        .personer_mes .my_date {
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .personer_mes .my_date .closed {
+            margin-top: 10px;
+
+        }
+
+        .personer_mes .my_date .operation {
+            position: absolute;
+            bottom: 20px;
+            right: 2%;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .personer_mes .my_date .operation a {
+            display: inline-block;
+            float: right;
+            padding: 1px 5px;
+            margin-right: 5px;
+            border: 1px solid #f60;
+            color: #f60;
+            border-radius: 4px;
+        }
+
+        .personer_mes .my_date .operation span {
+            display: inline-block;
+            float: right;
+            padding: 1px 5px;
+            margin-right: 5px;
+            border: 1px solid #ddd;
+            color: #999;
+            border-radius: 4px;
+        }
+
+
+    </style>
+
+    <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
+    <script src="${webtxc }/js/wap/reset.js"></script>
+    <script src="${webtxc }/js/wap/TouchSlide.js"></script>
+    <script type="text/javascript">
+        var serviceTypetree = '${serviceTypetree}';
+        var serviceId = '${serviceVo.serviceId}';
+    </script>
+    <script type="text/javascript" src="${webtxc }/js/wap/common.js"></script>
+    <script src="${webtxc }/myjs/wap/saleinfo/my_date.js?v=1288823123"></script>
+    <script src="${webtxc }/js/wap/paging.js"></script>
+
+    <script>
+        var f = ${f};
+        $(function () {
+
+            //设计案例hover效果
+            $('.service_content .service_content_pj li').hover(function () {
+                $(this).css("border-color", "#ff6600");
+                $(this).find('p > a').css('color', '#ff6600');
+            }, function () {
+                $(this).css("border-color", "#fafafa");
+                $(this).find('p > a').css('color', '#666666');
+            });
+        });
+    </script>
+    <script type="text/javascript" src="${webtxc }/js/wap/common.js?v=12312"></script>
+</head>
+
+<body>
+<!--wapper-->
+<div class="wapper">
+    <!--page-->
+    <div id="page">
+        <div class="personer_top">
+            <h3>我的预约</h3>
+            <span onclick="history.go(-1)"
+                  style="width:40px;height:50px;display:block;position:absolute;left:0;top:0;"></span>
+        </div>
+
+        <div class="my_date_bt">
+            <div class="title cf">
+                <ul class="title-list fr cf ">
+                    <li id="li1" class="on">发出的预约</li>
+                    <c:if test="${logInfo.logType == 2 }">
+                        <li id="li3">收到的预约</li>
+                    </c:if>
+                    <p></p>
+                </ul>
+            </div>
+
+            <div class="title" style="height: auto;border:0;padding:15px 10px">
+                <ul class="son-title-list clearfix">
+                    <li class="order-state-all"><a class="active" href="javascript:">全部</a></li>
+                    <li class="order-state-0"><a href="javascript:">待确认</a></li>
+                    <li class="order-state-1"><a href="javascript:">拒绝</a></li>
+                    <li class="order-state-2"><a href="javascript:">待支付</a></li>
+                    <li class="order-state-3"><a href="javascript:">已取消</a></li>
+                    <li class="order-state-4"><a href="javascript:">待完成</a></li>
+                    <li class="order-state-5"><a href="javascript:">待评价</a></li>
+                    <li class="order-state-6"><a href="javascript:">已完成</a></li>
+                    <li class="order-state-7"><a href="javascript:">申请退款</a></li>
+                </ul>
+            </div>
+
+            <div class="service_content">
+                <div class="service_content_pj show">
+                    <div id="personer_mes" class="personer_mes">
+
+                        <%-- 列表demo 开始 --%>
+
+                        <!-- <ul class="my_date">
+                            <li class="my_date_img"><img src="http://localhost:8080/escq/files/image/20170519/20170519144405_357.png"></li>
+                            <li class="my_date_title">
+                                <h3><a href="http://localhost:8080/escq/wap/saleinfo/orderInfoBuyer/details.html?orderId=17051914460001">1撒都放假啊收到话费卡上雕刻技法</a></h3>
+                                <p>0.01 元<span id="orderId0" style="visibility:hidden">17051914460001</span></p>
+                            </li>
+                            <li class="my_date_zt">
+                                <p onclick="window.location.href=path+'/wap/saleinfo/orderInfoBuyer/ConfirmPayment.html?orderNo=17051914460001'">待完成</p>
+                                <span>2017-05-19</span>
+                            </li>
+                            <li class="closed">
+                                <a id="d0" href="javascript:del(0);" style="display: block;">
+                                    <span style="display:none;">4</span>
+                                    <img src="http://localhost:8080/escq/images/wap/wrong.jpg">
+                                </a>
+                            </li>
+
+                            <li class="operation">
+                                <a href="javascript:;">支付</a>
+                                <a href="javascript:;">退款详情</a>
+                                <a href="javascript:;">申请退款</a>
+                            </li>
+                        </ul> -->
+
+                        <%-- 列表demo 结束 --%>
+
+
+                    </div>
+                    <!--end.personer_mes-->
+
+                </div>
+
+
+            </div>
+            <!--end.service_content-->
+
+        </div>
+        <!--end.wap_service_xq-->
+        <div class="more"></div>
+    </div>
+    <!--page end-->
+</div>
+<!--wapper end-->
+<%@ include file="/WEB-INF/jsp/wap/common/bottom.jsp" %>
+</body>
+
+</html>

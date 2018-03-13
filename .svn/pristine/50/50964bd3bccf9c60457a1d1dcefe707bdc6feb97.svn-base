@@ -1,0 +1,573 @@
+package com.jero.esc.service.impl.goodsinfo;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.jero.esc.common.po.FastPage;
+import com.jero.esc.common.po.PageRowBounds;
+import com.jero.esc.common.utils.UUIDUtil;
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import com.jero.esc.common.utils.fastvalidate.FastValid;
+import com.jero.esc.mapper.details.PriceSetMapper;
+import com.jero.esc.mapper.goodsinfo.ServiceInfoMapper;
+import com.jero.esc.mapper.goodsinfo.ServiceRemarkMapper;
+import com.jero.esc.mapper.goodsinfo.ServiceStepMapper;
+import com.jero.esc.mapper.pubinfo.CommonTypeMapper;
+import com.jero.esc.po.details.PriceSet;
+import com.jero.esc.po.goodsinfo.ServiceCart;
+import com.jero.esc.po.goodsinfo.ServiceInfo;
+import com.jero.esc.po.goodsinfo.ServiceSnapshot;
+import com.jero.esc.po.goodsinfo.ServiceStep;
+import com.jero.esc.po.pubinfo.CommonType;
+import com.jero.esc.service.goodsinfo.IServiceRemarkService;
+import com.jero.esc.service.goodsinfo.IServiceService;
+import com.jero.esc.service.goodsinfo.IServiceSnapshotService;
+import com.jero.esc.vo.goodsinfo.ServiceInfoVo;
+import com.jero.esc.vo.userinfo.ServiceVo;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+
+/**
+ * Created by blazh on 2016/12/12.
+ */
+@Service
+public class ServiceService implements IServiceService {
+
+	@Autowired
+	private ServiceInfoMapper serviceInfoMapper;
+
+	@Autowired
+	private IServiceSnapshotService serviceSnapshotService;
+
+	@Autowired
+	private ServiceStepMapper serviceStepMapper;
+
+	@Autowired
+	private PriceSetMapper PriceSetMapper;
+
+	@Autowired
+	private CommonTypeMapper commonTypeMapper;
+	
+	@Autowired
+	private ServiceRemarkMapper ServiceRemarkMapper;
+
+	// region 添加价格与设置
+	private void addPricesAndStep(ServiceInfo serviceInfo) throws Exception {
+
+		if (serviceInfo.getPriceSets() == null || serviceInfo.getServiceSteps() == null) {
+			throw new ExceptionWithMessage("阶段与价格不应该变更");
+		}
+
+		// 得到价格属性
+		Map<Integer, Float[]> styleList = new HashMap<Integer, Float[]>();
+		// 添加价格表
+		for (PriceSet priceSet : serviceInfo.getPriceSets()) {
+			priceSet.setLogId(serviceInfo.getLogId());
+			// 验证
+			if (FastValid.isEmp(priceSet.getPsetDiscountType(), priceSet.getPsetPoint(), priceSet.getPsetPrice(),
+					priceSet.getLogId()) || priceSet.getPsetPrice() < 0 || priceSet.getPsetPoint() < 0)
+				throw new ExceptionWithMessage("价格有误");
+			priceSet.setPsetCreateTime(new Date());
+			priceSet.setPsetId(UUIDUtil.getUUID());
+			priceSet.setLogId(serviceInfo.getLogId());
+			priceSet.setServiceId(serviceInfo.getServiceId());
+			if (styleList.containsKey(priceSet.getPsetDiscountType()))
+				throw new ExceptionWithMessage("价格类型有误");
+			styleList.put(priceSet.getPsetDiscountType(),
+					new Float[] { priceSet.getPsetPrice(), priceSet.getPsetPoint() });
+		}
+
+		try {
+			for (PriceSet iterable_element : serviceInfo.getPriceSets()) {
+				int f = PriceSetMapper.insertSelective(iterable_element);
+				System.out.println(f + "");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// 添加阶段表
+		int i = 0;
+		Map<Integer, Float[]> styleList1 = new HashMap<Integer, Float[]>();
+		for (Integer integer : styleList.keySet()) {
+			styleList1.put(integer, new Float[] { 0f, 0f });
+		}
+		for (ServiceStep serviceStep : serviceInfo.getServiceSteps()) {
+			// 验证
+			if (FastValid.isEmp(serviceStep.getSsDescribe(), serviceStep.getSsName(), serviceStep.getSsPrice()))
+				throw new ExceptionWithMessage("阶段有误");
+			// 得到价格json 并且验证
+			JSONArray jsonObject = JSON.parseArray(serviceStep.getSsPrice());
+
+			// {"2":{price:100.0,point:100},"3":{}}
+			//
+			// [{"psetDiscountType":"43","psetPoint":"4","psetPrice":"4"},{"psetDiscountType":"45","psetPoint":"4","psetPrice":"4"}]
+
+			int ii = 0;
+			float totalPrice = 0;
+			float totalPoint = 0;
+
+			for (int j = 0; j < jsonObject.size(); j++) {
+				PriceSet pri = jsonObject.getObject(j, PriceSet.class);
+				Integer s = pri.getPsetDiscountType();
+				if (styleList1.containsKey(s)) {
+					styleList1.get(s)[0] += pri.getPsetPrice();
+					styleList1.get(s)[1] += pri.getPsetPoint();
+					ii++;
+				}
+			}
+
+			//
+			// for (String _s : jsonObject) {
+			// Integer s = Integer.parseInt(_s);
+			// if (styleList1.containsKey(s)) {
+			//
+			// }
+			// }
+			//
+
+			if (ii < jsonObject.size()) {
+				throw new ExceptionWithMessage("每个阶段的价格类型不够");
+			}
+			serviceStep.setSsId(UUIDUtil.getUUID());
+			serviceStep.setServiceId(serviceInfo.getServiceId());
+			serviceStep.setLogId(serviceInfo.getLogId());
+			serviceStep.setSsSort(i);
+			i++;
+		}
+		// 检查合集的价格
+		for (Map.Entry<Integer, Float[]> integerEntry : styleList1.entrySet()) {
+			if (!integerEntry.getValue()[0].equals(styleList.get(integerEntry.getKey())[0])
+					|| !integerEntry.getValue()[1].equals(styleList.get(integerEntry.getKey())[1])) {
+				throw new ExceptionWithMessage("阶段价格加起来不等于设定的价格");
+			}
+		}
+
+		try {
+			for (ServiceStep serviceStep : serviceInfo.getServiceSteps()) {
+				if (serviceStepMapper.insertSelective(serviceStep) < 0) {
+					throw new ExceptionWithMessage("阶段价格添加错误");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	// endregion
+
+	/**
+	 * 修改点赞人数
+	 * @param serviceId
+	 * @param flag true：点赞   false：取消点赞
+	 * @return
+	 */
+	@Override
+	public Boolean updateService(String serviceId, Boolean flag) {
+		ServiceInfo serviceInfo = serviceInfoMapper.selectByPrimaryKey(serviceId);
+		Integer num = serviceInfo.getServiceZanNum();
+		num = num != null ? num : 0;
+		ServiceInfo info = new ServiceInfo();
+		info.setServiceId(serviceId);
+		if(flag){
+			info.setServiceZanNum(num + 1);
+		} else {
+			info.setServiceZanNum((num - 1) < 0 ? 0 : (num - 1));
+		}
+		int i = serviceInfoMapper.updateByPrimaryKeySelective(info);
+		return i > 0 ? true : false;
+	}
+	/**
+	 * 修改服务收藏人数
+	 * @param serviceId
+	 * @param flag true：收藏   false：取消收藏
+	 * @return
+	 */
+	@Override
+	public Boolean updateServiceCollectNum(String serviceId, Boolean flag) {
+		ServiceInfo serviceInfo = serviceInfoMapper.selectByPrimaryKey(serviceId);
+		Integer num = serviceInfo.getServiceCollectNum();
+		num = num != null ? num : 0;
+		ServiceInfo info = new ServiceInfo();
+		info.setServiceId(serviceId);
+		if(flag){
+			info.setServiceCollectNum(num + 1);
+		} else {
+			info.setServiceCollectNum((num - 1) < 0 ? 0 : (num - 1));
+		}
+		int i = serviceInfoMapper.updateByPrimaryKeySelective(info);
+		return i > 0 ? true : false;
+	}
+	
+
+	/**
+	 * 添加服务
+	 *
+	 * @param serviceInfo
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean addService(ServiceInfo serviceInfo) throws Exception {
+		// 验证
+		//System.err.println(serviceInfoMapper.countByExample(serviceInfo));
+		ServiceInfo ssss=new ServiceInfo();
+		ssss.setServiceTitle(serviceInfo.getServiceTitle());
+		if(serviceInfoMapper.countByExample(ssss)>0){
+			throw new ExceptionWithMessage("服务重复");
+		}
+
+		// 补完信息
+		serviceInfo.setServiceId(UUIDUtil.getUUID());
+		serviceInfo.setServiceCreatetime(new Date());
+		serviceInfo.setServiceIsdelete(false);
+		serviceInfo.setServiceState(1);
+		serviceInfo.setServiceRemark("{\"total\":0.0,\"count\":0}");
+		serviceInfo.setServiceSuccessnum(0);
+		serviceInfo.setServiceResponse(0.0f);
+		serviceInfo.setServiceMeetnum(0);
+		serviceInfo.setServiceMark(0.0f);
+		serviceInfo.setServiceCollectNum(0);
+		serviceInfo.setServiceZanNum(0);
+
+
+		// Map<Integer, Float[]> styleList = new HashMap<Integer, Float[]>();
+		//
+		// //添加价格表
+		// for (PriceSet priceSet : serviceInfo.getPriceSets()) {
+		// //验证
+		// if (FastValid.isEmp(priceSet.getPsetDiscountType(),
+		// priceSet.getPsetPoint(), priceSet.getPsetPrice(),
+		// priceSet.getPsetPointType(), priceSet.getLogId()) ||
+		// priceSet.getPsetPrice() < 0 || priceSet.getPsetPoint() < 0)
+		// throw new ExceptionWithMessage("价格有误");
+		// priceSet.setPsetCreateTime(new Date());
+		// priceSet.setPsetId(UUIDUtil.getUUID());
+		// priceSet.setLogId(serviceInfo.getLogId());
+		// priceSet.setServiceId(serviceInfo.getServiceId());
+		// if (styleList.containsKey(priceSet.getPsetDiscountType()))
+		// throw new ExceptionWithMessage("价格类型有误");
+		// styleList.put(priceSet.getPsetDiscountType(), new
+		// Float[]{priceSet.getPsetPrice(), priceSet.getPsetPoint()});
+		// }
+		// PriceSetMapper.insertListSelective(serviceInfo.getPriceSets());
+		//
+		//
+		//
+		// //添加阶段表
+		// int i = 0;
+		// Map<Integer,Float[]> styleList1=new HashMap<Integer, Float[]>();
+		// for (Integer integer : styleList.keySet()) {
+		// styleList1.put(integer,new Float[]{0f,0f});
+		// }
+		// for (ServiceStep serviceStep : serviceInfo.getServiceSteps()) {
+		// //验证
+		// if (FastValid.isEmp(serviceStep.getSsDescribe(),
+		// serviceStep.getSsName(), serviceStep.getSsPrice()))
+		// throw new ExceptionWithMessage("阶段有误");
+		// //得到价格json 并且验证
+		// JSONObject jsonObject = JSON.parseObject(serviceStep.getSsPrice());
+		// int ii = 0;
+		// float totalPrice = 0;
+		// float totalPoint = 0;
+		// for (String _s : jsonObject.keySet()) {
+		// Integer s=Integer.parseInt(_s);
+		// if (styleList1.containsKey(s)) {
+		// styleList1.get(s)[0] +=
+		// jsonObject.getJSONObject(s.toString()).getFloat("price");
+		// styleList1.get(s)[0]+=jsonObject.getJSONObject(s.toString()).getFloat("point");
+		// ii++;
+		// }
+		// }
+		// if (ii < jsonObject.keySet().size()) {
+		// throw new ExceptionWithMessage("每个阶段的价格类型不够");
+		// }
+		// serviceStep.setSsId(UUIDUtil.getUUID());
+		// serviceStep.setServiceId(serviceInfo.getServiceId());
+		// serviceStep.setLogId(serviceInfo.getLogId());
+		// serviceStep.setSsSort(i);
+		// }
+		// //检查合集的价格
+		// for (Map.Entry<Integer, Float[]> integerEntry :
+		// styleList1.entrySet()) {
+		// if
+		// (integerEntry.getValue()[0]!=styleList.get(integerEntry.getKey())[0]||integerEntry.getValue()[1]!=styleList.get(integerEntry.getKey())[1]){
+		// throw new ExceptionWithMessage("阶段价格加起来不等于设定的价格");
+		// }
+		// }
+		// for (ServiceStep serviceStep : serviceInfo.getServiceSteps()) {
+		// if (serviceStepMapper.insertSelective(serviceStep)<0){
+		// throw new ExceptionWithMessage("阶段价格添加错误");
+		// }
+		// }
+
+		addPricesAndStep(serviceInfo);
+
+		//对类型链进行处理
+        addTree(serviceInfo);
+
+
+		// 添加快照
+		serviceInfo.setServicePrice(JSONArray.toJSONString(serviceInfo.getPriceSets()));
+		ServiceSnapshot serviceSnapshot = new ServiceSnapshot();
+		JSONObject.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+		String s = JSONObject.toJSONString(serviceInfo);// json序列化serviceInfo 写入
+		serviceSnapshot.setSersInfo(s);
+		serviceSnapshot.setSersPrice(JSONArray.toJSONString(serviceInfo.getPriceSets()));
+		serviceSnapshot.setSersPerprice(JSONArray.toJSONString(serviceInfo.getServiceSteps()));
+		serviceSnapshot.setServiceId(serviceInfo.getServiceId());
+		if (!serviceSnapshotService.addSnapshot(serviceSnapshot)) {
+			throw new ExceptionWithMessage("快照添加错误");
+		}
+
+		// 最后服务进行收尾项目?
+		// TODO: 2016/12/20
+
+		return serviceInfoMapper.insertSelective(serviceInfo) > 0;
+	}
+
+
+    private  void addTree(ServiceInfo serviceInfo){
+        String typeTree="";
+        CommonType commonType = commonTypeMapper.selectByPrimaryKey(serviceInfo.getServiceType()+"");
+        typeTree+=commonType.getCtId();
+        CommonType f=commonType.getCommonType();
+        while (f!=null){
+            typeTree= f.getCtId()+","+typeTree;
+            f=f.getCommonType();
+        }
+        serviceInfo.setTypeTree(typeTree);
+    }
+
+	/**
+	 * 修改服务
+	 *
+	 * @param serviceInfo
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean modifyService(ServiceInfo serviceInfo) throws Exception {
+		// 合法检测
+		if (FastValid.isEmp(serviceInfo.getLogId(), serviceInfo.getServiceId())) {
+			throw new ExceptionWithMessage("非法参数", null);
+		}
+
+		// 服务的字段阻拦
+		serviceInfo.setServiceCreatetime(null);
+		serviceInfo.setServiceIsdelete(null);
+		serviceInfo.setServiceState(null);
+		serviceInfo.setServiceRemark(null);
+		serviceInfo.setServiceResponse(null);
+		serviceInfo.setServiceMeetnum(null);
+		serviceInfo.setServiceState(1);
+		
+		// 删除阶段与价格 并且重新添加?
+		if (serviceInfo.getServiceSteps() != null && serviceInfo.getPriceSets() != null) {
+
+			// 删除
+			int i = serviceStepMapper.countByServiceId(serviceInfo.getServiceId());
+			if (serviceStepMapper.deleteByServiceId(serviceInfo.getServiceId()) != i) {
+				throw new ExceptionWithMessage("删除服务出错");
+			}
+			int ii = PriceSetMapper.countByServiceId(serviceInfo.getServiceId());
+			if (PriceSetMapper.deleteByServiceId(serviceInfo.getServiceId()) != ii) {
+				throw new ExceptionWithMessage("删除价格出错");
+			}
+
+			// 添加
+			addPricesAndStep(serviceInfo);
+
+		}
+
+        //对类型链进行处理
+        addTree(serviceInfo);
+
+		if (serviceInfoMapper.updateByPrimaryKeySelective(serviceInfo) <= 0) {
+			throw new ExceptionWithMessage("修改服务出错");
+		}
+
+		// 刷新服务
+		ServiceInfo serviceInfo1 = serviceInfoMapper.selectByPrimaryKey(serviceInfo.getServiceId());
+		serviceInfo1.setServicePrice(null);
+		// serviceInfo1.setServiceSteps(serviceInfo.getServiceSteps());
+		// serviceInfo1.setServicePrice(JSONArray.toJSONString(serviceInfo.getPriceSets()));
+
+
+
+		// 添加快照
+		ServiceSnapshot serviceSnapshot = new ServiceSnapshot();
+		JSONObject.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+		String s = JSONObject.toJSONString(serviceInfo1);// json序列化serviceInfo
+
+
+
+		serviceSnapshot.setSersInfo(s);
+		serviceSnapshot.setSersPerprice(JSONArray.toJSONString(serviceInfo.getServiceSteps()));
+		serviceSnapshot.setSersPrice(JSONArray.toJSONString(serviceInfo.getPriceSets()));
+		serviceSnapshot.setServiceId(serviceInfo.getServiceId());
+
+		return serviceSnapshotService.addSnapshot(serviceSnapshot);
+	}
+
+	/**
+	 * 删除服务
+	 * 
+	 * @param serviceInfo
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean removeService(ServiceInfo serviceInfo) throws Exception {
+
+		// 合法检测
+		if (FastValid.isEmp(serviceInfo.getLogId(), serviceInfo.getServiceId())
+				|| serviceInfoMapper.countByExample(serviceInfo) <= 0) {
+			throw new ExceptionWithMessage("非法参数", null);
+		}
+		serviceInfo.setServiceIsdelete(true);
+		return serviceInfoMapper.updateByPrimaryKeySelective(serviceInfo) > 0;
+	}
+
+	/**
+	 * 根据要求查询
+	 *
+	 * @param serviceInfo
+	 * @param require
+	 * @param rowBounds
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public FastPage queryServiceByReqiure(ServiceInfo serviceInfo, Map<String, String> require, RowBounds rowBounds)
+			throws Exception {
+		if (FastValid.isEmp(serviceInfo.getLogId())) {
+			throw new ExceptionWithMessage("不合法参数", null);
+		}
+		FastPage fastPage = null;
+		HashMap<String, String> map = new HashMap<String, String>();
+		if (!FastValid.isEmp(require.get("time"))) {
+			String time = require.get("time");
+			String[] split = time.split("-");
+			map.put("star", split[0] + "-01-01 00:00:00");
+			map.put("end", split[1] + "-01-01 00:00:00");
+		}
+		if (!FastValid.isEmp(require.get("name"))) {
+			map.put("title", require.get("name"));
+		}
+		int i = serviceInfoMapper.countByRequire(serviceInfo);
+		List<ServiceInfo> serviceInfos = serviceInfoMapper.selectByRequire(serviceInfo, rowBounds);
+		fastPage = new FastPage(serviceInfos, i, (PageRowBounds) rowBounds);
+		return fastPage;
+	}
+
+	@Override
+	public ServiceVo queryServiceVoDetailsById(String serviceId,Integer priceType,String com) throws Exception {
+		//Integer count=ServiceRemarkMapper.CountServiceRemarkByServiceId(serviceId);
+		ServiceVo serviceVo= serviceInfoMapper.selectServiceDetailsById(serviceId, priceType,com);
+		/*if(count!=null&&count!=0){
+		serviceVo.setCountRemark(count);
+		}else{
+			serviceVo.setCountRemark(0);
+		}*/
+		return serviceVo;
+		
+	}
+
+	@Override
+	public List<ServiceStep> selectServiceSetById(String serviceId) {
+		// TODO Auto-generated method stub
+		return serviceStepMapper.selectServiceSetById(serviceId);
+	}
+
+	@Override
+	public ServiceInfo queryByPrimaryKey(String serviceId) throws Exception {
+		// TODO 自动生成的方法存根
+		return serviceInfoMapper.selectByPrimaryKey(serviceId);
+	}
+
+	@Override
+	public List<ServiceInfoVo> queryHomeServiceInfo(String serviceTypetree,String com) {
+		return serviceInfoMapper.selectHomeServiceInfo(serviceTypetree,com);
+	}
+
+	@Override
+	public List<ServiceInfoVo> queryServiceByType(RowBounds rb, String serviceTypetree,String order,String province,String city,String area) {
+		List<ServiceInfoVo> serList = serviceInfoMapper.selectServiceByType(rb, serviceTypetree, order, province,city, area);
+		for (ServiceInfoVo serviceInfoVo2 : serList) {
+			JSONObject jo = JSON.parseObject(serviceInfoVo2.getServiceRemark());
+			if(jo!=null){
+				serviceInfoVo2.setServiceRek(Float.parseFloat(jo.getString("total"))/Float.parseFloat(jo.getString("count")));
+			}
+		}
+		return serList;
+	}
+
+	@Override
+	public FastPage<ServiceVo> queryServiceInfo(ServiceVo serviceVo, RowBounds rowBounds) throws Exception {
+		/*if (FastValid.isEmp(serviceInfo.getLogId())) {
+			throw new ExceptionWithMessage("不合法参数", null);
+		}*/
+		serviceVo.setServiceIsdelete(false);
+		int totalSize = serviceInfoMapper.countServiceInfo(serviceVo);
+		List<ServiceVo> serviceInfos =  serviceInfoMapper.selectServiceInfo(serviceVo, rowBounds);
+		FastPage<ServiceVo> psage = new FastPage<ServiceVo>(serviceInfos, totalSize, (PageRowBounds)rowBounds);
+		return psage;
+	}
+
+	@Override
+	public Integer queryServiceCountByType(String serviceTypetree,String province,String city,String area,String com) {
+		return serviceInfoMapper.selectServiceCountByType(serviceTypetree, province,city, area,com);
+	}
+	@Override
+	public List<ServiceInfoVo> queryServiceByCon(RowBounds rb, String search, String order,String province,String city,String area,String type,String point) {
+		String lat = "29.608069";
+		String lng = "106.374488";
+		if(point!=null){
+			String[] points = point.split(",");
+			if(points!=null && points.length>0){
+				lat = points[1];
+				lng = points[0];
+			}
+		}
+		return serviceInfoMapper.selectServiceByCon(rb, search, order,province,city,area,type,lat,lng);
+	}
+
+	@Override
+	public Integer queryServiceCountByCon(String search, String order,String province,String city,String area,String type) {
+		return serviceInfoMapper.selectServiceCountByCon(search, order,province,city,area,type);
+	}
+	@Override
+	public List<ServiceVo> queryServiceByProvider(String order, RowBounds rb,String com) {
+		return serviceInfoMapper.selectServiceByProvider(order, rb,com);
+	}
+
+	@Override
+	public Integer queryServiceCountByProvider(String order,String com) {
+		return serviceInfoMapper.selectServiceCountByProvider(order,com);
+	}
+
+	@Override
+	public List<ServiceInfoVo> queryGreatService(String order, RowBounds rb,String com) {
+		return serviceInfoMapper.selectGreatService(order, rb,com);
+	}
+
+	@Override
+	public Integer queryGreatServiceCount(String order,String com) {
+		return serviceInfoMapper.selectGreatServiceCount(order,com);
+	}
+
+	@Override
+	public List<ServiceVo> queryServiceByModule(String serviceTypetree, RowBounds rb) {
+		return serviceInfoMapper.selectServiceByModule(serviceTypetree, rb);
+	}
+	
+}

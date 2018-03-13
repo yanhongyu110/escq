@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.OrderDoneDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.OrderDoneDetails">
+    <id column="ODD_ID" jdbcType="VARCHAR" property="oddId" />
+    <result column="ODD_INFO" jdbcType="INTEGER" property="oddInfo" />
+    <result column="ODD_CREATETIME" jdbcType="TIMESTAMP" property="oddCreatetime" />
+    <result column="ODD_RESULT" jdbcType="VARCHAR" property="oddResult" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="ORDER_ID" jdbcType="VARCHAR" property="orderId" />
+    <result column="ODD_COMMENT" jdbcType="VARCHAR" property="oddComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ODD_ID, ODD_INFO, ODD_CREATETIME, ODD_RESULT, LOG_ID, ORDER_ID, ODD_COMMENT
+  </sql>
+  
+  <!-- 按照PO集合插入数据：开始  -->
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into order_done_details (ODD_ID, ODD_INFO, ODD_CREATETIME, 
+      ODD_RESULT, LOG_ID, ORDER_ID, 
+      ODD_COMMENT)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="item.oddId != null">
+	        #{item.oddId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="item.oddInfo != null">
+	        #{item.oddInfo,jdbcType=INTEGER},
+	      </if>
+	      <if test="item.oddCreatetime != null">
+	        #{item.oddCreatetime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="item.oddResult != null">
+	        #{item.oddResult,jdbcType=VARCHAR},
+	      </if>
+	      <if test="item.logId != null">
+	        #{item.logId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="item.orderId != null">
+	        #{item.orderId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="item.oddComment != null">
+	        #{item.oddComment,jdbcType=VARCHAR},
+	      </if>
+	    </trim>
+    </foreach>
+  </insert>
+  <!-- 按照PO集合插入数据：结束  -->
+  
+  <!-- 按照条件查询：开始selectOrderDoneDetailsByCon  -->
+  <select id="selectOrderDoneDetailsByCon" parameterType="java.lang.String" resultMap="BaseResultMap">
+  		select
+	  	<include refid="Base_Column_List" />
+	  	from order_done_details
+	  	where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+	    ORDER BY ODD_CREATETIME DESC
+  </select>
+  
+  <select id="selectOrderDoneDetailsByCount" resultType="Integer">
+  		select
+	  	COUNT(1) 
+	  	from order_done_details
+	  	where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <!-- 按照条件查询：结束  -->
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_done_details
+    where ODD_ID = #{oddId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order_done_details
+    where ODD_ID = #{oddId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.OrderDoneDetails">
+    insert into order_done_details (ODD_ID, ODD_INFO, ODD_CREATETIME, 
+      ODD_RESULT, LOG_ID, ORDER_ID, 
+      ODD_COMMENT)
+    values (#{oddId,jdbcType=VARCHAR}, #{oddInfo,jdbcType=INTEGER}, #{oddCreatetime,jdbcType=TIMESTAMP}, 
+      #{oddResult,jdbcType=VARCHAR}, #{logId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, 
+      #{oddComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.OrderDoneDetails">
+    insert into order_done_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oddId != null">
+        ODD_ID,
+      </if>
+      <if test="oddInfo != null">
+        ODD_INFO,
+      </if>
+      <if test="oddCreatetime != null">
+        ODD_CREATETIME,
+      </if>
+      <if test="oddResult != null">
+        ODD_RESULT,
+      </if>
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="orderId != null">
+        ORDER_ID,
+      </if>
+      <if test="oddComment != null">
+        ODD_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oddId != null">
+        #{oddId,jdbcType=VARCHAR},
+      </if>
+      <if test="oddInfo != null">
+        #{oddInfo,jdbcType=INTEGER},
+      </if>
+      <if test="oddCreatetime != null">
+        #{oddCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oddResult != null">
+        #{oddResult,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="oddComment != null">
+        #{oddComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.OrderDoneDetails">
+    update order_done_details
+    <set>
+      <if test="oddInfo != null">
+        ODD_INFO = #{oddInfo,jdbcType=INTEGER},
+      </if>
+      <if test="oddCreatetime != null">
+        ODD_CREATETIME = #{oddCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oddResult != null">
+        ODD_RESULT = #{oddResult,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        LOG_ID = #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="oddComment != null">
+        ODD_COMMENT = #{oddComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ODD_ID = #{oddId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.OrderDoneDetails">
+    update order_done_details
+    set ODD_INFO = #{oddInfo,jdbcType=INTEGER},
+      ODD_CREATETIME = #{oddCreatetime,jdbcType=TIMESTAMP},
+      ODD_RESULT = #{oddResult,jdbcType=VARCHAR},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      ODD_COMMENT = #{oddComment,jdbcType=VARCHAR}
+    where ODD_ID = #{oddId,jdbcType=VARCHAR}
+  </update>
+</mapper>

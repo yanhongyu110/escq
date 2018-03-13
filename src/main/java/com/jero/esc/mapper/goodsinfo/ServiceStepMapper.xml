@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.goodsinfo.ServiceStepMapper">
+    <resultMap id="BaseResultMap" type="com.jero.esc.po.goodsinfo.ServiceStep">
+        <id column="SS_ID" jdbcType="VARCHAR" property="ssId"/>
+        <result column="SS_NAME" jdbcType="VARCHAR" property="ssName"/>
+        <result column="SS_DESCRIBE" jdbcType="VARCHAR" property="ssDescribe"/>
+        <result column="SS_PRICE" jdbcType="VARCHAR" property="ssPrice"/>
+        <result column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId"/>
+        <result column="SS_SORT" jdbcType="INTEGER" property="ssSort"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="logId"/>
+        <result column="SS_COMMENT" jdbcType="VARCHAR" property="ssComment"/>
+        <association property="serviceInfo" resultMap="com.jero.esc.mapper.goodsinfo.ServiceInfoMapper.BaseResultMap"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    SS_ID, SS_NAME, SS_DESCRIBE, SS_PRICE, SERVICE_ID, SS_SORT, LOG_ID, SS_COMMENT
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from service_step
+        where SS_ID = #{ssId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectServiceSetById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from service_step
+        where SERVICE_ID = #{serviceId,jdbcType=VARCHAR}
+        ORDER BY
+        service_step.SS_SORT ASC
+    </select>
+    <select id="selectIdListByServiceId" resultType="java.lang.String">
+        SELECT
+        SS_ID
+        FROM service_step
+        WHERE
+        service_step.SERVICE_ID=#{value}
+        ORDER BY
+        service_step.SS_SORT ASC
+  </select>
+
+    <select id="countByServiceId" resultType="java.lang.Integer">
+          SELECT
+        COUNT(SS_ID)
+        FROM service_step
+        WHERE
+        SERVICE_ID=#{value}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from service_step
+    where SS_ID = #{ssId,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByServiceId">
+    delete from service_step
+    where SERVICE_ID = #{value}
+    </delete>
+    <insert id="insert" parameterType="com.jero.esc.po.goodsinfo.ServiceStep">
+    insert into service_step (SS_ID, SS_NAME, SS_DESCRIBE, 
+      SS_PRICE, SERVICE_ID, SS_SORT, 
+      LOG_ID, SS_COMMENT)
+    values (#{ssId,jdbcType=VARCHAR}, #{ssName,jdbcType=VARCHAR}, #{ssDescribe,jdbcType=VARCHAR}, 
+      #{ssPrice,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, #{ssSort,jdbcType=INTEGER},
+      #{logId,jdbcType=VARCHAR}, #{ssComment,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.jero.esc.po.goodsinfo.ServiceStep">
+        insert into service_step
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ssId != null">
+                SS_ID,
+            </if>
+            <if test="ssName != null">
+                SS_NAME,
+            </if>
+            <if test="ssDescribe != null">
+                SS_DESCRIBE,
+            </if>
+            <if test="ssPrice != null">
+                SS_PRICE,
+            </if>
+            <if test="serviceId != null">
+                SERVICE_ID,
+            </if>
+            <if test="ssSort != null">
+                SS_SORT,
+            </if>
+            <if test="logId != null">
+                LOG_ID,
+            </if>
+            <if test="ssComment != null">
+                SS_COMMENT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ssId != null">
+                #{ssId,jdbcType=VARCHAR},
+            </if>
+            <if test="ssName != null">
+                #{ssName,jdbcType=VARCHAR},
+            </if>
+            <if test="ssDescribe != null">
+                #{ssDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="ssPrice != null">
+                #{ssPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceId != null">
+                #{serviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="ssSort != null">
+                #{ssSort,jdbcType=INTEGER},
+            </if>
+            <if test="logId != null">
+                #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="ssComment != null">
+                #{ssComment,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.goodsinfo.ServiceStep">
+        update service_step
+        <set>
+            <if test="ssName != null">
+                SS_NAME = #{ssName,jdbcType=VARCHAR},
+            </if>
+            <if test="ssDescribe != null">
+                SS_DESCRIBE = #{ssDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="ssPrice != null">
+                SS_PRICE = #{ssPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceId != null">
+                SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="ssSort != null">
+                SS_SORT = #{ssSort,jdbcType=INTEGER},
+            </if>
+            <if test="logId != null">
+                LOG_ID = #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="ssComment != null">
+                SS_COMMENT = #{ssComment,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where SS_ID = #{ssId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.goodsinfo.ServiceStep">
+    update service_step
+    set SS_NAME = #{ssName,jdbcType=VARCHAR},
+      SS_DESCRIBE = #{ssDescribe,jdbcType=VARCHAR},
+      SS_PRICE = #{ssPrice,jdbcType=VARCHAR},
+      SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+      SS_SORT = #{ssSort,jdbcType=INTEGER},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      SS_COMMENT = #{ssComment,jdbcType=VARCHAR}
+    where SS_ID = #{ssId,jdbcType=VARCHAR}
+  </update>
+</mapper>

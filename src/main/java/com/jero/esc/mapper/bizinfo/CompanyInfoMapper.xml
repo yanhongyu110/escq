@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jero.esc.mapper.bizinfo.CompanyInfoMapper" >
+
+
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" ></cache>
+
+
+
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.bizinfo.CompanyInfo" >
+    <id column="COMP_ID" property="compId" jdbcType="VARCHAR" />
+    <result column="COMP_NAME" property="compName" jdbcType="VARCHAR" />
+    <result column="COMP_ADDR" property="compAddr" jdbcType="VARCHAR" />
+    <result column="COMP_OWNER" property="compOwner" jdbcType="VARCHAR" />
+    <result column="COMP_TYPE" property="compType" jdbcType="VARCHAR" />
+    <result column="COMP_CONTACT" property="compContact" jdbcType="VARCHAR" />
+    <result column="COMP_CELL" property="compCell" jdbcType="VARCHAR" />
+    <result column="COMP_SITE" property="compSite" jdbcType="VARCHAR" />
+    <result column="COMP_OWNERPHOTO" property="compOwnerphoto" jdbcType="VARCHAR" />
+    <result column="COMP_CHARTERFRONT" property="compCharterfront" jdbcType="VARCHAR" />
+    <result column="COMP_CHARTERBACK" property="compCharterback" jdbcType="VARCHAR" />
+    <result column="COMP_RESTIME" property="compRestime" jdbcType="TIMESTAMP" />
+    <result column="COMP_BRIER" property="compBrier" jdbcType="VARCHAR" />
+    <result column="COMP_INTRODUCE" property="compIntroduce" jdbcType="VARCHAR" />
+    <result column="COMP_ISDELETE" property="compIsdelete" jdbcType="BIT" />
+    <result column="COMP_STATE" property="compState" jdbcType="INTEGER" />
+    <result column="COMP_COMMENTS" property="compComments" jdbcType="VARCHAR" />
+    <result column="COMP_LOG" property="compLog" jdbcType="VARCHAR" />
+    <result column="COMP_PROVICE" property="compProvice" jdbcType="VARCHAR" />
+    <result column="COMP_LOGS" property="compLogs" jdbcType="VARCHAR" />
+    <result column="COMP_VIEWCELL" property="compViewcell" jdbcType="VARCHAR" />
+    <result column="COMP_VIEWADDR" property="compViewaddr" jdbcType="VARCHAR" />
+    <result column="COMP_VIEWZIP" property="compViewzip" jdbcType="VARCHAR" />
+    <result column="COMP_VIEWEMAIL" property="compViewemail" jdbcType="VARCHAR" />
+    <result column="COMP_VIEWQR" property="compViewqr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    COMP_ID, COMP_NAME, COMP_ADDR, COMP_OWNER, COMP_TYPE, COMP_CONTACT, COMP_CELL, COMP_SITE, 
+    COMP_OWNERPHOTO, COMP_CHARTERFRONT, COMP_CHARTERBACK, COMP_RESTIME, COMP_BRIER, COMP_INTRODUCE, 
+    COMP_ISDELETE, COMP_STATE, COMP_COMMENTS, COMP_LOG, COMP_PROVICE, COMP_LOGS, COMP_VIEWCELL, 
+    COMP_VIEWADDR, COMP_VIEWZIP, COMP_VIEWEMAIL, COMP_VIEWQR
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jero.esc.po.bizinfo.CompanyInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from company_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from company_info
+    where COMP_ID = #{compId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from company_info
+    where COMP_ID = #{compId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jero.esc.po.bizinfo.CompanyInfoExample" >
+    delete from company_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.bizinfo.CompanyInfo" >
+    insert into company_info (COMP_ID, COMP_NAME, COMP_ADDR, 
+      COMP_OWNER, COMP_TYPE, COMP_CONTACT, 
+      COMP_CELL, COMP_SITE, COMP_OWNERPHOTO, 
+      COMP_CHARTERFRONT, COMP_CHARTERBACK, COMP_RESTIME, 
+      COMP_BRIER, COMP_INTRODUCE, COMP_ISDELETE, 
+      COMP_STATE, COMP_COMMENTS, COMP_LOG, 
+      COMP_PROVICE, COMP_LOGS, COMP_VIEWCELL, 
+      COMP_VIEWADDR, COMP_VIEWZIP, COMP_VIEWEMAIL, 
+      COMP_VIEWQR)
+    values (#{compId,jdbcType=VARCHAR}, #{compName,jdbcType=VARCHAR}, #{compAddr,jdbcType=VARCHAR}, 
+      #{compOwner,jdbcType=VARCHAR}, #{compType,jdbcType=VARCHAR}, #{compContact,jdbcType=VARCHAR}, 
+      #{compCell,jdbcType=VARCHAR}, #{compSite,jdbcType=VARCHAR}, #{compOwnerphoto,jdbcType=VARCHAR}, 
+      #{compCharterfront,jdbcType=VARCHAR}, #{compCharterback,jdbcType=VARCHAR}, #{compRestime,jdbcType=TIMESTAMP}, 
+      #{compBrier,jdbcType=VARCHAR}, #{compIntroduce,jdbcType=VARCHAR}, #{compIsdelete,jdbcType=BIT}, 
+      #{compState,jdbcType=INTEGER}, #{compComments,jdbcType=VARCHAR}, #{compLog,jdbcType=VARCHAR}, 
+      #{compProvice,jdbcType=VARCHAR}, #{compLogs,jdbcType=VARCHAR}, #{compViewcell,jdbcType=VARCHAR}, 
+      #{compViewaddr,jdbcType=VARCHAR}, #{compViewzip,jdbcType=VARCHAR}, #{compViewemail,jdbcType=VARCHAR}, 
+      #{compViewqr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.bizinfo.CompanyInfo" >
+    insert into company_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="compId != null" >
+        COMP_ID,
+      </if>
+      <if test="compName != null" >
+        COMP_NAME,
+      </if>
+      <if test="compAddr != null" >
+        COMP_ADDR,
+      </if>
+      <if test="compOwner != null" >
+        COMP_OWNER,
+      </if>
+      <if test="compType != null" >
+        COMP_TYPE,
+      </if>
+      <if test="compContact != null" >
+        COMP_CONTACT,
+      </if>
+      <if test="compCell != null" >
+        COMP_CELL,
+      </if>
+      <if test="compSite != null" >
+        COMP_SITE,
+      </if>
+      <if test="compOwnerphoto != null" >
+        COMP_OWNERPHOTO,
+      </if>
+      <if test="compCharterfront != null" >
+        COMP_CHARTERFRONT,
+      </if>
+      <if test="compCharterback != null" >
+        COMP_CHARTERBACK,
+      </if>
+      <if test="compRestime != null" >
+        COMP_RESTIME,
+      </if>
+      <if test="compBrier != null" >
+        COMP_BRIER,
+      </if>
+      <if test="compIntroduce != null" >
+        COMP_INTRODUCE,
+      </if>
+      <if test="compIsdelete != null" >
+        COMP_ISDELETE,
+      </if>
+      <if test="compState != null" >
+        COMP_STATE,
+      </if>
+      <if test="compComments != null" >
+        COMP_COMMENTS,
+      </if>
+      <if test="compLog != null" >
+        COMP_LOG,
+      </if>
+      <if test="compProvice != null" >
+        COMP_PROVICE,
+      </if>
+      <if test="compLogs != null" >
+        COMP_LOGS,
+      </if>
+      <if test="compViewcell != null" >
+        COMP_VIEWCELL,
+      </if>
+      <if test="compViewaddr != null" >
+        COMP_VIEWADDR,
+      </if>
+      <if test="compViewzip != null" >
+        COMP_VIEWZIP,
+      </if>
+      <if test="compViewemail != null" >
+        COMP_VIEWEMAIL,
+      </if>
+      <if test="compViewqr != null" >
+        COMP_VIEWQR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="compId != null" >
+        #{compId,jdbcType=VARCHAR},
+      </if>
+      <if test="compName != null" >
+        #{compName,jdbcType=VARCHAR},
+      </if>
+      <if test="compAddr != null" >
+        #{compAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="compOwner != null" >
+        #{compOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="compType != null" >
+        #{compType,jdbcType=VARCHAR},
+      </if>
+      <if test="compContact != null" >
+        #{compContact,jdbcType=VARCHAR},
+      </if>
+      <if test="compCell != null" >
+        #{compCell,jdbcType=VARCHAR},
+      </if>
+      <if test="compSite != null" >
+        #{compSite,jdbcType=VARCHAR},
+      </if>
+      <if test="compOwnerphoto != null" >
+        #{compOwnerphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="compCharterfront != null" >
+        #{compCharterfront,jdbcType=VARCHAR},
+      </if>
+      <if test="compCharterback != null" >
+        #{compCharterback,jdbcType=VARCHAR},
+      </if>
+      <if test="compRestime != null" >
+        #{compRestime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="compBrier != null" >
+        #{compBrier,jdbcType=VARCHAR},
+      </if>
+      <if test="compIntroduce != null" >
+        #{compIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="compIsdelete != null" >
+        #{compIsdelete,jdbcType=BIT},
+      </if>
+      <if test="compState != null" >
+        #{compState,jdbcType=INTEGER},
+      </if>
+      <if test="compComments != null" >
+        #{compComments,jdbcType=VARCHAR},
+      </if>
+      <if test="compLog != null" >
+        #{compLog,jdbcType=VARCHAR},
+      </if>
+      <if test="compProvice != null" >
+        #{compProvice,jdbcType=VARCHAR},
+      </if>
+      <if test="compLogs != null" >
+        #{compLogs,jdbcType=VARCHAR},
+      </if>
+      <if test="compViewcell != null" >
+        #{compViewcell,jdbcType=VARCHAR},
+      </if>
+      <if test="compViewaddr != null" >
+        #{compViewaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="compViewzip != null" >
+        #{compViewzip,jdbcType=VARCHAR},
+      </if>
+      <if test="compViewemail != null" >
+        #{compViewemail,jdbcType=VARCHAR},
+      </if>
+      <if test="compViewqr != null" >
+        #{compViewqr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jero.esc.po.bizinfo.CompanyInfoExample" resultType="java.lang.Integer" >
+    select count(*) from company_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update company_info
+    <set >
+      <if test="record.compId != null" >
+        COMP_ID = #{record.compId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compName != null" >
+        COMP_NAME = #{record.compName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compAddr != null" >
+        COMP_ADDR = #{record.compAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compOwner != null" >
+        COMP_OWNER = #{record.compOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compType != null" >
+        COMP_TYPE = #{record.compType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compContact != null" >
+        COMP_CONTACT = #{record.compContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compCell != null" >
+        COMP_CELL = #{record.compCell,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compSite != null" >
+        COMP_SITE = #{record.compSite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compOwnerphoto != null" >
+        COMP_OWNERPHOTO = #{record.compOwnerphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compCharterfront != null" >
+        COMP_CHARTERFRONT = #{record.compCharterfront,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compCharterback != null" >
+        COMP_CHARTERBACK = #{record.compCharterback,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compRestime != null" >
+        COMP_RESTIME = #{record.compRestime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.compBrier != null" >
+        COMP_BRIER = #{record.compBrier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compIntroduce != null" >
+        COMP_INTRODUCE = #{record.compIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compIsdelete != null" >
+        COMP_ISDELETE = #{record.compIsdelete,jdbcType=BIT},
+      </if>
+      <if test="record.compState != null" >
+        COMP_STATE = #{record.compState,jdbcType=INTEGER},
+      </if>
+      <if test="record.compComments != null" >
+        COMP_COMMENTS = #{record.compComments,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compLog != null" >
+        COMP_LOG = #{record.compLog,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compProvice != null" >
+        COMP_PROVICE = #{record.compProvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compLogs != null" >
+        COMP_LOGS = #{record.compLogs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compViewcell != null" >
+        COMP_VIEWCELL = #{record.compViewcell,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compViewaddr != null" >
+        COMP_VIEWADDR = #{record.compViewaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compViewzip != null" >
+        COMP_VIEWZIP = #{record.compViewzip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compViewemail != null" >
+        COMP_VIEWEMAIL = #{record.compViewemail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compViewqr != null" >
+        COMP_VIEWQR = #{record.compViewqr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update company_info
+    set COMP_ID = #{record.compId,jdbcType=VARCHAR},
+      COMP_NAME = #{record.compName,jdbcType=VARCHAR},
+      COMP_ADDR = #{record.compAddr,jdbcType=VARCHAR},
+      COMP_OWNER = #{record.compOwner,jdbcType=VARCHAR},
+      COMP_TYPE = #{record.compType,jdbcType=VARCHAR},
+      COMP_CONTACT = #{record.compContact,jdbcType=VARCHAR},
+      COMP_CELL = #{record.compCell,jdbcType=VARCHAR},
+      COMP_SITE = #{record.compSite,jdbcType=VARCHAR},
+      COMP_OWNERPHOTO = #{record.compOwnerphoto,jdbcType=VARCHAR},
+      COMP_CHARTERFRONT = #{record.compCharterfront,jdbcType=VARCHAR},
+      COMP_CHARTERBACK = #{record.compCharterback,jdbcType=VARCHAR},
+      COMP_RESTIME = #{record.compRestime,jdbcType=TIMESTAMP},
+      COMP_BRIER = #{record.compBrier,jdbcType=VARCHAR},
+      COMP_INTRODUCE = #{record.compIntroduce,jdbcType=VARCHAR},
+      COMP_ISDELETE = #{record.compIsdelete,jdbcType=BIT},
+      COMP_STATE = #{record.compState,jdbcType=INTEGER},
+      COMP_COMMENTS = #{record.compComments,jdbcType=VARCHAR},
+      COMP_LOG = #{record.compLog,jdbcType=VARCHAR},
+      COMP_PROVICE = #{record.compProvice,jdbcType=VARCHAR},
+      COMP_LOGS = #{record.compLogs,jdbcType=VARCHAR},
+      COMP_VIEWCELL = #{record.compViewcell,jdbcType=VARCHAR},
+      COMP_VIEWADDR = #{record.compViewaddr,jdbcType=VARCHAR},
+      COMP_VIEWZIP = #{record.compViewzip,jdbcType=VARCHAR},
+      COMP_VIEWEMAIL = #{record.compViewemail,jdbcType=VARCHAR},
+      COMP_VIEWQR = #{record.compViewqr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.bizinfo.CompanyInfo" >
+    update company_info
+    <set >
+      <if test="compName != null" >
+        COMP_NAME = #{compName,jdbcType=VARCHAR},
+      </if>
+      <if test="compAddr != null" >
+        COMP_ADDR = #{compAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="compOwner != null" >
+        COMP_OWNER = #{compOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="compType != null" >
+        COMP_TYPE = #{compType,jdbcType=VARCHAR},
+      </if>
+      <if test="compContact != null" >
+        COMP_CONTACT = #{compContact,jdbcType=VARCHAR},
+      </if>
+      <if test="compCell != null" >
+        COMP_CELL = #{compCell,jdbcType=VARCHAR},
+      </if>
+      <if test="compSite != null" >
+        COMP_SITE = #{compSite,jdbcType=VARCHAR},
+      </if>
+      <if test="compOwnerphoto != null" >
+        COMP_OWNERPHOTO = #{compOwnerphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="compCharterfront != null" >
+        COMP_CHARTERFRONT = #{compCharterfront,jdbcType=VARCHAR},
+      </if>
+      <if test="compCharterback != null" >
+        COMP_CHARTERBACK = #{compCharterback,jdbcType=VARCHAR},
+      </if>
+      <if test="compRestime != null" >
+        COMP_RESTIME = #{compRestime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="compBrier != null" >
+        COMP_BRIER = #{compBrier,jdbcType=VARCHAR},
+      </if>
+      <if test="compIntroduce != null" >
+        COMP_INTRODUCE = #{compIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="compIsdelete != null" >
+        COMP_ISDELETE = #{compIsdelete,jdbcType=BIT},
+      </if>
+      <if test="compState != null" >
+        COMP_STATE = #{compState,jdbcType=INTEGER},
+      </if>
+      <if test="compComments != null" >
+        COMP_COMMENTS = #{compComments,jdbcType=VARCHAR},
+      </if>
+      <if test="compLog != null" >
+        COMP_LOG = #{compLog,jdbcType=VARCHAR},
+      </if>
+      <if test="compProvice != null" >
+        COMP_PROVICE = #{compProvice,jdbcType=VARCHAR},
+      </if>
+      <if test="compLogs != null" >
+        COMP_LOGS = #{compLogs,jdbcType=VARCHAR},
+      </if>
+      <if test="compViewcell != null" >
+        COMP_VIEWCELL = #{compViewcell,jdbcType=VARCHAR},
+      </if>
+      <if test="compViewaddr != null" >
+        COMP_VIEWADDR = #{compViewaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="compViewzip != null" >
+        COMP_VIEWZIP = #{compViewzip,jdbcType=VARCHAR},
+      </if>
+      <if test="compViewemail != null" >
+        COMP_VIEWEMAIL = #{compViewemail,jdbcType=VARCHAR},
+      </if>
+      <if test="compViewqr != null" >
+        COMP_VIEWQR = #{compViewqr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where COMP_ID = #{compId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.bizinfo.CompanyInfo" >
+    update company_info
+    set COMP_NAME = #{compName,jdbcType=VARCHAR},
+      COMP_ADDR = #{compAddr,jdbcType=VARCHAR},
+      COMP_OWNER = #{compOwner,jdbcType=VARCHAR},
+      COMP_TYPE = #{compType,jdbcType=VARCHAR},
+      COMP_CONTACT = #{compContact,jdbcType=VARCHAR},
+      COMP_CELL = #{compCell,jdbcType=VARCHAR},
+      COMP_SITE = #{compSite,jdbcType=VARCHAR},
+      COMP_OWNERPHOTO = #{compOwnerphoto,jdbcType=VARCHAR},
+      COMP_CHARTERFRONT = #{compCharterfront,jdbcType=VARCHAR},
+      COMP_CHARTERBACK = #{compCharterback,jdbcType=VARCHAR},
+      COMP_RESTIME = #{compRestime,jdbcType=TIMESTAMP},
+      COMP_BRIER = #{compBrier,jdbcType=VARCHAR},
+      COMP_INTRODUCE = #{compIntroduce,jdbcType=VARCHAR},
+      COMP_ISDELETE = #{compIsdelete,jdbcType=BIT},
+      COMP_STATE = #{compState,jdbcType=INTEGER},
+      COMP_COMMENTS = #{compComments,jdbcType=VARCHAR},
+      COMP_LOG = #{compLog,jdbcType=VARCHAR},
+      COMP_PROVICE = #{compProvice,jdbcType=VARCHAR},
+      COMP_LOGS = #{compLogs,jdbcType=VARCHAR},
+      COMP_VIEWCELL = #{compViewcell,jdbcType=VARCHAR},
+      COMP_VIEWADDR = #{compViewaddr,jdbcType=VARCHAR},
+      COMP_VIEWZIP = #{compViewzip,jdbcType=VARCHAR},
+      COMP_VIEWEMAIL = #{compViewemail,jdbcType=VARCHAR},
+      COMP_VIEWQR = #{compViewqr,jdbcType=VARCHAR}
+    where COMP_ID = #{compId,jdbcType=VARCHAR}
+  </update>
+</mapper>

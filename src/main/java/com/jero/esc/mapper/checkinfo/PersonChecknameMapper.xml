@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.checkinfo.PersonChecknameMapper">
+	 <update id="updateByLogIdSelective" parameterType="com.jero.esc.po.checkinfo.PersonCheckname">
+    update person_checkname
+    <set>
+      <if test="pcnRelname != null">
+        PCN_RELNAME = #{pcnRelname,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnIdnumber != null">
+        PCN_IDNUMBER = #{pcnIdnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnFrontid != null">
+        PCN_FRONTID = #{pcnFrontid,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnReverseid != null">
+        PCN_REVERSEID = #{pcnReverseid,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnIntroduce != null">
+        PCN_INTRODUCE = #{pcnIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnCreatetime != null">
+        PCN_CREATETIME = #{pcnCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcnState != null">
+        PCN_STATE = #{pcnState,jdbcType=INTEGER},
+      </if>
+      <if test="pcnComment != null">
+        PCN_COMMENT = #{pcnComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LOG_ID = #{logId,jdbcType=VARCHAR}
+  </update>
+
+
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.checkinfo.PersonCheckname">
+    <id column="PCN_ID" jdbcType="VARCHAR" property="pcnId" />
+    <result column="PCN_RELNAME" jdbcType="VARCHAR" property="pcnRelname" />
+    <result column="PCN_IDNUMBER" jdbcType="VARCHAR" property="pcnIdnumber" />
+    <result column="PCN_FRONTID" jdbcType="VARCHAR" property="pcnFrontid" />
+    <result column="PCN_REVERSEID" jdbcType="VARCHAR" property="pcnReverseid" />
+    <result column="PCN_INTRODUCE" jdbcType="VARCHAR" property="pcnIntroduce" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="PCN_CREATETIME" jdbcType="TIMESTAMP" property="pcnCreatetime" />
+    <result column="PCN_STATE" jdbcType="INTEGER" property="pcnState" />
+    <result column="PCN_COMMENT" jdbcType="VARCHAR" property="pcnComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    PCN_ID, PCN_RELNAME, PCN_IDNUMBER, PCN_FRONTID, PCN_REVERSEID, PCN_INTRODUCE, LOG_ID, 
+    PCN_CREATETIME, PCN_STATE, PCN_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from person_checkname
+    where PCN_ID = #{pcnId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectPcnIdnumberIsEquals" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT COUNT(PCN_IDNUMBER) FROM person_checkname WHERE PCN_IDNUMBER = #{pcnIdnumber,jdbcType=VARCHAR} AND
+  	(PCN_STATE=1 OR PCN_STATE=2)
+  </select>
+
+  <select id="selectByExample" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from person_checkname
+    <where>
+      1=1
+      <if test="pcnId != null" >
+        AND PCN_ID=#{pcnId}
+      </if>
+      <if test="pcnRelname != null" >
+        AND PCN_RELNAME=#{pcnRelname}
+      </if>
+      <if test="pcnIdnumber != null" >
+        AND PCN_IDNUMBER=#{pcnIdnumber}
+      </if>
+      <if test="pcnFrontid != null" >
+        AND PCN_FRONTID=#{pcnFrontid}
+      </if>
+      <if test="pcnReverseid != null" >
+        AND PCN_REVERSEID=#{pcnReverseid}
+      </if>
+      <if test="pcnIntroduce != null" >
+        AND PCN_INTRODUCE=#{pcnIntroduce}
+      </if>
+      <if test="logId != null" >
+        AND LOG_ID=#{logId}
+      </if>
+      <if test="pcnCreatetime != null" >
+        AND PCN_CREATETIME=#{pcnCreatetime}
+      </if>
+      <if test="pcnState != null" >
+        AND PCN_STATE=#{pcnState}
+      </if>
+      <if test="pcnComment != null" >
+        AND PCN_COMMENT=#{pcnComment}
+      </if>
+    </where>
+  </select>
+  <select id="countByExample" resultType="java.lang.Integer">
+    select
+    Count(PCN_ID)
+    from person_checkname
+    <where>
+      1=1
+      <if test="pcnId != null" >
+        AND PCN_ID=#{pcnId}
+      </if>
+      <if test="pcnRelname != null" >
+        AND PCN_RELNAME=#{pcnRelname}
+      </if>
+      <if test="pcnIdnumber != null" >
+        AND PCN_IDNUMBER=#{pcnIdnumber}
+      </if>
+      <if test="pcnFrontid != null" >
+        AND PCN_FRONTID=#{pcnFrontid}
+      </if>
+      <if test="pcnReverseid != null" >
+        AND PCN_REVERSEID=#{pcnReverseid}
+      </if>
+      <if test="pcnIntroduce != null" >
+        AND PCN_INTRODUCE=#{pcnIntroduce}
+      </if>
+      <if test="logId != null" >
+        AND LOG_ID=#{logId}
+      </if>
+      <if test="pcnCreatetime != null" >
+        AND PCN_CREATETIME=#{pcnCreatetime}
+      </if>
+      <if test="pcnState != null" >
+        AND PCN_STATE=#{pcnState}
+      </if>
+      <if test="pcnComment != null" >
+        AND PCN_COMMENT=#{pcnComment}
+      </if>
+    </where>
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from person_checkname
+    where PCN_ID = #{pcnId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.checkinfo.PersonCheckname">
+    insert into person_checkname (PCN_ID, PCN_RELNAME, PCN_IDNUMBER, 
+      PCN_FRONTID, PCN_REVERSEID, PCN_INTRODUCE, 
+      LOG_ID, PCN_CREATETIME, PCN_STATE, 
+      PCN_COMMENT)
+    values (#{pcnId,jdbcType=VARCHAR}, #{pcnRelname,jdbcType=VARCHAR}, #{pcnIdnumber,jdbcType=VARCHAR}, 
+      #{pcnFrontid,jdbcType=VARCHAR}, #{pcnReverseid,jdbcType=VARCHAR}, #{pcnIntroduce,jdbcType=VARCHAR}, 
+      #{logId,jdbcType=VARCHAR}, #{pcnCreatetime,jdbcType=TIMESTAMP}, #{pcnState,jdbcType=INTEGER}, 
+      #{pcnComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.checkinfo.PersonCheckname">
+    insert into person_checkname
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pcnId != null">
+        PCN_ID,
+      </if>
+      <if test="pcnRelname != null">
+        PCN_RELNAME,
+      </if>
+      <if test="pcnIdnumber != null">
+        PCN_IDNUMBER,
+      </if>
+      <if test="pcnFrontid != null">
+        PCN_FRONTID,
+      </if>
+      <if test="pcnReverseid != null">
+        PCN_REVERSEID,
+      </if>
+      <if test="pcnIntroduce != null">
+        PCN_INTRODUCE,
+      </if>
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="pcnCreatetime != null">
+        PCN_CREATETIME,
+      </if>
+      <if test="pcnState != null">
+        PCN_STATE,
+      </if>
+      <if test="pcnComment != null">
+        PCN_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pcnId != null">
+        #{pcnId,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnRelname != null">
+        #{pcnRelname,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnIdnumber != null">
+        #{pcnIdnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnFrontid != null">
+        #{pcnFrontid,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnReverseid != null">
+        #{pcnReverseid,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnIntroduce != null">
+        #{pcnIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnCreatetime != null">
+        #{pcnCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcnState != null">
+        #{pcnState,jdbcType=INTEGER},
+      </if>
+      <if test="pcnComment != null">
+        #{pcnComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.checkinfo.PersonCheckname">
+    update person_checkname
+    <set>
+      <if test="pcnRelname != null">
+        PCN_RELNAME = #{pcnRelname,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnIdnumber != null">
+        PCN_IDNUMBER = #{pcnIdnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnFrontid != null">
+        PCN_FRONTID = #{pcnFrontid,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnReverseid != null">
+        PCN_REVERSEID = #{pcnReverseid,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnIntroduce != null">
+        PCN_INTRODUCE = #{pcnIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        LOG_ID = #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="pcnCreatetime != null">
+        PCN_CREATETIME = #{pcnCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcnState != null">
+        PCN_STATE = #{pcnState,jdbcType=INTEGER},
+      </if>
+      <if test="pcnComment != null">
+        PCN_COMMENT = #{pcnComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PCN_ID = #{pcnId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.checkinfo.PersonCheckname">
+    update person_checkname
+    set PCN_RELNAME = #{pcnRelname,jdbcType=VARCHAR},
+      PCN_IDNUMBER = #{pcnIdnumber,jdbcType=VARCHAR},
+      PCN_FRONTID = #{pcnFrontid,jdbcType=VARCHAR},
+      PCN_REVERSEID = #{pcnReverseid,jdbcType=VARCHAR},
+      PCN_INTRODUCE = #{pcnIntroduce,jdbcType=VARCHAR},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      PCN_CREATETIME = #{pcnCreatetime,jdbcType=TIMESTAMP},
+      PCN_STATE = #{pcnState,jdbcType=INTEGER},
+      PCN_COMMENT = #{pcnComment,jdbcType=VARCHAR}
+    where PCN_ID = #{pcnId,jdbcType=VARCHAR}
+  </update>
+</mapper>

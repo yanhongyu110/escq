@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.bizinfo.BusinessTeamMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.bizinfo.BusinessTeam">
+    <id column="BT_ID" jdbcType="VARCHAR" property="btId" />
+    <result column="BT_NAME" jdbcType="VARCHAR" property="btName" />
+    <result column="BT_CONTENT" jdbcType="VARCHAR" property="btContent" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="BT_PROVIDERS" jdbcType="VARCHAR" property="btProviders" />
+    <result column="BT_CREATETIME" jdbcType="TIMESTAMP" property="btCreatetime" />
+    <result column="BT_STATE" jdbcType="INTEGER" property="btState" />
+    <result column="BT_TYPE" jdbcType="INTEGER" property="btType" />
+    <result column="BT_ISDELETE" jdbcType="BIT" property="btIsdelete" />
+    <result column="BT_COMMENT" jdbcType="VARCHAR" property="btComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    BT_ID, BT_NAME, BT_CONTENT, LOG_ID, BT_PROVIDERS, BT_CREATETIME, BT_STATE, BT_TYPE, 
+    BT_ISDELETE, BT_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from business_team
+    where BT_ID = #{btId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from business_team
+    where BT_ID = #{btId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.bizinfo.BusinessTeam">
+    insert into business_team (BT_ID, BT_NAME, BT_CONTENT, 
+      LOG_ID, BT_PROVIDERS, BT_CREATETIME, 
+      BT_STATE, BT_TYPE, BT_ISDELETE, 
+      BT_COMMENT)
+    values (#{btId,jdbcType=VARCHAR}, #{btName,jdbcType=VARCHAR}, #{btContent,jdbcType=VARCHAR}, 
+      #{logId,jdbcType=VARCHAR}, #{btProviders,jdbcType=VARCHAR}, #{btCreatetime,jdbcType=TIMESTAMP}, 
+      #{btState,jdbcType=INTEGER}, #{btType,jdbcType=INTEGER}, #{btIsdelete,jdbcType=BIT}, 
+      #{btComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.bizinfo.BusinessTeam">
+    insert into business_team
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="btId != null">
+        BT_ID,
+      </if>
+      <if test="btName != null">
+        BT_NAME,
+      </if>
+      <if test="btContent != null">
+        BT_CONTENT,
+      </if>
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="btProviders != null">
+        BT_PROVIDERS,
+      </if>
+      <if test="btCreatetime != null">
+        BT_CREATETIME,
+      </if>
+      <if test="btState != null">
+        BT_STATE,
+      </if>
+      <if test="btType != null">
+        BT_TYPE,
+      </if>
+      <if test="btIsdelete != null">
+        BT_ISDELETE,
+      </if>
+      <if test="btComment != null">
+        BT_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="btId != null">
+        #{btId,jdbcType=VARCHAR},
+      </if>
+      <if test="btName != null">
+        #{btName,jdbcType=VARCHAR},
+      </if>
+      <if test="btContent != null">
+        #{btContent,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="btProviders != null">
+        #{btProviders,jdbcType=VARCHAR},
+      </if>
+      <if test="btCreatetime != null">
+        #{btCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btState != null">
+        #{btState,jdbcType=INTEGER},
+      </if>
+      <if test="btType != null">
+        #{btType,jdbcType=INTEGER},
+      </if>
+      <if test="btIsdelete != null">
+        #{btIsdelete,jdbcType=BIT},
+      </if>
+      <if test="btComment != null">
+        #{btComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.bizinfo.BusinessTeam">
+    update business_team
+    <set>
+      <if test="btName != null">
+        BT_NAME = #{btName,jdbcType=VARCHAR},
+      </if>
+      <if test="btContent != null">
+        BT_CONTENT = #{btContent,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        LOG_ID = #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="btProviders != null">
+        BT_PROVIDERS = #{btProviders,jdbcType=VARCHAR},
+      </if>
+      <if test="btCreatetime != null">
+        BT_CREATETIME = #{btCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btState != null">
+        BT_STATE = #{btState,jdbcType=INTEGER},
+      </if>
+      <if test="btType != null">
+        BT_TYPE = #{btType,jdbcType=INTEGER},
+      </if>
+      <if test="btIsdelete != null">
+        BT_ISDELETE = #{btIsdelete,jdbcType=BIT},
+      </if>
+      <if test="btComment != null">
+        BT_COMMENT = #{btComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BT_ID = #{btId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.bizinfo.BusinessTeam">
+    update business_team
+    set BT_NAME = #{btName,jdbcType=VARCHAR},
+      BT_CONTENT = #{btContent,jdbcType=VARCHAR},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      BT_PROVIDERS = #{btProviders,jdbcType=VARCHAR},
+      BT_CREATETIME = #{btCreatetime,jdbcType=TIMESTAMP},
+      BT_STATE = #{btState,jdbcType=INTEGER},
+      BT_TYPE = #{btType,jdbcType=INTEGER},
+      BT_ISDELETE = #{btIsdelete,jdbcType=BIT},
+      BT_COMMENT = #{btComment,jdbcType=VARCHAR}
+    where BT_ID = #{btId,jdbcType=VARCHAR}
+  </update>
+</mapper>

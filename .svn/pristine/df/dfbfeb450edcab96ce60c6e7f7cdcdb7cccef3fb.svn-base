@@ -1,0 +1,219 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>服务详情展示</title>
+<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+<link rel="stylesheet" href="${webtxc}/css/public.css" />
+<link rel="stylesheet" href="${webtxc}/css/personal.css" />
+<link rel="stylesheet" href="${webtxc}/css/service.css" />
+<link rel="stylesheet" type="text/css" href="${webtxc}/css/ishare/iconfont.css">
+<link rel="stylesheet" type="text/css" href="${webtxc}/css/ishare/ishare.css">
+<script type="text/javascript" src="${webtxc}/myjs/goodsinfo/remarkservice.js?value=1ssds5f644"></script>
+<script type="text/javascript">
+var loginfo='${sessionScope.logInfo}';
+var servicecount='${serviceVo.serviceCount}';
+var serviceId = '${serviceVo.serviceId}';
+var aBoolean = ${aBoolean};
+</script>
+</head>
+<body>
+		<c:set var="istop" value="false" />
+
+		<c:if test="${sessionScope.module!=null}">
+			<%@include file="/WEB-INF/jsp/common/top1.jsp"%>
+		</c:if>
+		<c:if test="${sessionScope.module==null}">
+			<%@include file="/WEB-INF/jsp/common/top.jsp"%>
+		</c:if>
+		<div class="content">
+		<div class="sv_position">
+					<h3><a href="${webtxc}/goodsinfo/ServiceInfo/homeShow.html?comId=${sessionScope.company.compId}">首页</a> >> ${serviceVo.serviceTitle }</h3>
+				</div>
+			<form id="formsubmit"
+				action="${webtxc}/saleinfo/order/viewAddOrder.html" type="post">
+				<div class="sv_position">
+
+					<input type="hidden" id="servicetitle"
+						value="${serviceVo.serviceTitle }">
+				</div>
+				<div class="content_top">
+					<div class="content_top_left">
+						<img src="${serviceVo.servicePic}"  />
+					</div>
+					<div class="content_top_right">
+
+						<h1>${serviceVo.serviceTitle }</h1>
+						
+						<div class="content_top_riht_pay">
+							价格： <font>¥</font> <span><f:formatNumber type="number" maxFractionDigits="2" value="${serviceVo.psetPrice }"/></span>元/小时 <br />
+							
+								<input class="cartList" type="hidden" name="cartList" /> 
+								<input class="scartNum " type="hidden" value="1" /> 
+								<input class="scartSource " type="hidden" value="1" /> 
+								<input id="serviceId" type="hidden" value="${serviceVo.serviceId}" />
+						</div>
+						<div class="fuw_my">
+						服务平均评分：<span id="serviceremark"></span><span><f:formatNumber type="number" value="${serviceVo.serviceMark} "/></span>分
+					</div>
+					<div class="content_right_share_fx">
+						分享到： <a class="iShare iShare-24 iShare3"></a>
+					</div>
+					<c:if test="${sessionScope.logInfo.logId!=serviceVo.logId }">
+						<div class="content_right_share">
+							<div><span id="zan" style="cursor: pointer">赞<img style="width: 15px;"/>(<span id="zanNum">${serviceVo.serviceZanNum != null ? serviceVo.serviceZanNum : 0}</span>)</span></div>
+							<a id="yuejian" class="content_top_riht_btn">约TA见面</a>
+							<a id="xinyuan" class="content_top_riht_btn">加入心愿单</a>
+						</div>
+					</c:if>
+					
+						
+					</div>
+						<div class="service_messages">
+						<img class="piphoto" alt="" src="${serviceVo.piPhoto}"  />
+						<div onclick="window.location.href=path+'/userinfo/providerdetails/preproviderdetails.html?logId=${serviceVo.logId}'+'&comId='+g_comid" style="cursor: pointer;">
+						<h3>${serviceVo.piRealname}/${serviceVo.piPosition}</h3></div>
+						<h4>
+							<span>${serviceVo.piAddr}</span>
+						</h4>
+
+						<!-- <div class="service_rz">
+							<a class="service_jp">金牌</a> <a class="service_qy">签约</a>
+						</div> -->
+
+						<div class="s_height"></div>
+						<div class="use-state">
+							<ul>
+								<li>
+									<div class="label-like">平均评分：</div>
+									<div id="piremark" class="count"><f:formatNumber type="number" value="${serviceVo.piMark }"/>分</div>
+								</li>
+								<li>
+									<div class="label-like">约见次数：</div>
+									<div class="count"><f:formatNumber type="number" value="${serviceVo.piMeetnum}"/>次</div>
+								</li>
+								<li>
+									<div class="label-like">付费人数：</div>
+									<div class="count"><f:formatNumber type="number" value="${serviceVo.piDealnum}"/>人</div>
+								</li>
+								<li>
+									<div class="label-like">回复时间：</div>
+									<div class="count"><f:formatNumber type="number" value="${serviceVo.piResponsetime}"/>小时</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					</div>
+				
+			</form>
+	
+		<div class="content_main">
+			<div class="content_main_left">
+				<div class="content_left_content">
+					<div class="title cf">
+						<ul class="title-list fr cf ">
+							<li class="on">服务详情</li>
+							<li>服务评价</li>
+							<p>
+								<b></b>
+							</p>
+						</ul>
+					</div>
+					<div class="service_content">
+						<div class="service_content_pj show">
+							<div class="service_content_jianjie">
+								<h3>服务简介</h3>
+								<p>${serviceVo.serviceBiref }</p>
+								<%-- <h3>服务进度</h3>
+								<div class="service_content_jieduan">
+									<c:forEach var="servicesetp" items="${serviceSteplist}">
+										<h4>服务阶段:${servicesetp.ssSort }</h4>
+										<p>服务名:${servicesetp.ssName }</p>
+										<p>服务描述:${servicesetp.ssDescribe }</p>
+										<p>
+											<span>执行人:${serviceVo.piRealname }</span> <span>单项服务费用:<span
+												class="psetPrice">${servicesetp.p[0].psetPrice }</span></span>
+										</p>
+									</c:forEach>
+								</div> --%>
+								<div class="service_content_img">
+									<h3>服务展示</h3>
+									${serviceVo.serviceContent }
+								</div>
+
+							</div>
+
+						</div>
+						<div class="service_content_pj">
+							<div class="select_pj">
+								<input type="radio" name="service_pj" value="0,1,2" checked />全部(<span
+									id="total0"></span>)<input type="radio" name="service_pj"
+									value="0" />好评(<span id="total1"></span>)<input type="radio"
+									name="service_pj" value="1" />中评(<span id="total2"></span>)<input
+									type="radio" name="service_pj" value="2" />差评(<span id="total3"></span>)
+							</div>
+
+							<div class="sr_content"></div>
+							<div class="note_message zwpj" ><h3><Strong>暂无评价</Strong></h3><br></div>
+							
+							<div class="jogger">
+								<div id="fy"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--end.content_main_left-->
+			<div class="content_main_right">
+				<div class="content_main_right_qt">
+					<h3>其他相关服务</h3>
+					<c:if test="${fn:length(serviceVoTree)==1}"><span>暂无相关服务</span></c:if>
+					<c:forEach var="serviceInfoVo" items="${serviceVoTree}">
+						<c:if test="${serviceInfoVo.serviceId !=serviceVo.serviceId }">
+							<a href="${webtxc}/goodsinfo/service/queryServiceDetails.html?serviceId=${serviceInfoVo.serviceId }&priceType=${serviceInfoVo.psetDiscountType}&comId=${sessionScope.company.compId}">
+							<div  class="fw_xg">
+								<font><f:formatNumber value="${serviceInfoVo.psetPrice }" type="currency"/> </font>
+								<span>${serviceInfoVo.serviceTitle }</span>
+								</div>
+							</a>
+						</c:if>
+					</c:forEach>
+				</div>
+				
+			</div>
+		</div>
+	</div>	
+	<jsp:include page="/WEB-INF/jsp/common/bottom.jsp" />
+	<script type="text/javascript">
+	var url=window.location.href;
+	
+	var iShare_config = {
+			container:'.iShare',config:{
+				title: '${serviceVo.serviceTitle }',
+				//description: '${serviceVo.serviceBiref }',
+				url: url,
+				isAbroad: false,
+				isTitle: true,
+				initialized: true,
+				WXoptions:{
+					evenType: 'click',
+					isTitleVisibility: true,
+					title: '二维码标题',
+					isTipVisibility: true,
+					tip: '二维码描述文本',
+					qrcodeW: 140,
+					qrcodeH: 140,
+					qrcodeBgc: '#fff',
+					qrcodeFgc: '#000',
+					bgcolor: '#2BAD13'
+				}
+			}
+	}
+	</script>
+<script type="text/javascript" src="${webtxc}/js/ishare/iShare.js?value=134"></script>	
+</body>
+
+</html>

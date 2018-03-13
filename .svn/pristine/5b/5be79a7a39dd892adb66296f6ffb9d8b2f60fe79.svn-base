@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.bizinfo.FocusUtopMapper">
+<resultMap id="FocusUserMap" type="com.jero.esc.vo.bizinfo.FocusUser">
+    	<id column="FUTP_USER" jdbcType="VARCHAR" property="futpUser" />
+    	<id column="FUTP_PROVIDER" jdbcType="VARCHAR" property="futpProvider" />
+		<result column="LOG_CELL" jdbcType="VARCHAR" property="logCell" />
+		<result column="LOG_EMAIL" jdbcType="VARCHAR" property="logEmail" />
+		<result column="LOG_NAME" jdbcType="VARCHAR" property="logName" />
+		<result column="USER_WECHAT" jdbcType="VARCHAR" property="userWechat" />
+		<result column="USER_PHOTO" jdbcType="VARCHAR" property="userPhoto" />
+  </resultMap>
+  <resultMap id="FocusProviderMap" type="com.jero.esc.vo.bizinfo.FocusProvider">
+    <id column="FUTP_USER" jdbcType="VARCHAR" property="futpUser" />
+    <id column="FUTP_PROVIDER" jdbcType="VARCHAR" property="futpProvider" />
+    <result column="LOG_NAME" jdbcType="VARCHAR" property="logName" />
+    <result column="PI_ID" jdbcType="VARCHAR" property="piId" />
+    <result column="PI_AREA" jdbcType="VARCHAR" property="piArea" />
+    <result column="PI_PHOTO" jdbcType="VARCHAR" property="piPhoto" />
+    <result column="PI_KEYWORDS" jdbcType="VARCHAR" property="piKeywords" />
+    <result column="PI_REMARK" jdbcType="VARCHAR" property="piRemark" />
+    <result column="PI_REALNAME" jdbcType="VARCHAR" property="piRealname" />
+    <result column="PI_POSITION" jdbcType="VARCHAR" property="piPosition" />
+    <result column="PI_WORKYEAR" jdbcType="INTEGER" property="piWorkyear" />
+    <result column="PI_EMAIL" jdbcType="VARCHAR" property="piEmail" />
+    <result column="PI_CELL" jdbcType="VARCHAR" property="piCell" />
+    <result column="PI_MEETNUM" jdbcType="INTEGER" property="piMeetnum" />
+    <result column="PI_DEALNUM" jdbcType="INTEGER" property="piDealnum" />
+    <result column="PI_RESPONSETIME" jdbcType="INTEGER" property="piResponsetime" />
+    <result column="PI_MARK" jdbcType="REAL" property="piMark" />
+    
+  </resultMap>
+  <delete id="delete" parameterType="com.jero.esc.po.bizinfo.FocusUtop">
+    delete from focus_user_to_provider
+    where FUTP_USER = #{futpUser,jdbcType=VARCHAR}
+      and FUTP_PROVIDER = #{futpProvider,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.bizinfo.FocusUtop">
+    insert into focus_user_to_provider (FUTP_USER, FUTP_PROVIDER)
+    values (#{futpUser,jdbcType=VARCHAR}, #{futpProvider,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.bizinfo.FocusUtop">
+    insert into focus_user_to_provider
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="futpUser != null">
+        FUTP_USER,
+      </if>
+      <if test="futpProvider != null">
+        FUTP_PROVIDER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="futpUser != null">
+        #{futpUser,jdbcType=VARCHAR},
+      </if>
+      <if test="futpProvider != null">
+        #{futpProvider,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCon"  parameterType="com.jero.esc.po.bizinfo.FocusUtop" resultType="java.lang.Integer">
+  		select count(*) from focus_user_to_provider 
+  		 <where>
+        	<if test="futpProvider!=null and futpProvider!=''">
+                AND focus_user_to_provider.FUTP_PROVIDER= #{futpProvider,jdbcType=VARCHAR}
+            </if>
+            <if test="futpUser!=null and futpUser!=''">
+                AND focus_user_to_provider.FUTP_USER= #{futpUser,jdbcType=VARCHAR}
+            </if>
+        </where>
+  
+  </select>
+  <select id="selectByUser" parameterType="String" resultMap="FocusProviderMap">
+		  SELECT
+				focus_user_to_provider.FUTP_USER,
+				focus_user_to_provider.FUTP_PROVIDER,
+				log_info.LOG_NAME,
+				provider_info.PI_ID,
+				provider_info.PI_AREA,
+				provider_info.PI_PHOTO,
+				provider_info.PI_KEYWORDS,
+				provider_info.PI_REMARK,
+				provider_info.PI_REALNAME,
+				provider_info.PI_POSITION,
+				provider_info.PI_WORKYEAR,
+				provider_info.PI_CELL,
+				provider_info.PI_EMAIL,
+				provider_info.PI_MEETNUM,
+				provider_info.PI_DEALNUM,
+				provider_info.PI_RESPONSETIME,
+				provider_info.PI_MARK
+			FROM
+			focus_user_to_provider
+			INNER JOIN provider_info ON focus_user_to_provider.FUTP_PROVIDER = provider_info.LOG_ID
+			INNER JOIN log_info ON focus_user_to_provider.FUTP_PROVIDER=log_info.LOG_ID
+			WHERE
+			focus_user_to_provider.FUTP_USER= #{futpUser,jdbcType=VARCHAR}
+			  
+  </select>
+  
+  <select id="selectByProvider" parameterType="String" resultMap="FocusUserMap">
+  	SELECT
+	focus_user_to_provider.FUTP_USER,
+	focus_user_to_provider.FUTP_PROVIDER,
+	user_info.USER_WECHAT,
+	user_info.USER_PHOTO,
+	log_info.LOG_NAME,
+	log_info.LOG_TYPE,
+	log_info.LOG_REGIP,
+	log_info.LOG_ISLOG,
+	log_info.LOG_COMMENT,
+	log_info.LOG_EMAIL,
+	log_info.LOG_CELL
+	FROM
+	focus_user_to_provider
+	INNER JOIN user_info ON focus_user_to_provider.FUTP_USER = user_info.LOG_ID
+	INNER JOIN log_info ON focus_user_to_provider.FUTP_USER = log_info.LOG_ID
+	WHERE focus_user_to_provider.FUTP_PROVIDER= #{futpProvider,jdbcType=VARCHAR}
+  
+  </select>
+  
+  <!-- 根据用户id查询粉丝数量 -->
+   <select id="queryFocusCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        focus_user_to_provider
+        <where>
+        1=1 AND FUTP_PROVIDER='${_parameter}'
+        </where>
+    </select>
+  <!-- 根据用户id查询关注数量 -->
+   <select id="queryFocusCountFollow" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        focus_user_to_provider
+        <where>
+        1=1 AND FUTP_USER='${_parameter}'
+        </where>
+    </select>
+</mapper>

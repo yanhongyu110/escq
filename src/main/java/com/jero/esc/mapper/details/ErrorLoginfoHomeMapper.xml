@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.ErrorLoginfoHomeMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.ErrorLoginfoHome">
+    <id column="ELH_ID" jdbcType="VARCHAR" property="elhId" />
+    <result column="ELH_INFO" jdbcType="VARCHAR" property="elhInfo" />
+    <result column="ELH_CREATETIME" jdbcType="TIMESTAMP" property="elhCreatetime" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="ELH_COMMENT" jdbcType="VARCHAR" property="elhComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ELH_ID, ELH_INFO, ELH_CREATETIME, LOG_ID, ELH_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from error_loginfo_home
+    where ELH_ID = #{elhId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from error_loginfo_home
+    where ELH_ID = #{elhId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.ErrorLoginfoHome">
+    insert into error_loginfo_home (ELH_ID, ELH_INFO, ELH_CREATETIME, 
+      LOG_ID, ELH_COMMENT)
+    values (#{elhId,jdbcType=VARCHAR}, #{elhInfo,jdbcType=VARCHAR}, #{elhCreatetime,jdbcType=TIMESTAMP}, 
+      #{logId,jdbcType=VARCHAR}, #{elhComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.ErrorLoginfoHome">
+    insert into error_loginfo_home
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="elhId != null">
+        ELH_ID,
+      </if>
+      <if test="elhInfo != null">
+        ELH_INFO,
+      </if>
+      <if test="elhCreatetime != null">
+        ELH_CREATETIME,
+      </if>
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="elhComment != null">
+        ELH_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="elhId != null">
+        #{elhId,jdbcType=VARCHAR},
+      </if>
+      <if test="elhInfo != null">
+        #{elhInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="elhCreatetime != null">
+        #{elhCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="elhComment != null">
+        #{elhComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.ErrorLoginfoHome">
+    update error_loginfo_home
+    <set>
+      <if test="elhInfo != null">
+        ELH_INFO = #{elhInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="elhCreatetime != null">
+        ELH_CREATETIME = #{elhCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logId != null">
+        LOG_ID = #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="elhComment != null">
+        ELH_COMMENT = #{elhComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ELH_ID = #{elhId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.ErrorLoginfoHome">
+    update error_loginfo_home
+    set ELH_INFO = #{elhInfo,jdbcType=VARCHAR},
+      ELH_CREATETIME = #{elhCreatetime,jdbcType=TIMESTAMP},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      ELH_COMMENT = #{elhComment,jdbcType=VARCHAR}
+    where ELH_ID = #{elhId,jdbcType=VARCHAR}
+  </update>
+</mapper>

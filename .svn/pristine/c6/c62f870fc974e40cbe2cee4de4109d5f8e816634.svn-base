@@ -1,0 +1,96 @@
+$(function(){
+	/**
+	 * 验证表单
+	 */
+	$("#form").validate({
+		rules : {
+			money : {
+				required : true,
+				digits : true,
+				min:1,
+				validatMoney:true
+			},
+		},
+		messages : {
+			money : {
+				required : "<em style='color: red'>必填</em>",
+				digits : "<em style='color: red'>请输入整数金额</em>",
+				min:"<em style='color: red'>体现金额最少为1元</em>"
+			},
+		},
+		onfocusout : function(element) {
+			$(element).valid();
+		},
+		invalidHandler : function(form, validator) { // 不通过回调
+			return false;
+		}
+	});
+	
+	
+	$.validator.addMethod("validatMoney",
+			function(value, element) {
+				var length = value.length;
+				var regPhone = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;;
+//				var regPhone = /^(([1-9]\d{0,9})|0)(\.\d{1,2})?$/;
+				return this.optional(element)
+						|| regPhone.test(value);
+			}, "<em style='color: red'>请输入合法金额!</em>");
+	
+
+	
+	
+})
+function tixian(){
+	var ua = navigator.userAgent.toLowerCase(); 
+	var isWeiXin;
+	if(ua.match(/MicroMessenger/i)=="micromessenger") { 
+		if(getOpenIdOnCk()==null){
+			getOpenId();
+			isWeiXin = 1;
+		}
+	}
+		var tl = $("#form").validate().form();
+		var count = $('#count').val();
+		if (tl == true) {
+			$.ajax({
+				type : "get",
+				dataType : "json",
+				url : path + "/wap/details/tixian.html",
+				data : {
+					money : $('#money').val(),
+					isWeiXin : isWeiXin,
+					openId : getOpenIdOnCk()
+				},
+				success : function(msg) {
+					alert(msg.errorMsg);
+				},
+				error : function(){
+					alert("系统异常");
+				}
+			});
+		}
+}
+
+/**
+ * 获取openid
+ */
+function getOpenId() {
+	var redirect_uri = encodeURIComponent("http://www.jindaoj.com/wap/userinfo/getWeichatOpenId.htm");
+	window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0c763640d4b8f08&redirect_uri="
+		+ redirect_uri
+			+ "&response_type=code&scope=snsapi_base&state="
+			+ encodeURIComponent("http://www.jindaoj.com/wap/userinfo/logInfo/jumpRegister.html") + "#wechat_redirect";
+}
+
+function getOpenIdOnCk() {
+	var cookies = document.cookie.split(";");
+	if (cookies != null) {
+		for ( var i = 0; i < cookies.length; i++) {
+			var cs = cookies[i].split("=");
+			if (cs[0].trim() == "weichatOpenId") {
+				return cs[1];
+			}
+		}
+	}
+	return null;
+}

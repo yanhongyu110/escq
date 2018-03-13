@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.SeerviceDoneLogMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.SeerviceDoneLog">
+    <id column="SDL_ID" jdbcType="VARCHAR" property="sdlId" />
+    <result column="SS_ID" jdbcType="VARCHAR" property="ssId" />
+    <result column="SDL_CREATETIME" jdbcType="TIMESTAMP" property="sdlCreatetime" />
+    <result column="SDL_STATE" jdbcType="INTEGER" property="sdlState" />
+    <result column="SDL_REVERSE" jdbcType="VARCHAR" property="sdlReverse" />
+    <result column="SDL_CUSTOMER" jdbcType="VARCHAR" property="sdlCustomer" />
+    <result column="SDL_COMMENT" jdbcType="VARCHAR" property="sdlComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SDL_ID, SS_ID, SDL_CREATETIME, SDL_STATE, SDL_REVERSE, SDL_CUSTOMER, SDL_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from seervice_done_log
+    where SDL_ID = #{sdlId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from seervice_done_log
+    where SDL_ID = #{sdlId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.SeerviceDoneLog">
+    insert into seervice_done_log (SDL_ID, SS_ID, SDL_CREATETIME, 
+      SDL_STATE, SDL_REVERSE, SDL_CUSTOMER, 
+      SDL_COMMENT)
+    values (#{sdlId,jdbcType=VARCHAR}, #{ssId,jdbcType=VARCHAR}, #{sdlCreatetime,jdbcType=TIMESTAMP}, 
+      #{sdlState,jdbcType=INTEGER}, #{sdlReverse,jdbcType=VARCHAR}, #{sdlCustomer,jdbcType=VARCHAR}, 
+      #{sdlComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.SeerviceDoneLog">
+    insert into seervice_done_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sdlId != null">
+        SDL_ID,
+      </if>
+      <if test="ssId != null">
+        SS_ID,
+      </if>
+      <if test="sdlCreatetime != null">
+        SDL_CREATETIME,
+      </if>
+      <if test="sdlState != null">
+        SDL_STATE,
+      </if>
+      <if test="sdlReverse != null">
+        SDL_REVERSE,
+      </if>
+      <if test="sdlCustomer != null">
+        SDL_CUSTOMER,
+      </if>
+      <if test="sdlComment != null">
+        SDL_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sdlId != null">
+        #{sdlId,jdbcType=VARCHAR},
+      </if>
+      <if test="ssId != null">
+        #{ssId,jdbcType=VARCHAR},
+      </if>
+      <if test="sdlCreatetime != null">
+        #{sdlCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sdlState != null">
+        #{sdlState,jdbcType=INTEGER},
+      </if>
+      <if test="sdlReverse != null">
+        #{sdlReverse,jdbcType=VARCHAR},
+      </if>
+      <if test="sdlCustomer != null">
+        #{sdlCustomer,jdbcType=VARCHAR},
+      </if>
+      <if test="sdlComment != null">
+        #{sdlComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.SeerviceDoneLog">
+    update seervice_done_log
+    <set>
+      <if test="ssId != null">
+        SS_ID = #{ssId,jdbcType=VARCHAR},
+      </if>
+      <if test="sdlCreatetime != null">
+        SDL_CREATETIME = #{sdlCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sdlState != null">
+        SDL_STATE = #{sdlState,jdbcType=INTEGER},
+      </if>
+      <if test="sdlReverse != null">
+        SDL_REVERSE = #{sdlReverse,jdbcType=VARCHAR},
+      </if>
+      <if test="sdlCustomer != null">
+        SDL_CUSTOMER = #{sdlCustomer,jdbcType=VARCHAR},
+      </if>
+      <if test="sdlComment != null">
+        SDL_COMMENT = #{sdlComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SDL_ID = #{sdlId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.SeerviceDoneLog">
+    update seervice_done_log
+    set SS_ID = #{ssId,jdbcType=VARCHAR},
+      SDL_CREATETIME = #{sdlCreatetime,jdbcType=TIMESTAMP},
+      SDL_STATE = #{sdlState,jdbcType=INTEGER},
+      SDL_REVERSE = #{sdlReverse,jdbcType=VARCHAR},
+      SDL_CUSTOMER = #{sdlCustomer,jdbcType=VARCHAR},
+      SDL_COMMENT = #{sdlComment,jdbcType=VARCHAR}
+    where SDL_ID = #{sdlId,jdbcType=VARCHAR}
+  </update>
+</mapper>

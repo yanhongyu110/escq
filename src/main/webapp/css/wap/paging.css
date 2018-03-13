@@ -1,0 +1,31 @@
+.paging a {
+  display: block;
+  float: left;
+  width: 11.5vw;
+  height: 25px;
+  outline: none;
+  border-right: 1px solid #CDCDCD;
+  border-left: 1px solid #CDCDCD;
+  color: #555555;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 19px;
+  font-family: Times, 'Times New Roman', Georgia, Palatino;
+  /* ATTN: need a better font stack */
+  background-color: #f3f3f3;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f3f3f3), color-stop(100%, lightgrey));
+  background-image: -webkit-linear-gradient(#f3f3f3, lightgrey);
+  background-image: linear-gradient(#f3f3f3, lightgrey); 
+}
+
+.paging input {
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 40vw;
+  height: 21px;
+  outline: none;
+  text-align: center; 
+}

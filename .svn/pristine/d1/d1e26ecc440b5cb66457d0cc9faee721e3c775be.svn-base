@@ -1,0 +1,35 @@
+log4j.rootLogger=INFO,stdout,FILE
+ 
+
+
+#log4j.logger.org.springframework=INFO
+#log4j.logger.com.ibatis.db=INFO
+#log4j.logger.net.sf.json=INFO
+#log4j.logger.org.apache.cxf=INFO
+#log4j.logger.Java.sql.PreparedStatement=INFO
+
+ 
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d %-5p %c - %m%n
+
+
+
+log4j.appender.FILE=org.apache.log4j.RollingFileAppender
+log4j.appender.FILE.Append=true
+log4j.appender.FILE.encoding=UTF-8
+log4j.appender.FILE.File=${webapp.root}/WEB-INF/logs/log.log
+log4j.appender.FILE.Threshold=INFO
+log4j.appender.FILE.layout=org.apache.log4j.PatternLayout
+log4j.appender.FILE.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} [%5p] - %c -%F(%L) -%m%n
+log4j.appender.FILE.MaxFileSize=2MB
+
+
+## Configure 'jms' appender. You'll also need jndi.properties file in order to make it work
+## Be sure that ActiveMQ messages are not logged to 'jms' appender
+#log4j.logger.org.apache.activemq=info, stdout
+#log4j.appender.jms=org.apache.log4j.net.JMSAppender
+#log4j.appender.jms.InitialContextFactoryName=org.apache.activemq.jndi.ActiveMQInitialContextFactory
+#log4j.appender.jms.ProviderURL=tcp://127.0.0.1:61616
+#log4j.appender.jms.TopicBindingName=logTopic
+#log4j.appender.jms.TopicConnectionFactoryBindingName=ConnectionFactory

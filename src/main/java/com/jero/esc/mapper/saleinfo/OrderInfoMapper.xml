@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.jero.esc.mapper.saleinfo.OrderInfoMapper"> 
+ <resultMap id="BaseResultMap" type="com.jero.esc.po.saleinfo.OrderInfo"> 
+  <id column="ORDER_ID" jdbcType="VARCHAR" property="orderId" /> 
+  <result column="ORDER_BUYER" jdbcType="VARCHAR" property="orderBuyer" /> 
+  <result column="ORDER_SELLER" jdbcType="VARCHAR" property="orderSeller" /> 
+  <result column="ORDER_CREATETIME" jdbcType="TIMESTAMP" property="orderCreatetime" /> 
+  <result column="ORDER_NO" jdbcType="VARCHAR" property="orderNo" /> 
+  <result column="ORDER_STATE" jdbcType="INTEGER" property="orderState" /> 
+  <result column="ORDER_MEETTIME" jdbcType="TIMESTAMP" property="orderMeettime" /> 
+  <result column="ORDER_PERSON" jdbcType="VARCHAR" property="orderPerson" /> 
+  <result column="ORDER_PERSONCELL" jdbcType="VARCHAR" property="orderPersoncell" /> 
+  <result column="ORDER_AREA" jdbcType="VARCHAR" property="orderArea" /> 
+  <result column="ORDER_ADDR" jdbcType="VARCHAR" property="orderAddr" /> 
+  <result column="ORDER_REQUEST" jdbcType="VARCHAR" property="orderRequest" /> 
+  <result column="ORDER_ISBILL" jdbcType="BIT" property="orderIsbill" /> 
+  <result column="ORDER_BILLADDR" jdbcType="VARCHAR" property="orderBilladdr" /> 
+  <result column="ORDER_BILLCONTENT" jdbcType="VARCHAR" property="orderBillcontent" /> 
+  <result column="ORDER_AQ" jdbcType="VARCHAR" property="orderAq" /> 
+  <result column="ORDER_CONFIRMTIME" jdbcType="TIMESTAMP" property="orderConfirmtime" /> 
+  <result column="ORDER_BUYERREPAYCONTENT" jdbcType="VARCHAR" property="orderBuyerrepaycontent" /> 
+  <result column="ORDER_SELLERREPAYCONTENT" jdbcType="VARCHAR" property="orderSellerrepaycontent" /> 
+  <result column="ORDER_ADMINREPAYCONTENT" jdbcType="VARCHAR" property="orderAdminrepaycontent" /> 
+  <result column="ORDER_COMMENT" jdbcType="VARCHAR" property="orderComment" /> 
+  <result column="ORDER_PRICE" jdbcType="REAL" property="orderPrice" /> 
+  <result column="ORDER_POINT" jdbcType="REAL" property="orderPoint" /> 
+  <result column="ORDER_REFUNDSTATE" jdbcType="INTEGER" property="orderRefundstate" /> 
+  <result column="ORDER_REFUNDPRICE" jdbcType="REAL" property="orderRefundprice" /> 
+  <result column="ORDER_REFUNDDATE" jdbcType="TIMESTAMP" property="orderRefunddate" />
+  <result column="COMPANY" jdbcType="VARCHAR" property="company" /> 
+  <collection property="orderService" ofType="OrderService" select="com.jero.esc.mapper.saleinfo.OrderServiceMapper.selectByOrderId" column="ORDER_ID" /> 
+ </resultMap> 
+ <sql id="Base_Column_List">
+  ORDER_ID, ORDER_BUYER, ORDER_SELLER, ORDER_CREATETIME, ORDER_NO, ORDER_STATE, ORDER_MEETTIME, ORDER_PERSON, ORDER_PERSONCELL, ORDER_AREA, ORDER_ADDR, ORDER_REQUEST, ORDER_ISBILL, ORDER_BILLADDR, ORDER_BILLCONTENT, ORDER_AQ, ORDER_CONFIRMTIME, ORDER_BUYERREPAYCONTENT, ORDER_SELLERREPAYCONTENT, ORDER_ADMINREPAYCONTENT, ORDER_COMMENT,ORDER_PRICE,ORDER_POINT,ORDER_REFUNDSTATE, ORDER_REFUNDPRICE,ORDER_REFUNDDATE,COMPANY
+ </sql> 
+ <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap"> select 
+  <include refid="Base_Column_List" /> from order_info where ORDER_ID = #{orderId,jdbcType=VARCHAR} </select> 
+ <select id="selectByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap"> select 
+  <include refid="Base_Column_List" /> from order_info where ORDER_NO = #{orderNo,jdbcType=VARCHAR} </select> 
+ <select id="countByRequire" resultType="java.lang.Integer"></select> 
+ <select id="selectByRequire" resultMap="BaseResultMap"></select> 
+ <select id="test" resultMap="BaseResultMap"> SELECT order_info.ORDER_ID, order_info.ORDER_BUYER, order_info.ORDER_SELLER, order_info.ORDER_CREATETIME, order_info.ORDER_NO, order_info.ORDER_STATE, order_info.ORDER_MEETTIME, order_info.ORDER_PERSON, order_info.ORDER_PERSONCELL, order_info.ORDER_AREA, order_info.ORDER_ADDR, order_info.ORDER_REQUEST, order_info.ORDER_ISBILL, order_info.ORDER_BILLADDR, order_info.ORDER_BILLCONTENT, order_info.ORDER_AQ, order_info.ORDER_CONFIRMTIME, order_info.ORDER_BUYERREPAYCONTENT, order_info.ORDER_SELLERREPAYCONTENT, order_info.ORDER_ADMINREPAYCONTENT, order_info.ORDER_COMMENT, order_info.ORDER_SERVICE, order_info.ORDER_PRICE, order_info.ORDER_POINT, provider_info.PI_ID, provider_info.PI_AREA, provider_info.PI_PHOTO, provider_info.PI_KEYWORDS, provider_info.PI_REMARK, provider_info.PI_TYPE, provider_info.PI_REALNAME, provider_info.PI_COMPANY, provider_info.PI_POSITION, provider_info.PI_WORKYEAR, provider_info.PI_EMAIL, provider_info.PI_CELL, provider_info.PI_ADDR, provider_info.PI_ISDELETE, provider_info.PI_CONTENT, provider_info.LOG_ID, provider_info.PI_BRIEF, provider_info.PI_MEETNUM, provider_info.PI_DEALNUM, provider_info.PI_RESPONSETIME, provider_info.PI_URLS, provider_info.PI_COMMENT, user_info.USER_ID, user_info.LOG_ID, user_info.USER_REALNAME, user_info.USER_WECHAT, user_info.USER_PHOTO, user_info.USER_COMMENT, order_service.OS_ID, order_service.ORDER_ID, order_service.SERS_ID, order_service.OS_GOODS_NUM, order_service.SS_ID, order_service.OS_COMMENT, order_service.OS_ATTRS, order_service.OS_SOURCE, order_service.OS_PRICE, order_service.OS_POINT FROM order_info INNER JOIN provider_info ON provider_info.LOG_ID = order_info.ORDER_SELLER INNER JOIN user_info ON user_info.LOG_ID = order_info.ORDER_BUYER INNER JOIN order_service ON order_service.ORDER_ID = order_info.ORDER_ID </select> 
+ <sql id="where"> 
+  <if test="orderId != null">
+    AND ORDER_ID=#{orderId} 
+  </if> 
+  <if test="orderBuyer != null">
+    AND ORDER_BUYER=#{orderBuyer} 
+  </if> 
+  <if test="orderSeller != null">
+    AND ORDER_SELLER=#{orderSeller} 
+  </if> 
+  <if test="orderCreatetime != null">
+    AND ORDER_CREATETIME=#{orderCreatetime} 
+  </if> 
+  <if test="orderNo != null">
+    AND ORDER_NO=#{orderNo} 
+  </if> 
+  <if test="orderState != null">
+    AND ORDER_STATE=#{orderState} 
+  </if> 
+  <if test="orderMeettime != null">
+    AND ORDER_MEETTIME=#{orderMeettime} 
+  </if> 
+  <if test="orderPerson != null">
+    AND ORDER_PERSON=#{orderPerson} 
+  </if> 
+  <if test="orderPersoncell != null">
+    AND ORDER_PERSONCELL=#{orderPersoncell} 
+  </if> 
+  <if test="orderArea != null">
+    AND ORDER_AREA=#{orderArea} 
+  </if> 
+  <if test="orderAddr != null">
+    AND ORDER_ADDR=#{orderAddr} 
+  </if> 
+  <if test="orderRequest != null">
+    AND ORDER_REQUEST=#{orderRequest} 
+  </if> 
+  <if test="orderIsbill != null">
+    AND ORDER_ISBILL=#{orderIsbill} 
+  </if> 
+  <if test="orderBilladdr != null">
+    AND ORDER_BILLADDR=#{orderBilladdr} 
+  </if> 
+  <if test="orderBillcontent != null">
+    AND ORDER_BILLCONTENT=#{orderBillcontent} 
+  </if> 
+  <if test="orderAq != null">
+    AND ORDER_AQ=#{orderAq} 
+  </if> 
+  <if test="orderConfirmtime != null">
+    AND ORDER_CONFIRMTIME=#{orderConfirmtime} 
+  </if> 
+  <if test="orderBuyerrepaycontent != null">
+    AND ORDER_BUYERREPAYCONTENT=#{orderBuyerrepaycontent} 
+  </if> 
+  <if test="orderSellerrepaycontent != null">
+    AND ORDER_SELLERREPAYCONTENT=#{orderSellerrepaycontent} 
+  </if> 
+  <if test="orderAdminrepaycontent != null">
+    AND ORDER_ADMINREPAYCONTENT=#{orderAdminrepaycontent} 
+  </if> 
+  <if test="orderComment != null">
+    AND ORDER_COMMENT=#{orderComment} 
+  </if> 
+  <if test="orderPrice != null">
+    AND ORDER_PRICE=#{orderPrice} 
+  </if> 
+  <if test="orderPoint != null">
+    AND ORDER_POINT=#{orderPoint} 
+  </if> 
+  <if test="orderRefundstate != null">
+    AND ORDER_REFUNDSTATE=#{orderRefundstate} 
+  </if> 
+  <if test="orderRefundprice != null">
+    AND ORDER_REFUNDPRICE=#{orderRefundprice} 
+  </if> 
+  <if test="orderRefunddate != null">
+    AND ORDER_REFUNDDATE=#{orderRefunddate} 
+  </if> 
+ </sql> 
+ <select id="countByExample" resultType="java.lang.Integer"> SELECT COUNT (ORDER_ID) FROM order_info 
+  <where>
+    1=1 
+   <if test="orderId != null">
+     AND ORDER_ID=#{orderId} 
+   </if> 
+   <if test="orderBuyer != null">
+     AND ORDER_BUYER=#{orderBuyer} 
+   </if> 
+   <if test="orderSeller != null">
+     AND ORDER_SELLER=#{orderSeller} 
+   </if> 
+   <if test="orderCreatetime != null">
+     AND ORDER_CREATETIME=#{orderCreatetime} 
+   </if> 
+   <if test="orderNo != null">
+     AND ORDER_NO=#{orderNo} 
+   </if> 
+   <if test="orderState != null">
+     AND ORDER_STATE=#{orderState} 
+   </if> 
+   <if test="orderMeettime != null">
+     AND ORDER_MEETTIME=#{orderMeettime} 
+   </if> 
+   <if test="orderPerson != null">
+     AND ORDER_PERSON=#{orderPerson} 
+   </if> 
+   <if test="orderPersoncell != null">
+     AND ORDER_PERSONCELL=#{orderPersoncell} 
+   </if> 
+   <if test="orderArea != null">
+     AND ORDER_AREA=#{orderArea} 
+   </if> 
+   <if test="orderAddr != null">
+     AND ORDER_ADDR=#{orderAddr} 
+   </if> 
+   <if test="orderRequest != null">
+     AND ORDER_REQUEST=#{orderRequest} 
+   </if> 
+   <if test="orderIsbill != null">
+     AND ORDER_ISBILL=#{orderIsbill} 
+   </if> 
+   <if test="orderBilladdr != null">
+     AND ORDER_BILLADDR=#{orderBilladdr} 
+   </if> 
+   <if test="orderBillcontent != null">
+     AND ORDER_BILLCONTENT=#{orderBillcontent} 
+   </if> 
+   <if test="orderAq != null">
+     AND ORDER_AQ=#{orderAq} 
+   </if> 
+   <if test="orderConfirmtime != null">
+     AND ORDER_CONFIRMTIME=#{orderConfirmtime} 
+   </if> 
+   <if test="orderBuyerrepaycontent != null">
+     AND ORDER_BUYERREPAYCONTENT=#{orderBuyerrepaycontent} 
+   </if> 
+   <if test="orderSellerrepaycontent != null">
+     AND ORDER_SELLERREPAYCONTENT=#{orderSellerrepaycontent} 
+   </if> 
+   <if test="orderAdminrepaycontent != null">
+     AND ORDER_ADMINREPAYCONTENT=#{orderAdminrepaycontent} 
+   </if> 
+   <if test="orderComment != null">
+     AND ORDER_COMMENT=#{orderComment} 
+   </if> 
+   <if test="orderPrice != null">
+     AND ORDER_PRICE=#{orderPrice} 
+   </if> 
+   <if test="orderPoint != null">
+     AND ORDER_POINT=#{orderPoint} 
+   </if> 
+   <if test="orderRefundstate != null">
+     AND ORDER_REFUNDSTATE=#{orderRefundstate} 
+   </if> 
+   <if test="orderRefundprice != null">
+     AND ORDER_REFUNDPRICE=#{orderRefundprice} 
+   </if> 
+   <if test="orderRefunddate != null">
+     AND ORDER_REFUNDDATE=#{orderRefunddate} 
+   </if> 
+  </where> </select> 
+ <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+   delete from order_info where ORDER_ID = #{orderId,jdbcType=VARCHAR} 
+ </delete> 
+ <insert id="insert" parameterType="com.jero.esc.po.saleinfo.OrderInfo">
+  insert into order_info (ORDER_ID, ORDER_BUYER, ORDER_SELLER, ORDER_CREATETIME, ORDER_NO, ORDER_STATE, ORDER_MEETTIME, ORDER_PERSON, ORDER_PERSONCELL, ORDER_AREA, ORDER_ADDR, ORDER_REQUEST, ORDER_ISBILL, ORDER_BILLADDR, ORDER_BILLCONTENT, ORDER_AQ, ORDER_CONFIRMTIME, ORDER_BUYERREPAYCONTENT, ORDER_SELLERREPAYCONTENT, ORDER_ADMINREPAYCONTENT, ORDER_COMMENT,ORDER_PRICE,ORDER_POINT,ORDER_REFUNDSTATE, ORDER_REFUNDPRICE,ORDER_REFUNDDATE,COMPANY) values (#{orderId,jdbcType=VARCHAR}, #{orderBuyer,jdbcType=VARCHAR}, #{orderSeller,jdbcType=VARCHAR}, #{orderCreatetime,jdbcType=TIMESTAMP}, #{orderNo,jdbcType=VARCHAR}, #{orderState,jdbcType=INTEGER}, #{orderMeettime,jdbcType=TIMESTAMP}, #{orderPerson,jdbcType=VARCHAR}, #{orderPersoncell,jdbcType=VARCHAR}, #{orderArea,jdbcType=VARCHAR}, #{orderAddr,jdbcType=VARCHAR}, #{orderRequest,jdbcType=VARCHAR}, #{orderIsbill,jdbcType=BIT}, #{orderBilladdr,jdbcType=VARCHAR}, #{orderBillcontent,jdbcType=VARCHAR}, #{orderAq,jdbcType=VARCHAR}, #{orderConfirmtime,jdbcType=TIMESTAMP}, #{orderBuyerrepaycontent,jdbcType=VARCHAR}, #{orderSellerrepaycontent,jdbcType=VARCHAR}, #{orderAdminrepaycontent,jdbcType=VARCHAR}, #{orderComment,jdbcType=VARCHAR},#{orderPrice},#{orderPoint},#{orderIsdelete},#{orderRefundprice},#{orderRefunddate} ,#{company})
+ </insert> 
+ <insert id="insertSelective" parameterType="com.jero.esc.po.saleinfo.OrderInfo">
+   insert into order_info 
+  <trim prefix="(" suffix=")" suffixOverrides=","> 
+   <if test="orderId != null">
+     ORDER_ID, 
+   </if> 
+   <if test="orderBuyer != null">
+     ORDER_BUYER, 
+   </if> 
+   <if test="orderSeller != null">
+     ORDER_SELLER, 
+   </if> 
+   <if test="orderCreatetime != null">
+     ORDER_CREATETIME, 
+   </if> 
+   <if test="orderNo != null">
+     ORDER_NO, 
+   </if> 
+   <if test="orderState != null">
+     ORDER_STATE, 
+   </if> 
+   <if test="orderMeettime != null">
+     ORDER_MEETTIME, 
+   </if> 
+   <if test="orderPerson != null">
+     ORDER_PERSON, 
+   </if> 
+   <if test="orderPersoncell != null">
+     ORDER_PERSONCELL, 
+   </if> 
+   <if test="orderArea != null">
+     ORDER_AREA, 
+   </if> 
+   <if test="orderAddr != null">
+     ORDER_ADDR, 
+   </if> 
+   <if test="orderRequest != null">
+     ORDER_REQUEST, 
+   </if> 
+   <if test="orderIsbill != null">
+     ORDER_ISBILL, 
+   </if> 
+   <if test="orderBilladdr != null">
+     ORDER_BILLADDR, 
+   </if> 
+   <if test="orderBillcontent != null">
+     ORDER_BILLCONTENT, 
+   </if> 
+   <if test="orderAq != null">
+     ORDER_AQ, 
+   </if> 
+   <if test="orderConfirmtime != null">
+     ORDER_CONFIRMTIME, 
+   </if> 
+   <if test="orderBuyerrepaycontent != null">
+     ORDER_BUYERREPAYCONTENT, 
+   </if> 
+   <if test="orderSellerrepaycontent != null">
+     ORDER_SELLERREPAYCONTENT, 
+   </if> 
+   <if test="orderAdminrepaycontent != null">
+     ORDER_ADMINREPAYCONTENT, 
+   </if> 
+   <if test="orderComment != null">
+     ORDER_COMMENT, 
+   </if> 
+   <if test="orderPrice != null">
+     ORDER_PRICE, 
+   </if> 
+   <if test="orderPoint != null">
+     ORDER_POINT, 
+   </if> 
+   <if test="orderRefundstate != null">
+     ORDER_REFUNDSTATE, 
+   </if> 
+   <if test="orderRefundprice != null">
+     ORDER_REFUNDPRICE, 
+   </if> 
+   <if test="orderRefunddate != null">
+     ORDER_REFUNDDATE, 
+   </if> ORDER_ISDELETE,  
+   <if test="company != null">
+     COMPANY, 
+   </if>
+  </trim> 
+  <trim prefix="values (" suffix=")" suffixOverrides=","> 
+   <if test="orderId != null">
+     #{orderId,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderBuyer != null">
+     #{orderBuyer,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderSeller != null">
+     #{orderSeller,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderCreatetime != null">
+     #{orderCreatetime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="orderNo != null">
+     #{orderNo,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderState != null">
+     #{orderState,jdbcType=INTEGER}, 
+   </if> 
+   <if test="orderMeettime != null">
+     #{orderMeettime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="orderPerson != null">
+     #{orderPerson,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderPersoncell != null">
+     #{orderPersoncell,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderArea != null">
+     #{orderArea,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderAddr != null">
+     #{orderAddr,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderRequest != null">
+     #{orderRequest,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderIsbill != null">
+     #{orderIsbill,jdbcType=BIT}, 
+   </if> 
+   <if test="orderBilladdr != null">
+     #{orderBilladdr,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderBillcontent != null">
+     #{orderBillcontent,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderAq != null">
+     #{orderAq,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderConfirmtime != null">
+     #{orderConfirmtime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="orderBuyerrepaycontent != null">
+     #{orderBuyerrepaycontent,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderSellerrepaycontent != null">
+     #{orderSellerrepaycontent,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderAdminrepaycontent != null">
+     #{orderAdminrepaycontent,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderComment != null">
+     #{orderComment,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderPrice != null">
+     #{orderPrice}, 
+   </if> 
+   <if test="orderPoint != null">
+     #{orderPoint}, 
+   </if> 
+   <if test="orderRefundstate != null">
+     #{orderRefundstate}, 
+   </if> 
+   <if test="orderRefundprice != null">
+     #{orderRefundprice}, 
+   </if> 
+   <if test="orderRefunddate != null">
+     #{orderRefunddate}, 
+   </if> 0,  
+   <if test="company != null">
+     #{company}, 
+   </if>
+  </trim> 
+ </insert> 
+ <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.saleinfo.OrderInfo">
+   update order_info 
+  <set> 
+   <if test="orderBuyer != null">
+     ORDER_BUYER = #{orderBuyer,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderSeller != null">
+     ORDER_SELLER = #{orderSeller,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderCreatetime != null">
+     ORDER_CREATETIME = #{orderCreatetime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="orderNo != null">
+     ORDER_NO = #{orderNo,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderState != null">
+     ORDER_STATE = #{orderState,jdbcType=INTEGER}, 
+   </if> 
+   <if test="orderMeettime != null">
+     ORDER_MEETTIME = #{orderMeettime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="orderPerson != null">
+     ORDER_PERSON = #{orderPerson,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderPersoncell != null">
+     ORDER_PERSONCELL = #{orderPersoncell,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderArea != null">
+     ORDER_AREA = #{orderArea,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderAddr != null">
+     ORDER_ADDR = #{orderAddr,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderRequest != null">
+     ORDER_REQUEST = #{orderRequest,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderIsbill != null">
+     ORDER_ISBILL = #{orderIsbill,jdbcType=BIT}, 
+   </if> 
+   <if test="orderBilladdr != null">
+     ORDER_BILLADDR = #{orderBilladdr,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderBillcontent != null">
+     ORDER_BILLCONTENT = #{orderBillcontent,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderAq != null">
+     ORDER_AQ = #{orderAq,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderConfirmtime != null">
+     ORDER_CONFIRMTIME = #{orderConfirmtime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="orderBuyerrepaycontent != null">
+     ORDER_BUYERREPAYCONTENT = #{orderBuyerrepaycontent,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderSellerrepaycontent != null">
+     ORDER_SELLERREPAYCONTENT = #{orderSellerrepaycontent,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderAdminrepaycontent != null">
+     ORDER_ADMINREPAYCONTENT = #{orderAdminrepaycontent,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderComment != null">
+     ORDER_COMMENT = #{orderComment,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="orderPrice != null">
+     ORDER_PRICE=#{orderPrice}, 
+   </if> 
+   <if test="orderPoint != null">
+     ORDER_POINT=#{orderPoint} 
+   </if> 
+   <if test="orderRefundstate != null">
+     ORDER_REFUNDSTATE=#{orderRefundstate}, 
+   </if> 
+   <if test="orderRefundprice != null">
+     ORDER_REFUNDPRICE=#{orderRefundprice} 
+   </if> 
+   <if test="orderRefunddate != null">
+     ORDER_REFUNDDATE=#{orderRefunddate} 
+   </if>  
+   <if test="company != null">
+     COMPANY = #{company}, 
+   </if>
+  </set> where ORDER_ID = #{orderId,jdbcType=VARCHAR} 
+ </update> 
+ <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.saleinfo.OrderInfo">
+  update order_info set ORDER_BUYER = #{orderBuyer,jdbcType=VARCHAR}, ORDER_SELLER = #{orderSeller,jdbcType=VARCHAR}, ORDER_CREATETIME = #{orderCreatetime,jdbcType=TIMESTAMP}, ORDER_NO = #{orderNo,jdbcType=VARCHAR}, ORDER_STATE = #{orderState,jdbcType=INTEGER}, ORDER_MEETTIME = #{orderMeettime,jdbcType=TIMESTAMP}, ORDER_PERSON = #{orderPerson,jdbcType=VARCHAR}, ORDER_PERSONCELL = #{orderPersoncell,jdbcType=VARCHAR}, ORDER_AREA = #{orderArea,jdbcType=VARCHAR}, ORDER_ADDR = #{orderAddr,jdbcType=VARCHAR}, ORDER_REQUEST = #{orderRequest,jdbcType=VARCHAR}, ORDER_PRICE=#{orderPrice}, ORDER_POINT=#{orderPoint}, ORDER_ISBILL = #{orderIsbill,jdbcType=BIT}, ORDER_BILLADDR = #{orderBilladdr,jdbcType=VARCHAR}, ORDER_BILLCONTENT = #{orderBillcontent,jdbcType=VARCHAR}, ORDER_AQ = #{orderAq,jdbcType=VARCHAR}, ORDER_CONFIRMTIME = #{orderConfirmtime,jdbcType=TIMESTAMP}, ORDER_BUYERREPAYCONTENT = #{orderBuyerrepaycontent,jdbcType=VARCHAR}, ORDER_SELLERREPAYCONTENT = #{orderSellerrepaycontent,jdbcType=VARCHAR}, ORDER_ADMINREPAYCONTENT = #{orderAdminrepaycontent,jdbcType=VARCHAR}, ORDER_REFUNDSTATE = #{orderRefundstate,jdbcType=INTEGER}, ORDER_REFUNDPRICE = #{orderRefundprice,jdbcType=REAL}, ORDER_REFUNDDATE = #{orderRefunddate,jdbcType=TIMESTAMP}, ORDER_COMMENT = #{orderComment,jdbcType=VARCHAR} , COMPANY = #{company} where ORDER_ID = #{orderId,jdbcType=VARCHAR}
+ </update> 
+</mapper>

@@ -1,0 +1,33 @@
+package com.jero.esc.mapper.pubinfo;
+
+import com.jero.esc.po.pubinfo.CommonType;
+import com.jero.esc.po.pubinfo.CommonTypeExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface CommonTypeMapper {
+
+    List<CommonType>  selectChainByFid(String chiain);
+
+    int countByExample(CommonTypeExample example);
+
+    int deleteByExample(CommonTypeExample example);
+
+    int deleteByPrimaryKey(String ctId);
+
+    int insert(CommonType record);
+
+    int insertSelective(CommonType record);
+
+    List<CommonType> selectByExample(CommonTypeExample example);
+
+    CommonType selectByPrimaryKey(String ctId);
+
+    int updateByExampleSelective(@Param("record") CommonType record, @Param("example") CommonTypeExample example);
+
+    int updateByExample(@Param("record") CommonType record, @Param("example") CommonTypeExample example);
+
+    int updateByPrimaryKeySelective(CommonType record);
+
+    int updateByPrimaryKey(CommonType record);
+}

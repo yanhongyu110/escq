@@ -1,0 +1,236 @@
+var times = 0;
+var nameRegx = /^[\u4e00-\u9fa5]{2,}$/;//验证用户名
+var cellRegx = /^1[34578]\d{9}$/;//验证手机
+var url = "";
+
+function regx(r,s){
+	if (r == null || r == ""){
+		return false;
+	}
+	var patrn= new RegExp(r);
+	if (patrn.exec(s))
+		return true;
+		return false;
+}
+
+$(function(){
+	if(flag == 1){
+		url = "/wap/demand/addDemand.html";
+	} else {
+		url = "/wap/demand/updateById.html";
+	}
+	
+	KindEditor.ready(function (K) {
+
+		var editor = K.editor({
+			uploadJson: path + '/kindEditor/4.1.10/jsp/upload_json.jsp',
+			fileManagerJson: path + '/kindEditor/4.1.10/jsp/file_manager_json.jsp',
+			allowFileManager: true,
+		});
+
+
+		//网络+本地
+		K('.upli').click(function () {
+			var temp=$(this);
+			editor.loadPlugin('image', function () {
+				editor.plugin.imageDialog({
+					clickFn: function (url, title) {
+						$("#info_icon1").val(url);
+						$("#image1").attr("src",url);
+                        //temp.css({'paddingTop':'10px','background-image': 'url("'+url+'")'});
+                        temp.children('span').remove();
+                        temp.children('img').css({'width': '100%','border-radius': '0','margin-top':'0'})
+						editor.hideDialog();
+					}
+				});
+			});
+		});
+    });
+	
+	//验证服务名称
+	$('input[name=demTitle]').blur(function(){
+		var titleval = $(this).val();
+		
+		if(!checktitle(titleval) && $('input[name=demTitle] ~ span').length < 1){
+			$(this).after('<br><span style="color:#f00;">请保证在15字以内！</span>');
+		};
+	});
+	//验证联系人
+	$('input[name=demContact]').blur(function(){
+		var flag = isEmpty($('input[name=demContact]').val());
+		if(flag /*&& $('input[name=demContact] ~ span').length < 1*/){
+			$(this).after('<br><span style="color:#f00;">您输入的姓名不能为空！</span>');
+		};
+	});
+	//验证手机号
+	$('input[name=demCell]').blur(function(){
+		var titleval = $(this).val();
+		var flag = regx(cellRegx,titleval);
+		if(!flag && $('input[name=demCell] ~ span').length < 1){
+			$(this).after('<br><span style="color:#f00;">您输入的联系方式有误！</span>');
+		};
+	});
+	/*//验证关键词
+	$('textarea[name=demKeyword]').blur(function(){
+		var kwval = $(this).val();
+		
+		if(!checkkeywords(kwval) && $('textarea[name=demKeyword] ~ span').length < 1){
+			$(this).after('<span style="color:#f00;">请按提示正确输入！</span>');
+		};
+	});*/
+	/*
+	//验证主题简介
+	$('textarea[name=demBrief]').blur(function(){
+		var contentval = $(this).val();
+		
+		if(!checkcontent(contentval) && $('textarea[name=demBrief] ~ span').length < 1){
+			$(this).after('<br><span style="color:#f00;">请按提示正确输入！</span>');
+		};
+	});*/
+	
+	$('#servicesave').click(function(){
+		//$('#servicesave').unbind("click");
+		var conval = $('#demContent').val();
+		if(isEmpty(conval) && $('#demContent ~ span').length < 1){
+			$('#demContent').after('<span style="color:#f00;display:block;margin-top:-10px;">需求介绍不能为空！</span>');
+            alert('需求介绍不能为空！');
+			return;
+		}
+		/*if(isEmpty($('input[name=demImage]').val())){
+            alert('请选一张图片！');
+			return;
+		}*/
+
+		if (isEmpty($('input[name=demType]').val())){
+			alert("请选择类型");
+			return;
+		}
+		var demTitle = $('input[name=demTitle]').val();
+		var demContact = $('input[name=demContact]').val();
+		var demCell = $('input[name=demCell]').val();
+		var demBrief = $('textarea[name=demBrief]').val();
+		//!checkcontent(demBrief)||
+		if(!checktitle(demTitle)){
+			alert("服务名称不能超过15个字");
+			return;
+		}
+		if(isEmpty($('input[name=demContact]').val())){
+			alert("请确认用户名不为空");
+			return;
+		}
+		if(!regx(cellRegx,demCell)){
+			alert("请确认电话号码是否正确");
+			return;
+		}
+		/*var demKeyword = $('textarea[name=demKeyword]').val().split(',');*/
+		var model={
+				demImage:$('input[name=demImage]').val(),
+				demContact: $('input[name=demContact]').val(),
+				demCell: $('input[name=demCell]').val(),
+				demTitle: $('input[name=demTitle]').val(),
+				//demBrief: $('textarea[name=demBrief]').val(),
+				demContent: $('#demContent').val(),
+				//demKeyword: demKeyword,
+				demType:$('input[name=demType]').val(),
+				demId:$("#demId").html()
+		};
+		$.ajax({
+			url: path + url,
+			data:{
+				demand:JSON.stringify(model),
+			},
+			dataType: 'json',
+			type: 'post',
+			cache: false,
+			success:function(data){
+				if(data.success){
+					alert(data.errorMsg,'成功',function(){
+						
+						window.location.href=path+'/wap/demand/gotoDemandListAdmin.html';
+					});
+				}else{
+					alert(data.errorMsg,'失败');
+				}
+			},
+			error:function(data){
+				
+			}
+		});
+	});
+	
+	
+	nextAllRemove($('input[name=demTitle]'));
+	nextAllRemove($('textarea[name=demKeyword]'));
+	nextAllRemove($('textarea[name=demContent]'));
+	nextAllRemove($('textarea[name=demBrief]'));
+	nextAllRemove($('input[name=demContact]'));
+	nextAllRemove($('input[name=demCell]'));
+});
+
+
+//校验方法
+function checktitle(value){
+	if(isEmpty(value)){
+		return false;
+	}
+	var reg =/^[\u4e00-\u9fa5a-zA-Z0-9]{1,15}$/;
+	return reg.test(value);
+}
+function checkkeywords(value){
+	if(isEmpty(value)){
+		return false;
+	}
+	var keywords = value.split(/[,|，]/);
+	if(keywords.length > 5){
+		return false;
+	}
+	var reg =/^[\u4e00-\u9fa5a-zA-Z0-9]+$/;
+	for ( var i=0;i<keywords.length;i++) {
+		var keyword = keywords[i];
+		if(isEmpty(keyword)){
+			return false;
+		}
+		if(!reg.test(keyword)){
+			return false;
+		}
+	}
+	return true;
+}
+function checkcontent(value){
+	if(isEmpty(value)){
+		return false;
+	}
+	var reg = /^.{1,200}$/;
+	return reg.test(value);
+}
+function checkprice(value){
+	if(isEmpty(value)){
+		return false;
+	}
+	var reg = /^(-?\d+)(\.\d+)?$/;
+	return reg.test(value);
+
+}
+
+function checktl(value){
+	if(isEmpty(value)){
+		return false;
+	}
+	var reg = /^[0-9]+$/;
+	return reg.test(value);
+
+}
+
+function isEmpty(value){
+	value = $.trim(value);
+	if(value == "" || value == null || value == undefined){
+		return true;
+	}
+	return false;
+}
+
+function nextAllRemove(node){
+	node.focus(function(){
+		$(this).nextAll().remove();
+	});
+}

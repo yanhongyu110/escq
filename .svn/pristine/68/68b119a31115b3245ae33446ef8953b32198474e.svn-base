@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>申请预约</title>
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+		<meta name="apple-touch-fullscreen" content="yes">
+		<!-- 开启对web app程序的支持  -->
+		<meta content="telephone=no,email=no" name="format-detection">
+		<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+		<!--base css-->
+		<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+		<link rel="stylesheet" href="../css/reset.css" />
+
+		<link rel="stylesheet" href="../css/personer.css" />
+		<script src="../js/reset.js"></script>
+		<script src="../js/jquery.min.js"></script>
+
+	</head>
+
+	<body>
+		<!--wapper-->
+		<div class="wapper">
+			<!--page-->
+			<div id="page">
+
+				<div class="my_date_bt">
+
+					<div class="service_content">
+						<div class="service_content_pj show">
+							<div class="personer_mes">
+								<ul class="my_date">
+									<li class="my_date_img"><img src="../images/tximg.jpg"></li>
+									<li class="my_date_title">
+										<h3>营销型网站策划营销型网站策划</h3>
+										<p>122.00 </p>
+									</li>
+									<li class="my_date_zt">
+										<p>已交易</p>
+										<span>2017-01-03</span>
+									</li>
+
+								</ul>
+
+							</div>
+							<!--end.personer_mes-->
+							<div class="personer_mes_zl">
+								<ul class="personer_mes_zl_ms have_border">
+									<li>预约时间</li>
+									<li class="mes_input">
+										<input type="text" value="2017-01-01" />
+									</li>
+									<li class="p_ts">请输入正确时间</li>
+								</ul>
+								<ul class="personer_mes_zl_ms">
+									<li>联系人</li>
+									<li class="mes_input">
+										<input type="text" value="请输入时间" />
+									</li>
+								</ul>
+								<ul class="personer_mes_zl_ms">
+									<li>联系方式</li>
+									<li class="mes_input">
+										<input type="text" value="联系方式" />
+									</li>
+								</ul>
+								<ul class="personer_zp">
+									<li>服务描述</li>
+									<li class="personer_js"><textarea>对自己进行简单的介绍，，，</textarea></li>
+								</ul>
+								
+								
+								<ul class="personer_fb">
+									<li>发票信息</li>
+									<li>
+									<input type="radio" name="x" id="" value="" /> 开具发票</li>
+									<li><input type="radio" name="x" id="" value="" checked="checked" /> 不开发票
+								</li>
+								</ul>
+								<ul class="personer_mes_zl_ms">
+									<li>发票地址</li>
+									<li class="mes_input">
+										<input type="text" value="发票地址" />
+									</li>
+								</ul>
+							</div>
+							<div class="personer_excit">
+					<div class="excit">同意约见</div>
+					<div class="cz">取消约见</div>
+				</div>
+
+						</div>
+						<!--end.service_content_pj-->
+						
+
+					</div>
+					<!--end.service_content-->
+
+				</div>
+				<!--end.wap_service_xq-->
+				
+
+			</div>
+			<!--page end-->
+			
+		</div>
+		<!--wapper end-->
+
+	</body>
+
+</html>

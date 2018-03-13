@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的账户</title>
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+		<meta name="apple-touch-fullscreen" content="yes">
+		<!-- 开启对web app程序的支持  -->
+		<meta content="telephone=no,email=no" name="format-detection">
+		<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+		<!--base css-->
+		<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+		<link rel="stylesheet" href="css/reset.css" />
+		
+		<link rel="stylesheet" href="css/personer.css"/>
+		<script src="js/reset.js"></script>
+		<script src="js/TouchSlide.js"></script>	
+	</head>
+
+	<body>
+		<!--wapper-->
+		<div class="wapper">
+			<!--page-->
+			
+				
+				
+				<div class="personer_mes">										
+					<ul class="list_mes have_border">
+						<li class="demand_title">需求名称：</li>						
+						<li class="add_demends"><input type="text" value="请输入需求名称"></li>
+					</ul>
+					<ul class="list_mes">
+						<li class="demand_title">预约时间：</li>						
+						<li class="add_demends">2017-05-26</li>
+					</ul>
+					<ul class="list_mes">
+						<li class="demand_title">联系人：</li>						
+						<li class="add_demends"><input type="text" value="请输入联系人姓名"></li>
+					</ul>
+					<ul class="list_mes">
+						<li class="demand_title">联系电话：</li>						
+						<li class="add_demends"><input type="text" value="请输入联系电话"></li>
+					</ul>
+					<ul class="list_mes text_height">
+						<li class="demand_title">需求介绍：</li>						
+						<li class="add_demends "><textarea></textarea></li>
+					</ul>
+					<ul class="list_mes">
+						<li class="demand_title">需求类型：</li>						
+						<li class="add_demends"><select><option>技术开发</option></select></li>
+					</ul>
+				</div><!--end.personer_mes-->
+				<div class="personer_excit">
+					<div class="excit">提交需求</div>
+					
+				</div>
+				
+				
+			
+		</div>
+		<!--wapper end-->
+
+	</body>
+
+</html>

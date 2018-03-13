@@ -1,0 +1,97 @@
+package com.jero.esc.common.weixin;
+
+import java.net.UnknownHostException;
+import java.util.Map;
+
+import org.jdom.JDOMException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jero.esc.common.utils.DateUtil;
+import com.jero.esc.common.weixin.entity.RedPacketEntity;
+import com.jero.esc.common.weixin.entity.TransfersEntity;
+import com.jero.esc.common.weixin.result.RedPacketResult;
+import com.jero.esc.common.weixin.result.TransfersResult;
+
+@Controller
+@RequestMapping(value="/weixin")
+public class WeiXinMain {
+	
+	/** 发送红包url */
+	private static final String SEND_REDPACK_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
+	/** 企业支付url */
+	private static final String TRANSFERS_URL = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
+	
+	public static void main(String[] args) throws JDOMException {
+		String openId = "o5tP4v2sRruivGVkBPjL5zvWQQnw";
+//		TransfersResult result = sendTransfersXml(openId,"100");
+//		RedPacketResult result = sendRedPacketXml(openId);
+//		System.out.println(result.getReturn_code());
+		WeixinDraw weixin = new WeixinDraw();
+		Map<String, String> map = weixin.transfer(openId, 100, "近到家公众平台体现", DateUtil.getPayMentId());
+		System.out.println(map);
+	}
+	/**
+	 * 
+	 *<pre>
+	 *<b> 发送现金红包.</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-12-11 下午6:14:08
+	 *@param openId
+	 *</pre>
+	 */
+	public static RedPacketResult sendRedPacketXml(String openId){
+		RedPacketResult result = new RedPacketResult();
+		try {
+			RedPacketEntity redPacket = new RedPacketEntity();
+			//设置openId
+			redPacket.setRe_openid(openId);
+			//生成签名
+			String sign = WeiXinSign.redPacketGetSign(redPacket);
+			redPacket.setSign(sign);
+			//组装xml
+			String data = WeiXinDataXml.getRedPacketXml(redPacket, sign);
+			//发送请求
+			String jsonStr = WeiXinSendRequest.sendRequest(data, redPacket.getMch_id(), SEND_REDPACK_URL);
+			//获取返回状态
+			result = WeiXinReultReturn.returnRedPacketResult(jsonStr);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * 
+	 *<pre>
+	 *<b>.</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-12-13 上午10:43:34
+	 *@param openId
+	 *@param amount
+	 *@return
+	 *</pre>
+	 */
+	public static TransfersResult sendTransfersXml(String openId, String amount){
+		TransfersResult result = new TransfersResult();
+		try {
+			TransfersEntity transfers = new TransfersEntity();
+			transfers.setOpenid(openId);
+			transfers.setAmount(amount);
+			String sign = WeiXinSign.transfersGetSign(transfers);
+			transfers.setSign(sign);
+			String data = WeiXinDataXml.getTransfersXml(transfers, sign);
+			System.out.println(data);
+			//发送请求 获取结果
+			String jsonStr = WeiXinSendRequest.sendRequest(data, transfers.getMchid(), TRANSFERS_URL);
+			result = WeiXinReultReturn.returnTransfersReult(jsonStr);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+}

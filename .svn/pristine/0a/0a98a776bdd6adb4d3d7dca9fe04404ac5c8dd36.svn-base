@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.goodsinfo.ServiceSnapshotMapper">
+    <resultMap id="BaseResultMap" type="com.jero.esc.po.goodsinfo.ServiceSnapshot">
+        <id column="SERS_ID" jdbcType="VARCHAR" property="sersId"/>
+        <result column="SERS_INFO" jdbcType="VARCHAR" property="sersInfo"/>
+        <result column="SERS_CHOOSE" jdbcType="VARCHAR" property="sersChoose"/>
+        <result column="SERS_PRICE" jdbcType="VARCHAR" property="sersPrice"/>
+        <result column="SERS_PERPRICE" jdbcType="VARCHAR" property="sersPerprice"/>
+        <result column="SERS_CREATETIME" jdbcType="TIMESTAMP" property="sersCreatetime"/>
+        <result column="SERS_COMMENT" jdbcType="VARCHAR" property="sersComment"/>
+        <result column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    SERS_ID, SERS_INFO, SERS_CHOOSE, SERS_PRICE, SERS_PERPRICE, SERS_CREATETIME, SERS_COMMENT,SERVICE_ID
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from service_snapshot
+        where SERS_ID = #{sersId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectLateByServiceId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM service_snapshot
+        WHERE
+        service_snapshot.SERVICE_ID=#{value}
+        ORDER BY
+        service_snapshot.SERS_CREATETIME DESC
+        LIMIT 0, 1
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from service_snapshot
+    where SERS_ID = #{sersId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.jero.esc.po.goodsinfo.ServiceSnapshot">
+    insert into service_snapshot (SERS_ID, SERS_INFO, SERS_CHOOSE, 
+      SERS_PRICE, SERS_PERPRICE, SERS_CREATETIME, 
+      SERS_COMMENT,SERVICE_ID)
+    values (#{sersId,jdbcType=VARCHAR}, #{sersInfo,jdbcType=VARCHAR}, #{sersChoose,jdbcType=VARCHAR}, 
+      #{sersPrice,jdbcType=VARCHAR}, #{sersPerprice,jdbcType=VARCHAR}, #{sersCreatetime,jdbcType=TIMESTAMP}, 
+      #{sersComment,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.jero.esc.po.goodsinfo.ServiceSnapshot">
+        insert into service_snapshot
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sersId != null">
+                SERS_ID,
+            </if>
+            <if test="sersInfo != null">
+                SERS_INFO,
+            </if>
+            <if test="sersChoose != null">
+                SERS_CHOOSE,
+            </if>
+            <if test="sersPrice != null">
+                SERS_PRICE,
+            </if>
+            <if test="sersPerprice != null">
+                SERS_PERPRICE,
+            </if>
+            <if test="sersCreatetime != null">
+                SERS_CREATETIME,
+            </if>
+            <if test="sersComment != null">
+                SERS_COMMENT,
+            </if>
+            <if test="serviceId != null">
+                SERVICE_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sersId != null">
+                #{sersId,jdbcType=VARCHAR},
+            </if>
+            <if test="sersInfo != null">
+                #{sersInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="sersChoose != null">
+                #{sersChoose,jdbcType=VARCHAR},
+            </if>
+            <if test="sersPrice != null">
+                #{sersPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="sersPerprice != null">
+                #{sersPerprice,jdbcType=VARCHAR},
+            </if>
+            <if test="sersCreatetime != null">
+                #{sersCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sersComment != null">
+                #{sersComment,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceId != null">
+                #{serviceId},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.goodsinfo.ServiceSnapshot">
+        update service_snapshot
+        <set>
+            <if test="sersInfo != null">
+                SERS_INFO = #{sersInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="sersChoose != null">
+                SERS_CHOOSE = #{sersChoose,jdbcType=VARCHAR},
+            </if>
+            <if test="sersPrice != null">
+                SERS_PRICE = #{sersPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="sersPerprice != null">
+                SERS_PERPRICE = #{sersPerprice,jdbcType=VARCHAR},
+            </if>
+            <if test="sersCreatetime != null">
+                SERS_CREATETIME = #{sersCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sersComment != null">
+                SERS_COMMENT = #{sersComment,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceId != null">
+                SERVICE_ID=#{serviceId},
+            </if>
+        </set>
+        where SERS_ID = #{sersId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.goodsinfo.ServiceSnapshot">
+    update service_snapshot
+    set SERS_INFO = #{sersInfo,jdbcType=VARCHAR},
+      SERS_CHOOSE = #{sersChoose,jdbcType=VARCHAR},
+      SERS_PRICE = #{sersPrice,jdbcType=VARCHAR},
+      SERS_PERPRICE = #{sersPerprice,jdbcType=VARCHAR},
+      SERS_CREATETIME = #{sersCreatetime,jdbcType=TIMESTAMP},
+      SERS_COMMENT = #{sersComment,jdbcType=VARCHAR},
+      SERVICE_ID=#{serviceId}
+    where SERS_ID = #{sersId,jdbcType=VARCHAR}
+  </update>
+</mapper>

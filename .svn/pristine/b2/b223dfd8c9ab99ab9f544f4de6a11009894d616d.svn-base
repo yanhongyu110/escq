@@ -1,0 +1,109 @@
+/*$(function(){
+	$('#login').click(function(){
+		login();
+	})
+	checkCookie();
+})*/
+window.onload = function(){
+	$('#login').click(function(){
+		login();
+	})
+	checkCookie();
+	$(".resetPass img").on("click",function () {
+		$("#logPass").val("");
+        $(this).hide();
+    });
+    $("#logPass").on("input propertychange", function() {
+        if($("#logPass").val().length>0){
+            $(".resetPass img").show();
+		}else {
+            $(".resetPass img").hide();
+		}
+    });
+}
+function checkCookie(){
+	var coo = $.cookie('rmb');
+	if($.cookie('rmb')){
+		 $("#logCell").val($.cookie('logName')); 
+		 $("#logPass").val($.cookie('logPass'));
+		 $("#check").attr("checked","true");
+	}
+}
+/**
+ * 跳转注册页面
+ */
+function register(){
+	var redirect_uri = encodeURIComponent("http://www.jindaoj.com/wap/userinfo/logInfo/jumpRegister.html");
+	window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0c763640d4b8f08&redirect_uri="
+		+ redirect_uri
+		+ "&response_type=code&scope=snsapi_base&state="
+		+ encodeURIComponent("http://www.jindaoj.com/wap/userinfo/logInfo/jumpRegister.html")+"#wechat_redirect";
+//	window.location.href = path+"/wap/userinfo/logInfo/jumpRegister.html";
+}
+function login(){
+	console.info($('#login'))
+	var logCell = $('#logCell').val();
+	var logPass = $('#logPass').val();
+	if(checkNull(logCell)){
+		$('#message').text('账号不能为空').slideDown(300).delay(1000).slideUp(300);
+		$('#logCell').focus();
+	}else if(checkNull(logPass)){
+		$('#message').text('密码不能为空').slideDown(300).delay(1000).slideUp(300);
+		$('#logPass').focus();
+	}else{
+		var name = $.cookie('logName');
+		var pass = $.cookie('logPass');
+		if(logCell != name || logPass != pass){
+			logPass = $.md5(logPass);
+		}
+		var checked = $("#check").is(":checked");
+		if (checked){ 
+			 $.cookie('rmb', true, { expires: 7, path: '/' });
+			 $.cookie('logName', logCell, { expires: 7, path: '/' });
+			 $.cookie('logPass', logPass, { expires: 7, path: '/' });
+		}else{  
+			 $.cookie('rmb', false, { expires: -1, path: '/' });
+			 $.cookie('logName', '', { expires: -1, path: '/' });
+			 $.cookie('logPass', '', { expires: -1, path: '/' });
+		}
+		$.post(path+'/wap/userinfo/logInfo/login.html',$.param({
+			'logName':logCell,
+			'logPass':logPass
+			},true),function(result){
+			if (result.success){
+				
+				var user=$("#logCell").val();
+				//设置只有在wap端使用配置的cookie
+				$.cookie('logUser',user, { expires: 30, path: '/' });
+				$.cookie('logToken',result.obj, { expires: 30, path: '/' });
+				var menuTag = $("#menuTag").val();
+				if(menuTag!=null&&menuTag!=""){
+					switch (menuTag){
+						case "2":
+                            window.location.href=path+"/wap/demand/gotoAddDemand.html"+"?menuTag="+menuTag;
+							break;
+                        case "3":
+                            window.location.href=path+"/wap/goodsinfo/service/viewAddService.html"+"?menuTag="+menuTag;
+                            break;
+                        case "4":
+                            window.location.href=path+"/wap/userinfo/personalAdmin.html"+"?menuTag="+menuTag;
+                            break;
+                        default:
+                            window.location.href=path+"/wap/main/view.html";
+                            break;
+					}
+
+				}else{
+                    window.location.href=path+"/wap/main/view.html";
+				}
+			}else{
+				if(result.errorCode == "1"){
+					$('#message').text(result.errorMsg).slideDown(300).delay(1000).slideUp(300);
+				}else if(result.errorCode == "2"){
+					$('#message').text(result.errorMsg).slideDown(300).delay(1000).slideUp(300);
+					$('#logPass').select();
+				}
+			}
+		},'json');
+	}
+}

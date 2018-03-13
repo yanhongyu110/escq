@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.system.SysUserToRoleMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.system.SysUserToRoleKey">
+    <id column="UTR_ROLE" jdbcType="VARCHAR" property="utrRole" />
+    <id column="UTR_USER" jdbcType="VARCHAR" property="utrUser" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.jero.esc.po.system.SysUserToRoleKey">
+    delete from sys_user_to_role
+    where UTR_ROLE = #{utrRole,jdbcType=VARCHAR}
+      and UTR_USER = #{utrUser,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.system.SysUserToRoleKey">
+    insert into sys_user_to_role (UTR_ROLE, UTR_USER)
+    values (#{utrRole,jdbcType=VARCHAR}, #{utrUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.system.SysUserToRoleKey">
+    insert into sys_user_to_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="utrRole != null">
+        UTR_ROLE,
+      </if>
+      <if test="utrUser != null">
+        UTR_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="utrRole != null">
+        #{utrRole,jdbcType=VARCHAR},
+      </if>
+      <if test="utrUser != null">
+        #{utrUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

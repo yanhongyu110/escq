@@ -1,0 +1,218 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>审核流程</title>
+		<link href="${webtxc}/css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="${webtxc}/css/personal.css" />
+		<link rel="stylesheet" href="${webtxc}/css/public.css" />
+		<script type="text/javascript" src="${webtxc}/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="${webtxc}/js/tab.js"></script>
+
+	</head>
+	<style>
+		.b_nav {
+			display: none
+		}
+	</style>
+
+	<body>
+		<%@include file="/WEB-INF/jsp/common/top.jsp"%>
+
+		<div class="help_center">
+			<div class="title cf">
+				<ul class="title-list fr cf ">
+					<li class="on">我是需求者</li>
+					<li>我是服务者</li>
+
+				</ul>
+			</div>
+			<div class="product-wrap">
+				<!--案例1-->
+				<div class="product show">
+
+					<div class="content_help">
+
+						<div class="help_main cle">
+							<div class="fl help_left">
+								<div class="titles">
+									<h4>我是需求者</h4>
+								</div>
+								<ul class="menu" id="left_bar">
+									<li class="col">
+										<h3>入驻相关</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=311">入驻条件</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=312">服务商入驻流程</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>服务管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=321">发布服务</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=322">审核流程</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=323">服务发布规范</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>交易管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=331">如何预约</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=332">如何付款</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>财务管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=341">资金管理</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=342">充值提现</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>账户管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=351">资料修改</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=352">修改支付密码</a>
+											</li>
+
+										</ul>
+									</li>
+								</ul>
+							</div>
+							<div class="help_right">
+								<h3 class="help_title">入驻条件</h3>
+								<div class="help_content">
+									<p>想要成为服务商，首先需要注册账号进行实名认证，然后申请成为服务商。成为服务商必须拥有自己的公司。并入驻擅长的类目并发布自己的服务！</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!--案例2-->
+				<div class="product">
+
+					<div class="content_help">
+
+						<div class="help_main cle">
+							<div class="fl help_left">
+								<div class="titles">
+									<h4>我是服务者</h4>
+								</div>
+								<ul class="menu" id="left_bar">
+									<li class="col">
+										<h3>入驻相关</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=311">入驻条件</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=312">服务商入驻流程</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>服务管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=321">发布服务</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=322">审核流程</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=323">服务发布规范</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>交易管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=331">如何预约</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=332">如何付款</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>财务管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=341">资金管理</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=342">充值提现</a>
+											</li>
+
+										</ul>
+									</li>
+									<li class="col">
+										<h3>账户管理</h3>
+										<ul class="child_nav">
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=351">资料修改</a>
+											</li>
+											<li>
+												<a href="${webtxc}/goodsinfo/home/direct.html?stId=352">修改支付密码</a>
+											</li>
+
+										</ul>
+									</li>
+								</ul>
+							</div>
+							<div class="help_right">
+								<h3 class="help_title">审核流程</h3>
+								<div class="help_content">
+									<p>想要成为服务商，首先需要注册账号进行实名认证，然后申请成为服务商。成为服务商必须拥有自己的公司。并入驻擅长的类目并发布自己的服务！</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+			<!--end.product-wrap-->
+		</div>
+
+		<%@include file="/WEB-INF/jsp/common/bottom.jsp"%>
+
+	</body>
+
+</html>

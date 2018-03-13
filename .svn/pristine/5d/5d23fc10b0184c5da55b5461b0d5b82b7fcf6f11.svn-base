@@ -1,0 +1,165 @@
+package com.jero.esc.service.impl.details;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jero.esc.common.po.JsonResult;
+import com.jero.esc.common.utils.StringUtil;
+import com.jero.esc.common.utils.UUIDUtil;
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import com.jero.esc.common.weixin.WeiXinMain;
+import com.jero.esc.common.weixin.result.TransfersResult;
+import com.jero.esc.mapper.details.AccontPaymentDetailsMapper;
+import com.jero.esc.mapper.userinfo.AccountInfoMapper;
+import com.jero.esc.po.details.AccontPaymentDetails;
+import com.jero.esc.po.userinfo.AccountInfo;
+import com.jero.esc.po.userinfo.LogInfo;
+import com.jero.esc.service.details.IAccountPaymentDetailsService;
+import com.jero.esc.service.userinfo.IAccountInfoService;
+import com.jero.esc.vo.userinfo.AccountVo;
+
+@Service
+public class AccountPaymentDetailsService implements IAccountPaymentDetailsService{
+	@Autowired
+	private AccontPaymentDetailsMapper accontPaymentDetailsMapper;
+	@Autowired
+	private IAccountInfoService accountInfoService;
+	@Autowired
+	private AccountInfoMapper accountInfoMapper;
+	
+	
+	@Override
+	public Integer queryAccountAmountById(String logId,String startTime,String endTime) {
+		Integer comein = accontPaymentDetailsMapper.selectAccountInAmountById(logId,startTime,endTime);
+		Integer comeout = accontPaymentDetailsMapper.selectAccountInAmountById(logId,startTime,endTime);
+		return comein - comeout;
+	}
+
+	@Override
+	public List<AccontPaymentDetails> queryAccountIOByIdYear(RowBounds rb,String logId, String startTime, String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIOByIdYear(rb,logId, startTime, endTime);
+	}
+
+	@Override
+	public List<AccontPaymentDetails> queryAccountIOByIdMonth(RowBounds rb,String logId, String startTime, String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIOByIdMonth(rb,logId, startTime, endTime);
+	}
+
+	@Override
+	public List<AccontPaymentDetails> queryAccountIOByIdDay(RowBounds rb,String logId, String startTime, String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIOByIdDay(rb,logId, startTime, endTime);
+	}
+
+	@Override
+	public HashMap<String, Object> queryAccountIODetailsById(RowBounds rb,String logId,String startTime,String endTime) {
+		List<AccountInfo> accList = accountInfoService.queryBalanceById(logId);
+		List<AccontPaymentDetails> apdList =  accontPaymentDetailsMapper.selectAccountIODetailsById(rb,logId,startTime,endTime);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("accList", accList);
+		map.put("apdList", apdList);
+		return map;
+	}
+
+	@Override
+	public Integer queryAccountIODetailsCountById(String logId,String startTime,String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIODetailsCountById(logId,startTime,endTime);
+	}
+
+	@Override
+	public Integer queryAccountIOCountByIdYear(String logId, String startTime, String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIOCountByIdYear(logId, startTime, endTime);
+	}
+
+	@Override
+	public Integer queryAccountIOCountByIdMonth(String logId, String startTime, String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIOCountByIdMonth(logId, startTime, endTime);
+	}
+
+	@Override
+	public Integer queryAccountIOCountByIdDay(String logId, String startTime, String endTime) {
+		return accontPaymentDetailsMapper.selectAccountIOCountByIdDay(logId, startTime, endTime);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Integer addAccountIODetails(AccontPaymentDetails accontPaymentDetails) throws Exception{
+		accontPaymentDetails.setApdCreatetime(new Date());
+		accontPaymentDetails.setApdId(UUIDUtil.getUUID());
+		Integer res = accontPaymentDetailsMapper.insertSelective(accontPaymentDetails);
+		if(res>0){
+			return res;
+		}
+		throw new ExceptionWithMessage("添加失败",null);
+	}
+
+	@Override
+	public JsonResult withDraw(LogInfo logInfo, String money) {
+		try {
+			if(StringUtil.isNotEmpty(logInfo.getLogId())){
+				if(StringUtil.isInteger(money)){
+					Map<String, String> parameter = new HashMap<String, String>();
+					parameter.put("money", money);
+					parameter.put("logId", logInfo.getLogId());
+					AccountVo accountDrawVo = accountInfoMapper.selectByLogId(logInfo.getLogId());
+					System.out.println("<<<<判断余额开始>>>>>>>");
+					if(accountDrawVo==null){
+						return new JsonResult(false, "用户不存在", null);
+					}else{
+						if(accountDrawVo.getAccBalance() - Integer.parseInt(money) < 0){
+							return new JsonResult(false, "余额不足", null);
+						}
+					}
+					System.out.println("<<<<判断余额结束>>>>>>>");
+					//调用微信企业支付
+//					WeixinDraw weixin = new WeixinDraw();
+//					Map<String, String> map = weixin.transfer("o5tP4v0LMeCnKzawLbuiAmDd8pAA", Integer.parseInt(money+"00"), "近到家公众平台提现", DateUtil.getPayMentId());
+//						WeixinDraw weixin = new WeixinDraw();
+//						Map<String, String> map = weixin.transfer(openId, Integer.valueOf(money+"00"), "近到家公众平台提现", DateUtil.getPayMentId());
+						TransfersResult result = WeiXinMain.sendTransfersXml(logInfo.getOpenId(), money+"00");
+						if("SUCCESS".equals(result.getResult_code())){
+//						if(true){
+//						if("SUCCESS".equals(map.get("state"))){
+							Integer i = accontPaymentDetailsMapper.withDraw(parameter);
+							System.out.println("提现结束>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        " + i);
+							if(i > 0){
+								//添加消费记录
+								AccontPaymentDetails accontPaymentDetails = new AccontPaymentDetails();
+								accontPaymentDetails.setApdCreatetime(new Date());
+								accontPaymentDetails.setApdId(UUIDUtil.getUUID());
+								accontPaymentDetails.setApdAdminorderno(result.getPartner_trade_no());
+								accontPaymentDetails.setApdAmount(Float.valueOf(money));
+								accontPaymentDetails.setApdIotype(2);
+								accontPaymentDetails.setApdPaytype(2);
+								accontPaymentDetails.setLogId(logInfo.getLogId());
+								Integer res = accontPaymentDetailsMapper.insertSelective(accontPaymentDetails);	
+								if(res > 0){
+									return new JsonResult(true, "提现成功", result);
+								}else{
+									return new JsonResult(false, "系统异常,添加交易记录失败", null);
+								}
+							}else{
+								return new JsonResult(false, "提现失败", result);
+							}
+						}else{
+							return new JsonResult(false, "微信付款失败,请检查网络", result);
+						}
+			
+				}else{
+					return new JsonResult(false, "请输入正确的金额", null);
+				}
+			}else{
+				return new JsonResult(false, "登录超时", null);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+			return new JsonResult(false, "系统异常", null);
+		}
+	}
+}

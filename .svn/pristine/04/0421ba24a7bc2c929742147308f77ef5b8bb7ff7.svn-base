@@ -1,0 +1,268 @@
+package com.jero.esc.service.impl.userinfo;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jero.esc.common.po.JsonResult;
+import com.jero.esc.common.utils.StringUtil;
+import com.jero.esc.common.utils.UUIDUtil;
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import com.jero.esc.common.weixin.WeiXinMain;
+import com.jero.esc.common.weixin.result.RedPacketResult;
+import com.jero.esc.mapper.checkinfo.PersonChecknameMapper;
+import com.jero.esc.mapper.details.AccontPaymentDetailsMapper;
+import com.jero.esc.mapper.userinfo.LogInfoMapper;
+import com.jero.esc.po.bizinfo.RecommendPtop;
+import com.jero.esc.po.checkinfo.PersonCheckname;
+import com.jero.esc.po.details.AccontPaymentDetails;
+import com.jero.esc.po.userinfo.AccountInfo;
+import com.jero.esc.po.userinfo.FenXiao;
+import com.jero.esc.po.userinfo.LogInfo;
+import com.jero.esc.po.userinfo.UserInfo;
+import com.jero.esc.service.bizinfo.IRecommendPtopService;
+import com.jero.esc.service.userinfo.IAccountInfoService;
+import com.jero.esc.service.userinfo.ILogInfoService;
+import com.jero.esc.service.userinfo.IUserInfoService;
+
+/**
+ * @copyright 上善云图信息技术有限公司
+ * @author zqy
+ * @version v1.0  （版本号）
+ * @date 2016年12月8日
+ * @description 账号信息
+ */
+@Service
+public class LogInfoService implements ILogInfoService{
+	@Autowired
+	private AccontPaymentDetailsMapper accontPaymentDetailsMapper;
+	@Autowired
+	private LogInfoMapper logInfoMapper;
+	@Autowired
+	private IAccountInfoService accountInfoService;
+	@Autowired
+	private IUserInfoService userInfoService;
+	@Autowired
+	private IRecommendPtopService recommendPtopService;
+	@Autowired
+	private PersonChecknameMapper personChecknameMapper;
+	
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 查询手机是否注册
+	 * @param logCell
+	 * @return LogInfo
+	 * @method selectLogInfoLogCell
+	 */
+	@Override
+	public Integer selectLogInfoLogCell(String logCell) {
+		return logInfoMapper.selectLogInfoLogCell(logCell);
+	}
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 查询昵称是否注册过
+	 * @param logName
+	 * @return Integer
+	 * @method selectLogInfoLogName
+	 */
+	@Override
+	public Integer selectLogInfoLogName(String logName) {
+		return logInfoMapper.selectLogInfoLogName(logName);
+	}
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 用户注册和增加账户
+	 * @param logInfo
+	 * @return Integer
+	 * @throws ExceptionWithMessage 
+	 * @method addLogInfo
+	 */
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public JsonResult addLogInfo(LogInfo logInfo, String isWeiXin) throws ExceptionWithMessage {
+		if(logInfo.getLogComment()!=null&&logInfo.getLogComment()!="")
+		{
+			RecommendPtop record=new RecommendPtop();
+			record.setRptpPresenter(logInfo.getLogComment());
+			record.setRptpPresentee(logInfo.getLogId());
+			try {
+				recommendPtopService.add(record);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		JsonResult jr = new JsonResult();
+		Integer resAddLogInfo = this.addSelective(logInfo);
+		AccountInfo accountInfo = new AccountInfo();
+		accountInfo.setAccId(UUIDUtil.getUUID());
+		accountInfo.setLogId(logInfo.getLogId());
+		accountInfo.setAccBalance(0f);
+		accountInfo.setAccBlockbalance(0f);
+		Integer resAddAccountInfo = accountInfoService.addSelective(accountInfo);
+		UserInfo userInfo = new UserInfo();
+		userInfo.setUserId(UUIDUtil.getUUID());
+		userInfo.setLogId(logInfo.getLogId());
+		userInfo.setUserPhoto(logInfo.getUserPhoto()!=null?logInfo.getUserPhoto():"/images/moren.png");
+		Integer resAddUserinfo = userInfoService.addSelective(userInfo);
+		//取消实名认证，若需加上实名认证  需去掉这部分代码
+		//实现方式：注册时直接添加实名信息 身份证号 真实姓名在服务商认证时添加
+		PersonCheckname personCheckname=new PersonCheckname();
+		personCheckname.setLogId(logInfo.getLogId());
+		personCheckname.setPcnCreatetime(new Date());
+	    personCheckname.setPcnId(UUIDUtil.getUUID());
+	    personCheckname.setPcnState(2);
+	    personCheckname.setPcnIdnumber("123456789");
+	    personChecknameMapper.insertSelective(personCheckname);
+	    //END
+		if(resAddLogInfo > 0 && resAddAccountInfo > 0 && resAddUserinfo > 0){
+			System.out.println("isWeiXin>>>>>>>>>>>>>>>>"+isWeiXin);
+			System.out.println("openid>>>>>>>>>>>>>>>>"+logInfo.getOpenId());
+			if("1".equals(isWeiXin)){
+				System.out.println("发送红包开始:>>>>>>>>>>>"+logInfo.getOpenId());
+				//发送红包
+				RedPacketResult result = WeiXinMain.sendRedPacketXml(logInfo.getOpenId());
+				if("SUCCESS".equals(result.getResult_code())){
+					System.out.println(result.getResult_code());
+					System.out.println("红包发送成功:>>>>>>>>>>>>"+logInfo.getOpenId());
+				}else{
+					System.out.println("红包发送失败:>>>>>>>>>>>>"+logInfo.getOpenId());
+				}
+			}
+			addExtension(logInfo);
+			jr.setSuccess(true);
+			jr.setErrorMsg("注册成功");
+			return jr;
+		}
+		jr.setSuccess(false);
+		jr.setErrorMsg("注册异常");
+		jr.setErrorCode("1");
+		throw new ExceptionWithMessage(jr);
+	}
+	
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 登录验证
+	 * @param logInfo
+	 * @return LogInfo
+	 * @method queryLogInfoLogin
+	 */
+	@Override
+	public LogInfo queryLogInfoLogin(LogInfo logInfo) {
+		return logInfoMapper.selectLogInfoLogin(logInfo);
+	}
+
+	@Override
+	public Integer removeByPrimaryKey(String logId) {
+		return logInfoMapper.deleteByPrimaryKey(logId);
+	}
+
+	@Override
+	public Integer add(LogInfo record) {
+		return logInfoMapper.insert(record);
+	}
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 用户注册
+	 * @param logInfo
+	 * @return Integer
+	 * @method addSelective
+	 */
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public Integer addSelective(LogInfo record) {
+		return logInfoMapper.insertSelective(record);
+	}
+
+	@Override
+	public LogInfo queryByPrimaryKey(String logId) {
+		return logInfoMapper.selectByPrimaryKey(logId);
+	}
+
+	@Override
+	public Integer modifyByPrimaryKeySelective(LogInfo record) {
+		return logInfoMapper.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public Integer modifyByPrimaryKey(LogInfo record) {
+		return logInfoMapper.updateByPrimaryKey(record);
+	}
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 忘记密码修改
+	 * @param LogInfo
+	 * @return Integer
+	 * @method addSelective
+	 */
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public Integer modifyPassByCell(LogInfo record) {
+		return logInfoMapper.updatePassByCell(record);
+	}
+	@Override
+	public LogInfo refreshSession(LogInfo logInfo) {
+		// TODO Auto-generated method stub
+		return logInfoMapper.selectLogInfoByLogId(logInfo);
+	}
+
+	@Override
+	public Integer addExtension(LogInfo logInfo) {
+		try {
+			System.out.println("查询分销开始");
+			//查询是否存在推广关系
+			if(StringUtil.isNotEmpty(logInfo.getOpenId())){
+				FenXiao fenXiao = logInfoMapper.selectFenXiao(logInfo);
+				System.out.println("判断分销       :" +fenXiao==null);
+				System.out.println("parentId :"+fenXiao.getParentId());
+				System.out.println("parentId :"+fenXiao.getOpenId());
+				System.out.println("查询分销结束");
+				
+				if(fenXiao != null && StringUtil.isNotEmpty(fenXiao.getParentId())){
+					logInfo.setParentId(fenXiao.getParentId());
+					//获取当前parentId 推广的个数
+					Integer count = logInfoMapper.selectExtensionByCount(logInfo);
+					System.out.println("推广个数>>>>>>>>>" + count);
+					//每推广10个用户发20块
+					if(count % 10 == 0 && count != 0){
+						Map<String, String> parameter = new HashMap<String, String>();
+						parameter.put("money", "-20");
+						parameter.put("logId", logInfo.getParentId());
+						//修改用户余额
+						Integer i = accontPaymentDetailsMapper.withDraw(parameter);
+						if(i > 0){
+							System.out.println("添加消费记录开始");
+							//添加消费记录
+							AccontPaymentDetails accontPaymentDetails = new AccontPaymentDetails();
+							accontPaymentDetails.setApdCreatetime(new Date());
+							accontPaymentDetails.setApdId(UUIDUtil.getUUID());
+							accontPaymentDetails.setApdAdminorderno(null);
+							accontPaymentDetails.setApdAmount(Float.valueOf(20));
+							accontPaymentDetails.setApdIotype(1);
+							accontPaymentDetails.setApdPaytype(2);
+							accontPaymentDetails.setLogId(logInfo.getParentId());
+							accontPaymentDetailsMapper.insertSelective(accontPaymentDetails);	
+						}
+					}
+					System.out.println("添加推广关系开始");
+					logInfoMapper.addExtension(logInfo);
+					logInfoMapper.deleteFenXiao(fenXiao);
+					return 0;
+				}
+			}
+		} catch (Exception e) {
+			return 0 ;
+		}
+		return 0;
+	}
+}

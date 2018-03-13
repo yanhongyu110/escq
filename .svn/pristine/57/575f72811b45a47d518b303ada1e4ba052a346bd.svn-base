@@ -1,0 +1,61 @@
+package com.jero.esc.controller.userinfo;
+
+
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSON;
+import com.jero.esc.common.controller.BaseController;
+import com.jero.esc.mapper.goodsinfo.ServiceInfoMapper;
+import com.jero.esc.mapper.userinfo.ProviderInfoMapper;
+import com.jero.esc.vo.userinfo.ProviderVo;
+import com.jero.esc.vo.userinfo.ServiceVo;
+
+@Controller
+@RequestMapping("/provider")
+public class ProviderController extends BaseController{
+
+    @Autowired
+    private ProviderInfoMapper providerInfoMapper;
+    @Autowired
+    private ServiceInfoMapper serviceInfoMapper;
+
+    //推荐服务商
+    @ResponseBody
+    @RequestMapping(value = "/recommend",produces = "text/html;charset=UTF-8")
+    public  String recommend(){
+        List<ProviderVo> providerVos = providerInfoMapper.selectProviderByOrder(new RowBounds(0, 5),"PI_MEETNUM DESC",null);
+        return JSON.toJSONString(providerVos);
+    }
+    
+  //推荐服务商
+  @Cacheable(value = "homeChae", key = "'providerindexService:'")
+  @CachePut(value = "homeChae", key = "'providerindexService:'")
+    @ResponseBody
+    @RequestMapping(value = "/indexService",produces = "text/html;charset=UTF-8")
+    public  String indexService(HttpSession session){
+    	String point = (String)session.getAttribute("point");
+		String lat = "29.608069";
+		String lng = "106.374488";
+		if(point!=null){
+			String[] points = point.split(",");
+			if(points!=null && points.length>0){
+				lat = points[1];
+				lng = points[0];
+			}
+		}
+        List<ServiceVo> serList = serviceInfoMapper.selectIndexService(lng,lat);
+        return JSON.toJSONString(serList);
+    }
+
+
+}

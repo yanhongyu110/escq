@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.bizinfo.RecommendPtopMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.vo.bizinfo.RecommendProvider">
+    <id column="RPTP_PRESENTER" jdbcType="VARCHAR" property="rptpPresenter" />
+    <id column="RPTP_PRESENTEE" jdbcType="VARCHAR" property="rptpPresentee" />
+    <result column="PI_ID" jdbcType="VARCHAR" property="piId" />
+    <result column="PI_AREA" jdbcType="VARCHAR" property="piArea" />
+    <result column="PI_PHOTO" jdbcType="VARCHAR" property="piPhoto" />
+    <result column="PI_KEYWORDS" jdbcType="VARCHAR" property="piKeywords" />
+    <result column="PI_REMARK" jdbcType="VARCHAR" property="piRemark" />
+    <result column="PI_REALNAME" jdbcType="VARCHAR" property="piRealname" />
+    <result column="PI_POSITION" jdbcType="VARCHAR" property="piPosition" />
+    <result column="PI_WORKYEAR" jdbcType="INTEGER" property="piWorkyear" />
+    <result column="PI_EMAIL" jdbcType="VARCHAR" property="piEmail" />
+    <result column="PI_CELL" jdbcType="VARCHAR" property="piCell" />
+    <result column="PI_MEETNUM" jdbcType="INTEGER" property="piMeetnum" />
+    <result column="PI_DEALNUM" jdbcType="INTEGER" property="piDealnum" />
+    <result column="PI_RESPONSETIME" jdbcType="INTEGER" property="piResponsetime" />
+    <result column="PI_MARK" jdbcType="REAL" property="piMark" />
+  </resultMap>
+  <delete id="delete" parameterType="com.jero.esc.po.bizinfo.RecommendPtop">
+    delete from recommend_provider_to_provider
+    where RPTP_PRESENTER = #{rptpPresenter,jdbcType=VARCHAR}
+      and RPTP_PRESENTEE = #{rptpPresentee,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.bizinfo.RecommendPtop">
+    insert into recommend_provider_to_provider (RPTP_PRESENTER, RPTP_PRESENTEE)
+    values (#{rptpPresenter,jdbcType=VARCHAR}, #{rptpPresentee,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.bizinfo.RecommendPtop">
+    insert into recommend_provider_to_provider
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rptpPresenter != null">
+        RPTP_PRESENTER,
+      </if>
+      <if test="rptpPresentee != null">
+        RPTP_PRESENTEE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rptpPresenter != null">
+        #{rptpPresenter,jdbcType=VARCHAR},
+      </if>
+      <if test="rptpPresentee != null">
+        #{rptpPresentee,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByPresenter" parameterType="String" resultMap="BaseResultMap">
+  	SELECT
+		recommend_provider_to_provider.RPTP_PRESENTER,
+		recommend_provider_to_provider.RPTP_PRESENTEE,
+		provider_info.PI_ID,
+		provider_info.PI_AREA,
+		provider_info.PI_PHOTO,
+		provider_info.PI_KEYWORDS,
+		provider_info.PI_REMARK,
+		provider_info.PI_REALNAME,
+		provider_info.PI_POSITION,
+		provider_info.PI_WORKYEAR,
+		provider_info.PI_EMAIL,
+		provider_info.PI_CELL,
+		provider_info.PI_MEETNUM,
+		provider_info.PI_DEALNUM,
+		provider_info.PI_RESPONSETIME,
+		provider_info.PI_MARK
+	FROM
+	recommend_provider_to_provider
+	INNER JOIN provider_info ON recommend_provider_to_provider.RPTP_PRESENTEE = provider_info.LOG_ID
+	where RPTP_PRESENTER = #{rptpPresenter,jdbcType=VARCHAR}
+  </select>
+   <select id="countByCon"  parameterType="com.jero.esc.po.bizinfo.RecommendPtop" resultType="java.lang.Integer">
+  		select count(*) from recommend_provider_to_provider 
+  		 <where>
+        	<if test="rptpPresenter!=null and rptpPresenter!=''">
+                AND recommend_provider_to_provider.RPTP_PRESENTER= #{rptpPresenter,jdbcType=VARCHAR}
+            </if>
+            <if test="rptpPresentee!=null and rptpPresentee!=''">
+                AND recommend_provider_to_provider.RPTP_PRESENTEE= #{rptpPresentee,jdbcType=VARCHAR}
+            </if>
+        </where>
+  
+  </select>
+  <select id="selectByPresentee" parameterType="String" resultMap="BaseResultMap">
+  		SELECT
+		recommend_provider_to_provider.RPTP_PRESENTER,
+		recommend_provider_to_provider.RPTP_PRESENTEE,
+		provider_info.PI_ID,
+		provider_info.PI_AREA,
+		provider_info.PI_PHOTO,
+		provider_info.PI_KEYWORDS,
+		provider_info.PI_REMARK,
+		provider_info.PI_REALNAME,
+		provider_info.PI_POSITION,
+		provider_info.PI_WORKYEAR,
+		provider_info.PI_EMAIL,
+		provider_info.PI_CELL,
+		provider_info.PI_MEETNUM,
+		provider_info.PI_DEALNUM,
+		provider_info.PI_RESPONSETIME,
+		provider_info.PI_MARK
+	FROM
+	recommend_provider_to_provider
+	INNER JOIN provider_info ON recommend_provider_to_provider.RPTP_PRESENTER = provider_info.LOG_ID
+	where RPTP_PRESENTEE = #{rptpPresentee,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.PayDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.PayDetails">
+    <id column="PAYD_ID" jdbcType="VARCHAR" property="paydId" />
+    <result column="ORDER_ID" jdbcType="VARCHAR" property="orderId" />
+    <result column="PAYD_PAYTIME" jdbcType="TIMESTAMP" property="paydPaytime" />
+    <result column="PAYD_PAYER" jdbcType="VARCHAR" property="paydPayer" />
+    <result column="PAYD_RECEIVER" jdbcType="VARCHAR" property="paydReceiver" />
+    <result column="PAYD_PAYAMMOUNT" jdbcType="REAL" property="paydPayammount" />
+    <result column="PAYD_POINTS" jdbcType="REAL" property="paydPoints" />
+    <result column="PAYD_STEP" jdbcType="VARCHAR" property="paydStep" />
+    <result column="PAYD_COMMENT" jdbcType="VARCHAR" property="paydComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    PAYD_ID, ORDER_ID, PAYD_PAYTIME, PAYD_PAYER, PAYD_RECEIVER, PAYD_PAYAMMOUNT, PAYD_POINTS, 
+    PAYD_STEP, PAYD_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pay_details
+    where PAYD_ID = #{paydId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pay_details
+    where PAYD_ID = #{paydId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.PayDetails">
+    insert into pay_details (PAYD_ID, ORDER_ID, PAYD_PAYTIME, 
+      PAYD_PAYER, PAYD_RECEIVER, PAYD_PAYAMMOUNT, 
+      PAYD_POINTS, PAYD_STEP, PAYD_COMMENT
+      )
+    values (#{paydId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{paydPaytime,jdbcType=TIMESTAMP}, 
+      #{paydPayer,jdbcType=VARCHAR}, #{paydReceiver,jdbcType=VARCHAR}, #{paydPayammount,jdbcType=REAL}, 
+      #{paydPoints,jdbcType=REAL}, #{paydStep,jdbcType=VARCHAR}, #{paydComment,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.PayDetails">
+    insert into pay_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="paydId != null">
+        PAYD_ID,
+      </if>
+      <if test="orderId != null">
+        ORDER_ID,
+      </if>
+      <if test="paydPaytime != null">
+        PAYD_PAYTIME,
+      </if>
+      <if test="paydPayer != null">
+        PAYD_PAYER,
+      </if>
+      <if test="paydReceiver != null">
+        PAYD_RECEIVER,
+      </if>
+      <if test="paydPayammount != null">
+        PAYD_PAYAMMOUNT,
+      </if>
+      <if test="paydPoints != null">
+        PAYD_POINTS,
+      </if>
+      <if test="paydStep != null">
+        PAYD_STEP,
+      </if>
+      <if test="paydComment != null">
+        PAYD_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="paydId != null">
+        #{paydId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="paydPaytime != null">
+        #{paydPaytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paydPayer != null">
+        #{paydPayer,jdbcType=VARCHAR},
+      </if>
+      <if test="paydReceiver != null">
+        #{paydReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="paydPayammount != null">
+        #{paydPayammount,jdbcType=REAL},
+      </if>
+      <if test="paydPoints != null">
+        #{paydPoints,jdbcType=REAL},
+      </if>
+      <if test="paydStep != null">
+        #{paydStep,jdbcType=VARCHAR},
+      </if>
+      <if test="paydComment != null">
+        #{paydComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.PayDetails">
+    update pay_details
+    <set>
+      <if test="orderId != null">
+        ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="paydPaytime != null">
+        PAYD_PAYTIME = #{paydPaytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paydPayer != null">
+        PAYD_PAYER = #{paydPayer,jdbcType=VARCHAR},
+      </if>
+      <if test="paydReceiver != null">
+        PAYD_RECEIVER = #{paydReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="paydPayammount != null">
+        PAYD_PAYAMMOUNT = #{paydPayammount,jdbcType=REAL},
+      </if>
+      <if test="paydPoints != null">
+        PAYD_POINTS = #{paydPoints,jdbcType=REAL},
+      </if>
+      <if test="paydStep != null">
+        PAYD_STEP = #{paydStep,jdbcType=VARCHAR},
+      </if>
+      <if test="paydComment != null">
+        PAYD_COMMENT = #{paydComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PAYD_ID = #{paydId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.PayDetails">
+    update pay_details
+    set ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      PAYD_PAYTIME = #{paydPaytime,jdbcType=TIMESTAMP},
+      PAYD_PAYER = #{paydPayer,jdbcType=VARCHAR},
+      PAYD_RECEIVER = #{paydReceiver,jdbcType=VARCHAR},
+      PAYD_PAYAMMOUNT = #{paydPayammount,jdbcType=REAL},
+      PAYD_POINTS = #{paydPoints,jdbcType=REAL},
+      PAYD_STEP = #{paydStep,jdbcType=VARCHAR},
+      PAYD_COMMENT = #{paydComment,jdbcType=VARCHAR}
+    where PAYD_ID = #{paydId,jdbcType=VARCHAR}
+  </update>
+</mapper>

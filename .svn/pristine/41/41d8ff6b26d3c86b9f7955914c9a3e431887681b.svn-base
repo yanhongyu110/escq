@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.pubinfo.AdvertisePositionMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.pubinfo.AdvertisePosition">
+    <id column="AP_ID" jdbcType="VARCHAR" property="apId" />
+    <result column="AP_IMAGE" jdbcType="VARCHAR" property="apImage" />
+    <result column="AP_URL" jdbcType="VARCHAR" property="apUrl" />
+    <result column="AP_TITLE" jdbcType="VARCHAR" property="apTitle" />
+    <result column="AP_POSITION" jdbcType="VARCHAR" property="apPosition" />
+    <result column="AP_CREATE_TIME" jdbcType="TIMESTAMP" property="apCreateTime" />
+    <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" />
+    <result column="AP_ISDELETE" jdbcType="BIT" property="apIsdelete" />
+    <result column="AP_COMMNET" jdbcType="VARCHAR" property="apCommnet" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    AP_ID, AP_IMAGE, AP_URL, AP_TITLE, AP_POSITION, AP_CREATE_TIME, ADMIN_ID, AP_ISDELETE, 
+    AP_COMMNET
+  </sql>
+  <select id="selectAdByPosition" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from advertise_position
+    where AP_POSITION = #{apPosition}
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from advertise_position
+    where AP_ID = #{apId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from advertise_position
+    where AP_ID = #{apId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.pubinfo.AdvertisePosition">
+    insert into advertise_position (AP_ID, AP_IMAGE, AP_URL, 
+      AP_TITLE, AP_POSITION, AP_CREATE_TIME, 
+      ADMIN_ID, AP_ISDELETE, AP_COMMNET
+      )
+    values (#{apId,jdbcType=VARCHAR}, #{apImage,jdbcType=VARCHAR}, #{apUrl,jdbcType=VARCHAR}, 
+      #{apTitle,jdbcType=VARCHAR}, #{apPosition,jdbcType=VARCHAR}, #{apCreateTime,jdbcType=TIMESTAMP}, 
+      #{adminId,jdbcType=VARCHAR}, #{apIsdelete,jdbcType=BIT}, #{apCommnet,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.pubinfo.AdvertisePosition">
+    insert into advertise_position
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="apId != null">
+        AP_ID,
+      </if>
+      <if test="apImage != null">
+        AP_IMAGE,
+      </if>
+      <if test="apUrl != null">
+        AP_URL,
+      </if>
+      <if test="apTitle != null">
+        AP_TITLE,
+      </if>
+      <if test="apPosition != null">
+        AP_POSITION,
+      </if>
+      <if test="apCreateTime != null">
+        AP_CREATE_TIME,
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="apIsdelete != null">
+        AP_ISDELETE,
+      </if>
+      <if test="apCommnet != null">
+        AP_COMMNET,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="apId != null">
+        #{apId,jdbcType=VARCHAR},
+      </if>
+      <if test="apImage != null">
+        #{apImage,jdbcType=VARCHAR},
+      </if>
+      <if test="apUrl != null">
+        #{apUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="apTitle != null">
+        #{apTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="apPosition != null">
+        #{apPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="apCreateTime != null">
+        #{apCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="apIsdelete != null">
+        #{apIsdelete,jdbcType=BIT},
+      </if>
+      <if test="apCommnet != null">
+        #{apCommnet,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.pubinfo.AdvertisePosition">
+    update advertise_position
+    <set>
+      <if test="apImage != null">
+        AP_IMAGE = #{apImage,jdbcType=VARCHAR},
+      </if>
+      <if test="apUrl != null">
+        AP_URL = #{apUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="apTitle != null">
+        AP_TITLE = #{apTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="apPosition != null">
+        AP_POSITION = #{apPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="apCreateTime != null">
+        AP_CREATE_TIME = #{apCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="apIsdelete != null">
+        AP_ISDELETE = #{apIsdelete,jdbcType=BIT},
+      </if>
+      <if test="apCommnet != null">
+        AP_COMMNET = #{apCommnet,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AP_ID = #{apId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.pubinfo.AdvertisePosition">
+    update advertise_position
+    set AP_IMAGE = #{apImage,jdbcType=VARCHAR},
+      AP_URL = #{apUrl,jdbcType=VARCHAR},
+      AP_TITLE = #{apTitle,jdbcType=VARCHAR},
+      AP_POSITION = #{apPosition,jdbcType=VARCHAR},
+      AP_CREATE_TIME = #{apCreateTime,jdbcType=TIMESTAMP},
+      ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      AP_ISDELETE = #{apIsdelete,jdbcType=BIT},
+      AP_COMMNET = #{apCommnet,jdbcType=VARCHAR}
+    where AP_ID = #{apId,jdbcType=VARCHAR}
+  </update>
+</mapper>

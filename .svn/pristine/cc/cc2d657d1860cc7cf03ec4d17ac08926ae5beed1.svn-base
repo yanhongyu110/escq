@@ -1,0 +1,107 @@
+var rows = 10;
+var pageDiv = 'pageDiv';
+var clickSwitch = true;
+$(function() {
+	selectCommonAjax(1,1);
+    $('body').bind('touchmove', function(e) {
+        if($(window).scrollTop()>=$(document).height()-$(window).height()-50){
+            if(clickSwitch){
+                clickSwitch = false;
+                var img = "<img src='"+path+"/images/wap/1.gif' style='width:50px;height: 50px;'/>"
+                $(".loading").html(img);
+                var pageNo = ($("#ms"+$(".on").data('type')+" a.mymy").length)/10+1;
+                selectCommonAjax(pageNo,$(".on").data('type'));
+            }
+        }
+    });
+	/*$(".loading").click(function(){
+		if(clickSwitch){
+			clickSwitch = false;
+			$(".loading").text("加载中...");
+			var pageNo = ($("#ms"+$(".on").data('type')+" ul").length)/10+1;
+			selectCommonAjax(pageNo,$(".on").data('type'));
+		}
+	})*/
+});
+function selectCommonAjax(pageNo,flag) {
+	$.ajax({
+		type : "post",
+		url : path + '/wap/goodsinfo/service/queryServiceProviderByAjax.html',
+		dataType : 'json',
+		data : {
+			'flag' : flag,
+			'page' :pageNo
+		},
+		success : function(res) {
+			showDiv(res.list,pageNo,res.flag);
+			$('#myflag').val(res.flag)
+			if(res.list.length<10){
+				clickSwitch = false;
+				$(".loading").text("没有更多了");
+			}else{
+				clickSwitch = true;
+				$(".loading").text("");
+			}
+		}
+	});
+}
+function showDiv(res,pageNo,flag) {
+	if(pageNo==1 && res.length>0){
+		$("#ms"+flag).empty();
+	}
+	if(flag==1){
+		for ( var i in res) {
+			var arr = res[i];
+			var serviceTitle = arr['serviceTitle'];
+			var serviceSuccessnum = arr['serviceSuccessnum'];
+			var psetPrice = arr['psetPrice'];
+			var serviceMark=arr['serviceMark'];
+			var servicePic = arr['servicePic'];
+			var serviceId = arr['serviceId'];
+			var distance = arr['distance'];
+			if(distance>1000){
+				distance = distance/1000+"km";
+			}else{
+				distance = distance+"m";
+			}
+			var innerTitle = '<a class="mymy" href="'+path+'/wap/goodsinfo/service/queryServiceDetails.html?serviceId='+(""||serviceId)+'&priceType=1">'
+                +'<div class="service_list">'
+                +'<div class="service_list_img" style="width: 30%;background-position: center;background-size: cover;overflow: hidden;padding: 0px;margin-left:5%;height:80px;background-image: url(\''+path+servicePic+'\')">'
+                +'</div>'
+                +'<div class="service_list_title" style="padding: 0px;margin-left: 5%">'
+                +'<div class="l_title">'+(""||serviceTitle)+'</div>'
+                +'<div class="l_money">￥'+(""||psetPrice)+'</div>'
+                +'<div class="l_date">'+(""||serviceSuccessnum)+'人约见<i>'+(""||serviceMark)+'分</i></div>'
+                +'<div class="distans">'+(""||distance)+'</div>'
+                
+                +'</div>'
+                +'</div>'
+                +'</a>';
+			$("#ms"+flag).append(innerTitle);
+		}
+	}else if(flag==2){
+		for ( var i in res) {
+			var arr = res[i];
+			var piPhoto = arr['piPhoto'];
+			var piLogId = arr['logId']
+			var piPosition = arr['piPosition'];
+			var piAddr = arr['piAddr'];
+			var logName=arr['logName'];
+			var piDealnum = arr['piDealnum'];
+			var piId = arr['piId'];/*background-position: center;background-size: cover;overflow: hidden;padding: 0px;margin-left: 3%;background-image: url(\''+path+piPhoto+'\')"*/
+			var innerTitle = '<a class="mymy" href="'+path+'/wap/userinfo/providerdetails/preproviderdetails.html?logId='+(""||piLogId)+'">'
+                +'<div class="service_list">'
+                +'<div class="service_list_img" style="width:30%;" ><img src="'+path+piPhoto+'" />'
+                +'</div>'
+                +'<div class="service_list_title" >'
+                +'<h3 style="font-weight:600">'+(""||logName)+'<i>'+(""||piPosition)+'</i></h3>'
+                +'<div class="zishu" cut="30">'+(""||piAddr)+'</div>'
+                +''
+                +'<span style="padding-left:0">'+(""||piDealnum)+'人约见</span>'
+                +'</div>'
+                +'</div>'
+                +'</a>';
+			$("#ms"+flag).append(innerTitle);
+		}
+	}
+}

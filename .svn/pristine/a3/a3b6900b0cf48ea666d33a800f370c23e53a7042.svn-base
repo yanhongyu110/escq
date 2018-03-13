@@ -1,0 +1,90 @@
+package com.jero.esc.controller.wap.userinfo;
+
+import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import com.alibaba.fastjson.JSONObject;
+import com.jero.esc.common.controller.BaseController;
+import com.jero.esc.common.utils.JsonUtil;
+import com.jero.esc.common.utils.fastvalidate.FastValid;
+import com.jero.esc.po.userinfo.LogInfo;
+import com.jero.esc.po.userinfo.ProviderInfo;
+import com.jero.esc.po.userinfo.ServiceInfo;
+import com.jero.esc.service.userinfo.IProviderDetailsService;
+
+@Controller
+@RequestMapping(value="/wap/userinfo")
+public class ExpertDetailsController extends BaseController {
+	
+	@Autowired
+	IProviderDetailsService providerDetailsService;
+	
+	/**
+	 * 
+	 *<pre>
+	 *<b> 跳转个人主页 .</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-11-9 下午2:20:05
+	 *@param session
+	 *@param logId
+	 *@return
+	 *</pre>
+	 */
+	@RequestMapping("/providerdetails/preproviderdetails")
+	public ModelAndView preProvider(HttpSession session,@RequestParam("logId") String logId){
+		LogInfo logInfo = new LogInfo();
+		logInfo.setLogId(logId);
+		ProviderInfo info = providerDetailsService.queryProviderDetailsById(logInfo,null);
+		RowBounds rowBounds = getRowBounds(1, 6);
+		List<ServiceInfo> list = providerDetailsService.queryServiceInfoByCon(logInfo, rowBounds);
+		info.setServiceInfos(list);
+		int serviceNum=providerDetailsService.countServiceInfoByCon(logInfo);
+		info.setServiceNum(serviceNum);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/wap/userinfo/expertdetails");
+		System.out.println(JSONObject.toJSONString(info.getServiceInfos()));
+		modelAndView.addObject("info", info);
+		return modelAndView;
+	}
+	
+	@RequestMapping("/providerdetails/preProviderFromUser")
+	public ModelAndView preProviderFromUser(HttpSession session, String type){
+		LogInfo logInfo = new LogInfo();
+		if("true".equals(type)){
+			logInfo = retrievalCurrentUserInfo(session);
+		}
+		ProviderInfo info = providerDetailsService.queryProviderDetailsById(logInfo,null);
+		RowBounds rowBounds = getRowBounds(1, 6);
+		List<ServiceInfo> list = providerDetailsService.queryServiceInfoByCon(logInfo, rowBounds);
+		info.setServiceInfos(list);
+		int serviceNum=providerDetailsService.countServiceInfoByCon(logInfo);
+		info.setServiceNum(serviceNum);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/wap/userinfo/expertdetails");
+		System.out.println(JSONObject.toJSONString(info.getServiceInfos()));
+		modelAndView.addObject("info", info);
+		return modelAndView;
+	}
+	
+	@RequestMapping("/providerdetails/ajaxpaging")
+	public void AjaxPaging(HttpSession session,HttpServletResponse response ,@RequestParam("logId") String logId,Integer page){
+		if (FastValid.isEmp(page)){
+            page=2;
+        }
+		RowBounds rowBounds = getRowBounds(page, 6);
+		LogInfo logInfo = new LogInfo();
+		logInfo.setLogId(logId);
+		List<ServiceInfo> list = providerDetailsService.queryServiceInfoByCon(logInfo, rowBounds);
+		JsonUtil.printByJSON(response, list);
+	}
+	
+
+}

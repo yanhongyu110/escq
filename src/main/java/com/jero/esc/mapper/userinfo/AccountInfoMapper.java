@@ -1,0 +1,80 @@
+package com.jero.esc.mapper.userinfo;
+
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+
+import com.jero.esc.po.userinfo.AccountInfo;
+import com.jero.esc.vo.pay.AccountDrawVo;
+import com.jero.esc.vo.userinfo.AccountVo;
+
+public interface AccountInfoMapper {
+	/**
+	  *@version v1.0
+	  *@date 2016年12月8日
+	  *@description 账户管理 查询账户收支信息
+	  *@param rb
+	  *@param logId
+	  *@return List<AccountVo>
+	  *@method selectLogAccById
+	 */
+	List<AccountVo> selectLogAccById(RowBounds rb,String logId);
+	
+	/**
+	  *@version v1.0
+	  *@date 2016年12月8日
+	  *@description 查询收支信息条数
+	  *@param logId
+	  *@return Integer
+	  *@method selectLogAccCountById
+	 */
+	Integer selectLogAccCountById(String logId);
+	
+	/**
+	  *@version v1.0
+	  *@date 2016年12月12日
+	  *@description 根据ID查询用户的账户信息
+	  *@param logId
+	  *@return List<AccountInfo>
+	  *@method selectBalanceById
+	 */
+	List<AccountInfo> selectBalanceById(String logId);
+	
+    int deleteByPrimaryKey(String accId);
+
+    int insert(AccountInfo record);
+    /**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 增加账户信息
+	 * @param record
+	 * @return Integer
+	 * @method insertSelective
+	 */
+    int insertSelective(AccountInfo record);
+
+    AccountInfo selectByPrimaryKey(String accId);
+
+    int updateByPrimaryKeySelective(AccountInfo record);
+
+    int updateByPrimaryKey(AccountInfo record);
+
+	/**
+	*@version v1.0 
+	*@date 2016年12月14日
+	*@description 
+	*@param record
+	*@return int
+	*@method updateByLogId
+	 */
+	int updateByLogId(AccountInfo record);
+	
+	/**
+	*@description 通过LogId查询账号信息
+	*@return
+	*@return AccountInfo
+	*@method selectByLogId
+	 */
+	AccountVo selectByLogId(String LogId); 	
+	
+}

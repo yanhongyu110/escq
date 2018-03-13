@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.BackgroundHandleLogMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.BackgroundHandleLog">
+    <id column="BHL_ID" jdbcType="VARCHAR" property="bhlId" />
+    <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" />
+    <result column="BHL_TIME" jdbcType="TIMESTAMP" property="bhlTime" />
+    <result column="BHL_CONTENT" jdbcType="VARCHAR" property="bhlContent" />
+    <result column="BHL_COMMENT" jdbcType="VARCHAR" property="bhlComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    BHL_ID, ADMIN_ID, BHL_TIME, BHL_CONTENT, BHL_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from background_handle_log
+    where BHL_ID = #{bhlId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from background_handle_log
+    where BHL_ID = #{bhlId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.BackgroundHandleLog">
+    insert into background_handle_log (BHL_ID, ADMIN_ID, BHL_TIME, 
+      BHL_CONTENT, BHL_COMMENT)
+    values (#{bhlId,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR}, #{bhlTime,jdbcType=TIMESTAMP}, 
+      #{bhlContent,jdbcType=VARCHAR}, #{bhlComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.BackgroundHandleLog">
+    insert into background_handle_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bhlId != null">
+        BHL_ID,
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="bhlTime != null">
+        BHL_TIME,
+      </if>
+      <if test="bhlContent != null">
+        BHL_CONTENT,
+      </if>
+      <if test="bhlComment != null">
+        BHL_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bhlId != null">
+        #{bhlId,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="bhlTime != null">
+        #{bhlTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bhlContent != null">
+        #{bhlContent,jdbcType=VARCHAR},
+      </if>
+      <if test="bhlComment != null">
+        #{bhlComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.BackgroundHandleLog">
+    update background_handle_log
+    <set>
+      <if test="adminId != null">
+        ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="bhlTime != null">
+        BHL_TIME = #{bhlTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bhlContent != null">
+        BHL_CONTENT = #{bhlContent,jdbcType=VARCHAR},
+      </if>
+      <if test="bhlComment != null">
+        BHL_COMMENT = #{bhlComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BHL_ID = #{bhlId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.BackgroundHandleLog">
+    update background_handle_log
+    set ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      BHL_TIME = #{bhlTime,jdbcType=TIMESTAMP},
+      BHL_CONTENT = #{bhlContent,jdbcType=VARCHAR},
+      BHL_COMMENT = #{bhlComment,jdbcType=VARCHAR}
+    where BHL_ID = #{bhlId,jdbcType=VARCHAR}
+  </update>
+</mapper>

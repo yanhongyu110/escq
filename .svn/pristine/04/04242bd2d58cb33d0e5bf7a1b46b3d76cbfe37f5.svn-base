@@ -1,0 +1,114 @@
+var tag=1;
+$(function (){
+	$("#btn_tx").click(function(){
+		btn();
+	})
+	// 第三方支付  支付判断
+	$('.zf_fs ul li').click(function(){
+		$(this).siblings().css({"border":" 2px solid #ddd"});
+		$(this).css({"border":" 2px solid #FB5A5A"});
+		tag =$(this).attr('tag');
+	});
+	$('.zf_hj_money li a').click(function(e){
+		console.log($(this));
+		$(this).unbind(e);
+		if(tag=='1'){
+			yuePay();
+		}else if(tag=='2'){
+			wxPay();
+		}
+		else if(tag=='3'){
+			zfbPay();
+		}
+	});
+	
+});
+
+function pd(){
+	var orderPrice = $("#orderPrice").html().substr(1);
+	var accBalance = $("#accBalance").html().substr(1);
+	if(parseInt(accBalance) < parseInt(orderPrice)){
+		$("#checkbox").attr("disabled","disabled");
+	}
+}
+
+function payResult(currentOrderId,isSuccess){
+	location.href = path+"/wap/saleinfo/orderInfoBuyer/orderView.html";
+}
+
+function btn(){
+	if(!$("#checkbox").is(':checked')) {
+		alert("请选择付款方式");
+	} else {
+		var accPaypass = $("#accPaypass").val();
+		var orderPrice = $("#orderPrice").html().substr(1);
+		var accBalance = $("#accBalance").html().substr(1);
+		var orderNo = $("#orderNo").html();
+		accPaypass = $.md5(accPaypass);
+		if(accPaypass == null || accPaypass == "请输入交易密码"){
+			alert("请输入支付密码");
+			return;
+		}
+		$.ajax({
+			url:path+'/saleinfo/orderInfoBuyer/validate.html?flag='+1,
+			type:'post',
+			dataType:'json',
+			data:{
+				'orderPrice':orderPrice,
+				'accBalance':accBalance,
+				'accPaypass':accPaypass,
+				'orderNo':orderNo
+			},
+			success:function(res){
+				if(res.success){
+					alert(res.errorMsg);
+					location.href=path+"/saleinfo/orderInfoBuyer/orderView.html";
+				} else {
+					alert(res.errorMsg);
+				}
+			}
+		});
+	}
+	
+	
+	
+}
+
+
+
+/*****************第三方支付 支付开始**************************/
+function yuePay(){
+	console.log("余额"+orderNo);
+	if(parseFloat(accBalance) < parseFloat($("#orderPrice").html())){
+		alert("余额不足")
+	} else {
+        location.href=path+"/wap/saleinfo/orderInfoBuyer/ConfirmPayment.html?orderNo="+orderNo+"&flag=1";
+    }
+}
+
+function wxPay(){
+	console.log("微信"+orderId);
+	var ua = navigator.userAgent.toLowerCase();	
+	if (/iphone|ipad|ipod/.test(ua)) {
+		share(orderId,"1","wx");			
+	} else if (/android/.test(ua)) {
+		window.android.submitPay(orderId,"1");
+		console.log(orderId);
+	}
+	//location.href=path+"/wap/saleinfo/orderInfoBuyer/orderView.html";
+	
+}
+function zfbPay(){
+	console.log("支付宝"+orderId);
+	var ua = navigator.userAgent.toLowerCase();	
+	if (/iphone|ipad|ipod/.test(ua)) {
+		share(orderId,"2","zfb");	
+	} else if (/android/.test(ua)) {
+		window.android.submitPay(orderId,"2");
+	}
+	//location.href=path+"/wap/saleinfo/orderInfoBuyer/orderView.html";
+	
+}
+/*****************第三方支付 支付结束**************************/
+
+

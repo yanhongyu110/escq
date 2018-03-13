@@ -1,0 +1,17 @@
+package com.jero.esc.mapper.details;
+
+import com.jero.esc.po.details.MegDetails;
+
+public interface MegDetailsMapper {
+    int deleteByPrimaryKey(String mdId);
+
+    int insert(MegDetails record);
+
+    int insertSelective(MegDetails record);
+
+    MegDetails selectByPrimaryKey(String mdId);
+
+    int updateByPrimaryKeySelective(MegDetails record);
+
+    int updateByPrimaryKey(MegDetails record);
+}

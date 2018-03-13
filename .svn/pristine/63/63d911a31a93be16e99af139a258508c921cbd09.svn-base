@@ -1,0 +1,206 @@
+var page=1;
+var pageSize=5;
+var s=false;
+$(function(){
+    if (aBoolean) {
+        $("#zan").css({
+            'color': 'red',
+            "background-image": "url('../../../images/wap/dianzan_on.png')"
+        });
+    } else {
+        $("#zan").css({
+            'color': '#999',
+            "background-image": "url('../../../images/wap/dianzan.png')"
+        });
+    }
+    if (scRes) {
+        $(".guanzhu").css({
+            'color': 'red',
+            "background-image": "url('../../../images/wap/souc_hover.png')"
+        });
+    } else {
+        $(".guanzhu").css({
+            'color': '#999',
+            "background-image": "url('../../../images/wap/souc.png')"
+        });
+    }
+	var flag = true
+
+	$("#zan").click(function () {
+		if (loginfo != '') {
+			if(flag) {
+                flag = false;
+                $.ajax({
+                    url: path + '/goodsinfo/service/dianzan.html',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        'serviceId': serviceId,
+                        'aBoolean': aBoolean
+                    },
+                    success: function (res) {
+                        flag = true
+                        if (res.success) {
+                            var zanNum = parseInt($('#zanNum').html());
+                                if (aBoolean) {
+                                    $("#zan").css({
+                                        'color': '#999',
+                                        "background-image": "url('../../../images/wap/dianzan.png')"
+                                    });
+                                    $('#zanNum').html(zanNum - 1);
+                                    $('.zanNum').html(zanNum - 1);
+                                    aBoolean = false
+                                } else {
+                                    $("#zan").css({
+                                        'color': 'red',
+                                        "background-image": "url('../../../images/wap/dianzan_on.png')"
+                                    });
+                                    $('#zanNum').html(zanNum + 1);
+                                    $('.zanNum').html(zanNum + 1);
+                                    aBoolean = true
+                                }
+                        } else {
+                            alert(res.errorMsg);
+                        }
+                    }
+                });
+            }
+		} else {
+			alert("请先登陆后再点赞");
+		}
+	});
+	
+	$('#service_content_pj_list').hide();
+	$('.title-list li').click(function(){
+		var index = $(this).index();
+		$(this).addClass("on").siblings().removeClass("on");
+		console.info(index);
+		if(index==0){
+			$('.service_content_p').show();
+			$('#service_content_pj_list').hide();
+            $(".service_content_img_pay").show();
+			$('.title-list p').css("left","0");
+			$(".jiaz").hide();
+			s=false;
+		}else{
+			$('.service_content_p').hide();
+			$('#service_content_pj_list').show();
+			$(".service_content_img_pay").hide();
+			$('.title-list p').css("left","30%");
+			$(".jiaz").show();
+			var html = '<div class="expert_qtss">'+
+			'<h4>服务评价</h4>'+
+			'</div>';
+			$("#service_content_pj_list").html(html);
+			s=true;
+			page=1;
+			$(".jiaz").html("");
+			initRemark();
+		}
+	});
+	$('body').bind('touchmove', function(e) {
+        if(($(window).scrollTop()>=$(document).height()-$(window).height())&&s){
+            page++;
+            initRemark();
+            s = false;
+        }
+    });
+	$(".guanzhu").click(function(){
+		var scNum = parseInt($('#scNum').html());
+		if(loginfo==null||loginfo==''){
+			alert("请先登陆后，再加入收藏！");
+		}else{
+			$.ajax({
+				type: "POST",
+				url:path+ "/wap/goodsinfo/cart/addCart.html",
+				data:{
+					"serviceId" :$('#serviceId').val(),
+					"num":$('.scartNum').val(),
+					"scartSource":$('.scartSource').val(),
+				},
+				success: function (data) {
+					var temp=JSON.parse(data);
+					alert(temp.errorMsg);
+					if(temp.success){
+						$(".guanzhu").css({
+                            'color': 'red',
+                            "background-image": "url('../../../images/wap/souc_hover.png')"
+                        });
+                        $('#scNum').html(scNum + 1);
+					}
+				}
+			});
+		}
+	})
+	
+	
+	$("#yuejian").click(function(){
+		if(loginfo==null||loginfo==''){
+			alert("请先登陆后，再进行约见！");
+		}else{
+		   var cartList={};
+		   cartList.serviceId=$('#serviceId').val();
+		   cartList.scartNum=parseInt($('.scartNum').val());
+		   cartList.scartSource=$('.scartSource').val();
+		   var temp=[];
+		   temp.push(cartList);
+		   var cart=JSON.stringify(temp);
+		  
+			$('.cartList').val(cart);
+			$('#formsubmit').submit();
+		}
+	});
+});
+
+function initRemark(){
+	$.ajax({
+		url: path + "/wap/goodsinfo/service/queryServiceRemark.html",
+		type:'post',
+		dataType:'json',
+		data:{
+			'page':page,
+			'rows':pageSize,
+			'serviceId':$("#serviceId").val()
+		},
+		success:function(res){
+			var temp="";
+			var total = res.totalPage;
+			var remark = res.list;
+			$.each(remark,function(i, v){
+				temp += '<div class="service_pingjias"><div class="service_content_pj_list_img">'+
+								'<img src="'+v.userPhoto+'" />'+
+							'</div>'+
+							'<div class="service_content_pj_list_title">'+
+								'<h3>'+v.logName+'</h3>'+
+								'<p>'+v.srContent+'</p>'+
+								'<span>'+v.srCreatetimeStr+'</span>'+
+							'</div></div>';
+			});
+			if(total == 0){
+				$(".jiaz").html("暂无评价");
+			}
+			if(total <=page){
+				$(".jiaz").html("到底了");
+				$(".jiaz").unbind("click");
+			} 
+			$("#service_content_pj_list").append(temp);
+			s=true;
+		}
+	});
+}
+/**
+ *
+ * @param type  1 -微信好友、2-微信朋友圈、3-qq好友、4-qq空间、5-微博
+ * @param title
+ * @param content
+ * @param url 分享的链接地址
+ * @param imgurl 分享的图片url
+ */
+function wapShare(type,title,content,url,imgurl) {
+    var ua = navigator.userAgent.toLowerCase();
+    if (/iphone|ipad|ipod/.test(ua)) {
+        fxshare(type,title,content,url,imgurl);
+    } else if (/android/.test(ua)) {
+        window.android.fxShare(type,title,content,url,imgurl);
+    }
+}

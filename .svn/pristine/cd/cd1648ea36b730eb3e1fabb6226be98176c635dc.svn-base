@@ -1,0 +1,38 @@
+body{font-family:Arial, "Microsoft YaHei", Helvetica, sans-serif;margin:0; padding:0; color: #333;font-size: 14px;}
+html,body,dl,dd,img,form,div,ul,ol,li,h1,h2,h3,h4,h5,h6,p{margin:0;padding:0;border:0;}
+a{ cursor: pointer;}
+img{ border:none;}
+input,select,textarea{ font-family: "Microsoft YaHei;"; outline: none;vertical-align:middle;}
+ul,ol,li{ list-style-type:none;}
+table{border-collapse:collapse;border-spacing:0}
+iframe{border:none;}
+a:link{color:#666666;text-decoration:none;}
+a:visited{color:#666666;text-decoration:none;}
+a:hover{color:#d94a33;text-decoration:none;}
+a:active{color:#d94a33;text-decoration:none;}
+img{border:0;vertical-align:middle}
+
+ 
+.xy_header_nav{margin: 0 auto; width: 100%;height: 50px; line-height: 50px;background:rgba(0,0,0,.2); z-index: 9999; position: fixed;}
+.xy_header_nav ul{width: 1200px; margin: 0 auto;}
+.xy_header_nav ul li{float: left;width:100px;text-align:center;font-size: 18px; color: #333;}
+.xy_header_nav .school_login_btn{ float:right;width: 180px;color: #f60;  font-size: 14px;}
+.xy_header_nav .nav_hover{background: #e05931; color: #fff;}
+.xy_header_nav .logo_jdj{width: 200px;}
+
+.footer{ margin: 0 ; padding: 0; clear: both; background:#4e4e4e ; border-top:2px solid #333; min-width: 1200px; font-size: 14px; color: #ccc; padding-top: 20px; padding-bottom: 20px; overflow: hidden;}
+.footer_top{ margin: 0 auto; width: 1200px;}
+.footer_top .footer_logo{ float: left; width: 400px; margin-top:20px; }
+.footer_top .footer_logo .footer_logo_list{ float: left; margin-right: 50px;}
+.footer_top .footer_logo .footer_logo_list h3{ margin-bottom: 10px; font-size: 14px;}
+.footer_top .footer_logo a{ display: block; line-height: 30px; font-size: 14px;}
+.footer_top .footer_contact{ float: left; width: 330px; margin-left: 20px;}
+.footer_top .footer_contact p{ padding-top: 15px; color: #ccc; font-size: 14px; line-height:30px;}
+.footer_top .footer_ewm{ float: right; width: 300px;}
+.footer_top .footer_ewm h3{font-size:30px;  background:url(../images/rx.png) no-repeat 10px   ; padding-left: 60px;}
+.footer_top .footer_ewm h4{ font-size: 16px;}
+.footer_top .footer_ewm img{ margin-left: 10px; }
+.footer_bottom{ margin:  0; padding: 0; background: #444; height:35px;min-width: 1110px; clear: both;}
+.footer_bottom_about{ margin: 0 auto; width: 1110px;}
+.footer_bottom_about ul li{  float: left; list-style: none;height:35px; line-height:35px; color: #666; font-size: 12px;}
+.footer_bottom_about .dz{ float: right; }

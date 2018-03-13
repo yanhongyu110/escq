@@ -1,0 +1,922 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.userinfo.ProviderInfoMapper">
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"></cache>
+    <resultMap id="BaseResultMap" type="com.jero.esc.po.userinfo.ProviderInfo">
+        <id column="PI_ID" jdbcType="VARCHAR" property="piId"/>
+        <result column="PI_AREA" jdbcType="VARCHAR" property="piArea"/>
+        <result column="PI_PHOTO" jdbcType="VARCHAR" property="piPhoto"/>
+        <result column="PI_KEYWORDS" jdbcType="VARCHAR" property="piKeywords"/>
+        <result column="PI_REMARK" jdbcType="VARCHAR" property="piRemark"/>
+        <result column="PI_TYPE" jdbcType="INTEGER" property="piType"/>
+        <result column="PI_REALNAME" jdbcType="VARCHAR" property="piRealname"/>
+        <result column="PI_COMPANY" jdbcType="VARCHAR" property="piCompany"/>
+        <result column="PI_POSITION" jdbcType="VARCHAR" property="piPosition"/>
+        <result column="PI_WORKYEAR" jdbcType="INTEGER" property="piWorkyear"/>
+        <result column="PI_EMAIL" jdbcType="VARCHAR" property="piEmail"/>
+        <result column="PI_CELL" jdbcType="VARCHAR" property="piCell"/>
+        <result column="PI_ADDR" jdbcType="VARCHAR" property="piAddr"/>
+        <result column="PI_ISDELETE" jdbcType="BIT" property="piIsdelete"/>
+        <result column="PI_CONTENT" jdbcType="VARCHAR" property="piContent"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="logId"/>
+        <result column="PI_BRIEF" jdbcType="VARCHAR" property="piBrief"/>
+        <result column="PI_MEETNUM" jdbcType="INTEGER" property="piMeetnum"/>
+        <result column="PI_DEALNUM" jdbcType="INTEGER" property="piDealnum"/>
+        <result column="PI_RESPONSETIME" jdbcType="INTEGER" property="piResponsetime"/>
+        <result column="PI_URLS" jdbcType="VARCHAR" property="piUrls"/>
+        <result column="PI_COMMENT" jdbcType="VARCHAR" property="piComment"/>
+        <result column="PI_MARK" jdbcType="REAL" property="piMark"/>
+        <result column="PI_VIDEO" jdbcType="VARCHAR" property="piVideo"/>
+        <result column="PI_COM" jdbcType="VARCHAR" property="piCom"/>
+    </resultMap>
+
+    <!-- 服务商详情 -->
+    <resultMap id="ProviderDetailsMap" type="com.jero.esc.po.userinfo.ProviderInfo">
+        <id column="PI_ID" jdbcType="VARCHAR" property="piId"/>
+        <result column="PI_AREA" jdbcType="VARCHAR" property="piArea"/>
+        <result column="PI_PHOTO" jdbcType="VARCHAR" property="piPhoto"/>
+        <result column="PI_KEYWORDS" jdbcType="VARCHAR" property="piKeywords"/>
+        <result column="PI_REMARK" jdbcType="VARCHAR" property="piRemark"/>
+        <result column="PI_TYPE" jdbcType="INTEGER" property="piType"/>
+        <result column="PI_REALNAME" jdbcType="VARCHAR" property="piRealname"/>
+        <result column="PI_COMPANY" jdbcType="VARCHAR" property="piCompany"/>
+        <result column="PI_POSITION" jdbcType="VARCHAR" property="piPosition"/>
+        <result column="PI_WORKYEAR" jdbcType="INTEGER" property="piWorkyear"/>
+        <result column="PI_EMAIL" jdbcType="VARCHAR" property="piEmail"/>
+        <result column="PI_CELL" jdbcType="VARCHAR" property="piCell"/>
+        <result column="PI_ADDR" jdbcType="VARCHAR" property="piAddr"/>
+        <result column="PI_ISDELETE" jdbcType="BIT" property="piIsdelete"/>
+        <result column="PI_CONTENT" jdbcType="VARCHAR" property="piContent"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="logId"/>
+        <result column="PI_BRIEF" jdbcType="VARCHAR" property="piBrief"/>
+        <result column="PI_MEETNUM" jdbcType="INTEGER" property="piMeetnum"/>
+        <result column="PI_DEALNUM" jdbcType="INTEGER" property="piDealnum"/>
+        <result column="PI_RESPONSETIME" jdbcType="INTEGER" property="piResponsetime"/>
+        <result column="PI_COMMENT" jdbcType="VARCHAR" property="piComment"/>
+        <result column="PI_MARK" jdbcType="REAL" property="piMark"/>
+        <result column="PI_VIDEO" jdbcType="VARCHAR" property="piVideo"/>
+        <!-- 服务商头像 -->
+        <result column="USER_PHOTO" jdbcType="VARCHAR" property="userPhoto"/>
+        <result column="COMPANY" jdbcType="VARCHAR" property="company"/>
+    </resultMap>
+
+    <!-- 服务信息 -->
+    <resultMap id="ServiceMsgMap" type="com.jero.esc.po.userinfo.ServiceInfo">
+        <id column="SERVICE_ID" property="serviceId" jdbcType="VARCHAR"/>
+        <result column="LOG_ID" property="logId" jdbcType="VARCHAR"/>
+        <result column="SERVICE_REMARK" property="serviceRemark" jdbcType="VARCHAR"/>
+        <result column="SERVICE_TITLE" property="serviceTitle" jdbcType="VARCHAR"/>
+        <result column="SERVICE_BIREF" property="serviceBiref" jdbcType="VARCHAR"/>
+        <result column="SERVICE_PRICE" property="servicePrice" jdbcType="VARCHAR"/>
+        <result column="SERVICE_RESPONSE" property="serviceResponse" jdbcType="REAL"/>
+        <result column="SERVICE_MEETNUM" property="serviceMeetnum" jdbcType="INTEGER"/>
+        <result column="SERVICE_SUCCESSNUM" property="serviceSuccessnum" jdbcType="INTEGER"/>
+        <result column="SERVICE_ISDELETE" property="serviceIsdelete" jdbcType="BIT"/>
+        <result column="SERVICE_CREATETIME" property="serviceCreatetime" jdbcType="TIMESTAMP"/>
+        <result column="SERVICE_STATE" property="serviceState" jdbcType="INTEGER"/>
+        <result column="SERVICE_MEETTIME" property="serviceMeettime" jdbcType="REAL"/>
+        <result column="SERVICE_TYPE" property="serviceType" jdbcType="VARCHAR"/>
+        <result column="SERVICE_ATTRINFO" property="serviceAttrinfo" jdbcType="VARCHAR"/>
+        <result column="SERVICE_KEYWORDS" property="serviceKeywords" jdbcType="VARCHAR"/>
+        <result column="SERVICE_COMMENT" property="serviceComment" jdbcType="VARCHAR"/>
+        <result column="SERVICE_PIC" property="servicePic" jdbcType="VARCHAR"/>
+
+        <!-- 价格表 -->
+        <result column="PSET_ID" property="psetId" jdbcType="VARCHAR"/>
+        <result column="PSET_DISCOUNT_TYPE" property="psetDiscountType" jdbcType="INTEGER"/>
+        <result column="PSET_POINT_TYPE" property="psetPointType" jdbcType="INTEGER"/>
+        <result column="PSET_PRICE" property="psetPrice" jdbcType="REAL"/>
+        <result column="PSET_POINT" property="psetPoint" jdbcType="REAL"/>
+        <result column="PSET_CREATE_TIME" property="psetCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="PSET_LOG_ID" property="psetLogId" jdbcType="VARCHAR"/>
+        <result column="PSET_SERVICE_ID" property="psetServiceId" jdbcType="VARCHAR"/>
+        <result column="PSET_COMMENT" property="psetComment" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.jero.esc.vo.userinfo.ProviderVo" id="providerVoMap">
+        <!-- 服务商信息表 -->
+        <id column="PI_ID" jdbcType="VARCHAR" property="piId"/>
+        <result column="PI_AREA" jdbcType="VARCHAR" property="piArea"/>
+        <result column="PI_PHOTO" jdbcType="VARCHAR" property="piPhoto"/>
+        <result column="PI_KEYWORDS" jdbcType="VARCHAR" property="piKeywords"/>
+        <result column="PI_REMARK" jdbcType="VARCHAR" property="piRemark"/>
+        <result column="PI_TYPE" jdbcType="INTEGER" property="piType"/>
+        <result column="PI_REALNAME" jdbcType="VARCHAR" property="piRealname"/>
+        <result column="PI_COMPANY" jdbcType="VARCHAR" property="piCompany"/>
+        <result column="PI_POSITION" jdbcType="VARCHAR" property="piPosition"/>
+        <result column="PI_WORKYEAR" jdbcType="INTEGER" property="piWorkyear"/>
+        <result column="PI_EMAIL" jdbcType="VARCHAR" property="piEmail"/>
+        <result column="PI_CELL" jdbcType="VARCHAR" property="piCell"/>
+        <result column="PI_ADDR" jdbcType="VARCHAR" property="piAddr"/>
+        <result column="PI_ISDELETE" jdbcType="BIT" property="piIsdelete"/>
+        <result column="PI_CONTENT" jdbcType="VARCHAR" property="piContent"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="piLogId"/>
+        <result column="PI_BRIEF" jdbcType="VARCHAR" property="piBrief"/>
+        <result column="PI_MEETNUM" jdbcType="INTEGER" property="piMeetnum"/>
+        <result column="PI_DEALNUM" jdbcType="INTEGER" property="piDealnum"/>
+        <result column="PI_RESPONSETIME" jdbcType="INTEGER" property="piResponsetime"/>
+        <result column="PI_URLS" jdbcType="VARCHAR" property="piUrls"/>
+        <result column="PI_COMMENT" jdbcType="VARCHAR" property="piComment"/>
+        <result column="PI_MARK" jdbcType="REAL" property="piMark"/>
+        <result column="PI_VIDEO" jdbcType="VARCHAR" property="piVideo"/>
+        <!-- 登陆信息表 -->
+        <result column="LOG_CELL" jdbcType="VARCHAR" property="logCell"/>
+        <result column="LOG_EMAIL" jdbcType="VARCHAR" property="logEmail"/>
+        <result column="LOG_NAME" jdbcType="VARCHAR" property="logName"/>
+        <result column="LOG_PASS" jdbcType="VARCHAR" property="logPass"/>
+        <result column="LOG_CREATETIME" jdbcType="TIMESTAMP" property="logCreatetime"/>
+        <result column="LOG_ISDELETE" jdbcType="BIT" property="logIsdelete"/>
+        <result column="LOG_STATE" jdbcType="INTEGER" property="logState"/>
+        <result column="LOG_TYPE" jdbcType="INTEGER" property="logType"/>
+        <result column="LOG_REGIP" jdbcType="VARCHAR" property="logRegip"/>
+        <result column="LOG_ISLOG" jdbcType="BIT" property="logIslog"/>
+        <result column="LOG_COMMENT" jdbcType="VARCHAR" property="logComment"/>
+        <!-- 服务商推荐表 -->
+        <result column="PR_ID" jdbcType="VARCHAR" property="prId"/>
+        <result column="PR_DETAILS" jdbcType="VARCHAR" property="prDetails"/>
+        <result column="PR_PHOTO" jdbcType="VARCHAR" property="prPhoto"/>
+        <result column="PR_CREATETIME" jdbcType="TIMESTAMP" property="prCreatetime"/>
+        <result column="PR_STATE" jdbcType="INTEGER" property="prState"/>
+        <result column="PR_SORT" jdbcType="INTEGER" property="prSort"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="prLogId"/>
+        <result column="PR_COMMENT" jdbcType="VARCHAR" property="prComment"/>
+        <!-- 价格表 -->
+        <result column="PSET_ID" property="psetId" jdbcType="VARCHAR"/>
+        <result column="PSET_DISCOUNT_TYPE" property="psetDiscountType" jdbcType="INTEGER"/>
+        <result column="PSET_POINT_TYPE" property="psetPointType" jdbcType="INTEGER"/>
+        <result column="PSET_PRICE" property="psetPrice" jdbcType="REAL"/>
+        <result column="PSET_POINT" property="psetPoint" jdbcType="REAL"/>
+        <result column="PSET_CREATE_TIME" property="psetCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="LOG_ID" property="psetLogId" jdbcType="VARCHAR"/>
+        <result column="PSET_SERVICE_ID" property="psetServiceId" jdbcType="VARCHAR"/>
+        <result column="PSET_COMMENT" property="psetComment" jdbcType="VARCHAR"/>
+
+        <result column="USER_PHOTO" property="userPhoto" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List_Provider">
+    PI_ID,PI_AREA,PI_PHOTO,PI_KEYWORDS,PI_REMARK,PI_TYPE,PI_REALNAME,PI_COMPANY,PI_POSITION,
+    PI_WORKYEAR,PI_EMAIL,PI_CELL,PI_ADDR,PI_ISDELETE,PI_CONTENT,LOG_INFO.LOG_ID,PI_BRIEF,PI_MEETNUM,
+    PI_DEALNUM,PI_RESPONSETIME,PI_URLS,PI_COMMENT,PI_MARK,PI_VIDEO,PI_COM,USER_PHOTO,COMPANY
+  </sql>
+
+    <sql id="Base_Column_List_Service">
+	service_info.SERVICE_ID,service_info.LOG_ID,SERVICE_REMARK,SERVICE_TITLE,SERVICE_BIREF,SERVICE_CONTENT,SERVICE_PRICE,SERVICE_RESPONSE,SERVICE_MEETNUM,SERVICE_SUCCESSNUM,SERVICE_ISDELETE,
+	SERVICE_CREATETIME,SERVICE_STATE,SERVICE_MEETTIME,SERVICE_TYPE,SERVICE_ATTRINFO,SERVICE_KEYWORDS,SERVICE_COMMENT,SERVICE_PIC,
+	PSET_ID,PSET_DISCOUNT_TYPE,PSET_POINT_TYPE,PSET_PRICE,PSET_POINT,PSET_CREATE_TIME,price_set.LOG_ID AS PSET_LOG_ID,price_set.SERVICE_ID AS PSET_SERVICE_ID,PSET_COMMENT
+  </sql>
+
+    <sql id="Base_Column_List">
+    PI_ID, PI_AREA, PI_PHOTO, PI_KEYWORDS, PI_REMARK, PI_TYPE, PI_REALNAME, PI_COMPANY, PI_COM,
+    PI_POSITION, PI_WORKYEAR, PI_EMAIL, PI_CELL, PI_ADDR, PI_ISDELETE, PI_CONTENT, LOG_ID, 
+    PI_BRIEF, PI_MEETNUM, PI_DEALNUM, PI_RESPONSETIME,PI_URLS, PI_COMMENT,PI_VIDEO,PI_MARK
+  </sql>
+
+    <select id="selectProviderBySearch" resultMap="providerVoMap">
+        SELECT
+        provider_info.PI_ID,
+        provider_info.PI_AREA,
+        provider_info.PI_PHOTO,
+        provider_info.PI_KEYWORDS,
+        provider_info.PI_REMARK,
+        provider_info.PI_TYPE,
+        provider_info.PI_REALNAME,
+        provider_info.PI_COMPANY,
+        provider_info.PI_POSITION,
+        provider_info.PI_WORKYEAR,
+        provider_info.PI_EMAIL,
+        provider_info.PI_CELL,
+        provider_info.PI_ADDR,
+        provider_info.PI_ISDELETE,
+        provider_info.PI_CONTENT,
+        provider_info.LOG_ID,
+        provider_info.PI_BRIEF,
+        provider_info.PI_MEETNUM,
+        provider_info.PI_DEALNUM,
+        provider_info.PI_RESPONSETIME,
+        provider_info.PI_URLS,
+        provider_info.PI_COMMENT,
+        provider_info.PI_MARK,
+        provider_info.PI_VIDEO,
+        AVG(price_set.PSET_PRICE) as PSET_PRICE
+        FROM
+        provider_info
+        INNER JOIN log_info ON provider_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN price_set ON log_info.LOG_ID = price_set.LOG_ID
+        INNER JOIN provider_check_info ON provider_info.LOG_ID = provider_check_info.LOG_ID
+        INNER JOIN company_info ON company_info.COMP_ID = provider_info.PI_COM
+        <where>
+            (
+            provider_info.PI_KEYWORDS LIKE '%${search}%'
+            AND provider_check_info.PCI_STATE = 2
+            AND provider_info.PI_AREA LIKE '%${province}%${city}%${area}%'
+            OR provider_info.PI_REALNAME LIKE '%${search}%'
+            AND provider_check_info.PCI_STATE = 2
+            AND provider_info.PI_AREA LIKE '%${province}%${city}%${area}%'
+            OR provider_info.PI_POSITION LIKE '%${search}%'
+            AND provider_check_info.PCI_STATE = 2
+            AND provider_info.PI_AREA LIKE '%${province}%${city}%${area}%'
+            )
+            <if test=" module != null and module != '' ">
+                AND company_info.COMP_COMMENTS LIKE '%${module}%'
+            </if>
+        </where>
+        GROUP BY provider_info.LOG_ID
+        ORDER BY ${order}
+    </select>
+
+    <select id="selectProviderCountBySearch" resultType="int">
+        SELECT
+        COUNT(*) FROM(
+        SELECT
+        COUNT(*)
+        FROM
+        provider_info
+        INNER JOIN log_info ON provider_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN price_set ON log_info.LOG_ID = price_set.LOG_ID
+        INNER JOIN provider_check_info ON provider_info.LOG_ID = provider_check_info.LOG_ID
+        INNER JOIN company_info ON company_info.COMP_ID = provider_info.PI_COM
+        <where>
+            (
+            provider_info.PI_KEYWORDS LIKE '%${search}%'
+            AND provider_check_info.PCI_STATE = 2
+            AND provider_info.PI_AREA LIKE '%${province}%${city}%${area}%'
+            OR provider_info.PI_REALNAME LIKE '%${search}%'
+            AND provider_check_info.PCI_STATE = 2
+            AND provider_info.PI_AREA LIKE '%${province}%${city}%${area}%'
+            OR provider_info.PI_POSITION LIKE '%${search}%'
+            AND provider_check_info.PCI_STATE = 2
+            AND provider_info.PI_AREA LIKE '%${province}%${city}%${area}%'
+            )
+            <if test=" module != null and module != '' ">
+                AND company_info.COMP_COMMENTS LIKE '%${module}%'
+            </if>
+        </where>
+        GROUP BY provider_info.LOG_ID
+        ORDER BY ${order}
+        ) AS B
+    </select>
+
+    <select id="selectProviderByCon" resultMap="providerVoMap">
+        SELECT
+        provider_info.PI_ID,
+        provider_info.PI_AREA,
+        provider_info.PI_PHOTO,
+        provider_info.PI_KEYWORDS,
+        provider_info.PI_REMARK,
+        provider_info.PI_TYPE,
+        provider_info.PI_REALNAME,
+        provider_info.PI_COMPANY,
+        provider_info.PI_POSITION,
+        provider_info.PI_WORKYEAR,
+        provider_info.PI_EMAIL,
+        provider_info.PI_CELL,
+        provider_info.PI_ADDR,
+        provider_info.PI_ISDELETE,
+        provider_info.PI_CONTENT,
+        provider_info.LOG_ID,
+        provider_info.PI_BRIEF,
+        provider_info.PI_MEETNUM,
+        provider_info.PI_DEALNUM,
+        provider_info.PI_RESPONSETIME,
+        provider_info.PI_URLS,
+        provider_info.PI_COMMENT,
+        provider_info.PI_VIDEO,
+        AVG(price_set.PSET_PRICE) as PSET_PRICE
+        FROM
+        provider_info
+        INNER JOIN log_info ON provider_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN price_set ON log_info.LOG_ID = price_set.LOG_ID
+        INNER JOIN provider_check_info ON provider_info.LOG_ID = provider_check_info.LOG_ID
+        INNER JOIN company_info ON company_info.COMP_ID = provider_info.PI_COM
+        WHERE
+        provider_info.PI_AREA LIKE '%${province}%${city}%${area}%'
+        AND provider_check_info.PCI_STATE = 2
+
+        <if test=" module != null and module != '' ">
+            AND company_info.COMP_COMMENTS = #{module}
+        </if>
+
+        GROUP BY provider_info.LOG_ID
+        ORDER BY ${order}
+    </select>
+
+    <select id="selectProviderCountByCon" resultType="int">
+    SELECT
+    COUNT(*)
+    FROM(
+	    SELECT
+	    COUNT(*)
+		FROM
+		provider_info
+		INNER JOIN log_info ON provider_info.LOG_ID = log_info.LOG_ID
+		INNER JOIN price_set ON log_info.LOG_ID = price_set.LOG_ID
+		INNER JOIN provider_check_info ON provider_info.LOG_ID = provider_check_info.LOG_ID
+		INNER JOIN company_info ON company_info.COMP_ID = provider_info.PI_COM
+		WHERE
+		provider_info.PI_AREA LIKE '%${province}%${city}%${area}%'
+		AND provider_check_info.PCI_STATE = 2
+        <if test=" module != null and module != '' ">
+            AND company_info.COMP_COMMENTS = #{module}
+        </if>
+		GROUP BY provider_info.LOG_ID
+		ORDER BY provider_info.PI_MEETNUM DESC
+    ) AS A
+  </select>
+
+    <select id="selectProviderByOrder" resultMap="providerVoMap">
+        SELECT
+        provider_info.PI_ID,
+        provider_info.PI_AREA,
+        provider_info.PI_PHOTO,
+        provider_info.PI_KEYWORDS,
+        provider_info.PI_REMARK,
+        provider_info.PI_TYPE,
+        provider_info.PI_REALNAME,
+        provider_info.PI_COMPANY,
+        provider_info.PI_POSITION,
+        provider_info.PI_WORKYEAR,
+        provider_info.PI_EMAIL,
+        provider_info.PI_CELL,
+        provider_info.PI_ADDR,
+        provider_info.PI_ISDELETE,
+        provider_info.PI_CONTENT,
+        provider_info.LOG_ID,
+        provider_info.PI_BRIEF,
+        provider_info.PI_MEETNUM,
+        provider_info.PI_DEALNUM,
+        provider_info.PI_RESPONSETIME,
+        provider_info.PI_URLS,
+        provider_info.PI_COMMENT,
+        provider_info.PI_MARK,
+        provider_info.PI_VIDEO,
+        user_info.USER_PHOTO
+        FROM
+        provider_info
+        INNER JOIN provider_check_info ON provider_info.LOG_ID = provider_check_info.LOG_ID
+        INNER JOIN log_info ON log_info.LOG_ID = provider_info.LOG_ID
+        INNER JOIN company_info ON company_info.COMP_ID = provider_info.PI_COM
+        INNER JOIN user_info ON user_info.LOG_ID = log_info.LOG_ID
+        <where>
+            provider_check_info.PCI_STATE = 2
+            <!-- AND provider_info.PI_VIDEO IS NOT NULL
+            AND provider_info.PI_VIDEO &lt;&gt; "" -->
+            <if test=" module != null and module != '' ">
+                AND company_info.COMP_COMMENTS LIKE '%${module}%'
+            </if>
+        </where>
+        ORDER BY ${order}
+    </select>
+
+    <select id="selectProviderCountByOrder" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        provider_info
+        INNER JOIN provider_check_info ON provider_info.LOG_ID = provider_check_info.LOG_ID
+        INNER JOIN log_info ON log_info.LOG_ID = provider_info.LOG_ID
+        INNER JOIN company_info ON company_info.COMP_ID = provider_info.PI_COM
+        <where>
+            provider_check_info.PCI_STATE = 2
+            AND provider_info.PI_VIDEO IS NOT NULL
+            AND provider_info.PI_VIDEO &lt;&gt; ""
+            <if test=" module != null and module != ''   ">
+                AND company_info.COMP_COMMENTS = #{module}
+            </if>
+        </where>
+        ORDER BY PI_MEETNUM DESC
+    </select>
+
+    <select id="selectRecommendProvider" resultMap="providerVoMap">
+        SELECT
+        provider_info.PI_ID,
+        provider_info.PI_AREA,
+        provider_info.PI_PHOTO,
+        provider_info.PI_KEYWORDS,
+        provider_info.PI_REMARK,
+        provider_info.PI_TYPE,
+        provider_info.PI_REALNAME,
+        provider_info.PI_COMPANY,
+        provider_info.PI_POSITION,
+        provider_info.PI_WORKYEAR,
+        provider_info.PI_EMAIL,
+        provider_info.PI_CELL,
+        provider_info.PI_ADDR,
+        provider_info.PI_ISDELETE,
+        provider_info.PI_CONTENT,
+        provider_info.LOG_ID,
+        provider_info.PI_BRIEF,
+        provider_info.PI_MEETNUM,
+        provider_info.PI_DEALNUM,
+        provider_info.PI_RESPONSETIME,
+        provider_info.PI_URLS,
+        provider_info.PI_COMMENT,
+        provider_info.PI_MARK,
+        provider_info.PI_VIDEO,
+        provider_recommend.PR_PHOTO,
+        provider_recommend.PR_DETAILS
+        FROM
+        provider_info
+        INNER JOIN log_info ON provider_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN provider_recommend ON log_info.LOG_ID = provider_recommend.LOG_ID
+        INNER JOIN provider_check_info ON provider_info.LOG_ID = provider_check_info.LOG_ID
+        INNER JOIN company_info ON provider_info.PI_COM = company_info.COMP_ID
+        WHERE
+        provider_recommend.PR_STATE = 1
+        AND provider_check_info.PCI_STATE = 2
+        <if test="module != null and module != '' ">
+            AND COMP_COMMENTS LIKE '%${module}%'
+        </if>
+        ORDER BY
+        provider_recommend.PR_SORT
+        LIMIT 8
+    </select>
+
+    <select id="selectProviderDetailsById" parameterType="com.jero.esc.po.userinfo.LogInfo" resultMap="ProviderDetailsMap">
+        SELECT
+        <include refid="Base_Column_List_Provider"/>
+        FROM
+        log_info INNER JOIN user_info ON log_info.LOG_ID = user_info.LOG_ID
+        INNER JOIN provider_info ON log_info.LOG_ID = provider_info.LOG_ID
+        WHERE log_info.LOG_ID=#{log.logId}
+    </select>
+
+
+    <select id="selectServiceInfoById" parameterType="com.jero.esc.po.userinfo.LogInfo" resultMap="ServiceMsgMap">
+        SELECT
+        <include refid="Base_Column_List_Service"/>
+        FROM
+        service_info
+        INNER JOIN price_set ON price_set.SERVICE_ID = service_info.SERVICE_ID
+        <where>
+            AND PSET_DISCOUNT_TYPE=1
+            <if test="logId!=null and logId!=''">
+                AND service_info.LOG_ID = #{logId,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+    </select>
+
+    <select id="selectServiceInfoByCon" parameterType="com.jero.esc.po.userinfo.LogInfo" resultMap="ServiceMsgMap">
+        SELECT
+        <include refid="Base_Column_List_Service"/>
+        FROM
+        service_info
+        INNER JOIN price_set ON price_set.SERVICE_ID = service_info.SERVICE_ID
+        <where>
+            AND PSET_DISCOUNT_TYPE=1
+            AND SERVICE_STATE=2
+            <if test="logId!=null and logId!=''">
+                AND service_info.LOG_ID = #{logId,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+    </select>
+    <select id="countServiceInfoByCon" parameterType="com.jero.esc.po.userinfo.LogInfo" resultType="int">
+        SELECT
+        count(*)
+        FROM
+        service_info
+        INNER JOIN price_set ON price_set.SERVICE_ID = service_info.SERVICE_ID
+        <where>
+            AND PSET_DISCOUNT_TYPE=1
+            AND SERVICE_STATE=2
+            <if test="logId!=null and logId!=''">
+                AND service_info.LOG_ID = #{logId,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+    </select>
+    <select id="selectProviderByModule" resultMap="providerVoMap">
+    	SELECT
+		provider_info.PI_PHOTO,
+		provider_info.PI_REALNAME,
+		provider_info.PI_BRIEF
+		FROM
+		provider_info
+		INNER JOIN company_info ON provider_info.PI_COM = company_info.COMP_ID
+		INNER JOIN common_type ON company_info.COMP_COMMENTS = common_type.CT_ID
+		<where>
+			<if test="module != null and module != '' ">
+            	AND COMP_COMMENTS LIKE '%${module}%'
+        	</if>
+		</where>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from provider_info
+        where PI_ID = #{piId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from provider_info
+    where PI_ID = #{piId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.jero.esc.po.userinfo.ProviderInfo">
+    insert into provider_info (PI_ID, PI_AREA, PI_PHOTO,
+    PI_KEYWORDS, PI_REMARK, PI_TYPE,
+    PI_REALNAME, PI_COMPANY, PI_POSITION,
+    PI_WORKYEAR, PI_EMAIL, PI_CELL,
+    PI_ADDR, PI_ISDELETE, PI_CONTENT,
+    LOG_ID, PI_BRIEF, PI_MEETNUM,
+    PI_DEALNUM, PI_RESPONSETIME,PI_URLS, PI_COMMENT,PI_MARK,PI_VIDEO,PI_COM
+    )
+    values (#{piId,jdbcType=VARCHAR}, #{piArea,jdbcType=VARCHAR}, #{piPhoto,jdbcType=VARCHAR},
+    #{piKeywords,jdbcType=VARCHAR}, #{piRemark,jdbcType=VARCHAR}, #{piType,jdbcType=INTEGER},
+    #{piRealname,jdbcType=VARCHAR}, #{piCompany,jdbcType=VARCHAR}, #{piPosition,jdbcType=VARCHAR},
+    #{piWorkyear,jdbcType=INTEGER}, #{piEmail,jdbcType=VARCHAR}, #{piCell,jdbcType=VARCHAR},
+    #{piAddr,jdbcType=VARCHAR}, #{piIsdelete,jdbcType=BIT}, #{piContent,jdbcType=VARCHAR},
+    #{logId,jdbcType=VARCHAR}, #{piBrief,jdbcType=VARCHAR}, #{piMeetnum,jdbcType=INTEGER},
+    #{piDealnum,jdbcType=INTEGER}, #{piResponsetime,jdbcType=INTEGER},#{piUrls,jdbcType=VARCHAR}, #{piComment,jdbcType=VARCHAR},
+    #{piMark,jdbcType=REAL},#{piVideo,jdbcType=VARCHAR},
+    #{piCom}
+    )
+  </insert>
+    <insert id="insertSelective" parameterType="com.jero.esc.po.userinfo.ProviderInfo">
+        insert into provider_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="piId != null">
+                PI_ID,
+            </if>
+            <if test="piArea != null">
+                PI_AREA,
+            </if>
+            <if test="piPhoto != null">
+                PI_PHOTO,
+            </if>
+            <if test="piKeywords != null">
+                PI_KEYWORDS,
+            </if>
+            <if test="piRemark != null">
+                PI_REMARK,
+            </if>
+            <if test="piType != null">
+                PI_TYPE,
+            </if>
+            <if test="piRealname != null">
+                PI_REALNAME,
+            </if>
+            <if test="piCompany != null">
+                PI_COMPANY,
+            </if>
+            <if test="piPosition != null">
+                PI_POSITION,
+            </if>
+            <if test="piWorkyear != null">
+                PI_WORKYEAR,
+            </if>
+            <if test="piEmail != null">
+                PI_EMAIL,
+            </if>
+            <if test="piCell != null">
+                PI_CELL,
+            </if>
+            <if test="piAddr != null">
+                PI_ADDR,
+            </if>
+            <if test="piIsdelete != null">
+                PI_ISDELETE,
+            </if>
+            <if test="piContent != null">
+                PI_CONTENT,
+            </if>
+            <if test="logId != null">
+                LOG_ID,
+            </if>
+            <if test="piBrief != null">
+                PI_BRIEF,
+            </if>
+            <if test="piMeetnum != null">
+                PI_MEETNUM,
+            </if>
+            <if test="piDealnum != null">
+                PI_DEALNUM,
+            </if>
+            <if test="piResponsetime != null">
+                PI_RESPONSETIME,
+            </if>
+            <if test="piUrls != null">
+                PI_URLS,
+            </if>
+            <if test="piComment != null">
+                PI_COMMENT,
+            </if>
+            <if test="piMark != null">
+                PI_MARK,
+            </if>
+            <if test="piVideo != null">
+                PI_VIDEO,
+            </if>
+            <if test="piCom != null">
+                PI_COM,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="piId != null">
+                #{piId,jdbcType=VARCHAR},
+            </if>
+            <if test="piArea != null">
+                #{piArea,jdbcType=VARCHAR},
+            </if>
+            <if test="piPhoto != null">
+                #{piPhoto,jdbcType=VARCHAR},
+            </if>
+            <if test="piKeywords != null">
+                #{piKeywords,jdbcType=VARCHAR},
+            </if>
+            <if test="piRemark != null">
+                #{piRemark,jdbcType=REAL},
+            </if>
+            <if test="piType != null">
+                #{piType,jdbcType=INTEGER},
+            </if>
+            <if test="piRealname != null">
+                #{piRealname,jdbcType=VARCHAR},
+            </if>
+            <if test="piCompany != null">
+                #{piCompany,jdbcType=VARCHAR},
+            </if>
+            <if test="piPosition != null">
+                #{piPosition,jdbcType=VARCHAR},
+            </if>
+            <if test="piWorkyear != null">
+                #{piWorkyear,jdbcType=INTEGER},
+            </if>
+            <if test="piEmail != null">
+                #{piEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="piCell != null">
+                #{piCell,jdbcType=VARCHAR},
+            </if>
+            <if test="piAddr != null">
+                #{piAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="piIsdelete != null">
+                #{piIsdelete,jdbcType=BIT},
+            </if>
+            <if test="piContent != null">
+                #{piContent,jdbcType=VARCHAR},
+            </if>
+            <if test="logId != null">
+                #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="piBrief != null">
+                #{piBrief,jdbcType=VARCHAR},
+            </if>
+            <if test="piMeetnum != null">
+                #{piMeetnum,jdbcType=INTEGER},
+            </if>
+            <if test="piDealnum != null">
+                #{piDealnum,jdbcType=INTEGER},
+            </if>
+            <if test="piResponsetime != null">
+                #{piResponsetime,jdbcType=INTEGER},
+            </if>
+            <if test="piUrls != null">
+                #{piUrls,jdbcType=VARCHAR},
+            </if>
+            <if test="piComment != null">
+                #{piComment,jdbcType=VARCHAR},
+            </if>
+            <if test="piMark != null">
+                #{piMark,jdbcType=REAL},
+            </if>
+            <if test="piVideo != null">
+                #{piVideo,jdbcType=VARCHAR},
+            </if>
+            <if test="piCom != null">
+                #{piCom},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.userinfo.ProviderInfo">
+        update provider_info
+        <set>
+            <if test="piArea != null">
+                PI_AREA = #{piArea,jdbcType=VARCHAR},
+            </if>
+            <if test="piPhoto != null">
+                PI_PHOTO = #{piPhoto,jdbcType=VARCHAR},
+            </if>
+            <if test="piKeywords != null">
+                PI_KEYWORDS = #{piKeywords,jdbcType=VARCHAR},
+            </if>
+            <if test="piRemark != null">
+                PI_REMARK = #{piRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="piType != null">
+                PI_TYPE = #{piType,jdbcType=INTEGER},
+            </if>
+            <if test="piRealname != null">
+                PI_REALNAME = #{piRealname,jdbcType=VARCHAR},
+            </if>
+            <if test="piCompany != null">
+                PI_COMPANY = #{piCompany,jdbcType=VARCHAR},
+            </if>
+            <if test="piCom != null">
+                PI_COM = #{piCom,jdbcType=VARCHAR},
+            </if>
+            <if test="piPosition != null">
+                PI_POSITION = #{piPosition,jdbcType=VARCHAR},
+            </if>
+            <if test="piWorkyear != null">
+                PI_WORKYEAR = #{piWorkyear,jdbcType=INTEGER},
+            </if>
+            <if test="piEmail != null">
+                PI_EMAIL = #{piEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="piCell != null">
+                PI_CELL = #{piCell,jdbcType=VARCHAR},
+            </if>
+            <if test="piAddr != null">
+                PI_ADDR = #{piAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="piIsdelete != null">
+                PI_ISDELETE = #{piIsdelete,jdbcType=BIT},
+            </if>
+            <if test="piContent != null">
+                PI_CONTENT = #{piContent,jdbcType=VARCHAR},
+            </if>
+            <if test="piBrief != null">
+                PI_BRIEF = #{piBrief,jdbcType=VARCHAR},
+            </if>
+            <if test="piMeetnum != null">
+                PI_MEETNUM = #{piMeetnum,jdbcType=INTEGER},
+            </if>
+            <if test="piDealnum != null">
+                PI_DEALNUM = #{piDealnum,jdbcType=INTEGER},
+            </if>
+            <if test="piResponsetime != null">
+                PI_RESPONSETIME = #{piResponsetime,jdbcType=INTEGER},
+            </if>
+            <if test="piUrls != null">
+                PI_URLS = #{piUrls,jdbcType=VARCHAR},
+            </if>
+            <if test="piComment != null">
+                PI_COMMENT = #{piComment,jdbcType=VARCHAR},
+            </if>
+            <if test="piMark != null">
+                PI_MARK = #{piMark},
+            </if>
+            <if test="piVideo != null">
+                PI_VIDEO = #{piVideo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where LOG_ID = #{logId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.userinfo.ProviderInfo">
+    update provider_info
+    set PI_AREA = #{piArea,jdbcType=VARCHAR},
+    PI_PHOTO = #{piPhoto,jdbcType=VARCHAR},
+    PI_KEYWORDS = #{piKeywords,jdbcType=VARCHAR},
+    PI_REMARK = #{piRemark,jdbcType=VARCHAR},
+    PI_TYPE = #{piType,jdbcType=INTEGER},
+    PI_REALNAME = #{piRealname,jdbcType=VARCHAR},
+    PI_COMPANY = #{piCompany,jdbcType=VARCHAR},
+    PI_POSITION = #{piPosition,jdbcType=VARCHAR},
+    PI_WORKYEAR = #{piWorkyear,jdbcType=INTEGER},
+    PI_EMAIL = #{piEmail,jdbcType=VARCHAR},
+    PI_CELL = #{piCell,jdbcType=VARCHAR},
+    PI_ADDR = #{piAddr,jdbcType=VARCHAR},
+    PI_ISDELETE = #{piIsdelete,jdbcType=BIT},
+    PI_CONTENT = #{piContent,jdbcType=VARCHAR},
+    LOG_ID = #{logId,jdbcType=VARCHAR},
+    PI_BRIEF = #{piBrief,jdbcType=VARCHAR},
+    PI_MEETNUM = #{piMeetnum,jdbcType=INTEGER},
+    PI_DEALNUM = #{piDealnum,jdbcType=INTEGER},
+    PI_RESPONSETIME = #{piResponsetime,jdbcType=INTEGER},
+     PI_URLS = #{piUrls,jdbcType=VARCHAR},
+    PI_COMMENT = #{piComment,jdbcType=VARCHAR},
+    PI_MARK = #{piMark,jdbcType=REAL},
+    PI_VIDEO = #{piVideo,jdbcType=VARCHAR}
+    where PI_ID = #{piId,jdbcType=VARCHAR}
+  </update>
+
+    <select id="selectByLogId" parameterType="String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from provider_info
+        WHERE LOG_ID = #{logId,jdbcType=VARCHAR} AND PI_ISDELETE= false;
+    </select>
+    <select id="countByExample" resultType="java.lang.Integer">
+        select
+        COUNT (PI_ID)
+        from provider_info
+        <where>
+            1=1
+            <if test="piId != null">
+                AND PI_ID=#{piId}
+            </if>
+            <if test="piArea != null">
+                AND PI_AREA=#{piArea}
+            </if>
+            <if test="piPhoto != null">
+                AND PI_PHOTO=#{piPhoto}
+            </if>
+            <if test="piKeywords != null">
+                AND PI_KEYWORDS=#{piKeywords}
+            </if>
+            <if test="piRemark != null">
+                AND PI_REMARK=#{piRemark}
+            </if>
+            <if test="piType != null">
+                AND PI_TYPE=#{piType}
+            </if>
+            <if test="piRealname != null">
+                AND PI_REALNAME=#{piRealname}
+            </if>
+            <if test="piCompany != null">
+                AND PI_COMPANY=#{piCompany}
+            </if>
+            <if test="piPosition != null">
+                AND PI_POSITION=#{piPosition}
+            </if>
+            <if test="piWorkyear != null">
+                AND PI_WORKYEAR=#{piWorkyear}
+            </if>
+            <if test="piEmail != null">
+                AND PI_EMAIL=#{piEmail}
+            </if>
+            <if test="piCell != null">
+                AND PI_CELL=#{piCell}
+            </if>
+            <if test="piAddr != null">
+                AND PI_ADDR=#{piAddr}
+            </if>
+            <if test="piIsdelete != null">
+                AND PI_ISDELETE=#{piIsdelete}
+            </if>
+            <if test="piContent != null">
+                AND PI_CONTENT=#{piContent}
+            </if>
+            <if test="logId != null">
+                AND LOG_ID=#{logId}
+            </if>
+            <if test="piBrief != null">
+                AND PI_BRIEF=#{piBrief}
+            </if>
+            <if test="piMeetnum != null">
+                AND PI_MEETNUM=#{piMeetnum}
+            </if>
+            <if test="piDealnum != null">
+                AND PI_DEALNUM=#{piDealnum}
+            </if>
+            <if test="piResponsetime != null">
+                AND PI_RESPONSETIME=#{piResponsetime}
+            </if>
+            <if test="piUrls != null">
+                AND PI_URLS=#{piUrls}
+            </if>
+            <if test="piComment != null">
+                AND PI_COMMENT=#{piComment}
+            </if>
+            <if test="piMark != null">
+                AND PI_MARK=#{piMark}
+            </if>
+            <if test="piVideo != null">
+                AND PI_VIDEO=#{piVideo}
+            </if>
+        </where>
+    </select>
+    <select id="countByLogId" resultType="java.lang.Integer">
+        select
+        COUNT (PI_ID)
+        from provider_info
+        <where>
+            LOG_ID=#{logId}
+        </where>
+    </select>
+    
+    <select id="selectGoodProviders" resultMap="BaseResultMap">
+    	select
+    	PI_PHOTO,
+    	PI_ID,
+    	PI_REALNAME,
+    	PI_POSITION,
+    	PI_ADDR,
+    	PI_DEALNUM,
+    	PI_MARK,
+    	provider_info.LOG_ID
+    	from provider_info
+    	INNER JOIN log_info ON provider_info.LOG_ID = log_info.LOG_ID
+		INNER JOIN provider_check_info ON log_info.LOG_ID = provider_check_info.LOG_ID
+    	<where>
+    		PCI_STATE = 2
+    	</where>
+    	order by PI_MARK DESC
+    </select>
+    
+    <select id="selectGoodProvidersCount" resultType="int">
+    	select COUNT(*) from provider_info
+    	INNER JOIN log_info ON provider_info.LOG_ID = log_info.LOG_ID
+		INNER JOIN provider_check_info ON log_info.LOG_ID = provider_check_info.LOG_ID
+    	<where>
+    		PCI_STATE = 2
+    	</where>
+    	order by PI_MARK DESC
+    </select>
+
+
+</mapper>

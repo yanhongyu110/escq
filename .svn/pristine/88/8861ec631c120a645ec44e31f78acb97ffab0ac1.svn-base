@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.jero.esc.mapper.system.SystemMegsMapper"> 
+ <resultMap id="BaseResultMap" type="com.jero.esc.po.system.SystemMegs"> 
+  <id column="SM_ID" jdbcType="VARCHAR" property="smId" /> 
+  <result column="SM_TITLE" jdbcType="VARCHAR" property="smTitle" /> 
+  <result column="SM_CONTENT" jdbcType="VARCHAR" property="smContent" /> 
+  <result column="SM_CREATETIME" jdbcType="TIMESTAMP" property="smCreatetime" /> 
+  <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" /> 
+  <result column="SM_TYPE" jdbcType="INTEGER" property="smType" /> 
+  <result column="SM_ISDELETE" jdbcType="BIT" property="smIsdelete" /> 
+  <result column="SM_COMMENT" jdbcType="VARCHAR" property="smComment" />
+  <result column="COMPANY" jdbcType="VARCHAR" property="company" /> 
+ </resultMap> 
+ <resultMap id="MesResultMap" type="com.jero.esc.vo.userinfo.SystemMesVo"> 
+  <id column="SM_ID" jdbcType="VARCHAR" property="smId" /> 
+  <result column="SM_TITLE" jdbcType="VARCHAR" property="smTitle" /> 
+  <result column="SM_CONTENT" jdbcType="VARCHAR" property="smContent" /> 
+  <result column="SM_CREATETIME" jdbcType="TIMESTAMP" property="smCreatetime" /> 
+  <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" /> 
+  <result column="SM_TYPE" jdbcType="INTEGER" property="smType" /> 
+  <result column="SM_ISDELETE" jdbcType="BIT" property="smIsdelete" /> 
+  <result column="SM_COMMENT" jdbcType="VARCHAR" property="smComment" /> 
+  <result column="MD_ID" jdbcType="VARCHAR" property="mdId" /> 
+  <result column="SM_ID" jdbcType="VARCHAR" property="mdsmId" /> 
+  <result column="LOG_ID" jdbcType="VARCHAR" property="logId" /> 
+  <result column="MD_CREATETIME" jdbcType="TIMESTAMP" property="mdCreatetime" /> 
+  <result column="MD_ISDELETE" jdbcType="BIT" property="mdIsdelete" /> 
+  <result column="MD_COMMENT" jdbcType="VARCHAR" property="mdComment" />
+  <result column="COMPANY" jdbcType="VARCHAR" property="company" /> 
+ </resultMap> 
+ <sql id="Base_Column_List">
+  SM_ID, SM_TITLE, SM_CONTENT, SM_CREATETIME, ADMIN_ID, SM_TYPE, SM_ISDELETE, SM_COMMENT,COMPANY
+ </sql>
+
+
+ <select id="selectAllMes" resultMap="MesResultMap" >
+ SELECT system_megs.SM_ID, system_megs.SM_TITLE, system_megs.SM_CONTENT, system_megs.SM_CREATETIME, system_megs.ADMIN_ID, system_megs.SM_TYPE, system_megs.SM_ISDELETE, system_megs.SM_COMMENT, meg_details.MD_ID, meg_details.SM_ID, meg_details.LOG_ID, meg_details.MD_CREATETIME, meg_details.MD_ISDELETE, meg_details.MD_COMMENT
+ FROM system_megs
+ INNER JOIN meg_details ON system_megs.SM_ID = meg_details.SM_ID
+ WHERE meg_details.LOG_ID=#{sysMes.logId}
+ AND system_megs.SM_TYPE=#{sysMes.smType}
+ AND SM_ISDELETE != 1
+ ORDER BY meg_details.MD_CREATETIME DESC
+ </select>
+
+
+
+
+
+ <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap"> select 
+  <include refid="Base_Column_List" /> from system_megs where SM_ ID = #{smId,jdbcType=VARCHAR} </select> 
+ <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+   delete from system_megs where SM_ID = #{smId,jdbcType=VARCHAR} 
+ </delete> 
+ <insert id="insert" parameterType="com.jero.esc.po.system.SystemMegs">
+  insert into system_megs (SM_ID, SM_TITLE, SM_CONTENT, SM_CREATETIME, ADMIN_ID, SM_TYPE, SM_ISDELETE, SM_COMMENT,COMPANY) values (#{smId,jdbcType=VARCHAR}, #{smTitle,jdbcType=VARCHAR}, #{smContent,jdbcType=VARCHAR}, #{smCreatetime,jdbcType=TIMESTAMP}, #{adminId,jdbcType=VARCHAR}, #{smType,jdbcType=INTEGER}, #{smIsdelete,jdbcType=BIT}, #{smComment,jdbcType=VARCHAR},#{company})
+ </insert> 
+ <insert id="insertSelective" parameterType="com.jero.esc.po.system.SystemMegs">
+   insert into system_megs 
+  <trim prefix="(" suffix=")" suffixOverrides=","> 
+   <if test="smId != null">
+     SM_ID, 
+   </if> 
+   <if test="smTitle != null">
+     SM_TITLE, 
+   </if> 
+   <if test="smContent != null">
+     SM_CONTENT, 
+   </if> 
+   <if test="smCreatetime != null">
+     SM_CREATETIME, 
+   </if> 
+   <if test="adminId != null">
+     ADMIN_ID, 
+   </if> 
+   <if test="smType != null">
+     SM_TYPE, 
+   </if> 
+   <if test="smIsdelete != null">
+     SM_ISDELETE, 
+   </if> 
+   <if test="smComment != null">
+     SM_COMMENT, 
+   </if>  
+   <if test="company != null">
+     COMPANY, 
+   </if>
+  </trim> 
+  <trim prefix="values (" suffix=")" suffixOverrides=","> 
+   <if test="smId != null">
+     #{smId,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="smTitle != null">
+     #{smTitle,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="smContent != null">
+     #{smContent,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="smCreatetime != null">
+     #{smCreatetime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="adminId != null">
+     #{adminId,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="smType != null">
+     #{smType,jdbcType=INTEGER}, 
+   </if> 
+   <if test="smIsdelete != null">
+     #{smIsdelete,jdbcType=BIT}, 
+   </if> 
+   <if test="smComment != null">
+     #{smComment,jdbcType=VARCHAR}, 
+   </if>  
+   <if test="company != null">
+     #{company}, 
+   </if>
+  </trim> 
+ </insert> 
+ <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.system.SystemMegs">
+   update system_megs 
+  <set> 
+   <if test="smTitle != null">
+     SM_TITLE = #{smTitle,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="smContent != null">
+     SM_CONTENT = #{smContent,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="smCreatetime != null">
+     SM_CREATETIME = #{smCreatetime,jdbcType=TIMESTAMP}, 
+   </if> 
+   <if test="adminId != null">
+     ADMIN_ID = #{adminId,jdbcType=VARCHAR}, 
+   </if> 
+   <if test="smType != null">
+     SM_TYPE = #{smType,jdbcType=INTEGER}, 
+   </if> 
+   <if test="smIsdelete != null">
+     SM_ISDELETE = #{smIsdelete,jdbcType=BIT}, 
+   </if> 
+   <if test="smComment != null">
+     SM_COMMENT = #{smComment,jdbcType=VARCHAR}, 
+   </if>  
+   <if test="company != null">
+     COMPANY = #{company}, 
+   </if>
+  </set> where SM_ID = #{smId,jdbcType=VARCHAR} 
+ </update> 
+ <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.system.SystemMegs">
+  update system_megs set SM_TITLE = #{smTitle,jdbcType=VARCHAR}, SM_CONTENT = #{smContent,jdbcType=VARCHAR}, SM_CREATETIME = #{smCreatetime,jdbcType=TIMESTAMP}, ADMIN_ID = #{adminId,jdbcType=VARCHAR}, SM_TYPE = #{smType,jdbcType=INTEGER}, SM_ISDELETE = #{smIsdelete,jdbcType=BIT}, SM_COMMENT = #{smComment,jdbcType=VARCHAR} , COMPANY = #{company} where SM_ID = #{smId,jdbcType=VARCHAR}
+ </update> 
+ <update id="deleteMesByPrimaryKey" parameterType="java.lang.String">
+   update system_megs set SM_ISDELETE = 1 where SM_ID = #{smId,jdbcType=VARCHAR} 
+ </update> 
+ <select id="selectMesCountBylogId" parameterType="com.jero.esc.vo.userinfo.SystemMesVo" resultType="int"> SELECT COUNT(*) FROM system_megs INNER JOIN meg_details ON system_megs.SM_ID = meg_details.SM_ID WHERE meg_details.LOG_ID=#{logId} AND system_megs.SM_TYPE=#{smType} AND SM_ISDELETE != 1 ORDER BY meg_details.MD_CREATETIME DESC </select> 
+</mapper>

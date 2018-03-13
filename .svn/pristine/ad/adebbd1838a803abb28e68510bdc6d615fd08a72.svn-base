@@ -1,0 +1,138 @@
+var maxPage = 0;
+var currentPage = 1;
+var s = true;
+
+$(function(){
+	$.ajax({
+		type: "POST",
+		dataType: "json",
+		url:path+ "/wap/goodsinfo/service/queryCountRemarkLogIdServiceId.html",
+		data:{
+			"logId" : logId,
+		},
+		success: function (data) {
+			$('#total0').html(data[0].remark0Count);
+			$('#total1').html(data[0].remark1Count);
+			$('#total2').html(data[0].remark2Count);
+			$('#total3').html(data[0].remark3Count);
+		}
+	});
+	selectCommonAjax(1);
+	$(".title-list.fr.cf li").bind('click',function(){
+		var liindex = $('.title-list li').index(this);
+		$(this).addClass('on').siblings().removeClass('on');
+		$('.service_content div.service_content_pj').eq(liindex).fadeIn(150).siblings('div.service_content_pj').hide();
+		var liWidth = $('.title-list li').width();
+		$('.my_date_bt .title-list p').stop(false, true).animate({
+			'left': liindex * liWidth + 'px'
+		}, 300);
+		$(".service_content_pj_list").html("");
+		maxPage = 0;
+		currentPage = 1;
+		selectCommonAjax(1);
+		$("#load_more").html("加载更多...");
+	});
+
+	/*$(document).on("click","#load_more", function () {
+		currentPage += 1;
+		if(currentPage>maxPage){
+			//alert("没有更多数据了。。。","提示");
+			$("#load_more").html("没有更多数据了...");
+		}else{
+			selectCommonAjax(currentPage);
+		}
+	});*/
+
+    $('body').bind('touchmove', function(e) {
+        if($(window).scrollTop()>=$(document).height()-$(window).height()){
+            if(s) {
+                currentPage += 1;
+                if(currentPage>maxPage){
+                    //alert("没有更多数据了。。。","提示");
+                    $("#load_more").html("没有更多数据了...");
+                }else{
+                    selectCommonAjax(currentPage);
+                }
+                s = false;
+            }
+        }
+    });
+
+	$(document).on("click",".waiter_box.border_bottom.clearfix", function () {
+			$(this).find(".remark_content").show(100).end().siblings().find(".remark_content").hide(100);
+	});
+
+});
+
+
+function selectCommonAjax(page){
+	var srLevel= $(".title-list.fr.cf li.on").find("input").val();
+	var rows=5;//每页显示评论
+		$.ajax({
+			type: "POST",
+			dataType: "json",
+			url:path+ "/wap/goodsinfo/service/queryServiceRemarkByLogIdServiceId.html",
+			data:{
+				"logId" : logId,
+				"srLevel" : srLevel,
+				"rows" : rows,
+				"page" : page
+			},
+			success: function (data) {
+					maxPage = Math.ceil(data.totalSize/ data.pageSize);
+					for (var i = 0; i < data.list.length; i++) {
+						var date1 = new Date(data.list[i].srCreatetime).toLocaleDateString(); 
+						var date2 = new Date(data.list[i].srCreatetime).toLocaleTimeString(); 
+						var date=date1+=date2;
+
+						var Appenddate1 = new Date(data.list[i].srAppendtime).toLocaleDateString();
+						var Appenddate2 = new Date(data.list[i].srAppendtime).toLocaleTimeString();
+						var Appenddate=Appenddate1+=Appenddate2;
+
+						var responsedate1 = new Date(data.list[i].srResponsetime).toLocaleDateString();
+						var responsedate2 = new Date(data.list[i].srResponsetime).toLocaleTimeString();
+						var responsedate=responsedate1+=responsedate2;
+
+						var responseAppenddate1 = new Date(data.list[i].srResponseappendtime).toLocaleDateString();
+						var responseAppenddate2 = new Date(data.list[i].srResponseappendtime).toLocaleTimeString();
+						var responseAppenddate=responseAppenddate1+=responseAppenddate2;
+
+
+						var resultSingle = "<div class='waiter_box border_bottom clearfix' >"
+						resultSingle += "<div class='waiter_img'><img src='"+data.list[i].userPhoto+"'> <span>"+data.list[i].logName+"</span> </div>";
+						resultSingle+="<div class='waiter'>"+"<h1>"+data.list[i].serviceTitle+"</h1>"+"<p>"+data.list[i].serviceContent+"</p>"+"<p>"+date+"</p>"+"</div>";
+						/*resultSingle+='<div class="my_remark_right"><div class="star_box" style=" position:absolute; top:30px; right:10px;">';
+						for(var j=0;j< data.list[i].srRemark;j++){
+							resultSingle+='<img src='+path+'/images/wap/star.png>';
+						}
+						for(var j=0;j<5 - data.list[i].srRemark;j++){
+							resultSingle+='<img src='+path+'/images/wap/star_gray.png>';
+						}
+						resultSingle+='	</div></div>';*/
+
+						resultSingle += '<div class="remark_content" style="display: none;"><div class="remark_content_son1"><div class="remark_content_son1_pl"><a href="javascript:;">'+data.list[i].logName+' </a>&nbsp;'+data.list[i].srContent+'<span>'+date+'</span></div> <div class="remark_content_son1_repl"><a href="javascript:;">[回复]</a>&nbsp;<a href="javascript:;">['+responsedate+']</a>'+data.list[i].srResponsecontent+'</div> </div>';
+						resultSingle += '<div class="remark_content_son1"><div class="remark_content_son1_pl"><a href="javascript:;">'+data.list[i].logName+' [追加评论]</a>&nbsp;<a href="javascript:;"></a>'+data.list[i].srAppendcontent+'<span>'+Appenddate+'</span></div><div class="remark_content_son1_repl"><a href="javascript:;">[追加回复]</a>&nbsp;<a href="javascript:;">['+responseAppenddate+']</a>'+data.list[i].srResponseappendcontent+'</div> </div> </div></div>';
+
+						var $resultObj = $(resultSingle);
+
+						var $resultObjConetent = $resultObj.find(".remark_content");
+						if(data.list[i].srContent==null || data.list[i].srContent==""){
+							$resultObjConetent.remove();
+						}
+						if(data.list[i].srResponsecontent==null  || data.list[i].srResponsecontent==""){
+							$resultObjConetent.find(".remark_content_son1_repl:eq(0)").remove();
+						}
+
+						if(data.list[i].srAppendcontent==null  || data.list[i].srAppendcontent==""){
+							$resultObjConetent.find(".remark_content_son1:eq(1)").remove();
+						}
+						if(data.list[i].srResponseappendcontent==null  || data.list[i].srResponseappendcontent==""){
+							$resultObjConetent.find(".remark_content_son1_repl:eq(1)").remove();
+						}
+
+						$(".service_content_pj_list").append($resultObj);
+					}
+			}
+		})
+	s = true;
+}

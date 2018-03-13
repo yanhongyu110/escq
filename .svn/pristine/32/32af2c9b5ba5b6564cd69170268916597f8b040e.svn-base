@@ -1,0 +1,256 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jsp/common/common.jsp" %>
+<!DOCTYPE html>
+<head>
+    <title>发布需求</title>
+    <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
+    <%@ include file="/WEB-INF/jsp/common/kindeditor.jsp" %>
+    <%@ include file="/WEB-INF/jsp/common/easyui.jsp" %>
+    <link rel="stylesheet" href="${webtxc}/css/public.css"/>
+    <link rel="stylesheet" href="${webtxc}/css/personal.css"/>
+    <link rel="stylesheet" href="${webtxc}/css/goodsinfo/goodsinfo.css"/>
+    <script type="text/javascript" src="${webtxc}/js/personal_tab.js"></script>
+    <script type="text/javascript" src="${webtxc}/js/personal_menu.js"></script>
+    <script type="text/javascript" src="${webtxc}/myjs/demand/adddemand.js?v=12"></script>
+</head>
+<body>
+
+<c:set var="istop" value="true" />
+<%@include file="/WEB-INF/jsp/common/top.jsp" %>
+<!-- start.content -->
+<div class="content">
+    <%@ include file="/WEB-INF/jsp/common/left.jsp" %>
+    <div class="content-right">
+        <div class="expert_mes">
+            <h2>发布需求</h2>
+            <ul class="note_message ">
+                <ul>
+                    <li class="mes">需求名称：</li>
+                    <li><input class="mees" name="demTitle" placeholder="请输入相关信息"></li>
+
+                    <li class="zp_ts">字数不低于<span>5</span>个字</li>
+                </ul>
+                <ul>
+                    <li class="mes">联系人：</li>
+                    <li><input class="mees" name="demContact" placeholder="请输入相关信息"></li>
+
+                    <!-- <li class="zp_ts">字数不低于<span>5</span>个字</li> -->
+                </ul>
+                <ul>
+                    <li class="mes">电话：</li>
+                    <li><input class="mees" name="demCell" placeholder="请输入相关信息"></li>
+
+                    <!-- <li class="zp_ts">字数不低于<span>5</span>个字</li> -->
+                </ul>
+                <ul>
+                    <li class="mes">需求关键字：</li>
+                    <li>
+                        <textarea name="demKeyword" cols="50" rows="3" placeholder="请输入关键词..."></textarea>
+                    </li>
+
+                    <li class="zp_ts" ><span>*选填</span>请填写此需求的关键字，以逗号（，）分隔，最多<span>5</span>个关键字，如：话题咨询，互联网产品</li>
+                </ul>
+                <ul>
+                    <li class="mes">需求简介：</li>
+                    <li>
+                        <textarea name="demBrief" cols="50" rows="6" placeholder="请需求服务简介..."></textarea>
+                    </li>
+                    <li class="zp_ts" ><span>*选填</span>字数不超过<span>200</span>个字。</li>
+                    <li class="qt_more">
+                        <a><b>看看别人家都怎么写文案</b></a>
+                        <a>【荐】王小二 互联网产品经理..</a>
+                        <a>【荐】王小二 互联网产品经理..</a>
+                        <a>【荐】王小二 互联网产品经理..</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="mes">需求介绍：</li>
+                    <li>
+                        <textarea id="info_brief" name="demContent" cols="50" rows="9"></textarea>
+                    </li>
+                </ul>
+
+                <%--<ul style="height:60px;">--%>
+                <%--<li class="mes">见面时长：</li>--%>
+                <%--<li>--%>
+                <%--<input class="mees" name="servicemeetnum" value="请输入见面时长,如:12">--%>
+                <%--</li>--%>
+
+                <%--<li class="zp_ts">如小时左右/次</li>--%>
+
+                <%--</ul>--%>
+
+
+                <%-- <ul >
+                    <li class="mes">咨询费用：</li>
+                    <li>
+                        <div class="pset">
+                            <a class="addrowpset" id="addrowpset" href="javascript:void(0)" style="display: none">添加</a>
+                            <div class="psetsg" style="display:none;" id="psetsg">
+                                来源：<select name="psetdiscounttype">
+                                            <option selected value="1">普通服务</option>
+                                            <option  value="2">积分服务</option>
+                                        </select>
+                                价格：<input type="text" class="" name="psetprice"/>
+                                积分：<input type="text" name="psetpoint"/>
+                                <a class="delrowpset" href="javascript:void(0)">删除</a>
+                            </div>
+                            <div class="psetsg ppset">
+                                来源：<select name="psetdiscounttype">
+                                            <option selected value="1">普通服务</option>
+                                            <option  value="2">积分服务</option>
+                                        </select>
+                                价格：<input type="text" name="psetprice"/>
+                               <!--  积分： --><input type="hidden" name="psetpoint" value="0"/>
+                                <a class="delrowpset" href="javascript:void(0)" style="display: none">删除</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul> --%>
+                <ul >
+                    <li class="mes">封面上传：</li>
+                 
+        <li class="sc_img">
+            <img src="${webtxc}/images/zp.png" id="image1" style="text-align: center;display: inline-block;padding-top: 30px" />
+            <br>
+            <input class="mees" id="info_icon1" name="demImage" type="hidden"/>
+            <span>上传封面</span>
+        </li>
+                    <li>
+
+                        <%--<input type="button" class="button" id="imgBtn" value="选择图片" style="width:72px"/>--%>
+                        <%--</li>--%>
+
+                    <li class="zp_ts"><span>*选填</span>注：大小为1M以内</li>
+
+                </ul>
+
+                <!-- <ul>
+                    <li class="mes">服务时间：</li>
+                    <li>
+                        <input class="mees" name="servicemeettime" placeholder="请输入服务时长（小时）">
+                    </li>
+                    <li class="zp_ts">（小时）</li>
+                </ul> -->
+
+                <ul>
+                    <li class="mes">类型：</li>
+                    <li>
+                        <select class="mess" name="demType"  id="tree">
+                        </select>
+                        <script>
+                            (function () {
+                                if (!Array.prototype.map) {
+                                    Array.prototype.map = function (callback, thisArg) {
+                                        var T, A, k;
+                                        if (this == null) {
+                                            throw new TypeError(" this is null or not defined");
+                                        }
+                                        var O = Object(this);
+                                        var len = O.length >>> 0;
+                                        if (typeof callback !== "function") {
+                                            throw new TypeError(callback + " is not a function");
+                                        }
+                                        if (thisArg) {
+                                            T = thisArg;
+                                        }
+                                        A = new Array(len);
+                                        k = 0;
+                                        while (k < len) {
+                                            var kValue, mappedValue;
+                                            if (k in O) {
+                                                kValue = O[k];
+                                                mappedValue = callback.call(T, kValue, k, O);
+                                                A[k] = mappedValue;
+                                            }
+                                            k++;
+                                        }
+                                        return A;
+                                    };
+                                }
+                            })()
+                            $(function () {
+                                $('#tree').combotree({
+                                    url: path + "/pubinfo/getTree.html?type=1",
+                                    height: "30",
+                                    width:279,
+                                    onlyLeafCheck:true,
+                                    onClick: function (node) {
+                                    console.log(node);
+                                        $('#tree').val(node.id);  // alert node text property when clicked
+                                    },
+                                    //父级不可选
+					                onBeforeSelect:function(node){
+					                	if(node.ctFid =='0'){
+					                		$("#tree").tree("unselect");
+					                	}
+ 					                },
+                                    loadFilter: function (data) {
+                                        var big = {}
+                                        var genList = function (data, obj) {
+                                            var l = []
+                                            data.map(function (it, index) {
+                                                if ( (obj.ctId == null&&it.ctFid=="0")  || obj.ctId == it.ctFid) {
+                                                    it.id=it.ctId;
+                                                    it.text=it.ctName;
+                                                    var c = genList(it.children, it);
+                                                    l.push(c)
+                                                }
+                                            })
+                                            obj.state='open';
+                                            if (l.length != 0) {
+                                                obj.children = l;
+                                                return obj;
+                                            } else {
+                                                obj.state='close';
+                                                return obj;
+                                            }
+                                        };
+                                        var ff = genList(data, big).children;
+                                        return ff;
+                                    }
+                                })
+                            })
+                        </script>
+
+                    </li>
+                </ul>
+                <div class="mes_btn">
+                    <a class="mes_bc" id="servicesave">保存</a>
+
+                </div>
+	<div id="ceng" style="position:absolute;z-index:2;left:0;top:0;right:0;filter:alpha(opacity=50);margin:1px 1px;display:none;width:100%;height:100%;text-align:center;"> 
+	</div>
+	<div id="close" style="position:absolute !important;left:30%;top:70%;z-index:3;border:1px solid #bbb;background-color:#fff;margin:100px auto;padding:0px;display:none;width:60%;height:60%;text-align:right">
+		<a href="#" onclick="closeCeng()">关闭</a>
+	<div style="text-align:center;"><br>
+
+	<div class="pictures">
+	 <h3>精美配图内容由近到家平台提供</h3>
+	 <div class="pictures_img" id="insertPicture">
+<%-- 	 <ul>
+	 <li><img src="${webtxc}/images/fw_01.jpg" ondblclick="doubleClick()"></li>
+	 <li><img src="${webtxc}/images/fw_02.jpg" ></li>
+	 <li><img src="${webtxc}/images/fw_03.jpg" ></li>
+	 </ul>
+	 <ul>
+	 <li><img src="${webtxc}/images/fw_01.jpg" ></li>
+	 <li><img src="${webtxc}/images/fw_02.jpg" ></li>
+	 <li><img src="${webtxc}/images/fw_03.jpg" ></li>
+	 </ul> --%>
+	 </div>
+	</div>
+
+</div>
+        </div>
+
+    </div><!--end.expert_mes-->
+</div>
+<!--end.content-right-->
+</div>
+<!--end.content-->
+<%@include file="/WEB-INF/jsp/common/bottom.jsp" %>
+</body>
+
+</html>

@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.goodsinfo.ServiceCartMapper">
+    <resultMap id="BaseResultMap" type="com.jero.esc.po.goodsinfo.ServiceCart">
+        <id column="SCART_ID" jdbcType="VARCHAR" property="scartId"/>
+        <result column="SS_ID" jdbcType="VARCHAR" property="ssId"/>
+        <result column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="logId"/>
+        <result column="SCART_CREATETIME" jdbcType="TIMESTAMP" property="scartCreatetime"/>
+        <result column="SCART_ISDELETE" jdbcType="BIT" property="scartIsdelete"/>
+        <result column="SCART_COMMENT" jdbcType="VARCHAR" property="scartComment"/>
+        <result column="SCART_ATTRS" jdbcType="VARCHAR" property="scartAttrs"/>
+        <result column="SCART_SOURCE" jdbcType="VARCHAR" property="scartSource"/>
+        <result column="SCART_NUM" jdbcType="INTEGER" property="scartNum"/>
+        <result column="SCART_PRICE" jdbcType="REAL" property="scartPrice"/>
+        <result column="SCART_POINT" jdbcType="REAL" property="scartPoint"/>
+        <association property="serviceSnapshot" column="SERS_ID" resultMap="com.jero.esc.mapper.goodsinfo.ServiceSnapshotMapper.BaseResultMap"/>
+        <association property="providerName" column="LOG_ID" resultMap="com.jero.esc.mapper.userinfo.ProviderInfoMapper.BaseResultMap"/>
+    </resultMap>
+    
+    <resultMap id="CartResultMap" type="com.jero.esc.vo.goodsinfo.CartVo">
+        <!-- 购物车 -->
+        <result column="SCART_ID" jdbcType="VARCHAR" property="scartId"/>
+        <result column="SS_ID" jdbcType="VARCHAR" property="ssId"/>
+        <result column="SCART_SERVICE_ID" jdbcType="VARCHAR" property="scartServiceId"/>
+        <result column="SCART_LOG_ID" jdbcType="VARCHAR" property="scartLogId"/>
+        <result column="SCART_CREATETIME" jdbcType="TIMESTAMP" property="scartCreatetime"/>
+        <result column="SCART_ISDELETE" jdbcType="BIT" property="scartIsdelete"/>
+        <result column="SCART_COMMENT" jdbcType="VARCHAR" property="scartComment"/>
+        <result column="SCART_ATTRS" jdbcType="VARCHAR" property="scartAttrs"/>
+        <result column="SCART_SOURCE" jdbcType="VARCHAR" property="scartSource"/>
+        <result column="SCART_NUM" jdbcType="INTEGER" property="scartNum"/>
+        <result column="SCART_PRICE" jdbcType="REAL" property="scartPrice"/>
+        <result column="SCART_POINT" jdbcType="REAL" property="scartPoint"/>
+       
+
+        
+        <!-- 服务信息表 -->
+        <result column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId"/>
+        <result column="PI_LOG_ID" jdbcType="VARCHAR" property="pilogId"/>
+        <result column="SERVICE_REMARK" jdbcType="VARCHAR" property="serviceRemark"/>
+        <result column="SERVICE_TITLE" jdbcType="VARCHAR" property="serviceTitle"/>
+        <result column="SERVICE_BIREF" jdbcType="VARCHAR" property="serviceBiref"/>
+        <result column="SERVICE_CONTENT" jdbcType="VARCHAR" property="serviceContent"/>
+        <result column="SERVICE_PRICE" jdbcType="VARCHAR" property="servicePrice"/>
+        <result column="SERVICE_RESPONSE" jdbcType="REAL" property="serviceResponse"/>
+        <result column="SERVICE_MEETNUM" jdbcType="INTEGER" property="serviceMeetnum"/>
+        <result column="SERVICE_SUCCESSNUM" jdbcType="INTEGER" property="serviceSuccessnum"/>
+        <result column="SERVICE_ISDELETE" jdbcType="BIT" property="serviceIsdelete"/>
+        <result column="SERVICE_CREATETIME" jdbcType="TIMESTAMP" property="serviceCreatetime"/>
+        <result column="SERVICE_STATE" jdbcType="INTEGER" property="serviceState"/>
+        <result column="SERVICE_MEETTIME" jdbcType="REAL" property="serviceMeettime"/>
+        <result column="SERVICE_TYPE" jdbcType="INTEGER" property="serviceType"/>
+        <result column="SERVICE_ATTRINFO" jdbcType="VARCHAR" property="serviceAttrinfo"/>
+        <result column="SERVICE_KEYWORDS" jdbcType="VARCHAR" property="serviceKeywords"/>
+        <result column="SERVICE_COMMENT" jdbcType="VARCHAR" property="serviceComment"/>
+        <result column="SERVICE_PIC" jdbcType="VARCHAR" property="servicePic"/>
+        
+        <!-- 服务商信息表 -->
+        <result column="PI_ID" jdbcType="VARCHAR" property="piId" />
+	    <result column="PI_AREA" jdbcType="VARCHAR" property="piArea" />
+	    <result column="PI_PHOTO" jdbcType="VARCHAR" property="piPhoto" />
+	    <result column="PI_KEYWORDS" jdbcType="VARCHAR" property="piKeywords" />
+	    <result column="PI_REMARK" jdbcType="VARCHAR" property="piRemark" />
+	    <result column="PI_TYPE" jdbcType="INTEGER" property="piType" />
+	    <result column="PI_REALNAME" jdbcType="VARCHAR" property="piRealname" />
+	    <result column="PI_COMPANY" jdbcType="VARCHAR" property="piCompany" />
+	    <result column="PI_POSITION" jdbcType="VARCHAR" property="piPosition" />
+	    <result column="PI_WORKYEAR" jdbcType="INTEGER" property="piWorkyear" />
+	    <result column="PI_EMAIL" jdbcType="VARCHAR" property="piEmail" />
+	    <result column="PI_CELL" jdbcType="VARCHAR" property="piCell" />
+	    <result column="PI_ADDR" jdbcType="VARCHAR" property="piAddr" />
+	    <result column="PI_ISDELETE" jdbcType="BIT" property="piIsdelete" />
+	    <result column="PI_CONTENT" jdbcType="VARCHAR" property="piContent" />
+	    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+	    <result column="PI_BRIEF" jdbcType="VARCHAR" property="piBrief" />
+	    <result column="PI_MEETNUM" jdbcType="INTEGER" property="piMeetnum" />
+	    <result column="PI_DEALNUM" jdbcType="INTEGER" property="piDealnum" />
+	    <result column="PI_RESPONSETIME" jdbcType="INTEGER" property="piResponsetime" />
+	    <result column="PI_URLS" jdbcType="VARCHAR" property="piUrls" />
+	    <result column="PI_COMMENT" jdbcType="VARCHAR" property="piComment" />
+    </resultMap>
+    
+    
+    
+    <sql id="Base_Column_List">
+    SCART_ID, SS_ID, SERVICE_ID, LOG_ID, SCART_CREATETIME, SCART_ISDELETE, SCART_COMMENT,
+    SCART_ATTRS, SCART_SOURCE, SCART_NUM, SCART_PRICE, SCART_POINT
+ 	 </sql>
+ 	 
+    <sql id="Base_Column_CartList">
+        <!-- 购物车 -->
+        SCART_ID,
+		SS_ID,
+		A.SERVICE_ID AS SCART_SERVICE_ID,
+		A.LOG_ID AS SCART_LOG_ID,
+		SCART_CREATETIME,
+		SCART_ISDELETE,
+		SCART_COMMENT,
+		SCART_ATTRS,
+		SCART_SOURCE,
+		SCART_NUM,
+		SCART_PRICE,
+		SCART_POINT,
+		
+		<!-- 服务信息 -->
+		C.SERVICE_ID,
+		C.LOG_ID AS PI_LOG_ID,
+		SERVICE_REMARK,
+		SERVICE_TITLE,
+		SERVICE_BIREF,
+		SERVICE_PRICE,
+		SERVICE_RESPONSE,
+		SERVICE_MEETNUM,
+		SERVICE_SUCCESSNUM,
+		SERVICE_ISDELETE,
+		SERVICE_CREATETIME,
+		SERVICE_STATE,
+		SERVICE_MEETTIME,
+		SERVICE_TYPE,
+		SERVICE_ATTRINFO,
+		SERVICE_KEYWORDS,
+		SERVICE_COMMENT,
+		SERVICE_PIC,
+		
+		<!-- 服务商信息 -->
+		PI_ID,
+		PI_AREA,
+		PI_PHOTO,
+		PI_KEYWORDS,
+		PI_REMARK,
+		PI_TYPE,
+		PI_REALNAME,
+		PI_COMPANY,
+		PI_POSITION,
+		PI_WORKYEAR,
+		PI_EMAIL,
+		PI_CELL,
+		PI_ADDR,
+		PI_ISDELETE,
+		D.LOG_ID,
+		PI_BRIEF,
+		PI_MEETNUM,
+		PI_DEALNUM,
+		PI_RESPONSETIME,
+		PI_URLS,
+		PI_COMMENT
+    </sql>
+    
+    <select id="seleteCartByRequire" parameterType="com.jero.esc.vo.goodsinfo.CartVo" resultMap="CartResultMap">
+        select
+        	 <include refid="Base_Column_CartList"/>,
+        	 B.SERS_ID, SERS_INFO, SERS_CHOOSE, SERS_PRICE, SERS_PERPRICE, SERS_CREATETIME, SERS_COMMENT
+        from 
+          service_cart AS A
+		INNER JOIN service_snapshot AS B ON A.SS_ID = B.SERS_ID
+		<!-- INNER JOIN service_info AS C ON B.SERVICE_ID = C.SERVICE_ID -->
+		INNER JOIN provider_info AS D ON A.LOG_ID = D.LOG_ID
+        <where>
+        	<if test="ssId!=null and ssId!=''">
+                AND A.SS_ID=#{ssId,jdbcType=VARCHAR}
+            </if>
+            <if test="logId!=null and logId!=''">
+                AND A.LOG_ID=#{logId,jdbcType=VARCHAR}
+            </if>
+            <if test="piRealname!=null and piRealname!=''">
+                AND PI_REALNAME LIKE concat('%',#{piRealname,jdbcType=VARCHAR},'%'）
+            </if>
+            <if test="serviceTitle!=null and serviceTitle!=''">
+                AND SERVICE_TITLE LIKE concat('%',#{serviceTitle,jdbcType=VARCHAR},'%')
+            </if>
+            
+            <if test="box!=null">
+	            <if test="box.startTime!=null and box.startTime!=''">
+	                AND SCART_CREATETIME &gt;=#{box.startTime}
+	            </if>
+	           	<if test="box.endTime!=null and box.endTime!=''">
+	                AND SCART_CREATETIME &lt;=#{box.endTime}
+	            </if>
+         	</if>
+            
+        </where>
+        ORDER BY SCART_CREATETIME DESC
+    </select>
+    
+    
+     <select id="countByRequire" parameterType="com.jero.esc.vo.goodsinfo.CartVo" resultType="java.lang.Integer">
+        select
+        count(*)
+        from 
+          service_cart AS A
+		INNER JOIN service_snapshot AS B ON A.SS_ID = B.SERS_ID
+		INNER JOIN service_info AS C ON B.SERVICE_ID = C.SERVICE_ID
+		INNER JOIN provider_info AS D ON C.LOG_ID = D.LOG_ID
+        <where>
+            <if test="logId!=null and logId!=''">
+                AND A.LOG_ID=#{logId,jdbcType=VARCHAR}
+            </if>
+            <if test="piRealname!=null and piRealname!=''">
+                AND PI_REALNAME LIKE concat('%',#{piRealname,jdbcType=VARCHAR},'%'）
+            </if>
+            <if test="serviceTitle!=null and serviceTitle!=''">
+                AND SERVICE_TITLE LIKE concat('%',#{serviceTitle,jdbcType=VARCHAR},'%')
+            </if>
+            
+            <if test="box!=null">
+             <if test="box.startTime!=null and box.startTime!=''">
+                AND SCART_CREATETIME &gt;=#{box.startTime}
+             </if>
+            <if test="box.endTime!=null and box.endTime!=''">
+                AND SCART_CREATETIME &lt;=#{box.endTime}
+            </if>
+            </if>
+        </where>
+        ORDER BY SCART_CREATETIME DESC
+    </select>
+    
+    
+    
+    
+     <select id="seleteCartByCon" parameterType="com.jero.esc.po.goodsinfo.ServiceCart" resultMap="BaseResultMap">
+        select
+        *
+        from service_cart AS A
+        INNER JOIN service_snapshot AS B ON A.SS_ID = B.SERS_ID
+        INNER JOIN service_info ON A.SERVICE_ID = service_info.SERVICE_ID
+		INNER JOIN provider_info ON service_info.LOG_ID = provider_info.LOG_ID
+        <where>
+        	<if test="ssId!=null and ssId!=''">
+                AND A.SS_ID=#{ssId,jdbcType=VARCHAR}
+            </if>
+            <if test="logId!=null and logId!=''">
+                AND A.LOG_ID=#{logId,jdbcType=VARCHAR}
+            </if>
+            <if test="scartSource!=null and scartSource!=''">
+                AND A.SCART_SOURCE=#{scartSource,jdbcType=VARCHAR}
+            </if>
+            <if test="serviceId!=null and serviceId!=''">
+                AND A.SERVICE_ID=#{serviceId,jdbcType=VARCHAR}
+            </if>
+                AND A.SCART_ISDELETE = 0
+        </where>
+        ORDER BY SCART_CREATETIME DESC
+    </select>
+    
+     <select id="countByCon" parameterType="com.jero.esc.po.goodsinfo.ServiceCart" resultType="java.lang.Integer">
+        select
+        count(*)
+        from service_cart AS A
+        INNER JOIN service_snapshot AS B ON A.SS_ID = B.SERS_ID
+        INNER JOIN service_info ON A.SERVICE_ID = service_info.SERVICE_ID
+		INNER JOIN provider_info ON service_info.LOG_ID = provider_info.LOG_ID
+        <where>
+        	<if test="ssId!=null and ssId!=''">
+                AND A.SS_ID=#{ssId,jdbcType=VARCHAR}
+            </if>
+            <if test="logId!=null and logId!=''">
+                AND A.LOG_ID=#{logId,jdbcType=VARCHAR}
+            </if>
+            <if test="scartSource!=null and scartSource!=''">
+                AND A.SCART_SOURCE=#{scartSource,jdbcType=VARCHAR}
+            </if>
+            <if test="serviceId!=null and serviceId!=''">
+                AND A.SERVICE_ID=#{serviceId,jdbcType=VARCHAR}
+            </if>
+                AND A.SCART_ISDELETE = 0
+        </where>
+        ORDER BY SCART_CREATETIME DESC
+    </select>
+    
+    
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from service_cart
+        where SCART_ID = #{scartId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from service_cart
+        where SCART_ID = #{scartId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.jero.esc.po.goodsinfo.ServiceCart">
+        insert into service_cart (SCART_ID, SS_ID, SERVICE_ID,
+        LOG_ID, SCART_CREATETIME, SCART_ISDELETE,
+        SCART_COMMENT, SCART_ATTRS, SCART_SOURCE,
+        SCART_NUM, SCART_PRICE, SCART_POINT
+        )
+        values (#{scartId,jdbcType=VARCHAR}, #{ssId,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR},
+        #{logId,jdbcType=VARCHAR}, #{scartCreatetime,jdbcType=TIMESTAMP}, #{scartIsdelete,jdbcType=BIT},
+        #{scartComment,jdbcType=VARCHAR}, #{scartAttrs,jdbcType=VARCHAR}, #{scartSource,jdbcType=VARCHAR},
+        #{scartNum,jdbcType=INTEGER}, #{scartPrice,jdbcType=REAL}, #{scartPoint,jdbcType=REAL}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.jero.esc.po.goodsinfo.ServiceCart">
+        insert into service_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="scartId != null">
+                SCART_ID,
+            </if>
+            <if test="ssId != null">
+                SS_ID,
+            </if>
+            <if test="serviceId != null">
+                SERVICE_ID,
+            </if>
+            <if test="logId != null">
+                LOG_ID,
+            </if>
+            <if test="scartCreatetime != null">
+                SCART_CREATETIME,
+            </if>
+            <if test="scartIsdelete != null">
+                SCART_ISDELETE,
+            </if>
+            <if test="scartComment != null">
+                SCART_COMMENT,
+            </if>
+            <if test="scartAttrs != null">
+                SCART_ATTRS,
+            </if>
+            <if test="scartSource != null">
+                SCART_SOURCE,
+            </if>
+            <if test="scartNum != null">
+                SCART_NUM,
+            </if>
+            <if test="scartPrice != null">
+                SCART_PRICE,
+            </if>
+            <if test="scartPoint != null">
+                SCART_POINT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="scartId != null">
+                #{scartId,jdbcType=VARCHAR},
+            </if>
+            <if test="ssId != null">
+                #{ssId,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceId != null">
+                #{serviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="logId != null">
+                #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="scartCreatetime != null">
+                #{scartCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="scartIsdelete != null">
+                #{scartIsdelete,jdbcType=BIT},
+            </if>
+            <if test="scartComment != null">
+                #{scartComment,jdbcType=VARCHAR},
+            </if>
+            <if test="scartAttrs != null">
+                #{scartAttrs,jdbcType=VARCHAR},
+            </if>
+            <if test="scartSource != null">
+                #{scartSource,jdbcType=VARCHAR},
+            </if>
+            <if test="scartNum != null">
+                #{scartNum,jdbcType=INTEGER},
+            </if>
+            <if test="scartPrice != null">
+                #{scartPrice,jdbcType=REAL},
+            </if>
+            <if test="scartPoint != null">
+                #{scartPoint,jdbcType=REAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.goodsinfo.ServiceCart">
+        update service_cart
+        <set>
+            <if test="ssId != null">
+                SS_ID = #{ssId,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceId != null">
+                SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="logId != null">
+                LOG_ID = #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="scartCreatetime != null">
+                SCART_CREATETIME = #{scartCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="scartIsdelete != null">
+                SCART_ISDELETE = #{scartIsdelete,jdbcType=BIT},
+            </if>
+            <if test="scartComment != null">
+                SCART_COMMENT = #{scartComment,jdbcType=VARCHAR},
+            </if>
+            <if test="scartAttrs != null">
+                SCART_ATTRS = #{scartAttrs,jdbcType=VARCHAR},
+            </if>
+            <if test="scartSource != null">
+                SCART_SOURCE = #{scartSource,jdbcType=VARCHAR},
+            </if>
+            <if test="scartNum != null">
+                SCART_NUM = #{scartNum,jdbcType=INTEGER},
+            </if>
+            <if test="scartPrice != null">
+                SCART_PRICE = #{scartPrice,jdbcType=REAL},
+            </if>
+            <if test="scartPoint != null">
+                SCART_POINT = #{scartPoint,jdbcType=REAL},
+            </if>
+        </set>
+        where SCART_ID = #{scartId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.goodsinfo.ServiceCart">
+    update service_cart
+    set SS_ID = #{ssId,jdbcType=VARCHAR},
+      SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      SCART_CREATETIME = #{scartCreatetime,jdbcType=TIMESTAMP},
+      SCART_ISDELETE = #{scartIsdelete,jdbcType=BIT},
+      SCART_COMMENT = #{scartComment,jdbcType=VARCHAR},
+      SCART_ATTRS = #{scartAttrs,jdbcType=VARCHAR},
+      SCART_SOURCE = #{scartSource,jdbcType=VARCHAR},
+      SCART_NUM = #{scartNum,jdbcType=INTEGER},
+      SCART_PRICE = #{scartPrice,jdbcType=REAL},
+      SCART_POINT = #{scartPoint,jdbcType=REAL}
+    where SCART_ID = #{scartId,jdbcType=VARCHAR}
+  </update>
+</mapper>

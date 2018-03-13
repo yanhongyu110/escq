@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.details.AdvertiseDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.details.AdvertiseDetails">
+    <id column="AD_ID" jdbcType="VARCHAR" property="adId" />
+    <result column="AP_ID" jdbcType="VARCHAR" property="apId" />
+    <result column="AD_CLICK_NUM" jdbcType="INTEGER" property="adClickNum" />
+    <result column="AD_COMMENT" jdbcType="VARCHAR" property="adComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    AD_ID, AP_ID, AD_CLICK_NUM, AD_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from advertise_details
+    where AD_ID = #{adId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from advertise_details
+    where AD_ID = #{adId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.details.AdvertiseDetails">
+    insert into advertise_details (AD_ID, AP_ID, AD_CLICK_NUM, 
+      AD_COMMENT)
+    values (#{adId,jdbcType=VARCHAR}, #{apId,jdbcType=VARCHAR}, #{adClickNum,jdbcType=INTEGER}, 
+      #{adComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.details.AdvertiseDetails">
+    insert into advertise_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adId != null">
+        AD_ID,
+      </if>
+      <if test="apId != null">
+        AP_ID,
+      </if>
+      <if test="adClickNum != null">
+        AD_CLICK_NUM,
+      </if>
+      <if test="adComment != null">
+        AD_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adId != null">
+        #{adId,jdbcType=VARCHAR},
+      </if>
+      <if test="apId != null">
+        #{apId,jdbcType=VARCHAR},
+      </if>
+      <if test="adClickNum != null">
+        #{adClickNum,jdbcType=INTEGER},
+      </if>
+      <if test="adComment != null">
+        #{adComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.details.AdvertiseDetails">
+    update advertise_details
+    <set>
+      <if test="apId != null">
+        AP_ID = #{apId,jdbcType=VARCHAR},
+      </if>
+      <if test="adClickNum != null">
+        AD_CLICK_NUM = #{adClickNum,jdbcType=INTEGER},
+      </if>
+      <if test="adComment != null">
+        AD_COMMENT = #{adComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AD_ID = #{adId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.details.AdvertiseDetails">
+    update advertise_details
+    set AP_ID = #{apId,jdbcType=VARCHAR},
+      AD_CLICK_NUM = #{adClickNum,jdbcType=INTEGER},
+      AD_COMMENT = #{adComment,jdbcType=VARCHAR}
+    where AD_ID = #{adId,jdbcType=VARCHAR}
+  </update>
+</mapper>

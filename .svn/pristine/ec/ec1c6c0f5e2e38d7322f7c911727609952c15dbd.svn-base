@@ -1,0 +1,13 @@
+package com.jero.esc.controller.activity;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(value="/weiXinDemo")
+public class WeiXinDemo {
+	
+	@RequestMapping(value="/weiXinPay")
+	public void weiXinPay(){}
+	
+}

@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.demand.DemandMapper">
+    <resultMap type="com.jero.esc.vo.demand.Demand" id="demandMap">
+        <id column="DEM_ID" jdbcType="VARCHAR" property="demId"/>
+        <result column="DEM_LOGID" jdbcType="VARCHAR" property="demLogid"/>
+        <result column="DEM_CONTACT" jdbcType="VARCHAR" property="demContact"/>
+        <result column="DEM_CELL" jdbcType="VARCHAR" property="demCell"/>
+        <result column="DEM_TITLE" jdbcType="VARCHAR" property="demTitle"/>
+        <result column="DEM_BRIEF" jdbcType="VARCHAR" property="demBrief"/>
+        <result column="DEM_CONTENT" jdbcType="VARCHAR" property="demContent"/>
+        <result column="DEM_TYPETREE" jdbcType="VARCHAR" property="demTypetree"/>
+        <result column="DEM_TYPE" jdbcType="VARCHAR" property="demType"/>
+        <result column="CT_NAME" jdbcType="VARCHAR" property="ctName"/>
+        <result column="DEM_CREATETIME" jdbcType="TIMESTAMP" property="demCreatetime"/>
+        <result column="DEM_STATE" jdbcType="INTEGER" property="demState"/>
+        <result column="DEM_IMAGE" jdbcType="VARCHAR" property="demImage"/>
+        <result column="DEM_KEYWORD" jdbcType="VARCHAR" property="demKeyword"/>
+        <result column="DEM_ISDELETE" jdbcType="BIT" property="demIsdelete"/>
+        <result column="DEM_COMMENTS" jdbcType="VARCHAR" property="demComments"/>
+
+        <association column="DEM_LOGID" property="logInfo" resultMap="com.jero.esc.mapper.userinfo.LogInfoMapper.BaseResultMap"></association>
+
+    </resultMap>
+
+    <resultMap type="com.jero.esc.vo.demand.DemandVo" id="demandVoMap">
+        <id column="DEM_ID" jdbcType="VARCHAR" property="demId"/>
+        <result column="DEM_LOGID" jdbcType="VARCHAR" property="demLogid"/>
+        <result column="DEM_CONTACT" jdbcType="VARCHAR" property="demContact"/>
+        <result column="DEM_CELL" jdbcType="VARCHAR" property="demCell"/>
+        <result column="DEM_TITLE" jdbcType="VARCHAR" property="demTitle"/>
+        <result column="DEM_BRIEF" jdbcType="VARCHAR" property="demBrief"/>
+        <result column="DEM_CONTENT" jdbcType="VARCHAR" property="demContent"/>
+        <result column="DEM_TYPETREE" jdbcType="VARCHAR" property="demTypetree"/>
+        <result column="DEM_TYPE" jdbcType="VARCHAR" property="demType"/>
+        <result column="CT_NAME" jdbcType="VARCHAR" property="ctName"/>
+        <result column="DEM_CREATETIME" jdbcType="TIMESTAMP" property="demCreatetime"/>
+        <result column="DEM_STATE" jdbcType="INTEGER" property="demState"/>
+        <result column="DEM_IMAGE" jdbcType="VARCHAR" property="demImage"/>
+        <result column="DEM_KEYWORD" jdbcType="VARCHAR" property="demKeyword"/>
+        <result column="DEM_ISDELETE" jdbcType="BIT" property="demIsdelete"/>
+        <result column="DEM_COMMENTS" jdbcType="VARCHAR" property="demComments"/>
+        <result column="USER_PHOTO" jdbcType="VARCHAR" property="userPhoto"/>
+        <result column="COMPANY" jdbcType="VARCHAR" property="company"/>
+        <association column="DEM_LOGID" property="logInfo" resultMap="com.jero.esc.mapper.userinfo.LogInfoMapper.BaseResultMap"></association>
+
+    </resultMap>
+
+    <update id="updateById">
+        update demand
+        <set>
+            <if test="demContact != '' and demContact != null">
+                DEM_CONTACT = #{demContact},
+            </if>
+            <if test="demCell != '' and demCell != null">
+                DEM_CELL = #{demCell},
+            </if>
+            <if test="demTitle != '' and demTitle != null">
+                DEM_TITLE = #{demTitle},
+            </if>
+            <if test="demBrief != '' and demBrief != null">
+                DEM_BRIEF = #{demBrief},
+            </if>
+            <if test="demContent != '' and demContent != null">
+                DEM_CONTENT = #{demContent},
+            </if>
+            <if test="demTypetree != '' and demTypetree != null">
+                DEM_TYPETREE = #{demTypetree},
+            </if>
+            <if test="demType != '' and demType != null">
+                DEM_TYPE = #{demType},
+            </if>
+            <if test="demCreatetime != '' and demCreatetime != null">
+                DEM_CREATETIME = #{demCreatetime},
+            </if>
+            <if test="demImage != '' and demImage != null">
+                DEM_IMAGE = #{demImage},
+            </if>
+            <if test="demKeyword != '' and demKeyword != null">
+                DEM_KEYWORD = #{demKeyword},
+            </if>
+            <if test="demIsdelete != '' and demIsdelete != null">
+                DEM_ISDELETE = #{demIsdelete},
+            </if>
+            DEM_STATE = 1
+        </set>
+        where DEM_ID = #{demId}
+    </update>
+
+    <select id="selectById" resultMap="demandMap">
+		SELECT
+		DEM_ID,
+		DEM_LOGID,
+		DEM_CONTACT,
+		DEM_CELL,
+		DEM_TITLE,
+		DEM_BRIEF,
+		DEM_CONTENT,
+		DEM_TYPETREE,
+		DEM_TYPE,
+		DEM_CREATETIME,
+		DEM_STATE,
+		DEM_IMAGE,
+		DEM_KEYWORD,
+		DEM_ISDELETE,
+		DEM_COMMENTS,
+		CT_NAME
+		FROM
+		demand
+		INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+		INNER JOIN common_type ON demand.DEM_TYPE = common_type.CT_ID
+		WHERE
+		demand.DEM_ID = #{demId}
+ 	</select>
+    <select id="selectDemandVoById" resultMap="demandVoMap">
+        SELECT
+        demand.DEM_ID,
+        demand.DEM_LOGID,
+        demand.DEM_CONTACT,
+        demand.DEM_CELL,
+        demand.DEM_TITLE,
+        demand.DEM_BRIEF,
+        demand.DEM_CONTENT,
+        demand.DEM_TYPETREE,
+        demand.DEM_TYPE,
+        demand.DEM_CREATETIME,
+        demand.DEM_STATE,
+        demand.DEM_IMAGE,
+        demand.DEM_KEYWORD,
+        demand.DEM_ISDELETE,
+        demand.DEM_COMMENTS,
+        user_info.USER_PHOTO,
+        log_info.COMPANY
+        FROM
+        demand
+        INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+        INNER JOIN user_info ON demand.DEM_LOGID = user_info.LOG_ID
+        WHERE
+        demand.DEM_ID = #{demId}
+    </select>
+
+    <select id="count" resultType="integer">
+        select count(*) from demand
+        INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+        <where>
+            <if test="dem.demType != '' and dem.demType != null">
+                and DEM_TYPETREE like CONCAT("%",#{dem.demType},"%")
+            </if>
+            <if test="dem.starttime != '' and dem.starttime != null">
+                and DEM_CREATETIME &gt; #{dem.starttime}
+            </if>
+            <if test="dem.endtime != '' and dem.endtime != null">
+                and DEM_CREATETIME &lt; #{dem.endtime}
+            </if>
+            <if test="dem.demState != '' and dem.demState != null">
+                and DEM_STATE = #{dem.demState}
+            </if>
+            <if test="dem.demKeyword != '' and dem.demKeyword != null">
+                and DEM_KEYWORD like CONCAT("%",#{dem.demKeyword},"%")
+            </if>
+            <if test="dem.demLogid != '' and dem.demLogid != null">
+                and DEM_LOGID = #{dem.demLogid}
+            </if>
+            and DEM_ISDELETE = 0
+        </where>
+    </select>
+
+    <select id="count1" resultType="integer">
+        select count(*) from demand
+        INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+        <where>
+            <if test="dem.demType != '' and dem.demType != null">
+                and DEM_TYPETREE like CONCAT("%",#{dem.demType},"%")
+            </if>
+            <if test="dem.starttime != '' and dem.starttime != null">
+                and DEM_CREATETIME &gt; #{dem.starttime}
+            </if>
+            <if test="dem.endtime != '' dem.and endtime != null">
+                and DEM_CREATETIME &lt; #{dem.endtime}
+            </if>
+            <if test="dem.demKeyword != '' and dem.demKeyword != null">
+                and DEM_KEYWORD like CONCAT("%",#{dem.demKeyword},"%")
+            </if>
+            and DEM_ISDELETE = 0 and DEM_STATE = 2
+        </where>
+    </select>
+    <select id="selectAll2" resultMap="demandVoMap">
+        SELECT
+        demand.DEM_ID,
+        demand.DEM_LOGID,
+        demand.DEM_CONTACT,
+        demand.DEM_CELL,
+        demand.DEM_TITLE,
+        demand.DEM_BRIEF,
+        demand.DEM_CONTENT,
+        demand.DEM_TYPETREE,
+        demand.DEM_TYPE,
+        demand.DEM_CREATETIME,
+        demand.DEM_STATE,
+        demand.DEM_IMAGE,
+        demand.DEM_KEYWORD,
+        demand.DEM_ISDELETE,
+        demand.DEM_COMMENTS,
+        user_info.USER_PHOTO,
+        log_info.COMPANY
+        FROM
+        demand
+        INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+        INNER JOIN user_info ON demand.DEM_LOGID = user_info.LOG_ID
+        <where>
+            <if test="dem.demType != '' and dem.demType != null">
+                and DEM_TYPETREE like CONCAT("%",#{dem.demType},"%")
+            </if>
+            <if test="dem.demLogid != '' and dem.demLogid != null">
+                and DEM_LOGID = #{dem.demLogid}
+            </if>
+            <if test="dem.starttime != '' and dem.starttime != null">
+                and DEM_CREATETIME &gt; #{dem.starttime}
+            </if>
+            <if test="dem.endtime != '' and dem.endtime != null">
+                and DEM_CREATETIME &lt; #{dem.endtime}
+            </if>
+            <if test="dem.demState != '' and dem.demState != null">
+                and DEM_STATE = #{dem.demState}
+            </if>
+            <if test="dem.demKeyword != '' and dem.demKeyword != null">
+                and DEM_KEYWORD like CONCAT("%",#{dem.demKeyword},"%")
+            </if>
+            and DEM_ISDELETE = 0
+
+
+        </where>
+        ORDER BY
+        demand.DEM_CREATETIME DESC
+    </select>
+
+    <select id="selectAll" resultMap="demandMap">
+        SELECT
+        demand.DEM_ID,
+        demand.DEM_LOGID,
+        demand.DEM_CONTACT,
+        demand.DEM_CELL,
+        demand.DEM_TITLE,
+        demand.DEM_BRIEF,
+        demand.DEM_CONTENT,
+        demand.DEM_TYPETREE,
+        demand.DEM_TYPE,
+        demand.DEM_CREATETIME,
+        demand.DEM_STATE,
+        demand.DEM_IMAGE,
+        demand.DEM_KEYWORD,
+        demand.DEM_ISDELETE,
+        demand.DEM_COMMENTS
+        FROM
+        demand
+        INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+        <where>
+            <if test="dem.demType != '' and dem.demType != null">
+                and DEM_TYPETREE like CONCAT("%",#{dem.demType},"%")
+            </if>
+            <if test="dem.demLogid != '' and dem.demLogid != null">
+                and DEM_LOGID = #{dem.demLogid}
+            </if>
+            <if test="dem.starttime != '' and dem.starttime != null">
+                and DEM_CREATETIME &gt; #{dem.starttime}
+            </if>
+            <if test="dem.endtime != '' and dem.endtime != null">
+                and DEM_CREATETIME &lt; #{dem.endtime}
+            </if>
+            <if test="dem.demState != '' and dem.demState != null">
+                and DEM_STATE = #{dem.demState}
+            </if>
+            <if test="dem.demKeyword != '' and dem.demKeyword != null">
+                and DEM_KEYWORD like CONCAT("%",#{dem.demKeyword},"%")
+            </if>
+            and DEM_ISDELETE = 0
+
+
+        </where>
+        ORDER BY
+        demand.DEM_CREATETIME ASC
+    </select>
+    <select id="selectOthers" resultMap="demandMap">
+        SELECT
+        demand.DEM_ID,
+        demand.DEM_LOGID,
+        demand.DEM_CONTACT,
+        demand.DEM_CELL,
+        demand.DEM_TITLE,
+        demand.DEM_BRIEF,
+        demand.DEM_CONTENT,
+        demand.DEM_TYPETREE,
+        demand.DEM_TYPE,
+        demand.DEM_CREATETIME,
+        demand.DEM_STATE,
+        demand.DEM_IMAGE,
+        demand.DEM_KEYWORD,
+        demand.DEM_ISDELETE,
+        demand.DEM_COMMENTS
+        FROM
+        demand
+        INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+        <where>
+            <if test="dem.demType != '' and dem.demType != null">
+                and DEM_TYPETREE like CONCAT("%",#{dem.demType},"%")
+            </if>
+            <if test="dem.starttime != '' and dem.starttime != null">
+                and DEM_CREATETIME &gt; #{dem.starttime}
+            </if>
+            <if test="dem.endtime != '' and dem.endtime != null">
+                and DEM_CREATETIME &lt; #{dem.endtime}
+            </if>
+            <if test="dem.demKeyword != '' and dem.demKeyword != null">
+                and DEM_KEYWORD like CONCAT("%",#{dem.demKeyword},"%")
+            </if>
+            and DEM_ID &lt;&gt; #{dem.demId}
+            and DEM_ISDELETE = 0
+        </where>
+        ORDER BY
+        demand.DEM_CREATETIME ASC
+        LIMIT 0,10
+    </select>
+
+    <select id="selectAll1" resultMap="demandMap">
+        SELECT
+        demand.DEM_ID,
+        demand.DEM_LOGID,
+        demand.DEM_CONTACT,
+        demand.DEM_CELL,
+        demand.DEM_TITLE,
+        demand.DEM_BRIEF,
+        demand.DEM_CONTENT,
+        demand.DEM_TYPETREE,
+        demand.DEM_TYPE,
+        demand.DEM_CREATETIME,
+        demand.DEM_STATE,
+        demand.DEM_IMAGE,
+        demand.DEM_KEYWORD,
+        demand.DEM_ISDELETE,
+        demand.DEM_COMMENTS
+        FROM
+        demand
+        INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+        <where>
+            <if test="dem.demType != '' and dem.demType != null">
+                and DEM_TYPETREE like CONCAT("%",#{dem.demType},"%")
+            </if>
+            and DEM_ISDELETE = 0 and DEM_STATE = 2
+        </where>
+    </select>
+
+    <select id="selectTop" resultMap="demandMap">
+		 		SELECT
+		*
+		FROM
+		demand
+		INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+		WHERE
+        1=1
+		AND  DEM_STATE=2
+		<if test="module!=null and module != '' ">
+            AND demand.DEM_TYPETREE LIKE '%${module}%'
+        </if>
+		ORDER BY
+		demand.DEM_CREATETIME ASC
+		LIMIT 0,${top}
+	</select>
+	
+	    <select id="selectTop1" resultMap="demandVoMap">
+		 SELECT
+			DEM_ID,
+			DEM_LOGID,
+			DEM_CONTACT,
+			DEM_CELL,
+			DEM_TITLE,
+			DEM_BRIEF,
+			DEM_CONTENT,
+			DEM_TYPETREE,
+			DEM_TYPE,
+			DEM_CREATETIME,
+			DEM_STATE,
+			DEM_IMAGE,
+			DEM_KEYWORD,
+			DEM_ISDELETE,
+			DEM_COMMENTS,
+			USER_PHOTO,
+            CT_NAME
+            FROM
+            demand
+            INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+            INNER JOIN user_info ON demand.DEM_LOGID = user_info.LOG_ID
+            INNER JOIN common_type ON demand.DEM_TYPE = common_type.CT_ID
+            WHERE
+          1=1
+		AND  DEM_STATE=2
+
+		<if test="module!=null and module != '' ">
+            AND demand.DEM_TYPETREE LIKE '%${module}%'
+        </if>
+		ORDER BY
+		demand.DEM_CREATETIME DESC
+		LIMIT 0,${top}
+	</select>
+
+    <select id="selectList" resultMap="demandMap">
+        SELECT *
+        FROM
+        demand
+        INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+        <where>
+            1=1
+            AND
+            DEM_STATE=2
+            <if test="typeTree != null">
+                AND DEM_TYPETREE LIKE '%${typeTree}%'
+            </if>
+            <if test="search != null">
+                AND DEM_TITLE LIKE '%${search}%'
+            </if>
+            <if test="search != null">
+                AND DEM_KEYWORD LIKE '%${search}%'
+            </if>
+        </where>
+
+        <if test="order != null and order != '' ">
+            ORDER BY
+            ${order}
+        </if>
+
+    </select>
+        <select id="selectList1" resultMap="demandVoMap">
+        SELECT
+			DEM_ID,
+			DEM_LOGID,
+			DEM_CONTACT,
+			DEM_CELL,
+			DEM_TITLE,
+			DEM_BRIEF,
+			DEM_CONTENT,
+			DEM_TYPETREE,
+			DEM_TYPE,
+			DEM_CREATETIME,
+			DEM_STATE,
+			DEM_IMAGE,
+			DEM_KEYWORD,
+			DEM_ISDELETE,
+			DEM_COMMENTS,
+			USER_PHOTO
+			FROM
+			demand
+			INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+			INNER JOIN user_info ON demand.DEM_LOGID = user_info.LOG_ID
+			<where>
+        1=1
+		AND  DEM_STATE=2
+
+            <if test="typeTree != null">
+                AND DEM_TYPETREE LIKE '%${typeTree}%'
+            </if>
+            <if test="search != null">
+                AND ( DEM_TITLE LIKE '%${search}%' or DEM_KEYWORD LIKE '%${search}%')
+            </if>
+        </where>
+
+        <if test="order != null and order != '' ">
+            ORDER BY
+            ${order}
+        </if>
+
+    </select>
+    <select id="selectListCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        demand
+        INNER JOIN log_info ON demand.DEM_LOGID = log_info.LOG_ID
+        <where>
+            1=1
+            AND DEM_STATE=2
+            <if test="typeTree != null">
+                AND DEM_TYPETREE LIKE '%${typeTree}%'
+            </if>
+            <if test="search != null">
+                AND (DEM_TITLE LIKE '%${search}%' OR DEM_KEYWORD LIKE '%${search}%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert">
+ 		insert into demand values(#{demId},#{demLogid},#{demContact},#{demCell},#{demTitle},#{demBrief},#{demContent},#{demTypetree},#{demType},
+ 				#{demCreatetime},#{demState},#{demImage},#{demKeyword},#{demIsdelete},#{demComments})
+ 	</insert>
+</mapper>

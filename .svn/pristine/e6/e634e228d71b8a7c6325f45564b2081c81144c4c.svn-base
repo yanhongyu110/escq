@@ -1,0 +1,261 @@
+package com.jero.esc.controller.wap.saleinfo;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.alibaba.fastjson.JSON;
+import com.jero.esc.common.controller.BaseController;
+import com.jero.esc.common.po.JsonResult;
+import com.jero.esc.common.utils.ConstUtil;
+import com.jero.esc.common.utils.DateUtil;
+import com.jero.esc.common.utils.JsonUtil;
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import com.jero.esc.common.utils.fastvalidate.FastValid;
+import com.jero.esc.common.weixin.WeiXinChongZhi;
+import com.jero.esc.po.userinfo.AccountInfo;
+import com.jero.esc.po.userinfo.LogInfo;
+import com.jero.esc.service.saleinfo.IOrderInfoBuyerService;
+import com.jero.esc.vo.saleinfo.OrderInfo;
+
+/**
+ * @copyright 
+ * @author zengd
+ * @version 
+ * @date 2016年12月22日下午7:25:20 
+ * @description
+ */
+@Controller
+@RequestMapping("/wap/saleinfo")
+public class WapOrderInfoBuyerController extends BaseController {
+	
+	@Autowired
+	private IOrderInfoBuyerService orderInfoBuyerService;
+	/**
+	 * @description  跳转到订单查询页面
+	 * @date 2016年12月26日下午7:36:09 
+	 * @Return ModelAndView
+	 */
+	@RequestMapping("/orderInfoBuyer/orderView")
+	public ModelAndView orderView(){
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("f", 1);
+		mv.setViewName("wap/saleinfo/my_date");
+		return mv;
+	}
+	
+	/**
+	 * 查询订单
+	 * @param orderService
+	 * @param page
+	 * @param rows
+	 */
+	@RequestMapping("/orderInfoBuyer/getAllOrder")
+	public void getAllOrder(HttpServletResponse response,HttpSession session,OrderInfo orderInfo,Integer page, Integer rows){
+		LogInfo logInfo = retrievalCurrentUserInfo(session);
+		orderInfo.setOrderBuyer(logInfo.getLogId());
+		rows = 10;
+		Integer totalNum = orderInfoBuyerService.totalNum(orderInfo);
+		int no = (int) Math.ceil((double)totalNum/rows);
+		if(page>no){
+			page = no;
+		}
+		List<OrderInfo> orderList = orderInfoBuyerService.selectAll(getPageRowBounds(page,rows), orderInfo);
+		printDataGridJsonData(response, totalNum, orderList);
+		
+	}
+	/**
+	 * @description 跳转支付页面
+	 * @date 2016年12月26日上午11:07:21 
+	 * @Parm session
+	 * @Return ModelAndView
+	 */
+	@RequestMapping("/orderInfoBuyer/getAccount")
+	public ModelAndView getAccount(HttpSession session,@RequestParam(value="orderId",required=false)String id){
+		ModelAndView mv = new ModelAndView();
+		String logId = retrievalCurrentUserInfo(session).getLogId();
+		AccountInfo selectBalanceById = orderInfoBuyerService.selectBalanceById(logId);
+		OrderInfo orderInfo = orderInfoBuyerService.selectById(id);
+		mv.addObject("selectBalanceById", selectBalanceById);
+		mv.addObject("orderInfo", orderInfo);
+		mv.setViewName("/wap/saleinfo/mony_tg");
+		return mv;
+	}
+	/**
+	 * @description 付款
+	 * @date 2016年12月26日上午11:30:13 
+	 * @Parm accountInfo
+	 * @Parm response
+	 * @Return void
+	 */
+	@RequestMapping("/orderInfoBuyer/validate")
+	public void validate(@RequestParam(value="flag",required=false)Integer flag,
+			@RequestParam(value="orderPrice",required=false)String orderPrice,
+			@RequestParam(value="orderNo",required=false)String orderNo, 
+			@RequestParam(value="serviceTitle",required=false)String serviceTitle, 
+			AccountInfo accountInfo,HttpServletResponse response,HttpSession session){
+		JsonResult jr = new JsonResult();
+		LogInfo logInfo = retrievalCurrentUserInfo(session);
+		accountInfo.setLogId(logInfo.getLogId());
+		
+		String accPaypass = accountInfo.getAccPaypass();
+		if(accPaypass == null && "".equals(accPaypass)){
+			jr.setSuccess(false);
+			jr.setErrorMsg("支付密码不能为空");
+			JsonUtil.printByJSON(response, jr);
+			return;
+		}
+		try {
+			jr = orderInfoBuyerService.validate(accountInfo, orderPrice, orderNo,flag,serviceTitle);
+		} catch (ExceptionWithMessage e) {
+			e.printStackTrace();
+			jr =e.jsonResult;
+		}
+		JsonUtil.printByJSON(response, jr);
+	}
+	
+	/**
+	 * @description 根据订单编号删除订单
+	 * @date 2016年12月27日下午1:46:14 
+	 * @Parm orderInfo
+	 * @Parm response
+	 * @Return void
+	 */
+	@RequestMapping("/orderInfoBuyer/del")
+	public void del(OrderInfo orderInfo,HttpServletResponse response){
+		JsonResult jr = new JsonResult();
+		String orderNo = orderInfo.getOrderNo();
+		try {
+			jr = orderInfoBuyerService.delete(orderNo);
+		} catch (ExceptionWithMessage e) {
+			e.printStackTrace();
+			jr =e.jsonResult;
+		}
+		JsonUtil.printByJSON(response, jr);
+	}
+	
+	/**
+	 * @description  订单详情
+	 * @date 2017年1月9日上午9:48:18 
+	 * @param orderId
+	 * @Return ModelAndView
+	 */
+	@RequestMapping("/orderInfoBuyer/details")
+	public ModelAndView details(HttpSession session,@RequestParam(value="orderId",required=false)String orderId){
+		ModelAndView mv = new ModelAndView();
+		OrderInfo orderInfo = orderInfoBuyerService.selectById(orderId);
+		/*String orderSeller = orderInfo.getOrderSeller();*/
+		/*LogInfo logInfo = orderInfoBuyerService.getLogInfo(orderSeller);*/
+		/*mv.addObject("logInfo", logInfo);*/
+		mv.addObject("orderInfo", orderInfo);
+		mv.setViewName("/wap/saleinfo/dd_xq");
+		return mv;
+	}
+	
+	/**
+	 * @description  跳转到确认支付页面
+	 * @date 2017年1月10日下午4:35:17 
+	 * @Return ModelAndView
+	 */
+	@RequestMapping("/orderInfoBuyer/ConfirmPayment")
+	public ModelAndView ConfirmPayment(HttpSession session,@RequestParam(value="orderNo",required=false)String orderNo,
+									   @RequestParam(value="flag",required=false)String flag){
+		ModelAndView mv = new ModelAndView();
+		OrderInfo orderInfo = orderInfoBuyerService.selectById(orderNo);
+		mv.addObject("orderInfo", orderInfo);
+		mv.addObject("flag", flag);
+		mv.setViewName("wap/saleinfo/zf_wc");
+		return mv;
+	}
+
+	
+	/**
+	 * @description 跳转到买家申请退款页面
+	 * @date 2017年1月10日16:56:33
+	 * @param orderNo 订单编号
+	 * @return ModelAndView
+	 */
+	@RequestMapping("/orderInfoBuyer/viewApplyRefund")
+	public ModelAndView viewApplyRefund(HttpSession session,@RequestParam(value="orderNo")String orderNo){
+		OrderInfo orderInfo = orderInfoBuyerService.selectById(orderNo);
+		String orderState = ConstUtil.ORDER_STATE_MAP.get(orderInfo.getOrderState());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("orderState",orderState);
+		modelAndView.addObject("orderInfo",orderInfo);
+		modelAndView.setViewName("/wap/saleinfo/applyrefund");
+		return modelAndView;
+	}
+	
+	/**
+	 * @description 买家申请退款
+	 * @date 2017年1月10日21:05:19
+	 * @param orderNo 订单编号
+	 * @throws ExceptionWithMessage 
+	 */
+	@ResponseBody
+	@RequestMapping("/orderInfoBuyer/buyerApplyRefund")
+	public String buyerApplyRefund(HttpSession session,@RequestParam(value="orderJson")String orderJson) throws ExceptionWithMessage{
+		if (isValidate) {
+            if (FastValid.isEmp(orderJson))
+                throw new ExceptionWithMessage("参数错误");
+        }
+		OrderInfo orderInfo = JSON.parseObject(orderJson, OrderInfo.class);
+		Integer res = orderInfoBuyerService.modifyRefundMsgByOrderNo(orderInfo);
+		String url = "";
+		if(res>0){
+			url = "{\"url\":\"/wap/saleinfo/orderInfoBuyer/orderView.html\"}";
+		}else{
+			
+		}
+		System.out.println(url);
+		return url;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/orderInfoBuyer/queryState")
+	public String queryState(String id){
+		OrderInfo orderInfo = orderInfoBuyerService.selectById(id);
+		String reMsg = "";
+		if(orderInfo.getOrderRefundstate()>0){
+			reMsg="ok";
+		}else{
+			reMsg="no";
+		}
+		return reMsg;
+		
+	}
+	
+	/**
+	 * @description 跳转到退款详情页面
+	 * @date 2017年1月10日16:56:33
+	 * @param orderNo 订单编号
+	 * @return ModelAndView
+	 */
+	@RequestMapping("/orderInfoBuyer/viewRefunddetails")
+	public ModelAndView viewRefunddetails(HttpSession session,@RequestParam(value="orderNo")String orderNo){
+		OrderInfo orderInfo = orderInfoBuyerService.selectById(orderNo);
+		String orderState = ConstUtil.ORDER_STATE_MAP.get(orderInfo.getOrderState());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("orderState",orderState);
+		modelAndView.addObject("orderInfo",orderInfo);
+		modelAndView.setViewName("/wap/saleinfo/refunddetails");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="/weixinBuy")
+	public void weixinBuy(HttpServletResponse response, String openId, String attach, String body, String total_fee) throws NumberFormatException, UnknownHostException{
+		WeiXinChongZhi wx = new WeiXinChongZhi();
+		wx.	weixinSign( DateUtil.getPayMentId(), Integer.parseInt(total_fee), body,
+				InetAddress.getLocalHost().getHostAddress(), attach, openId, response);
+	}
+}

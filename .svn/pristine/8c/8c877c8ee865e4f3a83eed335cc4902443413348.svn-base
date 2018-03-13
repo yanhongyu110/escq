@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jero.esc.mapper.pubinfo.CompanyDetailsMapper" >
+
+<select id="selectCompanyByCon" resultMap="ResultMapWithBLOBs" parameterType="com.jero.esc.po.pubinfo.CompanyDetails">
+	SELECT
+	company_details.ID,
+	company_details.COMPANY_NAME,
+	company_details.COMPANY_PROVINCE,
+	company_details.COMPANY_CITY,
+	company_details.COMPANY_PERSON,
+	company_details.COMPANY_REGISTER_CAPITAL,
+	company_details.COMPANY_REGISTER_DATE,
+	company_details.COMPANY_BUSINISS_SCOPE,
+	company_details.COMPANY_TEL,
+	company_details.COMPANY_ADDRESS,
+	company_details.COMPANY_EMAIL,
+	company_details.COMPANY_NET_ADDRESS,
+	company_details.COMPANY_TYPE
+	FROM
+	company_details
+	WHERE 1=1
+	<if test="companyProvince !=null and companyProvince !=''">
+	 AND company_details.COMPANY_PROVINCE =#{companyProvince,jdbcType=VARCHAR}
+	</if>
+	<if test="companyType !=null and companyType !=''">
+	 AND company_details.COMPANY_TYPE = #{companyType,jdbcType=VARCHAR}
+	</if> 
+
+</select>
+
+<select id="countCompanyByCon" resultType="Integer" parameterType="com.jero.esc.po.pubinfo.CompanyDetails">
+	SELECT
+	count(*)
+	FROM
+	company_details
+	WHERE 1=1
+	<if test="companyProvince !=null and companyProvince !=''">
+	 AND company_details.COMPANY_PROVINCE =#{companyProvince,jdbcType=VARCHAR}
+	</if>
+	<if test="companyType !=null and companyType !=''">
+	 AND company_details.COMPANY_TYPE = #{companyType,jdbcType=VARCHAR}
+	</if> 
+
+</select>
+
+
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.pubinfo.CompanyDetails" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="COMPANY_PROVINCE" property="companyProvince" jdbcType="VARCHAR" />
+    <result column="COMPANY_CITY" property="companyCity" jdbcType="VARCHAR" />
+    <result column="COMPANY_PERSON" property="companyPerson" jdbcType="VARCHAR" />
+    <result column="COMPANY_REGISTER_CAPITAL" property="companyRegisterCapital" jdbcType="VARCHAR" />
+    <result column="COMPANY_REGISTER_DATE" property="companyRegisterDate" jdbcType="DATE" />
+    <result column="COMPANY_TEL" property="companyTel" jdbcType="VARCHAR" />
+    <result column="COMPANY_ADDRESS" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="COMPANY_EMAIL" property="companyEmail" jdbcType="VARCHAR" />
+    <result column="COMPANY_NET_ADDRESS" property="companyNetAddress" jdbcType="VARCHAR" />
+    <result column="COMPANY_TYPE" property="companyType" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jero.esc.po.pubinfo.CompanyDetails" extends="BaseResultMap" >
+    <result column="COMPANY_BUSINISS_SCOPE" property="companyBusinissScope" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, COMPANY_NAME, COMPANY_PROVINCE, COMPANY_CITY, COMPANY_PERSON, COMPANY_REGISTER_CAPITAL, 
+    COMPANY_REGISTER_DATE, COMPANY_TEL, COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_NET_ADDRESS, 
+    COMPANY_TYPE
+  </sql>
+  <sql id="Blob_Column_List" >
+    COMPANY_BUSINISS_SCOPE
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.jero.esc.po.pubinfo.CompanyDetailsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from company_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jero.esc.po.pubinfo.CompanyDetailsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from company_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from company_details
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from company_details
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jero.esc.po.pubinfo.CompanyDetailsExample" >
+    delete from company_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.pubinfo.CompanyDetails" >
+    insert into company_details (ID, COMPANY_NAME, COMPANY_PROVINCE, 
+      COMPANY_CITY, COMPANY_PERSON, COMPANY_REGISTER_CAPITAL, 
+      COMPANY_REGISTER_DATE, COMPANY_TEL, COMPANY_ADDRESS, 
+      COMPANY_EMAIL, COMPANY_NET_ADDRESS, COMPANY_TYPE, 
+      COMPANY_BUSINISS_SCOPE)
+    values (#{id,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{companyProvince,jdbcType=VARCHAR}, 
+      #{companyCity,jdbcType=VARCHAR}, #{companyPerson,jdbcType=VARCHAR}, #{companyRegisterCapital,jdbcType=VARCHAR}, 
+      #{companyRegisterDate,jdbcType=DATE}, #{companyTel,jdbcType=VARCHAR}, #{companyAddress,jdbcType=VARCHAR}, 
+      #{companyEmail,jdbcType=VARCHAR}, #{companyNetAddress,jdbcType=VARCHAR}, #{companyType,jdbcType=VARCHAR}, 
+      #{companyBusinissScope,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.pubinfo.CompanyDetails" >
+    insert into company_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME,
+      </if>
+      <if test="companyProvince != null" >
+        COMPANY_PROVINCE,
+      </if>
+      <if test="companyCity != null" >
+        COMPANY_CITY,
+      </if>
+      <if test="companyPerson != null" >
+        COMPANY_PERSON,
+      </if>
+      <if test="companyRegisterCapital != null" >
+        COMPANY_REGISTER_CAPITAL,
+      </if>
+      <if test="companyRegisterDate != null" >
+        COMPANY_REGISTER_DATE,
+      </if>
+      <if test="companyTel != null" >
+        COMPANY_TEL,
+      </if>
+      <if test="companyAddress != null" >
+        COMPANY_ADDRESS,
+      </if>
+      <if test="companyEmail != null" >
+        COMPANY_EMAIL,
+      </if>
+      <if test="companyNetAddress != null" >
+        COMPANY_NET_ADDRESS,
+      </if>
+      <if test="companyType != null" >
+        COMPANY_TYPE,
+      </if>
+      <if test="companyBusinissScope != null" >
+        COMPANY_BUSINISS_SCOPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyProvince != null" >
+        #{companyProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCity != null" >
+        #{companyCity,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPerson != null" >
+        #{companyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRegisterCapital != null" >
+        #{companyRegisterCapital,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRegisterDate != null" >
+        #{companyRegisterDate,jdbcType=DATE},
+      </if>
+      <if test="companyTel != null" >
+        #{companyTel,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null" >
+        #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyEmail != null" >
+        #{companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNetAddress != null" >
+        #{companyNetAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyType != null" >
+        #{companyType,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinissScope != null" >
+        #{companyBusinissScope,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jero.esc.po.pubinfo.CompanyDetailsExample" resultType="java.lang.Integer" >
+    select count(*) from company_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update company_details
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null" >
+        COMPANY_NAME = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyProvince != null" >
+        COMPANY_PROVINCE = #{record.companyProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyCity != null" >
+        COMPANY_CITY = #{record.companyCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyPerson != null" >
+        COMPANY_PERSON = #{record.companyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyRegisterCapital != null" >
+        COMPANY_REGISTER_CAPITAL = #{record.companyRegisterCapital,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyRegisterDate != null" >
+        COMPANY_REGISTER_DATE = #{record.companyRegisterDate,jdbcType=DATE},
+      </if>
+      <if test="record.companyTel != null" >
+        COMPANY_TEL = #{record.companyTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyAddress != null" >
+        COMPANY_ADDRESS = #{record.companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyEmail != null" >
+        COMPANY_EMAIL = #{record.companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyNetAddress != null" >
+        COMPANY_NET_ADDRESS = #{record.companyNetAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyType != null" >
+        COMPANY_TYPE = #{record.companyType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyBusinissScope != null" >
+        COMPANY_BUSINISS_SCOPE = #{record.companyBusinissScope,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update company_details
+    set ID = #{record.id,jdbcType=VARCHAR},
+      COMPANY_NAME = #{record.companyName,jdbcType=VARCHAR},
+      COMPANY_PROVINCE = #{record.companyProvince,jdbcType=VARCHAR},
+      COMPANY_CITY = #{record.companyCity,jdbcType=VARCHAR},
+      COMPANY_PERSON = #{record.companyPerson,jdbcType=VARCHAR},
+      COMPANY_REGISTER_CAPITAL = #{record.companyRegisterCapital,jdbcType=VARCHAR},
+      COMPANY_REGISTER_DATE = #{record.companyRegisterDate,jdbcType=DATE},
+      COMPANY_TEL = #{record.companyTel,jdbcType=VARCHAR},
+      COMPANY_ADDRESS = #{record.companyAddress,jdbcType=VARCHAR},
+      COMPANY_EMAIL = #{record.companyEmail,jdbcType=VARCHAR},
+      COMPANY_NET_ADDRESS = #{record.companyNetAddress,jdbcType=VARCHAR},
+      COMPANY_TYPE = #{record.companyType,jdbcType=VARCHAR},
+      COMPANY_BUSINISS_SCOPE = #{record.companyBusinissScope,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update company_details
+    set ID = #{record.id,jdbcType=VARCHAR},
+      COMPANY_NAME = #{record.companyName,jdbcType=VARCHAR},
+      COMPANY_PROVINCE = #{record.companyProvince,jdbcType=VARCHAR},
+      COMPANY_CITY = #{record.companyCity,jdbcType=VARCHAR},
+      COMPANY_PERSON = #{record.companyPerson,jdbcType=VARCHAR},
+      COMPANY_REGISTER_CAPITAL = #{record.companyRegisterCapital,jdbcType=VARCHAR},
+      COMPANY_REGISTER_DATE = #{record.companyRegisterDate,jdbcType=DATE},
+      COMPANY_TEL = #{record.companyTel,jdbcType=VARCHAR},
+      COMPANY_ADDRESS = #{record.companyAddress,jdbcType=VARCHAR},
+      COMPANY_EMAIL = #{record.companyEmail,jdbcType=VARCHAR},
+      COMPANY_NET_ADDRESS = #{record.companyNetAddress,jdbcType=VARCHAR},
+      COMPANY_TYPE = #{record.companyType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.pubinfo.CompanyDetails" >
+    update company_details
+    <set >
+      <if test="companyName != null" >
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyProvince != null" >
+        COMPANY_PROVINCE = #{companyProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCity != null" >
+        COMPANY_CITY = #{companyCity,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPerson != null" >
+        COMPANY_PERSON = #{companyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRegisterCapital != null" >
+        COMPANY_REGISTER_CAPITAL = #{companyRegisterCapital,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRegisterDate != null" >
+        COMPANY_REGISTER_DATE = #{companyRegisterDate,jdbcType=DATE},
+      </if>
+      <if test="companyTel != null" >
+        COMPANY_TEL = #{companyTel,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null" >
+        COMPANY_ADDRESS = #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyEmail != null" >
+        COMPANY_EMAIL = #{companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNetAddress != null" >
+        COMPANY_NET_ADDRESS = #{companyNetAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyType != null" >
+        COMPANY_TYPE = #{companyType,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinissScope != null" >
+        COMPANY_BUSINISS_SCOPE = #{companyBusinissScope,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jero.esc.po.pubinfo.CompanyDetails" >
+    update company_details
+    set COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      COMPANY_PROVINCE = #{companyProvince,jdbcType=VARCHAR},
+      COMPANY_CITY = #{companyCity,jdbcType=VARCHAR},
+      COMPANY_PERSON = #{companyPerson,jdbcType=VARCHAR},
+      COMPANY_REGISTER_CAPITAL = #{companyRegisterCapital,jdbcType=VARCHAR},
+      COMPANY_REGISTER_DATE = #{companyRegisterDate,jdbcType=DATE},
+      COMPANY_TEL = #{companyTel,jdbcType=VARCHAR},
+      COMPANY_ADDRESS = #{companyAddress,jdbcType=VARCHAR},
+      COMPANY_EMAIL = #{companyEmail,jdbcType=VARCHAR},
+      COMPANY_NET_ADDRESS = #{companyNetAddress,jdbcType=VARCHAR},
+      COMPANY_TYPE = #{companyType,jdbcType=VARCHAR},
+      COMPANY_BUSINISS_SCOPE = #{companyBusinissScope,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.pubinfo.CompanyDetails" >
+    update company_details
+    set COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      COMPANY_PROVINCE = #{companyProvince,jdbcType=VARCHAR},
+      COMPANY_CITY = #{companyCity,jdbcType=VARCHAR},
+      COMPANY_PERSON = #{companyPerson,jdbcType=VARCHAR},
+      COMPANY_REGISTER_CAPITAL = #{companyRegisterCapital,jdbcType=VARCHAR},
+      COMPANY_REGISTER_DATE = #{companyRegisterDate,jdbcType=DATE},
+      COMPANY_TEL = #{companyTel,jdbcType=VARCHAR},
+      COMPANY_ADDRESS = #{companyAddress,jdbcType=VARCHAR},
+      COMPANY_EMAIL = #{companyEmail,jdbcType=VARCHAR},
+      COMPANY_NET_ADDRESS = #{companyNetAddress,jdbcType=VARCHAR},
+      COMPANY_TYPE = #{companyType,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

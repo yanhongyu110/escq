@@ -1,0 +1,93 @@
+package com.jero.esc.service.userinfo;
+
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import com.jero.esc.po.userinfo.AccountInfo;
+import com.jero.esc.vo.pay.AccountDrawVo;
+import com.jero.esc.vo.userinfo.AccountVo;
+
+/**
+ * @copyright 上善云图信息技术有限公司
+ * @author zqy
+ * @version v1.0  （版本号）
+ * @date 2016年12月8日
+ * @description 账户信息  
+ */
+public interface IAccountInfoService {
+	/**
+	  *@version v1.0
+	  *@date 2016年12月8日
+	  *@description 账户管理 查询账户收支信息
+	  *@param rb
+	  *@param logId
+	  *@return List<AccountVo>
+	  *@method queryLogAccById
+	 */
+	List<AccountVo> queryLogAccById(RowBounds rb,String logId);
+	
+	/**
+	  *@version v1.0
+	  *@date 2016年12月8日
+	  *@description 根据ID查询收支信息条数
+	  *@param logId
+	  *@return Integer
+	  *@method queryLogAccCountById
+	 */
+	Integer queryLogAccCountById(String logId);
+	
+	/**
+	  *@version v1.0
+	  *@date 2016年12月12日
+	  *@description 用户模块:用户注册
+	  *@param logId
+	  *@return List<AccountInfo>
+	  *@method selectBalanceById
+	 */
+	List<AccountInfo> queryBalanceById(String logId);
+	
+	/**
+	  *@version v1.0
+	  *@date 2016年12月12日
+	  *@description 修改支付密码
+	  *@param accountInfo
+	  *@return Integer
+	  *@method modifyPayPassById
+	 */
+	Integer modifyPayPassById(AccountInfo accountInfo);
+
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 增加账户信息
+	 * @param record
+	 * @return Integer
+	 * @method addSelective
+	 */
+	Integer addSelective(AccountInfo record);
+
+	/**
+	*@description 判断支付密码
+	*@param record
+	*@return Boolean
+	*@method judgePayPass
+	 */
+	Boolean judgePayPass(AccountInfo record) throws ExceptionWithMessage;
+	
+	AccountVo queryAccountDrawByLogId(String logId);
+	
+	/**
+	 * 
+	 * @version  v1.0
+	 * @date  2017年2月28日
+	 * @description 
+	 * @param logId 需要修改金额的账户 对应的登陆 id
+	 * @param ioType 收支类型  1表示收入   -1 表示支出
+	 * @param ioMoney 表示本次收入或者支出的 金额
+	 * @return Integer 表示是否修改金额成功  
+	 * @method modifyAccBalanceByLogId
+	 */
+	Integer  modifyAccBalanceByLogId(String logId,int ioType,float ioMoney);
+}

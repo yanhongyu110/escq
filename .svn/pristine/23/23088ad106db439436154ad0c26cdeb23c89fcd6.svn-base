@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.userinfo.ArrangementInfoMapper">
+    <resultMap type="com.jero.esc.po.userinfo.ArrangementInfo" id="BaseResultMap">
+        <id column="ARR_ID" jdbcType="VARCHAR" property="arrId" />
+        <result column="ARR_SEVERID" jdbcType="VARCHAR" property="arrSeverid" />
+        <result column="ARR_STARTTIME" jdbcType="VARCHAR" property="arrStarttime" />
+        <result column="ARR_ENDTIME" jdbcType="VARCHAR" property="arrEndtime" />
+        <result column="ARR_CURDAY" jdbcType="DATE" property="arrCurday" />
+        <result column="ARR_CONTENT" jdbcType="VARCHAR" property="arrContent" />
+        <result column="ARR_COMMENT" jdbcType="DATE" property="arrComment" />
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        ARR_ID, ARR_SEVERID, ARR_STARTTIME, ARR_ENDTIME, ARR_CURDAY,ARR_CONTENT,ARR_COMMENT
+    </sql>
+    
+    <select id="selectArrangeAll" resultMap="BaseResultMap" parameterType="com.jero.esc.po.userinfo.ArrangementInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM ARRANGE
+        WHERE ARR_SEVERID=#{arrSeverid,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="selectArrangeByDate" resultMap="BaseResultMap" parameterType="com.jero.esc.po.userinfo.ArrangementInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM ARRANGE
+        WHERE
+        ARR_SEVERID=#{arrSeverid,jdbcType=VARCHAR}
+        AND ARR_CURDAY=#{arrCurday,jdbcType=VARCHAR}
+        ORDER BY ARR_STARTTIME
+    </select>
+    
+    <select id="selectArrangeById" resultMap="BaseResultMap" parameterType="com.jero.esc.po.userinfo.ArrangementInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM ARRANGE
+        WHERE
+        ARR_ID=#{arrId,jdbcType=VARCHAR}
+    </select>
+    
+    <delete id="deleteArrangeById" parameterType="com.jero.esc.po.userinfo.ArrangementInfo">
+    DELETE FROM ARRANGE
+    WHERE
+    ARR_ID=#{arrId,jdbcType=VARCHAR}
+    </delete>
+    
+    
+    <insert id="insertArrange" parameterType="com.jero.esc.po.userinfo.ArrangementInfo">
+        INSERT INTO ARRANGE
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="arrId != null">
+      ARR_ID,
+      </if>
+      <if test="arrSeverid != null">
+      ARR_SEVERID,
+      </if>
+      <if test="arrStarttime != null">
+      ARR_STARTTIME,
+      </if>
+      <if test="arrEndtime != null">
+      ARR_ENDTIME,
+      </if>
+      <if test="arrCurday != null">
+      ARR_CURDAY,
+      </if>
+      <if test="arrContent != null">
+      ARR_CONTENT,
+      </if>
+      <if test="arrComment != null">
+      ARR_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="arrId != null">
+        #{arrId,jdbcType=VARCHAR},
+      </if>
+      <if test="arrSeverid != null">
+        #{arrSeverid,jdbcType=VARCHAR},
+      </if>
+      <if test="arrStarttime != null">
+        #{arrStarttime,jdbcType=VARCHAR},
+      </if>
+      <if test="arrEndtime != null">
+        #{arrEndtime,jdbcType=VARCHAR},
+      </if>
+      <if test="arrCurday != null">
+        #{arrCurday,jdbcType=DATE},
+      </if>
+      <if test="arrContent != null">
+        #{arrContent,jdbcType=DATE},
+      </if>
+      <if test="arrComment != null">
+        #{arrComment,jdbcType=DATE},
+      </if>
+    </trim>
+    </insert>
+    
+    <update id="updateArrangeById" parameterType="com.jero.esc.po.userinfo.ArrangementInfo">
+    UPDATE ARRANGE
+    <set>
+    ARR_STARTTIME = #{arrStarttime,jdbcType=VARCHAR},
+    ARR_ENDTIME = #{arrEndtime,jdbcType=VARCHAR},
+    ARR_CONTENT =  #{arrContent,jdbcType=VARCHAR}
+    </set>
+    <where>
+    ARR_ID =  #{arrId,jdbcType=VARCHAR}
+    </where>
+    </update>
+    
+    
+</mapper>

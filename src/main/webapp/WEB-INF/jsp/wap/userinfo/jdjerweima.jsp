@@ -1,0 +1,40 @@
+
+
+<%@ page import="com.alibaba.fastjson.JSON" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+
+	<meta charset="UTF-8">
+	<title>近到家二维码</title>
+	<meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="0">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+	<meta name="apple-touch-fullscreen" content="yes">
+	<!-- 开启对web app程序的支持  -->
+	<meta content="telephone=no,email=no" name="format-detection">
+	<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+	<!--base css-->
+	<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+	<link rel="stylesheet" href="${webtxc}/css/wap/personer.css?v=1234" />
+    <script type="text/javascript" src="${webtxc}/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="${webtxc}/myjs/wap/userinfo/jdjerweima.js"></script>
+</head>
+
+<body>
+         <div class="foucs_ewm">
+        	
+        	<img src="${webtxc}/images/wap/zcyj.jpg"/>
+        	<!-- <p>识别二维码关注近到家公众号</p> -->
+        	<a href="${webtxc}/wap/userinfo/selectAllOpenId"></a>
+        </div>
+        
+        <%-- <a href="${webtxc}/wap/main/view.html">测试</a> --%>
+</body>
+
+</html>

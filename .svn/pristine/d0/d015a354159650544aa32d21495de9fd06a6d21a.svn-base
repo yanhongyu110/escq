@@ -1,0 +1,128 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+	<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>发布服务</title>
+		<link href="${webtxc}/css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="${webtxc}/css/public.css" />
+</head>
+<style>
+.b_nav{display:none}
+</style>
+<body>
+<%@include file="/WEB-INF/jsp/common/top.jsp"%>
+
+<div class="content_help">
+        
+		  <div class="pages_tab">
+				<ul class="cle">
+					<li>
+						<a href="#" target="_blank">我是需求者</a>
+					</li>
+					<li>
+						<a href="#" target="_blank">我是服务者</a>
+					</li>
+					<li class="on">
+						<a href="#" target="_blank">我是服务商</a>
+					</li>
+				</ul>
+			</div>	
+			
+			<div class="help_main cle">
+			  <div class="fl help_left">
+			    <div class="title">
+						<h4>我是服务商</h4>
+				</div>
+				<ul class="menu" id="left_bar">
+						<li class="col">
+							<h3>入驻相关</h3>
+							<ul class="child_nav">
+								<li>
+									<a href="${webtxc}/goodsinfo/home/direct.html?stId=311">入驻条件</a>
+								</li>
+								<li>
+									<a href="${webtxc}/goodsinfo/home/direct.html?stId=312">服务商入驻流程</a>
+								</li>
+								
+							</ul>
+						</li>
+						<li class="col">
+							<h3>服务管理</h3>
+							<ul class="child_nav">
+								<li>
+									<a href="${webtxc}/goodsinfo/home/direct.html?stId=321">发布服务</a>
+								</li>
+								<li>
+									<a href="${webtxc}/goodsinfo/home/direct.html?stId=322">审核流程</a>
+								</li>
+								<li>
+									<a href="${webtxc}/goodsinfo/home/direct.html?stId=323">服务发布规范</a>
+								</li>
+								
+							</ul>
+						</li>
+						<li class="col">
+							<h3>交易管理</h3>
+							<ul class="child_nav">
+								<li>
+									<a href="${webtxc}/goodsinfo/home/direct.html?stId=331">如何预约</a>
+								</li>
+								<li>
+									<a href="${webtxc}/goodsinfo/home/direct.html?stId=332">如何付款</a>
+								</li>
+								
+								
+							</ul>
+						</li>
+						<li class="col">
+							<h3>财务管理</h3>
+							<ul class="child_nav">
+								<li>
+									<a href="${webtxc}/goodsinfo/home/direct.html?stId=341">资金管理</a>
+								</li>
+								<li>
+									<a href="${webtxc}/goodsinfo/home/direct.html?stId=342">充值提现</a>
+								</li>
+								
+								
+							</ul>
+						</li>
+						<li class="col">
+							<h3>账户管理</h3>
+							<ul class="child_nav">
+								<li>
+									<a href="${webtxc}/goodsinfo/home/direct.html?stId=351">资料修改</a>
+								</li>
+								<li>
+									<a href="${webtxc}/goodsinfo/home/direct.html?stId=352">修改支付密码</a>
+								</li>
+								
+								
+							</ul>
+						</li>
+					</ul>
+			  </div>
+			  <div class="help_right">
+			    <h3 class="help_title">发布服务</h3>
+			    <div class="help_content">
+			    <h3>服务商如何设置自己的话题？</h3>
+			    <p>服务商可以根据自己的专业、经验和兴趣选择话题领域，在综合考虑平台上同类行家情况后，选择最具有自己特色、优势的话题开设。新上线的行家一般建议开设1-2个话题，这样更易获得学员好评。</p>
+			    <h3>服务商可以为话题定价吗？</h3>
+			    <p>价格高低并不代表服务商资历高低，而是需求者对服务商付出帮助的感谢</p>
+
+                <p>服务商需要在在行整体话题单价水准下自行设置话题价格。目前，服务商话题客单价平均300元左右，学员普遍能接受的价格在 200-500 元/次（小时）之间。因此，建议您将话题价格设定在这一区间内更有利于获得约见机会。</p>
+			    </div>
+			  </div>
+			</div>	
+	   
+</div>
+
+<%@include file="/WEB-INF/jsp/common/bottom.jsp"%>
+
+</body>
+</html>

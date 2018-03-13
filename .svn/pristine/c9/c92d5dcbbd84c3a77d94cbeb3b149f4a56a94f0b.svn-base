@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.userinfo.ThirdPartyLoginMapper">
+	<insert id="addthirdPartyLogin" parameterType="com.jero.esc.vo.userinfo.ThirdPartyLogin">
+		insert into thirdpartylogin(id, telephone, type, mediaId, LOG_ID)
+		values(#{id,jdbcType=VARCHAR},#{telephone,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},#{mediaId,jdbcType=VARCHAR},#{logId,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="selectLog" parameterType="String" resultType="com.jero.esc.vo.userinfo.ThirdPartyLogin">
+		SELECT id,telephone,type,mediaId,LOG_ID as logId from thirdpartylogin where mediaId=#{openid,jdbcType=VARCHAR}
+	</select>
+	<select id="selectLogById" parameterType="String" resultType="com.jero.esc.vo.userinfo.ThirdPartyLogin">
+		SELECT id,telephone,type,mediaId,LOG_ID as logId from thirdpartylogin where LOG_ID=#{logId,jdbcType=VARCHAR}
+	</select>
+</mapper>

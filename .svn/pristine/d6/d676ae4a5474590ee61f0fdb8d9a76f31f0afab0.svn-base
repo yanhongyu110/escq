@@ -1,0 +1,185 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jsp/common/common.jsp" %>
+<head>
+    <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
+    <link rel="stylesheet" href="${webtxc}/css/public.css"/>
+    <link rel="stylesheet" href="${webtxc}/css/personal.css?v=123"/>
+    <script type="text/javascript" src="${webtxc}/js/personal_tab.js"></script>
+    <script type="text/javascript" src="${webtxc}/js/personal_menu.js"></script>
+    <script type="text/javascript">
+     $(function(){
+    	 $('#balance').hide();
+    	 $('#confirm').show();
+		 $('.validate').hide();
+		// 验证提现余额
+		 $('#apdAmount').change(function(){
+			 var backbalance=$('#accBalance').text();
+			 var frontbalance=$('#apdAmount').val();
+			 if(parseFloat(backbalance)<parseFloat(frontbalance)){
+				 $('#apdAmount').next('.validate').show();
+			 }else{
+				 $('#apdAmount').next('.validate').hide();
+			 }
+		 })
+		 //验证银行卡号
+		 $('#reacNo').change(function(){
+			 var acno=$('#acNo').val();
+			 var reacno=$('#reacNo').val();
+			 if(acno!=reacno){
+				 $('#reacNo').next('.validate').show();
+			 }else{
+				 $('#reacNo').next('.validate').hide();
+			 }
+		 })
+		  $('#identify').click(function(){
+			   console.log("heheh")
+			   $('#balance').show();
+			   $('#confirm').hide();
+			 
+		   })
+    })
+    </script>
+	<style >
+	.validate{
+	font-size: 15px;
+	margin: 12px;
+	color:red;
+	}
+	</style>
+    <title>余额提现</title>
+</head>
+<body>
+	<c:set var="istop" value="true" />
+    <%@include file="/WEB-INF/jsp/common/top.jsp" %>
+    <div class="content">
+        <%@include file="/WEB-INF/jsp/common/left.jsp" %>
+        <div class="content-right">
+					<div class="expert_mes">
+						<h2>我的账户  >> 余额提现</h2>
+						<div class="my_zh">
+							<div class="my_zh_title">
+								<div class="my_zh_title_left">
+									<a>账户余额：<span id="accBalance">${ accountDrawVo.accBalance}</span>元</a>
+								</div>
+							</div>
+						</div><!--end.my_zh-->
+					<form id="" action="" method="post">
+					<div class="my_zh_list" id="confirm">
+							<h2>提现到银行卡</h2>
+							<div class="my_zl_gr">
+							<!-- <ul>
+								<li class="mc">账户属性：</li>
+								<li class="mes_s ons">对私</li>
+								<li class="mes_s">对公</li>
+								
+							</ul> -->
+							<ul>
+								<li class="mc">银行卡账户名：</li>
+								<li><input type="text" class="gr_input" name="acName" placeholder="请输入银行账户名" /></li>
+								
+							</ul>
+							<ul>
+								<li class="mc">银行卡号：</li>
+								<li><input type="text" class="gr_input" id="acNo" name="acNo" placeholder="请输入银行卡号" /></li>
+								
+							</ul>
+							<ul>
+								<li class="mc">再次输入银行卡号：</li>
+								<li><input type="text" class="gr_input" id="reacNo"  placeholder="请再次输入银行号"/><span class="validate" >两次输入银行卡号不一致请重新输入</span></li>
+								
+							</ul>
+							<ul>
+								<li class="mc">账户类型：</li>
+								<li class="mes_s ">信用卡</li>
+								<li class="mes_s ons">借记卡</li>
+								<input class="gr_input" name="acType" type="hidden"  />
+							</ul>
+							
+							<ul>
+								<li class="mc">提现金额：</li>
+								<li><input type="text" class="gr_input" id="apdAmount" name="apdAmount"  placeholder="请输入提现金额"> 元
+									<span class="validate" >提现金额不能大于账户余额</span>
+								</li>
+								
+							</ul>
+							<ul>
+								<li class="mc">开户行：</li>
+								<li>
+									<select name="acBank">
+										<option value="104">中国银行</option>
+										<option value="1051">中国建设银行</option>
+										<option value="1025">中国工商银行</option>
+										<option value="103">中国农业银行</option>
+										<option value="3011">中国交通银行</option>
+										<option value="3230">中国邮政储蓄银行</option>
+										<option value="3080">中国招商银行</option>
+										<option value="313">中信银行</option>
+										<option value="314">上海浦东发展银行</option>
+										<option value="307">中国平安银行</option>
+										<option value="311">华夏银行</option>
+									</select>
+								</li>
+								
+							</ul>
+							<ul>
+								<li class="mc">联系电话：</li>
+								<li><input type="text" class="gr_input" name="acCell"  placeholder="请输入银行账号"></li>
+								
+							</ul>
+							<ul>
+								<li class="mc">备注：</li>
+								<li><textarea cols="48" rows="9" Style="padding: 10px;" name="acComment" ></textarea></li>
+								
+							</ul>
+							<ul>
+								<li class="mc"></li>
+								<li><div class="btn_tx" id="identify">确定</div></li>
+								
+								
+							</ul>
+							</div>
+							
+						</div><!--end.my_zh_list-->
+						<div class="my_zh_list" id="balance">
+							
+							<div class="my_zh_qtfs momargin">
+								<ul>
+									<li>银行账户：</li>
+									<li>行**</li>
+								</ul>
+								<ul>
+									<li>提现金额：</li>
+									<li><span id="rebalance"></span></li>
+								</ul>
+								<ul>
+									<li>交易密码：</li>
+									<li><input type="text" class="sr" value="请输入密码"></li>
+									<li class="forgot">忘记密码？</li>
+								</ul>
+							</div>
+							
+							<div class="my_zh_bottom tx">
+								<div class="btn_tx" id="submit">确认提现</div>
+								<h3>如提现失败，提现金额会返回到账户余额，请注意查看系统通知。</h3>
+								
+							</div>
+							
+						</div><!--end.my_zh_list-->
+						</form>
+						
+					</div><!--end.expert_mes-->
+					
+					
+					
+				</div>
+            
+        
+        <!--end.content-->
+</div>
+    <%@include file="/WEB-INF/jsp/common/bottom.jsp" %>
+
+
+
+</body>
+
+</html>

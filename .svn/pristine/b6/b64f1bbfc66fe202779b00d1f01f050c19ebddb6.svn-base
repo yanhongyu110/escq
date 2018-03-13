@@ -1,0 +1,26 @@
+package com.jero.esc.mapper.bizinfo;
+
+
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+
+import com.jero.esc.po.bizinfo.FocusUtop;
+import com.jero.esc.vo.bizinfo.FocusProvider;
+import com.jero.esc.vo.bizinfo.FocusUser;
+
+public interface FocusUtopMapper {
+
+    int insert(FocusUtop record);
+
+    int insertSelective(FocusUtop record);
+    //查看我关注的
+    List<FocusProvider> selectByUser(String futpUser,RowBounds rowBounds);
+    //查看关注我的
+    List<FocusUser> selectByProvider(String futpProvider,RowBounds rowBounds);
+    
+    Integer countByCon(FocusUtop record);
+    
+    int delete(FocusUtop record);
+    
+}

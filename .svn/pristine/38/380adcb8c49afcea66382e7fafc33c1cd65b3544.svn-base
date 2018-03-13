@@ -1,0 +1,79 @@
+package com.jero.esc.common.po;
+
+import com.alibaba.fastjson.JSON;
+
+public class JsonResult {
+
+
+
+    //*********************************************blazh
+    //**********************
+    public JsonResult(boolean isSuccess, String errorMsg, Object obj) {
+        this.success = isSuccess;
+        this.errorMsg = errorMsg;
+        this.obj = obj;
+    }
+
+    public JsonResult(boolean isSuccessj) {
+        this.success = isSuccessj;
+    }
+
+    public JsonResult() {
+    }
+
+    public JsonResult(String errorMsg) {
+        this.success = false;
+        this.errorMsg = errorMsg;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
+
+    public String toJSON() {
+        return JSON.toJSONString(this);
+    }
+    //**********************
+    //*********************************************blazh
+
+    private boolean success = false;
+    private String errorCode;
+    private String errorMsg;
+    private Object obj;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+    public boolean getSuccess() {
+    	return success;
+    }
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public Object getObj() {
+        return obj;
+    }
+
+    public void setObj(Object obj) {
+        this.obj = obj;
+    }
+
+}

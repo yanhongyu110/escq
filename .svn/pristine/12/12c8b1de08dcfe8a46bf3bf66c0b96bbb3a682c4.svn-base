@@ -1,0 +1,820 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%--<%@ include file="/WEB-INF/jsp/common/common.jsp"%>--%>
+<link rel="stylesheet" href="${webtxc}/css/personal.css?val=5454"/>
+<script type="text/javascript" src="${webtxc}/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="${webtxc}/jquery/jquery.md5.js"></script>
+
+<script src="${webtxc}/js/template-web.js"></script>
+
+<script src="${webtxc}/js/wap/swiper.min.js"></script>
+<link rel="stylesheet" href="${webtxc}/css/wap/swiper.min.css">
+
+<script type="text/javascript">
+    var serviceTypetree = '${serviceTypetree}'
+    var stId = '${stId}'
+    var isSilde = '${isSilde}'
+    var orz_to = true;
+</script>
+
+<script src="${webtxc}/vue/vue.min.js"></script>
+
+<script>
+    $(function () {
+        selectNav();
+        getSrceenWH();
+        //显示弹框
+        $('#log').click(function () {
+            className = $(this).attr('class');
+            $('#dialogBg').fadeIn(300);
+            $('#dialog').removeAttr('class').addClass('animated ' + className + '').fadeIn();
+            $('.product-wrap div.product').eq(0).fadeIn(150).siblings('div.product').hide();
+            var liWidth = $('.title-list li').width();
+            $('.lanrenzhijia .title-list p').stop(false, true).animate({'left': 0 * liWidth + 'px'}, 300);
+            $("#li2").addClass('on').siblings().removeClass('on');
+        });
+        $('#regidest').click(function () {
+            className = $(this).attr('class');
+            $('#dialogBg').fadeIn(300);
+            $('#dialog').removeAttr('class').addClass('animated ' + className + '').fadeIn();
+            $('.product-wrap div.product').eq(1).fadeIn(150).siblings('div.product').hide();
+            var liWidth = $('.title-list li').width();
+            $('.lanrenzhijia .title-list p').stop(false, true).animate({'left': 1 * liWidth + 'px'}, 300);
+            $("#li1").addClass('on').siblings().removeClass('on');
+        });
+        //关闭弹窗
+        $('.claseDialogBtn').click(function () {
+            $("#cb").prop("checked", false);
+            $(".registerBtn").unbind("click");
+            $('.registerBtn').css('background', '#999');
+            $('#dialogBg').fadeOut(300, function () {
+                $('#dialog').addClass('bounceOutUp').fadeOut();
+            });
+        });
+        /* deng lu 下拉*/
+        $('.dropdown').hover(function () {
+            $(this).addClass('dropdown-hover');
+            $(".dropdown-sub").show('slow');
+        }, function () {
+            $(this).removeClass('dropdown-hover');
+        });
+        $('.dropdown2').hover(function () {
+            $(this).addClass('dropdown-hover2');
+            $(".dropdown-sub2").show('slow');
+        }, function () {
+            $(this).removeClass('dropdown-hover2');
+        });
+
+        $('#logout').click(function () {
+            window.location.href = path + "/userinfo/logInfo/logout.html" + '?comId=' + g_comid;
+        })
+        $('.title-list li').click(function () {
+            var liindex = $('.title-list li').index(this);
+            /*$(this).addClass('on').siblings().removeClass('on');*/
+            $('.product-wrap div.product').eq(liindex).fadeIn(150).siblings('div.product').hide();
+            var liWidth = $('.title-list li').width();
+            $('.lanrenzhijia .title-list p').stop(false, true).animate({'left': liindex * liWidth + 'px'}, 300);
+        });
+        checkCookieLoad();
+
+        $('#cb').click(function () {
+            if ($('#cb').is(':checked')) {
+                $('.registerBtn').css('background', '#FB5A5A');
+            } else {
+                $('.registerBtn').css('background', '#999');
+            }
+        })
+        $('.registerBtn').click(function () {
+            if (!$('#cb').is(':checked')) {
+                $('.registerBtn').css('background', '#999');
+                alert("请阅读并同意专家服务协议后再点击注册");
+            } else {
+                $('.registerBtn').css('background', '#FB5A5A');
+                saveRegister();
+            }
+        })
+        //根据时间显示欢迎词
+        var time = new Date().getHours();
+        if (time < 7 || time > 20) {
+            $("#hello").text("晚上好，");
+        } else if (time <= 13) {
+            $("#hello").text("上午好，");
+        } else {
+            $("#hello").text("下午好，");
+        }
+        console.info(isSilde)
+
+        if (isSilde == undefined || isSilde == '') {
+
+            $(".b_nav").hide();
+            $('#thefull').click(function () {
+                $(".b_nav").slideToggle();
+            });
+
+        }
+
+//        $('#mmyull').on('click', 'li', function () {
+//            serviceTypetree = $(this).attr('val');
+//            jQuery('<form action="' + path + "/goodsinfo/ServiceInfo/showServiceList.html" + '?comId=' + g_comid + '" method="post">'
+//                    + '<input type="hidden" name="serviceTypetree" value="' + serviceTypetree + '" />'
+//                    + '</form>').appendTo('body').submit().remove();
+//        });
+        $('#mmyull').on('click', 'li', function () {
+            serviceTypetree = $(this).attr('val');
+            jQuery('<form action="' + path + '/goodsinfo/ServiceInfo/showServiceList.html" method="post">'
+                + '<input type="hidden" name="serviceTypetree" value="' + serviceTypetree + '" />'
+                + '</form>').appendTo('body').submit().remove();
+        });
+        $('.btn-search').click(function () {
+            searchService();
+        });
+        initCommonType();
+        $('.sou_top_btn').click(function () {
+            searchService1();
+        })
+    });
+    function selectNav() {
+        $('#ct li a[val="' + stId + '"]').addClass("nav_dh_face");
+        $('#ct li a[val="' + stId + '"]').parent().siblings().find('a').removeClass("nav_dh_face");
+    }
+    function enter(event) {
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if (e && e.keyCode == 13) { // enter 键
+            searchService();
+        }
+    }
+    function enter1(event) {
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if (e && e.keyCode == 13) { // enter 键
+            searchService1();
+        }
+    }
+    function searchService() {
+        var flag;
+        var search = $('.ss1').val();
+
+        if ($('.selected').attr("a") == '专家') {
+            flag = 'b';
+            jQuery('<form action="' + path + '/goodsinfo/ServiceInfo/searchService.html" method="post">'
+                + '<input type="hidden" name="search" value="' + search + '" />'
+                + '<input type="hidden" name="flag" value="' + flag + '" />'
+                + '<input type="hidden" name="to" value="' + orz_to + '" />'
+                + '</form>').appendTo('body').submit().remove();
+        } else if ($('.selected').attr("a") == '服务') {
+            flag = 'a';
+            jQuery('<form action="' + path + '/goodsinfo/ServiceInfo/searchService.html"  method="post">'
+                + '<input type="hidden" name="search" value="' + search + '" />'
+                + '<input type="hidden" name="flag" value="' + flag + '" />'
+                + '<input type="hidden" name="to" value="' + orz_to + '" />'
+                + '</form>').appendTo('body').submit().remove();
+        } else if ($('.selected').attr("a") == '需求') {
+            flag = 'c';
+            jQuery('<form action="' + path + '/demand/showList.html" method="post">'
+                + '<input type="hidden" name="search" value="' + search + '" />'
+                + '<input type="hidden" name="flag" value="' + flag + '" />'
+                + '<input type="hidden" name="to" value="' + orz_to + '" />'
+                + '</form>').appendTo('body').submit().remove();
+        }
+//        else if ($('.selected').attr("a") == '公司') {
+//            flag = 'd';
+//            jQuery('<form action="' + path + '/demand/showList.html" method="post">'
+//                + '<input type="hidden" name="search" value="' + search + '" />'
+//                + '<input type="hidden" name="flag" value="' + flag + '" />'
+//                + '<input type="hidden" name="to" value="' + orz_to + '" />'
+//                + '</form>').appendTo('body').submit().remove();
+//        }
+    }
+
+    //新top的搜索事件
+    function searchService1() {
+        var flag = 'b';
+        var search = $('.inp_srh').val();
+        var val = $('.select_option .selected').index() + 1;
+        console.log(val)
+        if (val == "2") {
+            flag = 'b';
+        } else if (val == "1") {
+            flag = 'a';
+        }
+
+        if (val == '3') {
+            flag = 'c';
+            jQuery('<form action="' + path + '/search/view.html"  method="post">'
+                + '<input type="hidden" name="search" value="' + search + '" />'
+                + '<input type="hidden" name="flag" value="' + flag + '" />'
+                + '<input type="hidden" name="to" value="' + orz_to + '" />'
+                + '</form>').appendTo('body').submit().remove();
+        }
+//        else if (val == '4') {
+//            flag = 'd';
+//            jQuery('<form action="' + path + '/company/companyList.html"  method="post">'
+//                + '<input type="hidden" name="search" value="' + search + '" />'
+//                + '<input type="hidden" name="flag" value="' + flag + '" />'
+//                + '<input type="hidden" name="to" value="' + orz_to + '" />'
+//                + '</form>').appendTo('body').submit().remove();
+//        }
+        else {
+            jQuery('<form action="' + path + '/search/view.html"  method="post">'
+                + '<input type="hidden" name="search" value="' + search + '" />'
+                + '<input type="hidden" name="flag" value="' + flag + '" />'
+                + '<input type="hidden" name="to" value="' + orz_to + '" />'
+                + '</form>').appendTo('body').submit().remove();
+        }
+    }
+
+
+    function initCommonType() {
+        $.ajax({
+            async: false,
+            type: 'post',
+            dataType: 'json',
+            data: {type: 5},
+            url: path + '/pubinfo/getTree.html',
+            success: function (data) {
+//                var type = data;
+                var typeList = data;
+                for (var i = 0; i < typeList.length; i++) {
+                    var commonType = typeList[i].ctName;
+                    var id = typeList[i].ctId;
+                    $("#mmyull").append("<li style='color:#ccc;text-align:center;line-height:30px;border-bottom: 1px solid rgba(255,255,255,.3);' val=" + id + ">" + commonType + "</li>");
+                }
+            }
+        })
+    }
+    var w, h, className;
+    function getSrceenWH() {
+        w = $(window).width();
+        h = $(window).height();
+        $('#dialogBg').width(w).height(h);
+    }
+
+    window.onresize = function () {
+        getSrceenWH();
+    }
+    $(window).resize();
+    if ($.fn.datagrid) {
+        $.fn.datagrid.defaults.pageSize = 30;
+        $.fn.datagrid.defaults.pageList = [30, 40, 50, 60, 80, 100, 200, 300, 500, 1000, 1500, 2000];
+        /*$.fn.datagrid.defaults.onLoadError=function(e){
+         //alert('加载失败!');
+         var html = e.responseText;
+         if(html.indexOf('<title>用户登录已超时</title>')!=-1){
+         location.href=path+'/timeout.jsp';
+         }else if(html.indexOf('j_spring_security_check')!=-1){
+         location.href=path+'/login.jsp';
+         }
+         };*/
+    }
+
+    function register() {
+        window.location.href = path + "/userinfo/logInfo/jumpRegister.html" + '?comId=' + g_comid;
+    }
+
+    function saveRegister() {
+        var logCell = $('.registerCell').val();
+        var checkCode = $('.registerCode').val();
+        var logPass = $('.registerPass').val();
+        var flag = 1;
+        if (checkNull(logCell)) {
+            alert('手机号不能为空！');
+        } else if (checkNull(checkCode)) {
+            alert('验证码不能为空！');
+        } else if (checkNull(logPass)) {
+            alert('密码不能为空！');
+        } else if (!checkCell(logCell)) {
+            alert('手机号格式不对！');
+        } else if (checkLength(logPass, 6, 20)) {
+            alert('密码长度必须在6-20位之间！');
+        } else {
+            /*$(".registerBtn").unbind("click");*/
+            $.post(path + '/userinfo/logInfo/register.html', $.param({
+                'logCell': logCell,
+                'checkCode': checkCode,
+                'logPass': $.md5(logPass),
+                'flag': flag
+            }, true), function (result) {
+                if (result.success) {
+                    if (document.URL != path + '/userinfo/logInfo/logout.html') {
+                        window.location.reload();
+                    }
+                    $.post(path + '/userinfo/logInfo/login.html', $.param({
+                        'logName': logCell,
+                        'logPass': $.md5(logPass)
+                    }, true), function (result) {
+                        alert("注册成功", "注册", function () {
+                            window.location.href = path + "/goodsinfo/ServiceInfo/homeShow.html" + '?comId=' + g_comid;
+                        })
+                    }, 'json');
+                } else {
+                    if (result.errorCode == "2") {
+                        alert(result.errorMsg, "注册", function () {
+                        })
+                    } else if (result.errorCode == "3") {
+                        alert(result.errorMsg, "注册", function () {
+                        })
+                    } else if (result.errorCode == "5") {
+                        alert(result.errorMsg, "注册", function () {
+                        })
+                    }
+                }
+            }, 'json');
+
+        }
+
+
+    }
+
+    var flag = false;
+    function buttonregister() {
+        if (flag == false) {
+            var logCell = $('.registerCell').val();
+            if (checkNull(logCell)) {
+                alert('手机号不能为空！');
+            } else if (!checkCell(logCell)) {
+                alert('请输入有效的手机号码！');
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: path + '/userinfo/logInfo/validateLoginName.html',
+                    dataType: 'json',
+                    data: {'logCell': logCell},
+                    success: function (res) {
+                        if (res.success) {
+                            flag = true;
+                            timeOutCommon(60);
+                        } else {
+                            if (res.errorCode == "1") {
+                                alert(res.errorMsg);
+                            } else if (res.errorCode == "2") {
+                                alert(res.errorMsg);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    function timeOutCommon(i) {
+        if (i != 0) {
+            $(".registerButton").unbind("click");
+            $('.registerButton').val(i + 's可重新发送');
+            $('.registerButton').css({background: '#999', border: '0px'});
+            setTimeout(function () {
+                timeOutCommon(i)
+            }, (1000));
+        } else {
+            flag = false;
+            $(".registerButton").click(function () {
+                button();
+            })
+            $('.registerButton').val('获取验证码');
+            $('.registerButton').css({background: '#FB5A5A', border: '1px solid #FB5A5A'});
+        }
+        i--;
+    }
+    function checkCookieLoad() {
+        var coo = $.cookie('rmb');
+        if ($.cookie('rmb')) {
+            $(".cellPhone").val($.cookie('logName'));
+            $(".logPassWord").val($.cookie('logPass'));
+            $(".checkLog").attr("checked", "true");
+        }
+    }
+    function logUser() {
+        var logCell = $('.cellPhone').val();
+        var logPass = $('.logPassWord').val();
+        if (checkNull(logCell)) {
+            alert("账号不能为空");
+        } else if (checkNull(logPass)) {
+            alert("密码不能为空");
+        } else {
+            var name = $.cookie('logName');
+            var pass = $.cookie('logPass');
+            if (logCell != name || logPass != pass) {
+                logPass = $.md5(logPass);
+            }
+            var checked = $(".checkLog").is(":checked");
+            if (checked) {
+                $.cookie('rmb', true, {expires: 7, path: '/'});
+                $.cookie('logName', logCell, {expires: 7, path: '/'});
+                $.cookie('logPass', logPass, {expires: 7, path: '/'});
+            } else {
+                $.cookie('rmb', false, {expires: -1, path: '/'});
+                $.cookie('logName', '', {expires: -1, path: '/'});
+                $.cookie('logPass', '', {expires: -1, path: '/'});
+            }
+            $.post(path + '/userinfo/logInfo/login.html', $.param({
+                'logName': logCell,
+                'logPass': logPass
+            }, true), function (result) {
+                if (result.success) {
+                    alert("登录成功", "登录", function () {
+                        if (document.URL == path + '/userinfo/logInfo/logout.html') {
+                            window.location.href = path + "/goodsinfo/ServiceInfo/homeShow.html" + '?comId=' + g_comid;
+                        } else {
+                            window.location.reload();
+                        }
+                    })
+                } else {
+                    if (result.errorCode == "1") {
+                        alert(result.errorMsg);
+                    } else if (result.errorCode == "2") {
+                        alert(result.errorMsg);
+                    }
+                }
+            }, 'json');
+        }
+    }
+
+
+    //弹出信息窗口 title:标题 msgString:提示信息 msgType:信息类型 [error,info,question,warning]
+    function msgShow(title, msgString, msgType) {
+        $.messager.alert(title, msgString, msgType);
+    }
+
+    /**
+     * 无数据显示横拉条
+     */
+    function scrollShow(datagrid) {
+        datagrid.prev(".datagrid-view2").children(".datagrid-body").html("<div style='width:" + datagrid.prev(".datagrid-view2").find(".datagrid-header-row").width() + "px;border:solid 0px;height:1px;'></div>");
+    }
+</script>
+
+
+<script>
+    $(function () {
+        //通用头部搜索切换
+        $('#search-hd .search-input').on('input propertychange', function () {
+            var val = $(this).val();
+            if (val.length > 0) {
+                $('#search-hd .pholder').hide(0);
+            } else {
+                var index = $('#search-bd li.selected').index();
+                $('#search-hd .pholder').eq(index).show().siblings('.pholder').hide(0);
+            }
+        })
+        $('#search-bd li').click(function () {
+            var index = $(this).index();
+            $('#search-hd .pholder').eq(index).show().siblings('.pholder').hide(0);
+            $('#search-hd .search-input').eq(index).show().siblings('.search-input').hide(0);
+            $(this).addClass('selected').siblings().removeClass('selected');
+            $('#search-hd .search-input').val('');
+        });
+    })
+</script>
+
+<script>
+    $.ajax({
+//            async: false,
+        type: 'post',
+        dataType: 'json',
+        data: {type: 5},
+        url: path + '/pubinfo/getTree.html',
+        success: function (data) {
+            var typeList = data;
+
+
+            var app = new Vue({
+                el: '.orz_app0',
+                data: {list: typeList.slice(0, 9), list1: typeList.slice(9, typeList.length)},
+                methods: {
+                    go: function (input) {
+                        location.href = path + '/goodsinfo/ServiceInfo/homeShow.html?module=' + input;
+                    }
+                }
+            });
+
+//            new Swiper('.orz_app0', {
+//                nextButton: '.more',
+//                loop: true,
+//                slidesPerGroup: 4,
+//                slidesPerView: 4
+//            });
+
+
+            var app2 = new Vue({
+                el: '.orz_app1',
+                data: {list: typeList.slice(0, 9), list1: typeList.slice(9, typeList.length)},
+                methods: {
+                    go: function (input) {
+                        location.href = path + '/goodsinfo/ServiceInfo/homeShow.html?module=' + input;
+                    }
+                }
+            });
+
+//            new Swiper('.orz_app1', {
+//                nextButton: '.more',
+//                loop: true,
+//                slidesPerGroup: 4,
+//                slidesPerView: 4
+//            });
+
+            $('.tl_nav').css({
+                margin: '0px',
+                width: '50px'
+            }).find('a').css({
+                "display": 'inline-block',
+                width: "100%",
+                height: "30px"
+            })
+
+
+        }
+    })
+</script>
+
+<style>
+    .more{
+        height: 60px;
+        overflow: hidden;
+    }
+    .more:hover{
+        height: auto;
+        overflow: visible;
+    }
+    .more a{}
+</style>
+
+<div class="contain">
+    <c:if test="${empty sessionScope.logInfo}">
+    <div id="dialogBg"></div>
+    <div id="dialog" class="animated">
+        <div class="dialogTop">
+            <a href="javascript:;" class="claseDialogBtn"><img src="${webtxc}/images/wrong.jpg"></a>
+        </div>
+        <div class="lanrenzhijia">
+            <div class="title cf">
+                <ul class="title-list fr cf ">
+                    <li id="li2" class="on">登录</li>
+                    <li id="li1">注册</li>
+                    <p>
+                        <b></b>
+                    </p>
+                </ul>
+            </div>
+            <div class="product-wrap">
+                <!--案例1-->
+                <div class="product show">
+                    <input type="text" placeholder="请用手机号、邮箱或者昵称登录" class="login_btn cellPhone"/>
+                    <input type="password" class="login_btn logPassWord" placeholder="至少输入8个字符"/>
+                    <input type="checkbox" class="zd checkLog">自动登录
+                    <a class="forget_password" href="${webtxc}/userinfo/logInfo/jumpForgetPass.html?comId=${sessionScope.company.compId}">忘记密码？</a>
+                    <input type="button" class="dl_btn" onclick="logUser()" value="登录"/>
+                    <div class="p_bttom">
+
+                        <!-- <div class="dl_qt">
+                            <a class="dl_fs">使用第三方帐号登录</a>
+                            <a class="qq_dl"></a>
+                            <a class="wx_dl"></a>
+                        </div> -->
+                    </div>
+                </div>
+                <!--案例2-->
+                <div class="product">
+                    <input type="text" placeholder="请输入正确的手机号" class="login_btn registerCell"/> <input type="text" id="checkCode" style="margin-right: 0px" placeholder="验证码" class="login_yz registerCode"/> <input type="button" style="height: 42px; margin-left: 0px" onclick="buttonregister()" value="获取验证码" class="login_yzm registerButton"/> <input type="password" placeholder="6-20位密码，区分大小写，不能为空格" class="login_btn registerPass"/>
+                    <div class="agrees_zc">
+
+                        <label><input type="checkbox" id="cb">我已阅读并同意</label>
+                        <a href="${webtxc}/goodsinfo/home/agreement.html?comId=${sessionScope.company.compId}">《近到家互联网专家平台服务协议》</a>
+                    </div>
+                    <!--end.agrees-->
+                    <input type="button" style="background: #999; border: #999" class="dl_btn registerBtn" id="registerBtn" value="注册"/>
+                </div>
+
+            </div>
+            <!--end.product-wrap-->
+        </div>
+    </div>
+    <div id="dialogBg"></div>
+    </c:if>
+    <c:if test="${empty sessionScope.logInfo}">
+    <div class="top_s" style="width: 100%;height: 50px"></div>
+    <div style="position: fixed;top: 0px;left: 0px;width: 100%;z-index: 9999" class="top2">
+        <div class="header2">
+            <div class="header_left2">
+                <a href="${webtxc}/company/companyIndex.html">
+                    <div style="width: 120px;height: 60px;background-image: url('${webtxc}/images/20170527143623_609.png');background-size: cover"></div>
+                </a>
+            </div>
+            <div class="navi2">
+                <div class="nav_dh2">
+                    <ul id="ct" class="">
+                            <%--<li class="z_fl" id="thefull"><img src="${webtxc}/images/xl.png"/>--%>
+                            <%--<div class="b_nav">--%>
+                            <%--<ul id="mmyull">--%>
+                            <%--</ul>--%>
+                            <%--</div>--%>
+                            <%--</li>--%>
+
+
+                                <span class="orz_app0">
+                        <li class="tl_nav ">
+                            <a val="001" href="${webtxc}/company/companyIndex.html">首页</a>
+                        </li>
+                            <%--<li class="tl_nav">--%>
+                            <%--<a val="002" href="${webtxc}/goodsinfo/ServiceInfo/showVideoList.html?comId=${sessionScope.company.compId}">专家达人</a>--%>
+                            <%--</li>--%>
+                            <%--<li class="tl_nav">--%>
+                            <%--<a val="003" href="${webtxc}/goodsinfo/ServiceInfo/showMorePage.html?stId=003&comId=${sessionScope.company.compId}">优质服务商</a>--%>
+                            <%--</li>--%>
+                            <%--<li class="tl_nav">--%>
+                            <%--<a val="004" href="${webtxc}/goodsinfo/ServiceInfo/showMorePage.html?stId=004&comId=${sessionScope.company.compId}">优质服务</a>--%>
+
+
+                        <span class="">
+                                    <li class="tl_nav " v-for="( it,index ) in list">
+                                        <a href="javascript:void(0);" v-bind:val="'00'+(index+2)" v-on:click="go(it.ctId)" v-text="it.ctName"></a>
+                                    </li>
+                          </span>
+
+                        <li class="tl_nav more" >
+                            <div href="javascript:void(0);">+</div>
+                            <div style="background:#333;width:60px;margin-top:-2px;border-radius: 4px;padding-bottom: 30px;"><a v-for="it in list1" href="javascript:void(0);" v-on:click="go(it.ctId)" v-text="it.ctName"></a></div>
+                        </li>
+                               
+
+
+                        <li>
+                            <div class="search radius6">
+                                <input name='ecmsfrom' type='hidden' value='9'>
+                                <input type="hidden" name="show" value="title,newstext">
+                                <select name="classid" id="choose">
+                                        <%--<option value="0">搜索</option>--%>
+                                    <option value="1" ${flag=='a'?'selected':''} >找服务</option>
+                                    <option value="4" ${flag=='b'?'selected':''} >找专家</option>
+                                    <option value="5" ${flag=='c'?'selected':''} >找需求</option>
+                                        <%--<option value="6" ${flag=='d'?'selected':''} >找公司</option>--%>
+                                </select>
+                                <input class="inp_srh" name="keyboard" placeholder="输入关键字" onkeydown="enter1()">
+                                <script type="text/javascript" src="${webtxc}/js/jquery.select.js"></script>
+                            </div>
+                        </li>
+                        <li><input class="sou_top_btn" type="button" /></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="header_right2">
+                <a href="javascript:;" class="bounceInDown" id="log">登录</a>
+                <a href="javascript:;" class="bounceInDown" id="regidest">注册</a>
+                <!-- 						<a id="userLogin" class="bounceInDown" style="color: #FB5A5A">登录</a>&nbsp&nbsp&nbsp
+                    <a style="color: #FB5A5A" onclick="register()">注册</a>
+-->
+            </div>
+        </div>
+        <!--end.header-->
+    </div>
+    </c:if>
+    <c:if test="${!empty sessionScope.logInfo}">
+    <div class="top_s" style="width: 100%;height: 50px"></div>
+    <div style="position: fixed;top: 0px;left: 0px;width: 100%;z-index: 9999;" class="global-nav2">
+        <div class="container">
+            <div class="global-nav-left">
+                <a href="${webtxc}/company/companyIndex.html">
+                    <div style="width: 120px;height: 60px;background-image: url('/images/20170527143623_609.png');background-size: cover"></div>
+                </a>
+            </div>
+            <div class="navi2">
+                <div class="nav_dh2">
+                    <ul id="ct" class="">
+                            <%--<li class="z_fl" id="thefull">--%>
+                            <%--<img src="${webtxc}/images/xl.png"/>--%>
+                            <%--<div class="b_nav">--%>
+                            <%--<ul id="mmyull"></ul>--%>
+                            <%--</div>--%>
+                            <%--</li>--%>
+                                <span class="orz_app1">
+                        <li class="tl_nav ">
+                            <a val="001" href="${webtxc}/company/companyIndex.html">首页</a>
+                        </li>
+
+
+                            <%--<li class="tl_nav">--%>
+                            <%--<a val="002" href="${webtxc}/goodsinfo/ServiceInfo/showVideoList.html?comId=${sessionScope.company.compId}">专家达人</a>--%>
+                            <%--</li>--%>
+                            <%--<li class="tl_nav">--%>
+                            <%--<a val="003" href="${webtxc}/goodsinfo/ServiceInfo/showMorePage.html?stId=003&comId=${sessionScope.company.compId}">优质服务商</a>--%>
+                            <%--</li>--%>
+                            <%--<li class="tl_nav">--%>
+                            <%--<a val="004" href="${webtxc}/goodsinfo/ServiceInfo/showMorePage.html?stId=004&comId=${sessionScope.company.compId}">优质服务</a>--%>
+
+                                <span class="">
+                                <li class="tl_nav swiper-slide" v-for="( it,index ) in list">
+                                    <a v-bind:val="'00'+(index+2)" v-on:click="go(it.ctId)" v-text="it.ctName"></a>
+                                </li>
+                            </span>
+
+
+                                <li class="tl_nav more" >
+                            <div href="javascript:void(0);">+</div>
+                            <div style="background:#333;width:60px;margin-top:-2px;border-radius: 4px;padding-bottom: 30px;"><a v-for="it in list1" href="javascript:void(0);" v-on:click="go(it.ctId)" v-text="it.ctName"></a></div>
+                        </li>
+
+
+                            <%--<li class="tl_nav">--%>
+                            <%--<a val="003" href="${webtxc}/goodsinfo/ServiceInfo/showMorePage.html?stId=003&comId=${sessionScope.company.compId}">优质服务商</a>--%>
+                            <%--</li>--%>
+                            <%--<li class="tl_nav">--%>
+                            <%--<a val="004" href="${webtxc}/goodsinfo/ServiceInfo/showMorePage.html?stId=004&comId=${sessionScope.company.compId}">优质服务</a>--%>
+                            <%--</li>--%>
+
+
+                        <li>
+                            <div class="search radius6">
+                                <input name='ecmsfrom' type='hidden' value='9'>
+                                <input type="hidden" name="show" value="title,newstext">
+                                <select name="classid" id="choose">
+                                        <%--<option value="0" >搜索</option>--%>
+                                    <option value="1" ${flag=='a'?'selected':''} >找服务</option>
+                                    <option value="4" ${flag=='b'?'selected':''} >找专家</option>
+                                    <option value="5" ${flag=='c'?'selected':''} >找需求</option>
+                                        <%--<option value="6" ${flag=='d'?'selected':''} >找公司</option>--%>
+                                </select>
+                                <input class="inp_srh" name="keyboard" placeholder="输入关键字" onkeydown="enter1()">
+                                <script type="text/javascript" src="${webtxc}/js/jquery.select.js"></script>
+                            </div>
+                        </li>
+
+                        <li><input class="sou_top_btn" type="button"/></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="global-nav-right2">
+                <div class="dropdown2 ">
+                    <a href="#" class="dropdown-main2"><span>${logInfo.logName}</span>
+                        <i class="allow_down2"></i> </a>
+                    <div class="dropdown-sub2" style="display: none;">
+                        <div class="dropdown-sub_box2">
+                            <div class="dropdown_mes2">
+                                <div class="dropdown_mes_left2">
+                                    <a href="${webtxc}/userinfo/jumpmodifyUserInfo.html"><img src="${logInfo.userPhoto}"></a>
+                                </div>
+                                <div class="dropdown_mes_right2">
+                                    <h3>${logInfo.logName}</h3>
+                                    <h3>余额：${logInfo.accBalance}</h3>
+                                    <!-- <a>等级(0)</a> <a>积分(0)分</a> -->
+                                    <div class="service_rz">
+                                        <c:if test="${empty sessionScope.logInfo.userRealname}"><a style="border:none;" class="service_nojp"></a><span>暂未实名认证</span></c:if>
+                                        <c:if test="${not empty sessionScope.logInfo.userRealname}"><a style="border:none;" class="service_jp"></a><span>已实名认证</span></c:if>
+                                        <c:if test="${logInfo.logType==1}"> <a class="service_noqy"></a><span>暂未进行服务商认证</span></c:if>
+                                        <c:if test="${logInfo.logType==2}"> <a class="service_qy"></a><span>已完成服务商认证</span></c:if>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown_mes_list2">
+                                <ul>
+
+                                    <li><a href="${webtxc}/userinfo/jumpmodifyUserInfo.html">个人设置</a></li>
+
+                                    <li><a href="${webtxc}/goodsinfo/cart/viewCart.html">我的心愿</a></li>
+
+                                </ul>
+                                <ul>
+                                    <li><a href="${webtxc}/details/AccountPaymentDetails/showIODetails.html">我的账户</a>
+                                    </li>
+
+                                    <li><a href="${webtxc}/userinfo/queryAllSystemMes.html?smType=1">
+                                        我的消息</a></li>
+
+                                </ul>
+                                <div class="height_h"></div>
+                                <div class="tc" id="logout">安全退出</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                    <%-- <div class="dropdown ">
+                            <a href="#" class="dropdown-main"><span>${logInfo.logCell}</span> <i class="allow_down"></i> </a>
+                            <div class="dropdown-sub" style="display:none;">
+                                <div class="dropdown-sub_box">
+                                    <div class="dropdown_mes">
+                                        <div class="dropdown_mes_left"><img src="${logInfo.userPhoto}"></div>
+                                        <div class="dropdown_mes_right">
+                                            <h3>${logInfo.logCell}</h3>
+                                            <a class="service_jp">金牌</a>
+                                            <a class="service_qy">签约</a>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown_mes_list">
+                                        <a class="sz"  href="${webtxc}/userinfo/jumpmodifyUserInfo.html" style="text-decoration: none;color: black;">个人设置</a>
+                                        <a class="sc">我的收藏</a>
+                                        <a class="zh">我的账户</a>
+                                        <a class="xx">我的消息</a>
+                                        <a class="tc" id="logout">退出</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div> --%>
+                <c:if test="${sessionScope.logInfo.logType == 1}">
+                    <a class="global-nav-right_a" href="${webtxc}/checkinfo/providerCheck/getCheckInfo.html">服务商认证</a>
+                </c:if>
+            </div>
+        </div>
+    </div>
+    </c:if>
+    <!--end.top-->
+
+	

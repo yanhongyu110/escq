@@ -1,0 +1,268 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+		<meta charset="UTF-8">
+		<title>推荐资料</title>
+		<meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="0">
+		<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+		<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+		<meta name="apple-touch-fullscreen" content="yes">
+		<!-- 开启对web app程序的支持  -->
+		<meta content="telephone=no,email=no" name="format-detection">
+		<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+		<!--base css-->
+		<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+			<link rel="stylesheet" href="${webtxc }/css/wap/reset.css" />
+		<link rel="stylesheet" href="${webtxc }/css/wap/personer.css?val=112" />
+		<script src="${webtxc }/js/wap/reset.js"></script>
+		<script src="${webtxc }/js/wap/TouchSlide.js"></script>
+		<script type="text/javascript" src="${webtxc }/js/jquery-1.11.3.min.js"></script>
+		<%@ include file="/WEB-INF/jsp/common/kindeditor.jsp"%>
+		
+		<script type="text/javascript" src="${webtxc}/jquery/jquery.cookie.js"></script>
+		<script type="text/javascript" src="${webtxc}/jquery/jquery.md5.js"></script>
+		<script type="text/javascript" src="${webtxc }/js/wap/common.js"></script>
+		<script type="text/javascript" src="${webtxc}/myjs/wap/userinfo/providerrecommend.js?tag=11312"></script>
+
+		<style type="text/css">
+			.status_icon{display: inline-block; position: relative; margin-top: 60px;    width: 100%;text-align: center;}
+			.status_icon .progress_bar{display: inline-block; width: 80%; height: 6px; position: absolute; top: 15px; background-color: #ccc; left: 0; right: 0; margin: auto;}
+			span.order_details{font-weight: normal;}
+			.status_progress{display: inline-block; vertical-align: top; margin-left: 40px;}
+			.status_note{margin-top: 20px; padding-bottom: 30px; border-bottom: 1px dashed #DADADA;}
+			.status_note span{font-weight: bold;}
+			.status_progress .steps{width: 40px; height: 40px; line-height: 40px; text-align: center; padding: 0; border-radius: 50%; background-color: #ccc; color: #000; margin: 0 auto; position: relative;}
+			.status_progress.on .steps{background-color: #00aee3; color: #FFF;}
+			.status_progress .stripeR{position: absolute; width: 60px; height: 6px; top: 15px; left: 35px;}
+			.status_progress .stripeL{position: absolute; width: 60px; height: 6px; top: 15px; left: -73px;}
+			.status_progress.on .stripeR, .status_progress.on .stripeL{background-color: #00aee3; line-height: 16px;padding-right: 15px;}
+			.status_progress.on .status_text{color: #73c3ed;}
+			.status_progress:first-of-type{margin-left: 0;}
+			.status_progress:first-of-type .stripeL{display: none;}
+			.status_progress:last-of-type .stripeR{display: none;}
+			.status_text{margin-top: 10px; color: #999;}
+			.personer_mes_zl .personer_mes_zl_ms{}
+			textarea{
+				width: auto;
+				/* height: 162px;
+				display:table-cell;
+				vertical-align: middle; */
+			}
+			.p_tan{
+				left:0;
+				width:370px;
+			}
+			
+			.msg_tg{
+				text-align: center;
+				padding-top: 20px;
+			}
+
+			.msg_tg a{
+				text-decoration: underline;
+				color: #0000FF;
+			}
+			.personer_sc{
+				display:flex;
+				justify-content:center;
+				align-items:center;
+			}
+			#imageKE img{
+				height:100%
+				
+			}
+			.personer_mes_zl {margin-top:0}
+		</style>
+
+
+
+
+	<style>
+		.upli{
+			text-align: center;
+			border: 1px solid #e5e5e5;
+			border-radius: 3px;
+			margin: 10px 0px;
+			line-height: 110px;
+			position: relative;
+			background-position: center;
+			background-size: contain;
+			margin-left: 9px;
+			width: 70%;
+		}
+		.upli:before{
+			content: "";
+			float: left;
+			display: inline-block;
+			padding-bottom: 70%;
+		}
+		.upli span{
+			line-height: 10px;
+			position: absolute;
+			left: 0px;
+			right: 0px;
+			top: 71%;
+		}
+	</style>
+	<script>
+        $(function () {
+            $('.mes_input textarea').each(function () {
+                $(this).css({    "line-height": "19px","padding": "5%","width":'90%',height:'85%'});
+            });
+            $('.personer_mes_zl_ms,.personer_zp').css({height:'auto',overflow: "hidden",'padding-top': '20px','padding-bottom': '20px'});
+            $('.upli').each(function () {
+                var li = $(this);
+                li.css({"width": "65%","line-height": "110px"});
+                li.find('img').get(0).style='vertical-align: middle;text-align: center;display: inline-block;width: 50px;height: 50px;border-radius:0;'
+            });
+        });
+	</script>
+
+
+	</head>
+
+	<body>
+		<!--wapper-->
+		<div class="wapper">
+			<!--page-->
+			<div id="page">
+				<div class="personer_top">
+					<h3>推荐申请</h3>
+					<span onclick="history.go(-1)" style="width:40px;height:50px;display:block;position:absolute;left:0;top:0;"></span>
+				</div>
+
+				<c:choose>
+					<c:when test="${empty providerRecommend}">
+						<div class="personer_mes">
+							
+							<div class="personer_mes_zl">
+								<ul class="personer_mes_zl_ms"  style="height: 162px;">
+									<li style="line-height: 162px;">个人说明:</li>
+									<li class="mes_input" style="height: 162px;width: 70%;">
+										<textarea <%--cols="35" rows="7"--%> id="providerDetails" style="height: 100%;width: 100%;">请填写您的个人说明，文字尽量精练。...</textarea>
+									</li>
+								</ul>
+								<ul class="personer_zp">
+									<li>展示照片：</li>
+									<li class="add_demends upli imgshow"  >
+										<img src="${webtxc }/images/zp.png" id="image1" />
+										<br>
+										<span>上传封面</span>
+										<%--<input class="mees" id="info_icon1" name="demImage" type="hidden" value="${demand.demImage }"/>--%>
+									</li>
+									<%--<li class="personer_sc" id="imageKE"><img class="imgshow" /></li>--%>
+									<input type="hidden" id="info_icon" />
+								</ul>
+
+
+							</div>
+							<div class="personer_excit" style="padding-top: 20px;">
+								<div class="excit" id="btn">提交审核</div>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${providerRecommend.prState==0}">
+						<div class="personer_mes">
+							
+							<div class="personer_mes_zl msg_tg">
+									<h1>资料已经提交，正在审核中。。。</h1>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${providerRecommend.prState==1}">
+						<div class="personer_mes">
+							
+							<div class="personer_mes_zl msg_tg">
+									<h1>审核通过！！！</h1>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${providerRecommend.prState==2}">
+						<div class="personer_mes">
+							
+							<div class="personer_mes_zl msg_tg">
+								审核未通过<a href="javascript:void(0)" onclick="ret()">点击这里</a>重新填写资料
+							</div>
+						</div>
+					</c:when>
+				</c:choose>
+
+
+				<%--<div class="personer_mes">
+					<div class="status_icon">
+						<p class="progress_bar"></p>
+						<div class="status_progress status_one on ">
+							<div class="steps">
+								1
+								<div class="stripeL"></div>
+								<div class="stripeR"></div>
+							</div>
+							<div class="status_text">平台筛选</div>
+						</div>
+						<div class="status_progress status_two on">
+							<div class="steps">
+								2
+								<div class="stripeL"></div>
+								<div class="stripeR"></div>
+							</div>
+							<div class="status_text">专家确认</div>
+						</div>
+						<div class="status_progress status_three ">
+							<div class="steps">
+								3
+								<div class="stripeL"></div>
+								<div class="stripeR"></div>
+							</div>
+							<div class="status_text">平台审核</div>
+						</div>
+						<div class="status_progress status_four">
+							<div class="steps">
+								4
+								<div class="stripeL"></div>
+								<div class="stripeR"></div>
+							</div>
+							<div class="status_text">成功推荐</div>
+						</div>
+
+					</div>
+					<div class="personer_mes_zl">
+						<ul class="personer_mes_zl_ms">
+							<li>个人说明</li>
+							<li class="mes_input">
+								<textarea cols="54" rows="7" id="providerDetails">请填写您的个人说明，文字尽量精练。...</textarea>
+							</li>
+						</ul>
+						<ul class="personer_mes_zl_ms">
+							<li>展示照片：</li>
+							<li class="mes_input">
+								<a id="imageKE"><img class="imgshow" /></a>
+							</li>
+						</ul>
+				
+						
+					</div>
+
+					<div class="personer_excit">
+						<div class="excit">保存</div>
+					</div>
+				</div>--%>
+				<!--end.personer_mes-->
+
+				<!--end.personer_excit-->
+			</div>
+			<!--page end-->
+		</div>
+		<!--wapper end-->
+
+	</body>
+
+</html>

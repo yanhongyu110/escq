@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.pay.PayApiMapper">
+
+    <select id="selectByOrderAndType" resultMap="PayApiMap">
+SELECT
+	*
+FROM
+	payapi
+INNER JOIN provider_info ON provider_info.PI_COM = payapi.COMP_ID
+INNER JOIN order_info ON order_info.ORDER_SELLER = provider_info.LOG_ID
+WHERE
+1=1
+AND	order_info.ORDER_ID =#{0}
+AND payapi.PAY_TYPE = #{1}
+    </select>
+
+<resultMap id="PayApiMap" type="com.jero.esc.po.pay.PayApi">
+    	<id column="PAY_ID" jdbcType="VARCHAR" property="payId" />
+		<result column="COMP_ID" jdbcType="VARCHAR" property="compId" />
+		<result column="PAY_TYPE" jdbcType="INTEGER" property="payType" />
+		<result column="PAY_JSON" jdbcType="VARCHAR" property="payJson" />
+  </resultMap>
+  <delete id="delete" parameterType="com.jero.esc.po.pay.PayApi">
+    delete from PAYAPI
+     <where>
+     		<if test="payId!=null and payId!=''">
+                AND PAYAPI.PAY_ID= #{payId,jdbcType=VARCHAR}
+            </if>
+        	<if test="compId!=null and compId!=''">
+                AND PAYAPI.COMP_ID= #{compId,jdbcType=VARCHAR}
+            </if>
+            <if test="payType!=null and payType!=''">
+                AND PAYAPI.PAY_TYPE= #{payType,jdbcType=INTEGER}
+            </if>
+        </where>
+  </delete>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.pay.PayApi">
+    insert into PAYAPI
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="payId != null">
+        PAY_ID,
+      </if>
+      <if test="compId != null">
+        COMP_ID,
+      </if>
+       <if test="payType != null">
+        PAY_TYPE,
+      </if>
+       <if test="payJson != null">
+        PAY_JSON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="payId != null">
+        #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="compId != null">
+        #{compId,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="payJson != null">
+        #{payJson,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCon"  parameterType="com.jero.esc.po.pay.PayApi" resultType="java.lang.Integer">
+  		select count(*) from PAYAPI 
+  		 <where>
+        	<if test="payId!=null and payId!=''">
+                AND PAYAPI.PAY_ID= #{payId,jdbcType=VARCHAR}
+            </if>
+            <if test="compId!=null and compId!=''">
+                AND PAYAPI.COMP_ID= #{compId,jdbcType=VARCHAR}
+            </if>
+             <if test="payType !=null and payType !=''">
+                AND PAYAPI.PAY_TYPE= #{payType,jdbcType=VARCHAR}
+            </if>
+             <if test="payJson !=null and payJson !=''">
+                AND PAYAPI.PAY_JSON= #{compId,jdbcType=VARCHAR}
+            </if>
+        </where>
+  
+  </select>
+  <select id="selectByCon" parameterType="com.jero.esc.po.pay.PayApi" resultMap="PayApiMap">
+		SELECT
+			payapi.PAY_ID,
+			payapi.COMP_ID,
+			payapi.PAY_TYPE,
+			payapi.PAY_JSON
+			FROM PAYAPI
+			<where>
+        	<if test="payId!=null and payId!=''">
+                AND PAYAPI.PAY_ID= #{payId,jdbcType=VARCHAR}
+            </if>
+            <if test="compId!=null and compId!=''">
+                AND PAYAPI.COMP_ID= #{compId,jdbcType=VARCHAR}
+            </if>
+             <if test="payType !=null and payType !=''">
+                AND PAYAPI.PAY_TYPE= #{payType,jdbcType=VARCHAR}
+            </if>
+             <if test="payJson !=null and payJson !=''">
+                AND PAYAPI.PAY_JSON= #{compId,jdbcType=VARCHAR}
+            </if>
+        </where>
+
+			  
+  </select>
+
+
+    <update id="updateSelective" parameterType="com.jero.esc.po.pay.PayApi">
+  	update PAYAPI
+  	<set>
+  	<if test="payId!=null and payId!=''">
+               PAYAPI.PAY_ID= #{payId,jdbcType=VARCHAR}
+            </if>
+            <if test="compId!=null and compId!=''">
+               PAYAPI.COMP_ID= #{compId,jdbcType=VARCHAR}
+            </if>
+             <if test="payType !=null and payType !=''">
+               PAYAPI.PAY_TYPE= #{payType,jdbcType=VARCHAR}
+            </if>
+             <if test="payJson !=null and payJson !=''">
+               PAYAPI.PAY_JSON= #{compId,jdbcType=VARCHAR}
+            </if>
+  	</set>
+  	<where>
+        	<if test="payId!=null and payId!=''">
+                AND PAYAPI.PAY_ID= #{payId,jdbcType=VARCHAR}
+            </if>
+            <if test="compId!=null and compId!=''">
+                AND PAYAPI.COMP_ID= #{compId,jdbcType=VARCHAR}
+            </if>
+             <if test="payType !=null and payType !=''">
+                AND PAYAPI.PAY_TYPE= #{payType,jdbcType=VARCHAR}
+            </if>
+             <if test="payJson !=null and payJson !=''">
+                AND PAYAPI.PAY_JSON= #{compId,jdbcType=VARCHAR}
+            </if>
+        </where>
+  
+  </update>
+</mapper>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.userinfo.ServiceCollectionMapper">
+    <resultMap id="BaseResultMap" type="com.jero.esc.po.userinfo.ServiceCollection">
+        <id column="SCOL_ID" jdbcType="VARCHAR" property="scolId"/>
+        <result column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="logId"/>
+        <result column="SCOL_CREATETIME" jdbcType="TIMESTAMP" property="scolCreatetime"/>
+        <result column="SCOL_ISDELETE" jdbcType="BIT" property="scolIsdelete"/>
+        <result column="SCOL_COMMENT" jdbcType="VARCHAR" property="scolComment"/>
+        <association property="serviceInfo" resultMap="com.jero.esc.mapper.goodsinfo.ServiceInfoMapper.BaseResultMap"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    SCOL_ID, SERVICE_ID, LOG_ID, SCOL_CREATETIME, SCOL_ISDELETE, SCOL_COMMENT
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from service_collection
+        where SCOL_ID = #{scolId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByExample" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from service_collection
+        <where>
+            1=1
+            <if test="scolId != null">
+                AND SCOL_ID=#{scolId}
+            </if>
+            <if test="serviceId != null">
+                AND SERVICE_ID=#{serviceId}
+            </if>
+            <if test="logId != null">
+                AND LOG_ID=#{logId}
+            </if>
+            <if test="scolCreatetime != null">
+                AND SCOL_CREATETIME=#{scolCreatetime}
+            </if>
+            <if test="scolIsdelete != null">
+                AND SCOL_ISDELETE=#{scolIsdelete}
+            </if>
+            <if test="scolComment != null">
+                AND SCOL_COMMENT=#{scolComment}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="countByExample" resultType="java.lang.Integer">
+        select
+        COUNT (SCOL_ID)
+        from service_collection
+        <where>
+            1=1
+            <if test="scolId != null">
+                AND SCOL_ID=#{scolId}
+            </if>
+            <if test="serviceId != null">
+                AND SERVICE_ID=#{serviceId}
+            </if>
+            <if test="logId != null">
+                AND LOG_ID=#{logId}
+            </if>
+            <if test="scolCreatetime != null">
+                AND SCOL_CREATETIME=#{scolCreatetime}
+            </if>
+            <if test="scolIsdelete != null">
+                AND SCOL_ISDELETE=#{scolIsdelete}
+            </if>
+            <if test="scolComment != null">
+                AND SCOL_COMMENT=#{scolComment}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByRequire" resultMap="BaseResultMap">
+        SELECT
+       *
+        FROM
+        SERVICE_COLLECTION
+        INNER JOIN SERVICE_INFO ON SERVICE_COLLECTION.SERVICE_ID = SERVICE_INFO.SERVICE_ID
+        <where>
+            1=1
+            AND SERVICE_COLLECTION.LOG_ID=#{logId}
+            AND SCOL_ISDELETE=false
+            <if test="box.title != null">
+                AND SERVICE_TITLE LIKE CONCAT('%','${box.title}','%' )
+            </if>
+        </where>
+        ORDER BY
+        SCOL_CREATETIME DESC
+    </select>
+
+    <select id="countByRequire" resultType="java.lang.Integer">
+        SELECT
+        COUNT(SCOL_ID)
+        FROM
+        SERVICE_COLLECTION
+        INNER JOIN SERVICE_INFO ON SERVICE_COLLECTION.SERVICE_ID = SERVICE_INFO.SERVICE_ID
+        <where>
+            1=1
+            AND SERVICE_COLLECTION.LOG_ID=#{logId}
+            AND SCOL_ISDELETE=false
+            <if test="box.title != null">
+                AND SERVICE_TITLE LIKE CONCAT('%','${box.title}','%' )
+            </if>
+        </where>
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from service_collection
+    where SCOL_ID = #{scolId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.jero.esc.po.userinfo.ServiceCollection">
+    insert into service_collection (SCOL_ID, SERVICE_ID, LOG_ID, 
+      SCOL_CREATETIME, SCOL_ISDELETE, SCOL_COMMENT
+      )
+    values (#{scolId,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, #{logId,jdbcType=VARCHAR}, 
+      #{scolCreatetime,jdbcType=TIMESTAMP}, #{scolIsdelete,jdbcType=BIT}, #{scolComment,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.jero.esc.po.userinfo.ServiceCollection">
+        insert into service_collection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="scolId != null">
+                SCOL_ID,
+            </if>
+            <if test="serviceId != null">
+                SERVICE_ID,
+            </if>
+            <if test="logId != null">
+                LOG_ID,
+            </if>
+            <if test="scolCreatetime != null">
+                SCOL_CREATETIME,
+            </if>
+            <if test="scolIsdelete != null">
+                SCOL_ISDELETE,
+            </if>
+            <if test="scolComment != null">
+                SCOL_COMMENT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="scolId != null">
+                #{scolId,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceId != null">
+                #{serviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="logId != null">
+                #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="scolCreatetime != null">
+                #{scolCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="scolIsdelete != null">
+                #{scolIsdelete,jdbcType=BIT},
+            </if>
+            <if test="scolComment != null">
+                #{scolComment,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.userinfo.ServiceCollection">
+        update service_collection
+        <set>
+            <if test="serviceId != null">
+                SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="logId != null">
+                LOG_ID = #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="scolCreatetime != null">
+                SCOL_CREATETIME = #{scolCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="scolIsdelete != null">
+                SCOL_ISDELETE = #{scolIsdelete,jdbcType=BIT},
+            </if>
+            <if test="scolComment != null">
+                SCOL_COMMENT = #{scolComment,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where SCOL_ID = #{scolId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.userinfo.ServiceCollection">
+    update service_collection
+    set SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      SCOL_CREATETIME = #{scolCreatetime,jdbcType=TIMESTAMP},
+      SCOL_ISDELETE = #{scolIsdelete,jdbcType=BIT},
+      SCOL_COMMENT = #{scolComment,jdbcType=VARCHAR}
+    where SCOL_ID = #{scolId,jdbcType=VARCHAR}
+  </update>
+</mapper>

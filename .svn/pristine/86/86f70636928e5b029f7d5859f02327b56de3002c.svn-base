@@ -1,0 +1,6 @@
+<config>
+	<!-- 配置成自己申请的微信应用的参数 -->
+	<appKey>wxd0c763640d4b8f08</appKey><!--mch_appid 微信公众号id-->
+	<mchid>1486272382</mchid>  <!--商户号  mchid-->
+	<cert_path>D:/workspace/escq/src/main/webapp/apiclient/apiclient_cert.p12</cert_path>
+</config>

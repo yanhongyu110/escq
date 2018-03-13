@@ -1,0 +1,165 @@
+package com.jero.esc.common.weixin;
+
+import java.security.MessageDigest;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+import org.apache.commons.codec.digest.DigestUtils;
+
+import com.jero.esc.common.weixin.entity.RedPacketEntity;
+import com.jero.esc.common.weixin.entity.TransfersEntity;
+
+public class WeiXinSign {
+	
+	/** 微信KEY */
+	private static final String KEY = "jindaojia20171129D123C654DDE6AC1";
+	/** 随机16位字符数组 */
+	private static final String[] HEXDIGITS = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+
+	/**
+	 * 
+	 *<pre>
+	 *<b> 微信现金红包生成签名.</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-12-12 上午9:56:54
+	 *@param redPacket 红包实体类
+	 *@return 返回签名
+	 *</pre>
+	 */
+	public static String redPacketGetSign(RedPacketEntity redPacket){
+	       StringBuffer sign = new StringBuffer();
+	        sign.append("act_name=").append(redPacket.getAct_name());
+	        sign.append("&client_ip=").append(redPacket.getClient_ip());
+	        sign.append("&mch_billno=").append(redPacket.getMch_billno());
+	        sign.append("&mch_id=").append(redPacket.getMch_id());
+	        sign.append("&nonce_str=").append(redPacket.getNonce_str());
+	        sign.append("&re_openid=").append(redPacket.getRe_openid());
+	        sign.append("&remark=").append(redPacket.getRemark());
+	        sign.append("&send_name=").append(redPacket.getSend_name());
+	        sign.append("&total_amount=").append(redPacket.getTotal_amount());
+	        sign.append("&total_num=").append(redPacket.getTotal_num());
+	        sign.append("&wishing=").append(redPacket.getWishing());
+	        sign.append("&wxappid=").append(redPacket.getWxappid());
+	        sign.append("&key=").append("jindaojia20171129D123C654DDE6AC1");
+	        String lastSign = DigestUtils.md5Hex(sign.toString()).toUpperCase();
+	        return lastSign;
+	}
+	
+	/**
+	 * 
+	 *<pre>
+	 *<b> 微信企业付款到零钱 .</b>
+	 *<b>Description:</b> 
+	 *    提现
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-12-12 上午10:10:04
+	 *@param transfers
+	 *@return
+	 *</pre>
+	 */
+	public static String transfersGetSign(TransfersEntity transfers){
+		// 设置支付参数
+		SortedMap<Object, Object> signParams = new TreeMap<Object, Object>();
+//		signParams.put("mch_appid", transfers.getMch_appid()); 
+//		signParams.put("mchid", transfers.getMchid());
+//		signParams.put("nonce_str", transfers.getNonce_str());
+//		signParams.put("partner_trade_no", transfers.getPartner_trade_no()); 
+//		signParams.put("openid", transfers.getOpenid()); 
+//		signParams.put("check_name",transfers.getCheck_name());
+//		signParams.put("amount", transfers.getAmount()); 
+//		signParams.put("desc", transfers.getDesc()); 
+//		signParams.put("spbill_create_ip", transfers.getSpbill_create_ip());
+		
+		
+
+		signParams.put("mch_appid", "wxd0c763640d4b8f08"); // 微信分配的公众账号ID（企业号corpid即为此appId）
+		signParams.put("mchid", "1486272382");// 微信支付分配的商户号
+		signParams.put("nonce_str", transfers.getPartner_trade_no()); // 随机字符串，不长于32位
+		signParams.put("partner_trade_no", transfers.getPartner_trade_no()); // 商户订单号，需保持唯一性
+		signParams.put("openid", "o5tP4v0LMeCnKzawLbuiAmDd8pAA"); // 商户appid下，某用户的openid
+		signParams.put("check_name", "NO_CHECK"); // NO_CHECK：不校验真实姓名
+		signParams.put("amount", 100); // 企业付款金额，单位为分
+		signParams.put("desc", "近到家"); // 企业付款操作说明信息。必填。
+		signParams.put("spbill_create_ip", transfers.getSpbill_create_ip()); // 调用接口的机器Ip地址
+		
+//		signParams.put("mch_appid", appid); // 微信分配的公众账号ID（企业号corpid即为此appId）
+//		signParams.put("mchid", mchid);// 微信支付分配的商户号
+//		signParams.put("nonce_str", uuid); // 随机字符串，不长于32位
+//		signParams.put("partner_trade_no", partner_trade_no); // 商户订单号，需保持唯一性
+//		signParams.put("openid", openid); // 商户appid下，某用户的openid
+//		signParams.put("check_name", "NO_CHECK"); // NO_CHECK：不校验真实姓名
+//		signParams.put("amount", amount); // 企业付款金额，单位为分
+//		signParams.put("desc", desc); // 企业付款操作说明信息。必填。
+//		signParams.put("spbill_create_ip", ip); // 调用接口的机器Ip地址
+//		
+		return createSign("UTF-8", signParams);
+	}
+	
+	/**
+	 * 
+	 *<pre>
+	 *<b> 生成签名 .</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-12-12 上午10:06:15
+	 *@param characterEncoding 编码格式
+	 *@param parameters 传入的参数
+	 *@return
+	 *</pre>
+	 */
+	private static String createSign(String characterEncoding, SortedMap<Object, Object> parameters) {
+		StringBuffer sb = new StringBuffer();
+		Set<Entry<Object, Object>> es = parameters.entrySet();
+		Iterator<Entry<Object, Object>> it = es.iterator();
+		while (it.hasNext()) {
+			Entry<Object, Object> entry = it.next();
+			String k = (String) entry.getKey();
+			Object v = entry.getValue();
+			if (null != v && !"".equals(v) && !"sign".equals(k) && !"key".equals(k)) {
+				sb.append(k + "=" + v + "&");
+			}
+		}
+		sb.append("key=" + KEY);
+		String sign = MD5Encode(sb.toString(), characterEncoding).toUpperCase();
+		return sign;
+	}
+
+	// MD5Util工具类中相关的方法
+
+	private static String byteArrayToHexString(byte b[]) {
+		StringBuffer resultSb = new StringBuffer();
+		for (int i = 0; i < b.length; i++)
+			resultSb.append(byteToHexString(b[i]));
+
+		return resultSb.toString();
+	}
+
+	private static String byteToHexString(byte b) {
+		int n = b;
+		if (n < 0)
+			n += 256;
+		int d1 = n / 16;
+		int d2 = n % 16;
+		return HEXDIGITS[d1] + HEXDIGITS[d2];
+	}
+
+	private static String MD5Encode(String origin, String charsetname) {
+		String resultString = null;
+		try {
+			resultString = new String(origin);
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			if (charsetname == null || "".equals(charsetname))
+				resultString = byteArrayToHexString(md.digest(resultString.getBytes()));
+			else
+				resultString = byteArrayToHexString(md.digest(resultString.getBytes(charsetname)));
+		} catch (Exception exception) {
+		}
+		return resultString;
+	}
+}

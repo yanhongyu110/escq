@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.goodsinfo.OfflineUsedGoodsinfoMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.goodsinfo.OfflineUsedGoodsinfo">
+    <id column="OUG_ID" jdbcType="VARCHAR" property="ougId" />
+    <result column="OUG_CONTENT" jdbcType="VARCHAR" property="ougContent" />
+    <result column="OUG_DESCRIBE" jdbcType="VARCHAR" property="ougDescribe" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="OUG_CREATETIME" jdbcType="TIMESTAMP" property="ougCreatetime" />
+    <result column="OUG_STATE" jdbcType="INTEGER" property="ougState" />
+    <result column="OUG_COMMENT" jdbcType="VARCHAR" property="ougComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    OUG_ID, OUG_CONTENT, OUG_DESCRIBE, LOG_ID, OUG_CREATETIME, OUG_STATE, OUG_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from offline_used_goodsinfo
+    where OUG_ID = #{ougId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from offline_used_goodsinfo
+    where OUG_ID = #{ougId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.goodsinfo.OfflineUsedGoodsinfo">
+    insert into offline_used_goodsinfo (OUG_ID, OUG_CONTENT, OUG_DESCRIBE, 
+      LOG_ID, OUG_CREATETIME, OUG_STATE, 
+      OUG_COMMENT)
+    values (#{ougId,jdbcType=VARCHAR}, #{ougContent,jdbcType=VARCHAR}, #{ougDescribe,jdbcType=VARCHAR}, 
+      #{logId,jdbcType=VARCHAR}, #{ougCreatetime,jdbcType=TIMESTAMP}, #{ougState,jdbcType=INTEGER}, 
+      #{ougComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.goodsinfo.OfflineUsedGoodsinfo">
+    insert into offline_used_goodsinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ougId != null">
+        OUG_ID,
+      </if>
+      <if test="ougContent != null">
+        OUG_CONTENT,
+      </if>
+      <if test="ougDescribe != null">
+        OUG_DESCRIBE,
+      </if>
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="ougCreatetime != null">
+        OUG_CREATETIME,
+      </if>
+      <if test="ougState != null">
+        OUG_STATE,
+      </if>
+      <if test="ougComment != null">
+        OUG_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ougId != null">
+        #{ougId,jdbcType=VARCHAR},
+      </if>
+      <if test="ougContent != null">
+        #{ougContent,jdbcType=VARCHAR},
+      </if>
+      <if test="ougDescribe != null">
+        #{ougDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="ougCreatetime != null">
+        #{ougCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ougState != null">
+        #{ougState,jdbcType=INTEGER},
+      </if>
+      <if test="ougComment != null">
+        #{ougComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.goodsinfo.OfflineUsedGoodsinfo">
+    update offline_used_goodsinfo
+    <set>
+      <if test="ougContent != null">
+        OUG_CONTENT = #{ougContent,jdbcType=VARCHAR},
+      </if>
+      <if test="ougDescribe != null">
+        OUG_DESCRIBE = #{ougDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        LOG_ID = #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="ougCreatetime != null">
+        OUG_CREATETIME = #{ougCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ougState != null">
+        OUG_STATE = #{ougState,jdbcType=INTEGER},
+      </if>
+      <if test="ougComment != null">
+        OUG_COMMENT = #{ougComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OUG_ID = #{ougId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.goodsinfo.OfflineUsedGoodsinfo">
+    update offline_used_goodsinfo
+    set OUG_CONTENT = #{ougContent,jdbcType=VARCHAR},
+      OUG_DESCRIBE = #{ougDescribe,jdbcType=VARCHAR},
+      LOG_ID = #{logId,jdbcType=VARCHAR},
+      OUG_CREATETIME = #{ougCreatetime,jdbcType=TIMESTAMP},
+      OUG_STATE = #{ougState,jdbcType=INTEGER},
+      OUG_COMMENT = #{ougComment,jdbcType=VARCHAR}
+    where OUG_ID = #{ougId,jdbcType=VARCHAR}
+  </update>
+</mapper>

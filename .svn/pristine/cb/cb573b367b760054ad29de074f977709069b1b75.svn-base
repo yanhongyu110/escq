@@ -1,0 +1,253 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jsp/common/common.jsp" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>首页</title>
+    <link href="${webtxc}/css/style.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="${webtxc}/css/public.css"/>
+    <script src="${webtxc}/js/tab.js"></script>
+    <script>
+        var siList =${siList};
+        var jsonList1 =${jsonList1};
+        var jsonList2 =${jsonList2};
+    </script>
+    <script src="${webtxc}/myjs/goodsinfo/home.js?v=2017123123121802"></script>
+    <script src="${webtxc}/js/slide.js"></script>
+    <script src="${webtxc}/js/lunbo.js"></script>
+    <script src="${webtxc}/js/template-web.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".slideInner").slide({
+                slideContainer: $('.slideInner a'),
+                effect: 'easeOutCirc',
+                autoRunTime: 4000,
+                slideSpeed: 1000,
+                nav: true,
+                autoRun: true,
+                prevBtn: $('a.prev'),
+                nextBtn: $('a.next')
+            })
+        })
+    </script>
+    <style type="text/css">
+        .popWindow {
+            background-color: #000;
+            width: 100%;
+            height: 3467px;
+            left: 0;
+            top: 0;
+            filter: alpha(opacity=50);
+            opacity: 0.5;
+            z-index: 10000;
+            position: absolute;
+
+        }
+
+        .nav_dh .z_fl .b_nav {
+            margin: 0 auto;
+            width: 240px;
+            background: rgba(0, 0, 0, .3);
+            position: absolute;
+            z-index: 9999;
+        }
+    </style>
+
+</head>
+
+<body>
+<div id="popWindow" class="popWindow" style="display: none;">
+</div>
+
+<%@include file="/WEB-INF/jsp/common/top1.jsp" %>
+
+
+<%--class id 结构不能动 start--%>
+<div class="bannre">
+    <div class="banner_center">
+        <div class="slides">
+            <div class="slideInner"></div>
+            <div class="nav">
+                <a class="prev" href="javascript:;"></a>
+                <a class="next" href="javascript:;"></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="da_banner">
+    <div class="b_nav"></div>
+</div>
+<%--class id 结构不能动 end--%>
+
+
+
+<div class="content01">
+    <div class="b_biaoti">
+        <h1>发现您身边的海量专家</h1>
+        <p>超过8千位行业达人专属服务，求教专家达人解惑或与达人切磋</p>
+    </div>
+    <div class="expert_z">
+        <div id="btn-left" class="arrow-btn dasabled"></div>
+
+        <%--class id 结构不能动 start--%>
+        <div class="expert">
+            <ul id="myul" style="width: 2400px;">
+                <c:forEach items="${proList}" var="it">
+                    <li>
+                        <a style="text-decoration: none;" href="${webtxc}/userinfo/providerdetails/preproviderdetails.html?logId=${it.piLogId}&comId=${sessionScope.company.compId}" class="e_btn"><img src="${(empty it.prPhoto)?it.piPhoto:it.prPhoto}"/></a>
+                        <div class="e_zl">
+                            <h3>${it.piRealname} / ${it.piPosition}</h3>
+                            <p>${fn:substring( ((!empty it.prDetails)?it.prDetails:it.piBrief), 0, 16)}
+                                <a href="${webtxc}/userinfo/providerdetails/preproviderdetails.html?logId=${it.piLogId}&comId=${sessionScope.company.compId}">查看详情>></a>
+                            </p>
+                            <a style="text-decoration: none;" href="${webtxc}/userinfo/providerdetails/preproviderdetails.html?logId=${it.piLogId}&comId=${sessionScope.company.compId}" class="e_btn">约Ta见面</a>
+                        </div>
+                        <div class="e_yy">
+                            <p>${it.piMeetnum}人<br/>预约</p>
+                        </div>
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
+        <%--class id 结构不能动 end--%>
+
+
+        <div id="btn-right" class="arrow-btn"></div>
+    </div>
+    <div class="more"><a href="${webtxc}/search/view?flag=b">发现更多专家>></a></div>
+</div>
+<div class="content02">
+    <div class="b_biaoti nopadding haveborder">
+        <h1>知识学堂 寻求服务 心得分享</h1>
+        <p>有效满足个性化需求 , 让服务响应更及时！</p>
+    </div>
+    <div class="content02_title">
+        <ul class="title-list">
+            <li class="on" onclick="serviceTypeAjax('')">全部</li>
+            <c:forEach var="it" items="${commonTypeList}">
+                <li value="${it.id}" onclick="serviceTypeAjax('${it.id}')">${it.text}</li>
+            </c:forEach>
+        </ul>
+    </div>
+    <div class="more"></div>
+    <div class="lei_list_zong">
+        <div class="service_lei show">
+
+            <div class="service_lei_center">
+                <div class="ck-product-list">
+                    <script type="text/html" id="orz_ul">
+                        {{each ulList}}
+                        <ul>
+                            {{each $value}}
+                            <li>
+                                <div class="item-panel">
+                                    <div class="item-pic">
+                                        <img src="${webtxc}{{$value.servicePic==null?'':$value.servicePic}}" onclick="gotoServiceDetails('{{$value.serviceId==null?'':$value.serviceId}}')">
+                                    </div>
+                                    <div class="item-title">
+                                        <a class="ittus" href="${webtxc}/goodsinfo/service/queryServiceDetails.html?serviceId={{$value.serviceId==null?'':$value.serviceId}}&comId=${sessionScope.company.compId}&priceType=1" target="_blank">{{$value.serviceTitle==null?"":$value.serviceTitle}}<em class="c_f60"></em></a>
+                                    </div>
+                                    <div class="item-addition">
+                                        
+                                        <div class="satisfaction">
+                                            <span class="">{{$value.serviceSuccessnum==null?'':$value.serviceSuccessnum}}人约见</span>
+                                        </div>
+                                        <div class="number">
+                                            <span>评分：<em>{{$value.serviceMark==null?0:$value.serviceMark}}</em></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ul>
+                        {{/each}}
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="more">
+        <a href="${webtxc}/search/view.html?flag=a">发现更多服务>></a>
+    </div>
+
+
+</div>
+<div class="content4">
+    <div class="b_biaoti nopadding ">
+        <h1>发布需求</h1>
+        <p>免费发布需求，获得专家帮助</p>
+    </div>
+    <div class="xq_fabu">
+        <div class="xq_fabu_left">
+            <img src="${webtxc}/images/fb2.jpg">
+        </div>
+        <div class="xq_fabu_left xq_right">
+            <img src="${webtxc}/images/fb.jpg">
+        </div>
+    </div>
+    <div class="more">
+        <a href="${webtxc}/search/view.html?flag=c">发现更多需求>></a>
+    </div>
+    <script type="text/html" id="d_temp">
+        <ul>
+            {{each list}}
+            <li onclick="gotoDemandDetails('{{$value.demId}}')" style="cursor: pointer;">
+                <div class="xq_tx"><img src="${webtxc}{{$value.userPhoto}}"></div>
+                <div class="xq_title">
+                    <p>{{$value.logInfo.logName}}</p>
+                    <p>{{$value.demTitle | cutFormat}}<span>发布日期:{{$value.demCreatetime | dataFormat}}</span></p>
+                    <p></p>
+                </div>
+            </li>
+            {{/each }}
+        </ul>
+    </script>
+</div>
+<div class="content3">
+    <div class="b_biaoti nopadding ">
+        <h1>专家达人访谈</h1>
+        <p>迅速找到你想要寻找的专家达人</p>
+    </div>
+    <div class="expert_sp">
+        <ul>
+            <c:forEach var="it" items="${videoList}">
+                <li style="float:left;">
+                    <img width="252px" height="163px" src="${it.piComment}"/>
+                    <div class="sp_mes">
+                        <h3>${it.piRealname}</h3>
+                        <p>${fn:substring(it.piBrief,0,60)}
+                            <c:if test="${fn:length(it.piBrief)>60}">...</c:if>
+                        </p>
+                    </div>
+                    <div class="bf_btn" onclick="showVideo('${it.piVideo}')"></div>
+                    <div class="hotm"></div>
+                </li>
+            </c:forEach>
+        </ul>
+    </div>
+    <div class="more">
+        <a href="${webtxc}/goodsinfo/ServiceInfo/showVideoList.html?st=002&comId=${sessionScope.company.compId}">发现更多视频>></a>
+    </div>
+</div>
+<%@include file="/WEB-INF/jsp/common/bottom.jsp" %>
+<div class="toolbar">
+    <a href="javascript:;" class="toolbar-item toolbar-item-weixin"><span class="toolbar-layer"></span></a>
+    <a href="javascript:;" class="toolbar-item toolbar-item-feedback"></a>
+    <a href="javascript:scroll(0,0)" id="top" class="toolbar-item toolbar-item-top"></a>
+</div>
+<div class="p_tan" id="myvideodiv" style="width:800px;height:450px; display: none;position: fixed;left: 750px;top: 300px;z-index: 99999;">
+    <div class="t_title">
+        <div class="t_title_left" data="title">视频</div>
+        <div style="float: right;margin-right: 10px;font-size: 36px;cursor: pointer;" onclick="hideVideo()">&times</div>
+    </div>
+    <video object-fit="fill" width="800px" height="410px" id="myvideoo" src="" controls="controls" autoplay="autoplay"></video>
+</div>
+
+</body>
+
+</html>

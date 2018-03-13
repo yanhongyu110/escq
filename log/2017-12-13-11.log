@@ -1,0 +1,936 @@
+2017-12-13 11:35:58,282 DEBUG [main] [org.apache.http.client.protocol.RequestAddCookies]:122 - CookieSpec selected: default
+2017-12-13 11:35:58,301 DEBUG [main] [org.apache.http.client.protocol.RequestAuthCache]:76 - Auth cache not set in the context
+2017-12-13 11:35:58,319 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:249 - Connection request: [route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2017-12-13 11:35:58,338 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:282 - Connection leased: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:35:58,341 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:234 - Opening connection {s}->https://api.mch.weixin.qq.com:443
+2017-12-13 11:35:58,351 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:138 - Connecting to api.mch.weixin.qq.com/182.254.78.168:443
+2017-12-13 11:35:58,352 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:335 - Connecting socket to api.mch.weixin.qq.com/182.254.78.168:443 with timeout 0
+2017-12-13 11:35:58,459 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:388 - Enabled protocols: [TLSv1]
+2017-12-13 11:35:58,460 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:389 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2017-12-13 11:35:58,460 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:393 - Starting handshake
+2017-12-13 11:35:58,675 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:423 - Secure session established
+2017-12-13 11:35:58,676 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:424 -  negotiated protocol: TLSv1
+2017-12-13 11:35:58,676 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:425 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2017-12-13 11:35:58,677 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:433 -  peer principal: CN=payapp.weixin.qq.com, OU=R&D, O=Tencent Technology (Shenzhen) Company Limited, L=shenzhen, ST=guangdong, C=CN
+2017-12-13 11:35:58,678 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:442 -  peer alternative names: [apihk.mch.weixin.qq.com, pay.weops.qq.com, act.weixin.qq.com, fraud.mch.weixin.qq.com, action.weixin.qq.com, oz.weixin.qq.com, fraudus.mch.weixin.qq.com, apius.mch.weixin.qq.com, api2.mch.weixin.qq.com, api.oz.weixin.qq.com, mch.weixin.qq.com, fraudhk.mch.weixin.qq.com, pay.weixin.qq.com, za.pay.wechat.com, api.mch.weixin.qq.com, api.pay.weixin.qq.com, wx.gtimg.com, payapp.weixin.qq.com]
+2017-12-13 11:35:58,678 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:446 -  issuer principal: CN=GeoTrust SSL CA - G3, O=GeoTrust Inc., C=US
+2017-12-13 11:35:58,685 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:145 - Connection established 192.168.1.199:51903<->182.254.78.168:443
+2017-12-13 11:35:58,686 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:255 - Executing request POST /mmpaymkttransfers/gettransferinfo HTTP/1.1
+2017-12-13 11:35:58,686 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:260 - Target auth state: UNCHALLENGED
+2017-12-13 11:35:58,687 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:266 - Proxy auth state: UNCHALLENGED
+2017-12-13 11:35:58,689 DEBUG [main] [org.apache.http.headers]:135 - http-outgoing-0 >> POST /mmpaymkttransfers/gettransferinfo HTTP/1.1
+2017-12-13 11:35:58,689 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Connection: keep-alive
+2017-12-13 11:35:58,690 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept: */*
+2017-12-13 11:35:58,690 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+2017-12-13 11:35:58,690 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Host: api.mch.weixin.qq.com
+2017-12-13 11:35:58,690 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> X-Requested-With: XMLHttpRequest
+2017-12-13 11:35:58,690 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Cache-Control: max-age=0
+2017-12-13 11:35:58,690 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) 
+2017-12-13 11:35:58,691 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Length: 654
+2017-12-13 11:35:58,691 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2017-12-13 11:35:58,691 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "POST /mmpaymkttransfers/gettransferinfo HTTP/1.1[\r][\n]"
+2017-12-13 11:35:58,692 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Connection: keep-alive[\r][\n]"
+2017-12-13 11:35:58,692 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept: */*[\r][\n]"
+2017-12-13 11:35:58,692 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+2017-12-13 11:35:58,692 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Host: api.mch.weixin.qq.com[\r][\n]"
+2017-12-13 11:35:58,692 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "X-Requested-With: XMLHttpRequest[\r][\n]"
+2017-12-13 11:35:58,692 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Cache-Control: max-age=0[\r][\n]"
+2017-12-13 11:35:58,693 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) [\r][\n]"
+2017-12-13 11:35:58,693 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Length: 654[\r][\n]"
+2017-12-13 11:35:58,693 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+2017-12-13 11:35:58,693 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "[\r][\n]"
+2017-12-13 11:35:58,693 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "<com.jero.esc.common.weixin.entity.TransfersEntity>[\n]"
+2017-12-13 11:35:58,694 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_appid><![CDATA[wxd0c763640d4b8f08]]></mch_appid>[\n]"
+2017-12-13 11:35:58,694 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mchid><![CDATA[1486272382]]></mchid>[\n]"
+2017-12-13 11:35:58,694 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <nonce_str><![CDATA[CFE4D6949BCA4AF5B7F61A712A518E79]]></nonce_str>[\n]"
+2017-12-13 11:35:58,694 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <partner_trade_no><![CDATA[331513136157193]]></partner_trade_no>[\n]"
+2017-12-13 11:35:58,694 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></openid>[\n]"
+2017-12-13 11:35:58,695 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <check_name><![CDATA[NO_CHECK]]></check_name>[\n]"
+2017-12-13 11:35:58,695 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <amount><![CDATA[100]]></amount>[\n]"
+2017-12-13 11:35:58,695 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <desc><![CDATA[[0xe8][0xbf][0x91][0xe5][0x88][0xb0][0xe5][0xae][0xb6][0xe5][0x85][0xac][0xe4][0xbc][0x97][0xe5][0xb9][0xb3][0xe5][0x8f][0xb0]]]></desc>[\n]"
+2017-12-13 11:35:58,695 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <spbill_create_ip><![CDATA[192.168.1.199]]></spbill_create_ip>[\n]"
+2017-12-13 11:35:58,695 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <sign><![CDATA[C555A1019332CF795FBC2FF4421645CE]]></sign>[\n]"
+2017-12-13 11:35:58,696 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 >> "</com.jero.esc.common.weixin.entity.TransfersEntity>"
+2017-12-13 11:35:58,797 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+2017-12-13 11:35:58,797 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Server: nginx[\r][\n]"
+2017-12-13 11:35:58,798 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Date: Wed, 13 Dec 2017 03:36:09 GMT[\r][\n]"
+2017-12-13 11:35:58,798 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+2017-12-13 11:35:58,798 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Length: 296[\r][\n]"
+2017-12-13 11:35:58,798 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+2017-12-13 11:35:58,799 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Keep-Alive: timeout=8[\r][\n]"
+2017-12-13 11:35:58,799 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Cache-Control: no-cache, must-revalidate[\r][\n]"
+2017-12-13 11:35:58,799 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "[\r][\n]"
+2017-12-13 11:35:58,799 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<xml>[\n]"
+2017-12-13 11:35:58,800 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_code><![CDATA[SUCCESS]]></return_code>[\n]"
+2017-12-13 11:35:58,800 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_msg><![CDATA[[0xe5][0x8f][0x82][0xe6][0x95][0xb0][0xe9][0x94][0x99][0xe8][0xaf][0xaf]:[0xe5][0xbf][0x85][0xe9][0xa1][0xbb][0xe8][0xbe][0x93][0xe5][0x85][0xa5][0xe5][0x95][0x86][0xe6][0x88][0xb7][0xe5][0x8f][0xb7]]]></return_msg>[\n]"
+2017-12-13 11:35:58,800 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<result_code><![CDATA[FAIL]]></result_code>[\n]"
+2017-12-13 11:35:58,800 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code><![CDATA[PARAM_ERROR]]></err_code>[\n]"
+2017-12-13 11:35:58,801 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code_des><![CDATA[[0xe5][0x8f][0x82][0xe6][0x95][0xb0][0xe9][0x94][0x99][0xe8][0xaf][0xaf]:[0xe5][0xbf][0x85][0xe9][0xa1][0xbb][0xe8][0xbe][0x93][0xe5][0x85][0xa5][0xe5][0x95][0x86][0xe6][0x88][0xb7][0xe5][0x8f][0xb7]]]></err_code_des>[\n]"
+2017-12-13 11:35:58,801 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 << "</xml>"
+2017-12-13 11:35:58,805 DEBUG [main] [org.apache.http.headers]:124 - http-outgoing-0 << HTTP/1.1 200 OK
+2017-12-13 11:35:58,805 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Server: nginx
+2017-12-13 11:35:58,805 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Date: Wed, 13 Dec 2017 03:36:09 GMT
+2017-12-13 11:35:58,806 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Type: text/html; charset=UTF-8
+2017-12-13 11:35:58,806 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Length: 296
+2017-12-13 11:35:58,806 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Connection: keep-alive
+2017-12-13 11:35:58,807 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Keep-Alive: timeout=8
+2017-12-13 11:35:58,807 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Cache-Control: no-cache, must-revalidate
+2017-12-13 11:35:58,814 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:284 - Connection can be kept alive for 8000 MILLISECONDS
+2017-12-13 11:35:58,819 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:314 - Connection [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN] can be kept alive for 8.0 seconds
+2017-12-13 11:35:58,819 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:320 - Connection released: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:36:13,090 DEBUG [main] [org.apache.http.client.protocol.RequestAddCookies]:122 - CookieSpec selected: default
+2017-12-13 11:36:13,107 DEBUG [main] [org.apache.http.client.protocol.RequestAuthCache]:76 - Auth cache not set in the context
+2017-12-13 11:36:13,109 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:249 - Connection request: [route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2017-12-13 11:36:13,128 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:282 - Connection leased: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:36:13,130 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:234 - Opening connection {s}->https://api.mch.weixin.qq.com:443
+2017-12-13 11:36:13,136 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:138 - Connecting to api.mch.weixin.qq.com/182.254.78.168:443
+2017-12-13 11:36:13,137 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:335 - Connecting socket to api.mch.weixin.qq.com/182.254.78.168:443 with timeout 0
+2017-12-13 11:36:13,258 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:388 - Enabled protocols: [TLSv1]
+2017-12-13 11:36:13,258 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:389 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2017-12-13 11:36:13,259 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:393 - Starting handshake
+2017-12-13 11:36:13,484 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:423 - Secure session established
+2017-12-13 11:36:13,485 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:424 -  negotiated protocol: TLSv1
+2017-12-13 11:36:13,485 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:425 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2017-12-13 11:36:13,486 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:433 -  peer principal: CN=payapp.weixin.qq.com, OU=R&D, O=Tencent Technology (Shenzhen) Company Limited, L=shenzhen, ST=guangdong, C=CN
+2017-12-13 11:36:13,486 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:442 -  peer alternative names: [apihk.mch.weixin.qq.com, pay.weops.qq.com, act.weixin.qq.com, fraud.mch.weixin.qq.com, action.weixin.qq.com, oz.weixin.qq.com, fraudus.mch.weixin.qq.com, apius.mch.weixin.qq.com, api2.mch.weixin.qq.com, api.oz.weixin.qq.com, mch.weixin.qq.com, fraudhk.mch.weixin.qq.com, pay.weixin.qq.com, za.pay.wechat.com, api.mch.weixin.qq.com, api.pay.weixin.qq.com, wx.gtimg.com, payapp.weixin.qq.com]
+2017-12-13 11:36:13,487 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:446 -  issuer principal: CN=GeoTrust SSL CA - G3, O=GeoTrust Inc., C=US
+2017-12-13 11:36:13,495 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:145 - Connection established 192.168.1.199:52273<->182.254.78.168:443
+2017-12-13 11:36:13,495 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:255 - Executing request POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:36:13,495 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:260 - Target auth state: UNCHALLENGED
+2017-12-13 11:36:13,496 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:266 - Proxy auth state: UNCHALLENGED
+2017-12-13 11:36:13,498 DEBUG [main] [org.apache.http.headers]:135 - http-outgoing-0 >> POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:36:13,499 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Connection: keep-alive
+2017-12-13 11:36:13,499 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept: */*
+2017-12-13 11:36:13,499 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+2017-12-13 11:36:13,499 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Host: api.mch.weixin.qq.com
+2017-12-13 11:36:13,500 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> X-Requested-With: XMLHttpRequest
+2017-12-13 11:36:13,500 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Cache-Control: max-age=0
+2017-12-13 11:36:13,500 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) 
+2017-12-13 11:36:13,500 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Length: 764
+2017-12-13 11:36:13,500 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2017-12-13 11:36:13,501 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "POST /mmpaymkttransfers/sendredpack HTTP/1.1[\r][\n]"
+2017-12-13 11:36:13,502 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Connection: keep-alive[\r][\n]"
+2017-12-13 11:36:13,502 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept: */*[\r][\n]"
+2017-12-13 11:36:13,502 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+2017-12-13 11:36:13,502 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Host: api.mch.weixin.qq.com[\r][\n]"
+2017-12-13 11:36:13,502 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "X-Requested-With: XMLHttpRequest[\r][\n]"
+2017-12-13 11:36:13,503 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Cache-Control: max-age=0[\r][\n]"
+2017-12-13 11:36:13,503 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) [\r][\n]"
+2017-12-13 11:36:13,503 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Length: 764[\r][\n]"
+2017-12-13 11:36:13,503 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+2017-12-13 11:36:13,503 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "[\r][\n]"
+2017-12-13 11:36:13,504 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "<com.jero.esc.common.weixin.entity.RedPacketEntity>[\n]"
+2017-12-13 11:36:13,504 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <nonce_str><![CDATA[92D7C3109A5E4AC9A81080A1DA8E0931]]></nonce_str>[\n]"
+2017-12-13 11:36:13,504 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <sign><![CDATA[61F6F001A6082F95D707E5CC2B4EA890]]></sign>[\n]"
+2017-12-13 11:36:13,504 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_billno><![CDATA[621513136171999]]></mch_billno>[\n]"
+2017-12-13 11:36:13,505 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:36:13,505 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:36:13,505 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <send_name><![CDATA[[0xe8][0xbf][0x91][0xe5][0x88][0xb0][0xe5][0xae][0xb6][0xe5][0x85][0xac][0xe4][0xbc][0x97][0xe5][0xb9][0xb3][0xe5][0x8f][0xb0]]]></send_name>[\n]"
+2017-12-13 11:36:13,505 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:36:13,506 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_amount><![CDATA[100]]></total_amount>[\n]"
+2017-12-13 11:36:13,506 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_num><![CDATA[1]]></total_num>[\n]"
+2017-12-13 11:36:13,506 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wishing><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x96][0xb0][0xe7][0x94][0xa8][0xe6][0x88][0xb7],[0xe4][0xb8][0x87][0xe5][0x85][0x83][0xe7][0xba][0xa2][0xe5][0x8c][0x85][0xe7][0xad][0x89][0xe4][0xbd][0xa0][0xe6][0x8b][0xbf]]]></wishing>[\n]"
+2017-12-13 11:36:13,506 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <client_ip><![CDATA[192.168.1.199]]></client_ip>[\n]"
+2017-12-13 11:36:13,507 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <act_name><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x9c][0x89][0xe5][0xa5][0x96]]]></act_name>[\n]"
+2017-12-13 11:36:13,507 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 >> "</com.jero.esc.common.weixin.entity.RedPacketEntity>"
+2017-12-13 11:36:13,740 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+2017-12-13 11:36:13,740 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Server: nginx[\r][\n]"
+2017-12-13 11:36:13,741 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Date: Wed, 13 Dec 2017 03:36:24 GMT[\r][\n]"
+2017-12-13 11:36:13,741 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+2017-12-13 11:36:13,741 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Length: 491[\r][\n]"
+2017-12-13 11:36:13,741 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+2017-12-13 11:36:13,742 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Keep-Alive: timeout=8[\r][\n]"
+2017-12-13 11:36:13,742 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Cache-Control: no-cache, must-revalidate[\r][\n]"
+2017-12-13 11:36:13,742 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "[\r][\n]"
+2017-12-13 11:36:13,742 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<xml>[\n]"
+2017-12-13 11:36:13,742 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_code><![CDATA[SUCCESS]]></return_code>[\n]"
+2017-12-13 11:36:13,743 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_msg><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></return_msg>[\n]"
+2017-12-13 11:36:13,743 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<result_code><![CDATA[FAIL]]></result_code>[\n]"
+2017-12-13 11:36:13,743 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code><![CDATA[SIGN_ERROR]]></err_code>[\n]"
+2017-12-13 11:36:13,743 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code_des><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></err_code_des>[\n]"
+2017-12-13 11:36:13,744 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_billno><![CDATA[621513136171999]]></mch_billno>[\n]"
+2017-12-13 11:36:13,744 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:36:13,744 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:36:13,744 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:36:13,745 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<total_amount>100</total_amount>[\n]"
+2017-12-13 11:36:13,745 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 << "</xml>"
+2017-12-13 11:36:13,751 DEBUG [main] [org.apache.http.headers]:124 - http-outgoing-0 << HTTP/1.1 200 OK
+2017-12-13 11:36:13,752 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Server: nginx
+2017-12-13 11:36:13,752 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Date: Wed, 13 Dec 2017 03:36:24 GMT
+2017-12-13 11:36:13,752 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Type: text/html; charset=UTF-8
+2017-12-13 11:36:13,752 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Length: 491
+2017-12-13 11:36:13,752 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Connection: keep-alive
+2017-12-13 11:36:13,752 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Keep-Alive: timeout=8
+2017-12-13 11:36:13,753 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Cache-Control: no-cache, must-revalidate
+2017-12-13 11:36:13,761 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:284 - Connection can be kept alive for 8000 MILLISECONDS
+2017-12-13 11:36:13,766 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:314 - Connection [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN] can be kept alive for 8.0 seconds
+2017-12-13 11:36:13,766 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:320 - Connection released: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:38:03,544 DEBUG [main] [org.apache.http.client.protocol.RequestAddCookies]:122 - CookieSpec selected: default
+2017-12-13 11:38:03,563 DEBUG [main] [org.apache.http.client.protocol.RequestAuthCache]:76 - Auth cache not set in the context
+2017-12-13 11:38:03,579 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:249 - Connection request: [route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2017-12-13 11:38:03,600 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:282 - Connection leased: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:38:03,603 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:234 - Opening connection {s}->https://api.mch.weixin.qq.com:443
+2017-12-13 11:38:03,613 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:138 - Connecting to api.mch.weixin.qq.com/182.254.10.62:443
+2017-12-13 11:38:03,614 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:335 - Connecting socket to api.mch.weixin.qq.com/182.254.10.62:443 with timeout 0
+2017-12-13 11:38:03,723 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:388 - Enabled protocols: [TLSv1]
+2017-12-13 11:38:03,724 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:389 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2017-12-13 11:38:03,724 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:393 - Starting handshake
+2017-12-13 11:38:03,948 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:423 - Secure session established
+2017-12-13 11:38:03,948 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:424 -  negotiated protocol: TLSv1
+2017-12-13 11:38:03,949 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:425 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2017-12-13 11:38:03,949 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:433 -  peer principal: CN=payapp.weixin.qq.com, OU=R&D, O=Tencent Technology (Shenzhen) Company Limited, L=shenzhen, ST=guangdong, C=CN
+2017-12-13 11:38:03,950 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:442 -  peer alternative names: [apihk.mch.weixin.qq.com, pay.weops.qq.com, act.weixin.qq.com, fraud.mch.weixin.qq.com, action.weixin.qq.com, oz.weixin.qq.com, fraudus.mch.weixin.qq.com, apius.mch.weixin.qq.com, api2.mch.weixin.qq.com, api.oz.weixin.qq.com, mch.weixin.qq.com, fraudhk.mch.weixin.qq.com, pay.weixin.qq.com, za.pay.wechat.com, api.mch.weixin.qq.com, api.pay.weixin.qq.com, wx.gtimg.com, payapp.weixin.qq.com]
+2017-12-13 11:38:03,950 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:446 -  issuer principal: CN=GeoTrust SSL CA - G3, O=GeoTrust Inc., C=US
+2017-12-13 11:38:03,957 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:145 - Connection established 192.168.1.199:53903<->182.254.10.62:443
+2017-12-13 11:38:03,958 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:255 - Executing request POST /mmpaymkttransfers/gettransferinfo HTTP/1.1
+2017-12-13 11:38:03,959 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:260 - Target auth state: UNCHALLENGED
+2017-12-13 11:38:03,960 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:266 - Proxy auth state: UNCHALLENGED
+2017-12-13 11:38:03,962 DEBUG [main] [org.apache.http.headers]:135 - http-outgoing-0 >> POST /mmpaymkttransfers/gettransferinfo HTTP/1.1
+2017-12-13 11:38:03,962 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Connection: keep-alive
+2017-12-13 11:38:03,962 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept: */*
+2017-12-13 11:38:03,962 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+2017-12-13 11:38:03,963 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Host: api.mch.weixin.qq.com
+2017-12-13 11:38:03,963 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> X-Requested-With: XMLHttpRequest
+2017-12-13 11:38:03,963 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Cache-Control: max-age=0
+2017-12-13 11:38:03,963 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) 
+2017-12-13 11:38:03,963 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Length: 656
+2017-12-13 11:38:03,964 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2017-12-13 11:38:03,964 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "POST /mmpaymkttransfers/gettransferinfo HTTP/1.1[\r][\n]"
+2017-12-13 11:38:03,964 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Connection: keep-alive[\r][\n]"
+2017-12-13 11:38:03,965 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept: */*[\r][\n]"
+2017-12-13 11:38:03,965 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+2017-12-13 11:38:03,965 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Host: api.mch.weixin.qq.com[\r][\n]"
+2017-12-13 11:38:03,965 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "X-Requested-With: XMLHttpRequest[\r][\n]"
+2017-12-13 11:38:03,966 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Cache-Control: max-age=0[\r][\n]"
+2017-12-13 11:38:03,966 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) [\r][\n]"
+2017-12-13 11:38:03,966 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Length: 656[\r][\n]"
+2017-12-13 11:38:03,967 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+2017-12-13 11:38:03,967 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "[\r][\n]"
+2017-12-13 11:38:03,967 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "<com.jero.esc.common.weixin.entity.TransfersEntity>[\n]"
+2017-12-13 11:38:03,967 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_appid1><![CDATA[wxd0c763640d4b8f08]]></mch_appid1>[\n]"
+2017-12-13 11:38:03,967 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mchid><![CDATA[1486272382]]></mchid>[\n]"
+2017-12-13 11:38:03,969 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <nonce_str><![CDATA[0120F270620E40A3BBB9377CD7156CCB]]></nonce_str>[\n]"
+2017-12-13 11:38:03,969 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <partner_trade_no><![CDATA[021513136282383]]></partner_trade_no>[\n]"
+2017-12-13 11:38:03,969 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></openid>[\n]"
+2017-12-13 11:38:03,969 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <check_name><![CDATA[NO_CHECK]]></check_name>[\n]"
+2017-12-13 11:38:03,969 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <amount><![CDATA[100]]></amount>[\n]"
+2017-12-13 11:38:03,970 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <desc><![CDATA[[0xe8][0xbf][0x91][0xe5][0x88][0xb0][0xe5][0xae][0xb6][0xe5][0x85][0xac][0xe4][0xbc][0x97][0xe5][0xb9][0xb3][0xe5][0x8f][0xb0]]]></desc>[\n]"
+2017-12-13 11:38:03,970 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <spbill_create_ip><![CDATA[192.168.1.199]]></spbill_create_ip>[\n]"
+2017-12-13 11:38:03,970 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <sign><![CDATA[3EB177582D8D9A125D43EB36A2661828]]></sign>[\n]"
+2017-12-13 11:38:03,970 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 >> "</com.jero.esc.common.weixin.entity.TransfersEntity>"
+2017-12-13 11:38:04,072 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+2017-12-13 11:38:04,072 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Server: nginx[\r][\n]"
+2017-12-13 11:38:04,073 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Date: Wed, 13 Dec 2017 03:38:14 GMT[\r][\n]"
+2017-12-13 11:38:04,073 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+2017-12-13 11:38:04,073 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Length: 296[\r][\n]"
+2017-12-13 11:38:04,073 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+2017-12-13 11:38:04,073 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Keep-Alive: timeout=8[\r][\n]"
+2017-12-13 11:38:04,074 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Cache-Control: no-cache, must-revalidate[\r][\n]"
+2017-12-13 11:38:04,074 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "[\r][\n]"
+2017-12-13 11:38:04,074 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<xml>[\n]"
+2017-12-13 11:38:04,074 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_code><![CDATA[SUCCESS]]></return_code>[\n]"
+2017-12-13 11:38:04,074 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_msg><![CDATA[[0xe5][0x8f][0x82][0xe6][0x95][0xb0][0xe9][0x94][0x99][0xe8][0xaf][0xaf]:[0xe5][0xbf][0x85][0xe9][0xa1][0xbb][0xe8][0xbe][0x93][0xe5][0x85][0xa5][0xe5][0x95][0x86][0xe6][0x88][0xb7][0xe5][0x8f][0xb7]]]></return_msg>[\n]"
+2017-12-13 11:38:04,075 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<result_code><![CDATA[FAIL]]></result_code>[\n]"
+2017-12-13 11:38:04,075 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code><![CDATA[PARAM_ERROR]]></err_code>[\n]"
+2017-12-13 11:38:04,075 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code_des><![CDATA[[0xe5][0x8f][0x82][0xe6][0x95][0xb0][0xe9][0x94][0x99][0xe8][0xaf][0xaf]:[0xe5][0xbf][0x85][0xe9][0xa1][0xbb][0xe8][0xbe][0x93][0xe5][0x85][0xa5][0xe5][0x95][0x86][0xe6][0x88][0xb7][0xe5][0x8f][0xb7]]]></err_code_des>[\n]"
+2017-12-13 11:38:04,075 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 << "</xml>"
+2017-12-13 11:38:04,079 DEBUG [main] [org.apache.http.headers]:124 - http-outgoing-0 << HTTP/1.1 200 OK
+2017-12-13 11:38:04,079 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Server: nginx
+2017-12-13 11:38:04,080 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Date: Wed, 13 Dec 2017 03:38:14 GMT
+2017-12-13 11:38:04,080 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Type: text/html; charset=UTF-8
+2017-12-13 11:38:04,080 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Length: 296
+2017-12-13 11:38:04,080 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Connection: keep-alive
+2017-12-13 11:38:04,080 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Keep-Alive: timeout=8
+2017-12-13 11:38:04,080 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Cache-Control: no-cache, must-revalidate
+2017-12-13 11:38:04,088 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:284 - Connection can be kept alive for 8000 MILLISECONDS
+2017-12-13 11:38:04,093 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:314 - Connection [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN] can be kept alive for 8.0 seconds
+2017-12-13 11:38:04,093 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:320 - Connection released: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:43:05,290 DEBUG [main] [org.apache.http.client.protocol.RequestAddCookies]:122 - CookieSpec selected: default
+2017-12-13 11:43:05,307 DEBUG [main] [org.apache.http.client.protocol.RequestAuthCache]:76 - Auth cache not set in the context
+2017-12-13 11:43:05,310 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:249 - Connection request: [route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2017-12-13 11:43:05,329 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:282 - Connection leased: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:43:05,331 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:234 - Opening connection {s}->https://api.mch.weixin.qq.com:443
+2017-12-13 11:43:05,381 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:138 - Connecting to api.mch.weixin.qq.com/182.254.78.168:443
+2017-12-13 11:43:05,382 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:335 - Connecting socket to api.mch.weixin.qq.com/182.254.78.168:443 with timeout 0
+2017-12-13 11:43:05,491 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:388 - Enabled protocols: [TLSv1]
+2017-12-13 11:43:05,492 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:389 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2017-12-13 11:43:05,493 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:393 - Starting handshake
+2017-12-13 11:43:05,705 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:423 - Secure session established
+2017-12-13 11:43:05,705 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:424 -  negotiated protocol: TLSv1
+2017-12-13 11:43:05,706 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:425 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2017-12-13 11:43:05,706 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:433 -  peer principal: CN=payapp.weixin.qq.com, OU=R&D, O=Tencent Technology (Shenzhen) Company Limited, L=shenzhen, ST=guangdong, C=CN
+2017-12-13 11:43:05,707 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:442 -  peer alternative names: [apihk.mch.weixin.qq.com, pay.weops.qq.com, act.weixin.qq.com, fraud.mch.weixin.qq.com, action.weixin.qq.com, oz.weixin.qq.com, fraudus.mch.weixin.qq.com, apius.mch.weixin.qq.com, api2.mch.weixin.qq.com, api.oz.weixin.qq.com, mch.weixin.qq.com, fraudhk.mch.weixin.qq.com, pay.weixin.qq.com, za.pay.wechat.com, api.mch.weixin.qq.com, api.pay.weixin.qq.com, wx.gtimg.com, payapp.weixin.qq.com]
+2017-12-13 11:43:05,710 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:446 -  issuer principal: CN=GeoTrust SSL CA - G3, O=GeoTrust Inc., C=US
+2017-12-13 11:43:05,717 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:145 - Connection established 192.168.1.199:58163<->182.254.78.168:443
+2017-12-13 11:43:05,718 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:255 - Executing request POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:43:05,718 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:260 - Target auth state: UNCHALLENGED
+2017-12-13 11:43:05,719 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:266 - Proxy auth state: UNCHALLENGED
+2017-12-13 11:43:05,721 DEBUG [main] [org.apache.http.headers]:135 - http-outgoing-0 >> POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:43:05,721 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Connection: keep-alive
+2017-12-13 11:43:05,721 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept: */*
+2017-12-13 11:43:05,722 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+2017-12-13 11:43:05,722 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Host: api.mch.weixin.qq.com
+2017-12-13 11:43:05,722 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> X-Requested-With: XMLHttpRequest
+2017-12-13 11:43:05,722 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Cache-Control: max-age=0
+2017-12-13 11:43:05,722 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) 
+2017-12-13 11:43:05,722 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Length: 764
+2017-12-13 11:43:05,723 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2017-12-13 11:43:05,724 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "POST /mmpaymkttransfers/sendredpack HTTP/1.1[\r][\n]"
+2017-12-13 11:43:05,724 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Connection: keep-alive[\r][\n]"
+2017-12-13 11:43:05,724 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept: */*[\r][\n]"
+2017-12-13 11:43:05,724 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+2017-12-13 11:43:05,725 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Host: api.mch.weixin.qq.com[\r][\n]"
+2017-12-13 11:43:05,725 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "X-Requested-With: XMLHttpRequest[\r][\n]"
+2017-12-13 11:43:05,725 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Cache-Control: max-age=0[\r][\n]"
+2017-12-13 11:43:05,725 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) [\r][\n]"
+2017-12-13 11:43:05,726 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Length: 764[\r][\n]"
+2017-12-13 11:43:05,726 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+2017-12-13 11:43:05,726 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "[\r][\n]"
+2017-12-13 11:43:05,726 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "<com.jero.esc.common.weixin.entity.RedPacketEntity>[\n]"
+2017-12-13 11:43:05,727 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <nonce_str><![CDATA[8CF034B70D5946C09E67234949E6B87A]]></nonce_str>[\n]"
+2017-12-13 11:43:05,727 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <sign><![CDATA[2E557280BAE93BAF172BB12B4FDB51D6]]></sign>[\n]"
+2017-12-13 11:43:05,727 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_billno><![CDATA[141513136584195]]></mch_billno>[\n]"
+2017-12-13 11:43:05,727 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:43:05,727 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:43:05,728 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <send_name><![CDATA[[0xe8][0xbf][0x91][0xe5][0x88][0xb0][0xe5][0xae][0xb6][0xe5][0x85][0xac][0xe4][0xbc][0x97][0xe5][0xb9][0xb3][0xe5][0x8f][0xb0]]]></send_name>[\n]"
+2017-12-13 11:43:05,728 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:43:05,728 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_amount><![CDATA[100]]></total_amount>[\n]"
+2017-12-13 11:43:05,728 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_num><![CDATA[1]]></total_num>[\n]"
+2017-12-13 11:43:05,729 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wishing><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x96][0xb0][0xe7][0x94][0xa8][0xe6][0x88][0xb7],[0xe4][0xb8][0x87][0xe5][0x85][0x83][0xe7][0xba][0xa2][0xe5][0x8c][0x85][0xe7][0xad][0x89][0xe4][0xbd][0xa0][0xe6][0x8b][0xbf]]]></wishing>[\n]"
+2017-12-13 11:43:05,729 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <client_ip><![CDATA[192.168.1.199]]></client_ip>[\n]"
+2017-12-13 11:43:05,729 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <act_name><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x9c][0x89][0xe5][0xa5][0x96]]]></act_name>[\n]"
+2017-12-13 11:43:05,729 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 >> "</com.jero.esc.common.weixin.entity.RedPacketEntity>"
+2017-12-13 11:43:05,909 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+2017-12-13 11:43:05,909 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Server: nginx[\r][\n]"
+2017-12-13 11:43:05,910 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Date: Wed, 13 Dec 2017 03:43:16 GMT[\r][\n]"
+2017-12-13 11:43:05,910 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+2017-12-13 11:43:05,910 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Length: 491[\r][\n]"
+2017-12-13 11:43:05,910 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+2017-12-13 11:43:05,911 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Keep-Alive: timeout=8[\r][\n]"
+2017-12-13 11:43:05,911 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Cache-Control: no-cache, must-revalidate[\r][\n]"
+2017-12-13 11:43:05,911 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "[\r][\n]"
+2017-12-13 11:43:05,911 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<xml>[\n]"
+2017-12-13 11:43:05,912 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_code><![CDATA[SUCCESS]]></return_code>[\n]"
+2017-12-13 11:43:05,912 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_msg><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></return_msg>[\n]"
+2017-12-13 11:43:05,912 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<result_code><![CDATA[FAIL]]></result_code>[\n]"
+2017-12-13 11:43:05,912 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code><![CDATA[SIGN_ERROR]]></err_code>[\n]"
+2017-12-13 11:43:05,913 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code_des><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></err_code_des>[\n]"
+2017-12-13 11:43:05,913 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_billno><![CDATA[141513136584195]]></mch_billno>[\n]"
+2017-12-13 11:43:05,913 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:43:05,913 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:43:05,914 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:43:05,914 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<total_amount>100</total_amount>[\n]"
+2017-12-13 11:43:05,914 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 << "</xml>"
+2017-12-13 11:43:05,918 DEBUG [main] [org.apache.http.headers]:124 - http-outgoing-0 << HTTP/1.1 200 OK
+2017-12-13 11:43:05,918 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Server: nginx
+2017-12-13 11:43:05,919 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Date: Wed, 13 Dec 2017 03:43:16 GMT
+2017-12-13 11:43:05,919 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Type: text/html; charset=UTF-8
+2017-12-13 11:43:05,919 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Length: 491
+2017-12-13 11:43:05,919 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Connection: keep-alive
+2017-12-13 11:43:05,919 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Keep-Alive: timeout=8
+2017-12-13 11:43:05,920 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Cache-Control: no-cache, must-revalidate
+2017-12-13 11:43:05,928 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:284 - Connection can be kept alive for 8000 MILLISECONDS
+2017-12-13 11:43:05,933 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:314 - Connection [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN] can be kept alive for 8.0 seconds
+2017-12-13 11:43:05,934 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:320 - Connection released: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:44:11,720 DEBUG [main] [org.apache.http.client.protocol.RequestAddCookies]:122 - CookieSpec selected: default
+2017-12-13 11:44:11,740 DEBUG [main] [org.apache.http.client.protocol.RequestAuthCache]:76 - Auth cache not set in the context
+2017-12-13 11:44:11,743 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:249 - Connection request: [route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2017-12-13 11:44:11,765 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:282 - Connection leased: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:44:11,767 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:234 - Opening connection {s}->https://api.mch.weixin.qq.com:443
+2017-12-13 11:44:11,777 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:138 - Connecting to api.mch.weixin.qq.com/182.254.10.62:443
+2017-12-13 11:44:11,778 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:335 - Connecting socket to api.mch.weixin.qq.com/182.254.10.62:443 with timeout 0
+2017-12-13 11:44:11,884 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:388 - Enabled protocols: [TLSv1]
+2017-12-13 11:44:11,885 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:389 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2017-12-13 11:44:11,885 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:393 - Starting handshake
+2017-12-13 11:44:12,104 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:423 - Secure session established
+2017-12-13 11:44:12,105 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:424 -  negotiated protocol: TLSv1
+2017-12-13 11:44:12,105 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:425 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2017-12-13 11:44:12,105 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:433 -  peer principal: CN=payapp.weixin.qq.com, OU=R&D, O=Tencent Technology (Shenzhen) Company Limited, L=shenzhen, ST=guangdong, C=CN
+2017-12-13 11:44:12,106 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:442 -  peer alternative names: [apihk.mch.weixin.qq.com, pay.weops.qq.com, act.weixin.qq.com, fraud.mch.weixin.qq.com, action.weixin.qq.com, oz.weixin.qq.com, fraudus.mch.weixin.qq.com, apius.mch.weixin.qq.com, api2.mch.weixin.qq.com, api.oz.weixin.qq.com, mch.weixin.qq.com, fraudhk.mch.weixin.qq.com, pay.weixin.qq.com, za.pay.wechat.com, api.mch.weixin.qq.com, api.pay.weixin.qq.com, wx.gtimg.com, payapp.weixin.qq.com]
+2017-12-13 11:44:12,106 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:446 -  issuer principal: CN=GeoTrust SSL CA - G3, O=GeoTrust Inc., C=US
+2017-12-13 11:44:12,114 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:145 - Connection established 192.168.1.199:59091<->182.254.10.62:443
+2017-12-13 11:44:12,114 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:255 - Executing request POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:44:12,114 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:260 - Target auth state: UNCHALLENGED
+2017-12-13 11:44:12,115 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:266 - Proxy auth state: UNCHALLENGED
+2017-12-13 11:44:12,117 DEBUG [main] [org.apache.http.headers]:135 - http-outgoing-0 >> POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:44:12,118 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Connection: keep-alive
+2017-12-13 11:44:12,118 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept: */*
+2017-12-13 11:44:12,118 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+2017-12-13 11:44:12,119 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Host: api.mch.weixin.qq.com
+2017-12-13 11:44:12,119 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> X-Requested-With: XMLHttpRequest
+2017-12-13 11:44:12,119 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Cache-Control: max-age=0
+2017-12-13 11:44:12,119 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) 
+2017-12-13 11:44:12,119 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Length: 764
+2017-12-13 11:44:12,120 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2017-12-13 11:44:12,120 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "POST /mmpaymkttransfers/sendredpack HTTP/1.1[\r][\n]"
+2017-12-13 11:44:12,120 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Connection: keep-alive[\r][\n]"
+2017-12-13 11:44:12,121 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept: */*[\r][\n]"
+2017-12-13 11:44:12,121 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+2017-12-13 11:44:12,121 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Host: api.mch.weixin.qq.com[\r][\n]"
+2017-12-13 11:44:12,122 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "X-Requested-With: XMLHttpRequest[\r][\n]"
+2017-12-13 11:44:12,122 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Cache-Control: max-age=0[\r][\n]"
+2017-12-13 11:44:12,122 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) [\r][\n]"
+2017-12-13 11:44:12,122 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Length: 764[\r][\n]"
+2017-12-13 11:44:12,123 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+2017-12-13 11:44:12,123 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "[\r][\n]"
+2017-12-13 11:44:12,123 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "<com.jero.esc.common.weixin.entity.RedPacketEntity>[\n]"
+2017-12-13 11:44:12,123 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <nonce_str><![CDATA[967CA6F8DBB84B1A893FB6058559AA07]]></nonce_str>[\n]"
+2017-12-13 11:44:12,123 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <sign><![CDATA[695006FC181EB2330EE2013F451BCBEC]]></sign>[\n]"
+2017-12-13 11:44:12,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_billno><![CDATA[721513136650527]]></mch_billno>[\n]"
+2017-12-13 11:44:12,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:44:12,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:44:12,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <send_name><![CDATA[[0xe8][0xbf][0x91][0xe5][0x88][0xb0][0xe5][0xae][0xb6][0xe5][0x85][0xac][0xe4][0xbc][0x97][0xe5][0xb9][0xb3][0xe5][0x8f][0xb0]]]></send_name>[\n]"
+2017-12-13 11:44:12,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:44:12,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_amount><![CDATA[100]]></total_amount>[\n]"
+2017-12-13 11:44:12,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_num><![CDATA[1]]></total_num>[\n]"
+2017-12-13 11:44:12,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wishing><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x96][0xb0][0xe7][0x94][0xa8][0xe6][0x88][0xb7],[0xe4][0xb8][0x87][0xe5][0x85][0x83][0xe7][0xba][0xa2][0xe5][0x8c][0x85][0xe7][0xad][0x89][0xe4][0xbd][0xa0][0xe6][0x8b][0xbf]]]></wishing>[\n]"
+2017-12-13 11:44:12,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <client_ip><![CDATA[192.168.1.199]]></client_ip>[\n]"
+2017-12-13 11:44:12,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <act_name><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x9c][0x89][0xe5][0xa5][0x96]]]></act_name>[\n]"
+2017-12-13 11:44:12,126 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 >> "</com.jero.esc.common.weixin.entity.RedPacketEntity>"
+2017-12-13 11:44:12,271 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+2017-12-13 11:44:12,271 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Server: nginx[\r][\n]"
+2017-12-13 11:44:12,271 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Date: Wed, 13 Dec 2017 03:44:23 GMT[\r][\n]"
+2017-12-13 11:44:12,271 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+2017-12-13 11:44:12,272 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Length: 491[\r][\n]"
+2017-12-13 11:44:12,272 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+2017-12-13 11:44:12,272 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Keep-Alive: timeout=8[\r][\n]"
+2017-12-13 11:44:12,272 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Cache-Control: no-cache, must-revalidate[\r][\n]"
+2017-12-13 11:44:12,273 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "[\r][\n]"
+2017-12-13 11:44:12,273 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<xml>[\n]"
+2017-12-13 11:44:12,273 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_code><![CDATA[SUCCESS]]></return_code>[\n]"
+2017-12-13 11:44:12,273 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_msg><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></return_msg>[\n]"
+2017-12-13 11:44:12,274 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<result_code><![CDATA[FAIL]]></result_code>[\n]"
+2017-12-13 11:44:12,274 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code><![CDATA[SIGN_ERROR]]></err_code>[\n]"
+2017-12-13 11:44:12,274 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code_des><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></err_code_des>[\n]"
+2017-12-13 11:44:12,274 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_billno><![CDATA[721513136650527]]></mch_billno>[\n]"
+2017-12-13 11:44:12,275 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:44:12,275 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:44:12,275 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:44:12,275 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<total_amount>100</total_amount>[\n]"
+2017-12-13 11:44:12,276 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 << "</xml>"
+2017-12-13 11:44:12,280 DEBUG [main] [org.apache.http.headers]:124 - http-outgoing-0 << HTTP/1.1 200 OK
+2017-12-13 11:44:12,280 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Server: nginx
+2017-12-13 11:44:12,280 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Date: Wed, 13 Dec 2017 03:44:23 GMT
+2017-12-13 11:44:12,280 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Type: text/html; charset=UTF-8
+2017-12-13 11:44:12,281 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Length: 491
+2017-12-13 11:44:12,281 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Connection: keep-alive
+2017-12-13 11:44:12,281 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Keep-Alive: timeout=8
+2017-12-13 11:44:12,281 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Cache-Control: no-cache, must-revalidate
+2017-12-13 11:44:12,290 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:284 - Connection can be kept alive for 8000 MILLISECONDS
+2017-12-13 11:44:12,296 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:314 - Connection [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN] can be kept alive for 8.0 seconds
+2017-12-13 11:44:12,296 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:320 - Connection released: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:44:33,601 DEBUG [main] [org.apache.http.client.protocol.RequestAddCookies]:122 - CookieSpec selected: default
+2017-12-13 11:44:33,618 DEBUG [main] [org.apache.http.client.protocol.RequestAuthCache]:76 - Auth cache not set in the context
+2017-12-13 11:44:33,634 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:249 - Connection request: [route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2017-12-13 11:44:33,653 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:282 - Connection leased: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:44:33,656 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:234 - Opening connection {s}->https://api.mch.weixin.qq.com:443
+2017-12-13 11:44:33,664 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:138 - Connecting to api.mch.weixin.qq.com/182.254.78.168:443
+2017-12-13 11:44:33,664 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:335 - Connecting socket to api.mch.weixin.qq.com/182.254.78.168:443 with timeout 0
+2017-12-13 11:44:33,776 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:388 - Enabled protocols: [TLSv1]
+2017-12-13 11:44:33,776 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:389 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2017-12-13 11:44:33,776 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:393 - Starting handshake
+2017-12-13 11:44:34,023 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:423 - Secure session established
+2017-12-13 11:44:34,023 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:424 -  negotiated protocol: TLSv1
+2017-12-13 11:44:34,024 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:425 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2017-12-13 11:44:34,024 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:433 -  peer principal: CN=payapp.weixin.qq.com, OU=R&D, O=Tencent Technology (Shenzhen) Company Limited, L=shenzhen, ST=guangdong, C=CN
+2017-12-13 11:44:34,025 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:442 -  peer alternative names: [apihk.mch.weixin.qq.com, pay.weops.qq.com, act.weixin.qq.com, fraud.mch.weixin.qq.com, action.weixin.qq.com, oz.weixin.qq.com, fraudus.mch.weixin.qq.com, apius.mch.weixin.qq.com, api2.mch.weixin.qq.com, api.oz.weixin.qq.com, mch.weixin.qq.com, fraudhk.mch.weixin.qq.com, pay.weixin.qq.com, za.pay.wechat.com, api.mch.weixin.qq.com, api.pay.weixin.qq.com, wx.gtimg.com, payapp.weixin.qq.com]
+2017-12-13 11:44:34,025 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:446 -  issuer principal: CN=GeoTrust SSL CA - G3, O=GeoTrust Inc., C=US
+2017-12-13 11:44:34,032 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:145 - Connection established 192.168.1.199:59359<->182.254.78.168:443
+2017-12-13 11:44:34,033 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:255 - Executing request POST /mmpaymkttransfers/gettransferinfo HTTP/1.1
+2017-12-13 11:44:34,033 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:260 - Target auth state: UNCHALLENGED
+2017-12-13 11:44:34,034 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:266 - Proxy auth state: UNCHALLENGED
+2017-12-13 11:44:34,036 DEBUG [main] [org.apache.http.headers]:135 - http-outgoing-0 >> POST /mmpaymkttransfers/gettransferinfo HTTP/1.1
+2017-12-13 11:44:34,037 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Connection: keep-alive
+2017-12-13 11:44:34,037 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept: */*
+2017-12-13 11:44:34,037 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+2017-12-13 11:44:34,037 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Host: api.mch.weixin.qq.com
+2017-12-13 11:44:34,037 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> X-Requested-With: XMLHttpRequest
+2017-12-13 11:44:34,038 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Cache-Control: max-age=0
+2017-12-13 11:44:34,038 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) 
+2017-12-13 11:44:34,038 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Length: 654
+2017-12-13 11:44:34,038 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2017-12-13 11:44:34,039 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "POST /mmpaymkttransfers/gettransferinfo HTTP/1.1[\r][\n]"
+2017-12-13 11:44:34,039 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Connection: keep-alive[\r][\n]"
+2017-12-13 11:44:34,039 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept: */*[\r][\n]"
+2017-12-13 11:44:34,039 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+2017-12-13 11:44:34,040 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Host: api.mch.weixin.qq.com[\r][\n]"
+2017-12-13 11:44:34,040 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "X-Requested-With: XMLHttpRequest[\r][\n]"
+2017-12-13 11:44:34,040 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Cache-Control: max-age=0[\r][\n]"
+2017-12-13 11:44:34,040 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) [\r][\n]"
+2017-12-13 11:44:34,041 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Length: 654[\r][\n]"
+2017-12-13 11:44:34,041 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+2017-12-13 11:44:34,041 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "[\r][\n]"
+2017-12-13 11:44:34,041 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "<com.jero.esc.common.weixin.entity.TransfersEntity>[\n]"
+2017-12-13 11:44:34,042 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_appid><![CDATA[wxd0c763640d4b8f08]]></mch_appid>[\n]"
+2017-12-13 11:44:34,042 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mchid><![CDATA[1486272382]]></mchid>[\n]"
+2017-12-13 11:44:34,042 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <nonce_str><![CDATA[98F3F9C4BE1945F780A281432763D294]]></nonce_str>[\n]"
+2017-12-13 11:44:34,042 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <partner_trade_no><![CDATA[121513136672558]]></partner_trade_no>[\n]"
+2017-12-13 11:44:34,042 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></openid>[\n]"
+2017-12-13 11:44:34,043 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <check_name><![CDATA[NO_CHECK]]></check_name>[\n]"
+2017-12-13 11:44:34,043 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <amount><![CDATA[100]]></amount>[\n]"
+2017-12-13 11:44:34,043 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <desc><![CDATA[[0xe8][0xbf][0x91][0xe5][0x88][0xb0][0xe5][0xae][0xb6][0xe5][0x85][0xac][0xe4][0xbc][0x97][0xe5][0xb9][0xb3][0xe5][0x8f][0xb0]]]></desc>[\n]"
+2017-12-13 11:44:34,043 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <spbill_create_ip><![CDATA[192.168.1.199]]></spbill_create_ip>[\n]"
+2017-12-13 11:44:34,044 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <sign><![CDATA[EA8721FD071BD73B39D1E1BDF23C1519]]></sign>[\n]"
+2017-12-13 11:44:34,044 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 >> "</com.jero.esc.common.weixin.entity.TransfersEntity>"
+2017-12-13 11:44:34,146 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+2017-12-13 11:44:34,146 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Server: nginx[\r][\n]"
+2017-12-13 11:44:34,147 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Date: Wed, 13 Dec 2017 03:44:45 GMT[\r][\n]"
+2017-12-13 11:44:34,147 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+2017-12-13 11:44:34,147 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Length: 296[\r][\n]"
+2017-12-13 11:44:34,147 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+2017-12-13 11:44:34,148 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Keep-Alive: timeout=8[\r][\n]"
+2017-12-13 11:44:34,148 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Cache-Control: no-cache, must-revalidate[\r][\n]"
+2017-12-13 11:44:34,148 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "[\r][\n]"
+2017-12-13 11:44:34,148 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<xml>[\n]"
+2017-12-13 11:44:34,148 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_code><![CDATA[SUCCESS]]></return_code>[\n]"
+2017-12-13 11:44:34,149 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_msg><![CDATA[[0xe5][0x8f][0x82][0xe6][0x95][0xb0][0xe9][0x94][0x99][0xe8][0xaf][0xaf]:[0xe5][0xbf][0x85][0xe9][0xa1][0xbb][0xe8][0xbe][0x93][0xe5][0x85][0xa5][0xe5][0x95][0x86][0xe6][0x88][0xb7][0xe5][0x8f][0xb7]]]></return_msg>[\n]"
+2017-12-13 11:44:34,149 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<result_code><![CDATA[FAIL]]></result_code>[\n]"
+2017-12-13 11:44:34,149 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code><![CDATA[PARAM_ERROR]]></err_code>[\n]"
+2017-12-13 11:44:34,149 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code_des><![CDATA[[0xe5][0x8f][0x82][0xe6][0x95][0xb0][0xe9][0x94][0x99][0xe8][0xaf][0xaf]:[0xe5][0xbf][0x85][0xe9][0xa1][0xbb][0xe8][0xbe][0x93][0xe5][0x85][0xa5][0xe5][0x95][0x86][0xe6][0x88][0xb7][0xe5][0x8f][0xb7]]]></err_code_des>[\n]"
+2017-12-13 11:44:34,150 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 << "</xml>"
+2017-12-13 11:44:34,154 DEBUG [main] [org.apache.http.headers]:124 - http-outgoing-0 << HTTP/1.1 200 OK
+2017-12-13 11:44:34,154 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Server: nginx
+2017-12-13 11:44:34,154 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Date: Wed, 13 Dec 2017 03:44:45 GMT
+2017-12-13 11:44:34,154 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Type: text/html; charset=UTF-8
+2017-12-13 11:44:34,155 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Length: 296
+2017-12-13 11:44:34,155 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Connection: keep-alive
+2017-12-13 11:44:34,155 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Keep-Alive: timeout=8
+2017-12-13 11:44:34,155 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Cache-Control: no-cache, must-revalidate
+2017-12-13 11:44:34,164 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:284 - Connection can be kept alive for 8000 MILLISECONDS
+2017-12-13 11:44:34,170 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:314 - Connection [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN] can be kept alive for 8.0 seconds
+2017-12-13 11:44:34,171 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:320 - Connection released: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:44:52,960 DEBUG [main] [org.apache.http.client.protocol.RequestAddCookies]:122 - CookieSpec selected: default
+2017-12-13 11:44:52,976 DEBUG [main] [org.apache.http.client.protocol.RequestAuthCache]:76 - Auth cache not set in the context
+2017-12-13 11:44:52,979 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:249 - Connection request: [route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2017-12-13 11:44:52,998 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:282 - Connection leased: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:44:53,001 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:234 - Opening connection {s}->https://api.mch.weixin.qq.com:443
+2017-12-13 11:44:53,007 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:138 - Connecting to api.mch.weixin.qq.com/182.254.78.168:443
+2017-12-13 11:44:53,007 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:335 - Connecting socket to api.mch.weixin.qq.com/182.254.78.168:443 with timeout 0
+2017-12-13 11:44:53,118 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:388 - Enabled protocols: [TLSv1]
+2017-12-13 11:44:53,118 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:389 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2017-12-13 11:44:53,119 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:393 - Starting handshake
+2017-12-13 11:44:53,330 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:423 - Secure session established
+2017-12-13 11:44:53,331 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:424 -  negotiated protocol: TLSv1
+2017-12-13 11:44:53,331 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:425 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2017-12-13 11:44:53,332 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:433 -  peer principal: CN=payapp.weixin.qq.com, OU=R&D, O=Tencent Technology (Shenzhen) Company Limited, L=shenzhen, ST=guangdong, C=CN
+2017-12-13 11:44:53,333 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:442 -  peer alternative names: [apihk.mch.weixin.qq.com, pay.weops.qq.com, act.weixin.qq.com, fraud.mch.weixin.qq.com, action.weixin.qq.com, oz.weixin.qq.com, fraudus.mch.weixin.qq.com, apius.mch.weixin.qq.com, api2.mch.weixin.qq.com, api.oz.weixin.qq.com, mch.weixin.qq.com, fraudhk.mch.weixin.qq.com, pay.weixin.qq.com, za.pay.wechat.com, api.mch.weixin.qq.com, api.pay.weixin.qq.com, wx.gtimg.com, payapp.weixin.qq.com]
+2017-12-13 11:44:53,333 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:446 -  issuer principal: CN=GeoTrust SSL CA - G3, O=GeoTrust Inc., C=US
+2017-12-13 11:44:53,340 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:145 - Connection established 192.168.1.199:59532<->182.254.78.168:443
+2017-12-13 11:44:53,341 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:255 - Executing request POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:44:53,341 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:260 - Target auth state: UNCHALLENGED
+2017-12-13 11:44:53,342 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:266 - Proxy auth state: UNCHALLENGED
+2017-12-13 11:44:53,344 DEBUG [main] [org.apache.http.headers]:135 - http-outgoing-0 >> POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:44:53,345 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Connection: keep-alive
+2017-12-13 11:44:53,345 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept: */*
+2017-12-13 11:44:53,345 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+2017-12-13 11:44:53,345 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Host: api.mch.weixin.qq.com
+2017-12-13 11:44:53,345 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> X-Requested-With: XMLHttpRequest
+2017-12-13 11:44:53,345 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Cache-Control: max-age=0
+2017-12-13 11:44:53,346 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) 
+2017-12-13 11:44:53,346 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Length: 764
+2017-12-13 11:44:53,346 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2017-12-13 11:44:53,346 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "POST /mmpaymkttransfers/sendredpack HTTP/1.1[\r][\n]"
+2017-12-13 11:44:53,347 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Connection: keep-alive[\r][\n]"
+2017-12-13 11:44:53,347 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept: */*[\r][\n]"
+2017-12-13 11:44:53,347 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+2017-12-13 11:44:53,347 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Host: api.mch.weixin.qq.com[\r][\n]"
+2017-12-13 11:44:53,347 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "X-Requested-With: XMLHttpRequest[\r][\n]"
+2017-12-13 11:44:53,348 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Cache-Control: max-age=0[\r][\n]"
+2017-12-13 11:44:53,348 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) [\r][\n]"
+2017-12-13 11:44:53,348 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Length: 764[\r][\n]"
+2017-12-13 11:44:53,348 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+2017-12-13 11:44:53,349 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "[\r][\n]"
+2017-12-13 11:44:53,349 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "<com.jero.esc.common.weixin.entity.RedPacketEntity>[\n]"
+2017-12-13 11:44:53,349 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <nonce_str><![CDATA[F0D63E237EE4471BA420E46D6F283569]]></nonce_str>[\n]"
+2017-12-13 11:44:53,349 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <sign><![CDATA[F2D08306B0AFCCA9C1FFD7E0E6CFAAED]]></sign>[\n]"
+2017-12-13 11:44:53,349 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_billno><![CDATA[471513136691880]]></mch_billno>[\n]"
+2017-12-13 11:44:53,350 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:44:53,350 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:44:53,350 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <send_name><![CDATA[[0xe8][0xbf][0x91][0xe5][0x88][0xb0][0xe5][0xae][0xb6][0xe5][0x85][0xac][0xe4][0xbc][0x97][0xe5][0xb9][0xb3][0xe5][0x8f][0xb0]]]></send_name>[\n]"
+2017-12-13 11:44:53,350 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:44:53,350 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_amount><![CDATA[100]]></total_amount>[\n]"
+2017-12-13 11:44:53,351 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_num><![CDATA[1]]></total_num>[\n]"
+2017-12-13 11:44:53,351 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wishing><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x96][0xb0][0xe7][0x94][0xa8][0xe6][0x88][0xb7],[0xe4][0xb8][0x87][0xe5][0x85][0x83][0xe7][0xba][0xa2][0xe5][0x8c][0x85][0xe7][0xad][0x89][0xe4][0xbd][0xa0][0xe6][0x8b][0xbf]]]></wishing>[\n]"
+2017-12-13 11:44:53,351 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <client_ip><![CDATA[192.168.1.199]]></client_ip>[\n]"
+2017-12-13 11:44:53,351 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <act_name><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x9c][0x89][0xe5][0xa5][0x96]]]></act_name>[\n]"
+2017-12-13 11:44:53,352 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 >> "</com.jero.esc.common.weixin.entity.RedPacketEntity>"
+2017-12-13 11:44:53,539 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+2017-12-13 11:44:53,540 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Server: nginx[\r][\n]"
+2017-12-13 11:44:53,540 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Date: Wed, 13 Dec 2017 03:45:04 GMT[\r][\n]"
+2017-12-13 11:44:53,540 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+2017-12-13 11:44:53,540 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Length: 491[\r][\n]"
+2017-12-13 11:44:53,541 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+2017-12-13 11:44:53,541 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Keep-Alive: timeout=8[\r][\n]"
+2017-12-13 11:44:53,541 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Cache-Control: no-cache, must-revalidate[\r][\n]"
+2017-12-13 11:44:53,541 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "[\r][\n]"
+2017-12-13 11:44:53,541 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<xml>[\n]"
+2017-12-13 11:44:53,542 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_code><![CDATA[SUCCESS]]></return_code>[\n]"
+2017-12-13 11:44:53,542 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_msg><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></return_msg>[\n]"
+2017-12-13 11:44:53,542 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<result_code><![CDATA[FAIL]]></result_code>[\n]"
+2017-12-13 11:44:53,542 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code><![CDATA[SIGN_ERROR]]></err_code>[\n]"
+2017-12-13 11:44:53,543 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code_des><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></err_code_des>[\n]"
+2017-12-13 11:44:53,543 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_billno><![CDATA[471513136691880]]></mch_billno>[\n]"
+2017-12-13 11:44:53,543 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:44:53,543 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:44:53,543 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:44:53,544 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<total_amount>100</total_amount>[\n]"
+2017-12-13 11:44:53,544 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 << "</xml>"
+2017-12-13 11:44:53,548 DEBUG [main] [org.apache.http.headers]:124 - http-outgoing-0 << HTTP/1.1 200 OK
+2017-12-13 11:44:53,548 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Server: nginx
+2017-12-13 11:44:53,548 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Date: Wed, 13 Dec 2017 03:45:04 GMT
+2017-12-13 11:44:53,548 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Type: text/html; charset=UTF-8
+2017-12-13 11:44:53,549 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Length: 491
+2017-12-13 11:44:53,549 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Connection: keep-alive
+2017-12-13 11:44:53,549 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Keep-Alive: timeout=8
+2017-12-13 11:44:53,549 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Cache-Control: no-cache, must-revalidate
+2017-12-13 11:44:53,556 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:284 - Connection can be kept alive for 8000 MILLISECONDS
+2017-12-13 11:44:53,563 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:314 - Connection [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN] can be kept alive for 8.0 seconds
+2017-12-13 11:44:53,563 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:320 - Connection released: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:47:03,713 DEBUG [main] [org.apache.http.client.protocol.RequestAddCookies]:122 - CookieSpec selected: default
+2017-12-13 11:47:03,732 DEBUG [main] [org.apache.http.client.protocol.RequestAuthCache]:76 - Auth cache not set in the context
+2017-12-13 11:47:03,735 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:249 - Connection request: [route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2017-12-13 11:47:03,757 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:282 - Connection leased: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:47:03,760 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:234 - Opening connection {s}->https://api.mch.weixin.qq.com:443
+2017-12-13 11:47:03,769 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:138 - Connecting to api.mch.weixin.qq.com/182.254.78.168:443
+2017-12-13 11:47:03,770 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:335 - Connecting socket to api.mch.weixin.qq.com/182.254.78.168:443 with timeout 0
+2017-12-13 11:47:03,880 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:388 - Enabled protocols: [TLSv1]
+2017-12-13 11:47:03,881 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:389 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2017-12-13 11:47:03,881 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:393 - Starting handshake
+2017-12-13 11:47:04,109 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:423 - Secure session established
+2017-12-13 11:47:04,109 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:424 -  negotiated protocol: TLSv1
+2017-12-13 11:47:04,110 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:425 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2017-12-13 11:47:04,110 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:433 -  peer principal: CN=payapp.weixin.qq.com, OU=R&D, O=Tencent Technology (Shenzhen) Company Limited, L=shenzhen, ST=guangdong, C=CN
+2017-12-13 11:47:04,111 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:442 -  peer alternative names: [apihk.mch.weixin.qq.com, pay.weops.qq.com, act.weixin.qq.com, fraud.mch.weixin.qq.com, action.weixin.qq.com, oz.weixin.qq.com, fraudus.mch.weixin.qq.com, apius.mch.weixin.qq.com, api2.mch.weixin.qq.com, api.oz.weixin.qq.com, mch.weixin.qq.com, fraudhk.mch.weixin.qq.com, pay.weixin.qq.com, za.pay.wechat.com, api.mch.weixin.qq.com, api.pay.weixin.qq.com, wx.gtimg.com, payapp.weixin.qq.com]
+2017-12-13 11:47:04,111 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:446 -  issuer principal: CN=GeoTrust SSL CA - G3, O=GeoTrust Inc., C=US
+2017-12-13 11:47:04,117 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:145 - Connection established 192.168.1.199:61402<->182.254.78.168:443
+2017-12-13 11:47:04,118 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:255 - Executing request POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:47:04,118 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:260 - Target auth state: UNCHALLENGED
+2017-12-13 11:47:04,119 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:266 - Proxy auth state: UNCHALLENGED
+2017-12-13 11:47:04,121 DEBUG [main] [org.apache.http.headers]:135 - http-outgoing-0 >> POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:47:04,122 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Connection: keep-alive
+2017-12-13 11:47:04,122 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept: */*
+2017-12-13 11:47:04,122 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+2017-12-13 11:47:04,122 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Host: api.mch.weixin.qq.com
+2017-12-13 11:47:04,123 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> X-Requested-With: XMLHttpRequest
+2017-12-13 11:47:04,123 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Cache-Control: max-age=0
+2017-12-13 11:47:04,123 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) 
+2017-12-13 11:47:04,123 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Length: 764
+2017-12-13 11:47:04,124 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2017-12-13 11:47:04,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "POST /mmpaymkttransfers/sendredpack HTTP/1.1[\r][\n]"
+2017-12-13 11:47:04,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Connection: keep-alive[\r][\n]"
+2017-12-13 11:47:04,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept: */*[\r][\n]"
+2017-12-13 11:47:04,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+2017-12-13 11:47:04,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Host: api.mch.weixin.qq.com[\r][\n]"
+2017-12-13 11:47:04,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "X-Requested-With: XMLHttpRequest[\r][\n]"
+2017-12-13 11:47:04,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Cache-Control: max-age=0[\r][\n]"
+2017-12-13 11:47:04,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) [\r][\n]"
+2017-12-13 11:47:04,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Length: 764[\r][\n]"
+2017-12-13 11:47:04,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+2017-12-13 11:47:04,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "[\r][\n]"
+2017-12-13 11:47:04,127 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "<com.jero.esc.common.weixin.entity.RedPacketEntity>[\n]"
+2017-12-13 11:47:04,127 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <nonce_str><![CDATA[5C45E089C16F461CBAC7F5736A913A1E]]></nonce_str>[\n]"
+2017-12-13 11:47:04,127 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <sign><![CDATA[CFC7162AF076F69EC2E5F00133913DEE]]></sign>[\n]"
+2017-12-13 11:47:04,127 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_billno><![CDATA[961513136822554]]></mch_billno>[\n]"
+2017-12-13 11:47:04,128 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:47:04,128 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:47:04,128 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <send_name><![CDATA[[0xe8][0xbf][0x91][0xe5][0x88][0xb0][0xe5][0xae][0xb6][0xe5][0x85][0xac][0xe4][0xbc][0x97][0xe5][0xb9][0xb3][0xe5][0x8f][0xb0]]]></send_name>[\n]"
+2017-12-13 11:47:04,128 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:47:04,129 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_amount><![CDATA[100]]></total_amount>[\n]"
+2017-12-13 11:47:04,129 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_num><![CDATA[1]]></total_num>[\n]"
+2017-12-13 11:47:04,129 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wishing><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x96][0xb0][0xe7][0x94][0xa8][0xe6][0x88][0xb7],[0xe4][0xb8][0x87][0xe5][0x85][0x83][0xe7][0xba][0xa2][0xe5][0x8c][0x85][0xe7][0xad][0x89][0xe4][0xbd][0xa0][0xe6][0x8b][0xbf]]]></wishing>[\n]"
+2017-12-13 11:47:04,129 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <client_ip><![CDATA[192.168.1.199]]></client_ip>[\n]"
+2017-12-13 11:47:04,130 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <act_name><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x9c][0x89][0xe5][0xa5][0x96]]]></act_name>[\n]"
+2017-12-13 11:47:04,130 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 >> "</com.jero.esc.common.weixin.entity.RedPacketEntity>"
+2017-12-13 11:47:04,280 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+2017-12-13 11:47:04,281 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Server: nginx[\r][\n]"
+2017-12-13 11:47:04,281 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Date: Wed, 13 Dec 2017 03:47:15 GMT[\r][\n]"
+2017-12-13 11:47:04,281 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+2017-12-13 11:47:04,281 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Length: 491[\r][\n]"
+2017-12-13 11:47:04,282 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+2017-12-13 11:47:04,282 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Keep-Alive: timeout=8[\r][\n]"
+2017-12-13 11:47:04,282 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Cache-Control: no-cache, must-revalidate[\r][\n]"
+2017-12-13 11:47:04,282 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "[\r][\n]"
+2017-12-13 11:47:04,283 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<xml>[\n]"
+2017-12-13 11:47:04,283 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_code><![CDATA[SUCCESS]]></return_code>[\n]"
+2017-12-13 11:47:04,283 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_msg><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></return_msg>[\n]"
+2017-12-13 11:47:04,283 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<result_code><![CDATA[FAIL]]></result_code>[\n]"
+2017-12-13 11:47:04,284 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code><![CDATA[SIGN_ERROR]]></err_code>[\n]"
+2017-12-13 11:47:04,284 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code_des><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></err_code_des>[\n]"
+2017-12-13 11:47:04,284 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_billno><![CDATA[961513136822554]]></mch_billno>[\n]"
+2017-12-13 11:47:04,284 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:47:04,285 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:47:04,285 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:47:04,285 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<total_amount>100</total_amount>[\n]"
+2017-12-13 11:47:04,285 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 << "</xml>"
+2017-12-13 11:47:04,290 DEBUG [main] [org.apache.http.headers]:124 - http-outgoing-0 << HTTP/1.1 200 OK
+2017-12-13 11:47:04,290 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Server: nginx
+2017-12-13 11:47:04,290 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Date: Wed, 13 Dec 2017 03:47:15 GMT
+2017-12-13 11:47:04,290 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Type: text/html; charset=UTF-8
+2017-12-13 11:47:04,291 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Length: 491
+2017-12-13 11:47:04,291 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Connection: keep-alive
+2017-12-13 11:47:04,291 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Keep-Alive: timeout=8
+2017-12-13 11:47:04,291 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Cache-Control: no-cache, must-revalidate
+2017-12-13 11:47:04,300 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:284 - Connection can be kept alive for 8000 MILLISECONDS
+2017-12-13 11:47:04,306 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:314 - Connection [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN] can be kept alive for 8.0 seconds
+2017-12-13 11:47:04,307 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:320 - Connection released: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:51:13,717 DEBUG [main] [org.apache.http.client.protocol.RequestAddCookies]:122 - CookieSpec selected: default
+2017-12-13 11:51:13,734 DEBUG [main] [org.apache.http.client.protocol.RequestAuthCache]:76 - Auth cache not set in the context
+2017-12-13 11:51:13,736 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:249 - Connection request: [route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2017-12-13 11:51:13,756 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:282 - Connection leased: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:51:13,759 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:234 - Opening connection {s}->https://api.mch.weixin.qq.com:443
+2017-12-13 11:51:13,768 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:138 - Connecting to api.mch.weixin.qq.com/182.254.10.62:443
+2017-12-13 11:51:13,768 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:335 - Connecting socket to api.mch.weixin.qq.com/182.254.10.62:443 with timeout 0
+2017-12-13 11:51:13,884 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:388 - Enabled protocols: [TLSv1]
+2017-12-13 11:51:13,885 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:389 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2017-12-13 11:51:13,885 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:393 - Starting handshake
+2017-12-13 11:51:14,108 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:423 - Secure session established
+2017-12-13 11:51:14,108 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:424 -  negotiated protocol: TLSv1
+2017-12-13 11:51:14,108 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:425 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2017-12-13 11:51:14,109 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:433 -  peer principal: CN=payapp.weixin.qq.com, OU=R&D, O=Tencent Technology (Shenzhen) Company Limited, L=shenzhen, ST=guangdong, C=CN
+2017-12-13 11:51:14,109 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:442 -  peer alternative names: [apihk.mch.weixin.qq.com, pay.weops.qq.com, act.weixin.qq.com, fraud.mch.weixin.qq.com, action.weixin.qq.com, oz.weixin.qq.com, fraudus.mch.weixin.qq.com, apius.mch.weixin.qq.com, api2.mch.weixin.qq.com, api.oz.weixin.qq.com, mch.weixin.qq.com, fraudhk.mch.weixin.qq.com, pay.weixin.qq.com, za.pay.wechat.com, api.mch.weixin.qq.com, api.pay.weixin.qq.com, wx.gtimg.com, payapp.weixin.qq.com]
+2017-12-13 11:51:14,110 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:446 -  issuer principal: CN=GeoTrust SSL CA - G3, O=GeoTrust Inc., C=US
+2017-12-13 11:51:14,117 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:145 - Connection established 192.168.1.199:64810<->182.254.10.62:443
+2017-12-13 11:51:14,118 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:255 - Executing request POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:51:14,118 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:260 - Target auth state: UNCHALLENGED
+2017-12-13 11:51:14,119 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:266 - Proxy auth state: UNCHALLENGED
+2017-12-13 11:51:14,121 DEBUG [main] [org.apache.http.headers]:135 - http-outgoing-0 >> POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:51:14,122 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Connection: keep-alive
+2017-12-13 11:51:14,122 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept: */*
+2017-12-13 11:51:14,122 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+2017-12-13 11:51:14,122 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Host: api.mch.weixin.qq.com
+2017-12-13 11:51:14,123 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> X-Requested-With: XMLHttpRequest
+2017-12-13 11:51:14,123 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Cache-Control: max-age=0
+2017-12-13 11:51:14,123 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) 
+2017-12-13 11:51:14,123 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Length: 764
+2017-12-13 11:51:14,123 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2017-12-13 11:51:14,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "POST /mmpaymkttransfers/sendredpack HTTP/1.1[\r][\n]"
+2017-12-13 11:51:14,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Connection: keep-alive[\r][\n]"
+2017-12-13 11:51:14,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept: */*[\r][\n]"
+2017-12-13 11:51:14,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+2017-12-13 11:51:14,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Host: api.mch.weixin.qq.com[\r][\n]"
+2017-12-13 11:51:14,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "X-Requested-With: XMLHttpRequest[\r][\n]"
+2017-12-13 11:51:14,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Cache-Control: max-age=0[\r][\n]"
+2017-12-13 11:51:14,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) [\r][\n]"
+2017-12-13 11:51:14,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Length: 764[\r][\n]"
+2017-12-13 11:51:14,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+2017-12-13 11:51:14,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "[\r][\n]"
+2017-12-13 11:51:14,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "<com.jero.esc.common.weixin.entity.RedPacketEntity>[\n]"
+2017-12-13 11:51:14,127 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <nonce_str><![CDATA[833D3FBC7AC94074A0E04AFAA0822FEB]]></nonce_str>[\n]"
+2017-12-13 11:51:14,127 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <sign><![CDATA[F607971694E82F75E332796F26BA9D3B]]></sign>[\n]"
+2017-12-13 11:51:14,127 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_billno><![CDATA[981513137072637]]></mch_billno>[\n]"
+2017-12-13 11:51:14,127 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:51:14,128 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:51:14,128 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <send_name><![CDATA[[0xe8][0xbf][0x91][0xe5][0x88][0xb0][0xe5][0xae][0xb6][0xe5][0x85][0xac][0xe4][0xbc][0x97][0xe5][0xb9][0xb3][0xe5][0x8f][0xb0]]]></send_name>[\n]"
+2017-12-13 11:51:14,128 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:51:14,128 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_amount><![CDATA[100]]></total_amount>[\n]"
+2017-12-13 11:51:14,129 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_num><![CDATA[1]]></total_num>[\n]"
+2017-12-13 11:51:14,129 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wishing><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x96][0xb0][0xe7][0x94][0xa8][0xe6][0x88][0xb7],[0xe4][0xb8][0x87][0xe5][0x85][0x83][0xe7][0xba][0xa2][0xe5][0x8c][0x85][0xe7][0xad][0x89][0xe4][0xbd][0xa0][0xe6][0x8b][0xbf]]]></wishing>[\n]"
+2017-12-13 11:51:14,129 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <client_ip><![CDATA[192.168.1.199]]></client_ip>[\n]"
+2017-12-13 11:51:14,129 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <act_name><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x9c][0x89][0xe5][0xa5][0x96]]]></act_name>[\n]"
+2017-12-13 11:51:14,130 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 >> "</com.jero.esc.common.weixin.entity.RedPacketEntity>"
+2017-12-13 11:51:14,350 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+2017-12-13 11:51:14,350 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Server: nginx[\r][\n]"
+2017-12-13 11:51:14,350 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Date: Wed, 13 Dec 2017 03:51:25 GMT[\r][\n]"
+2017-12-13 11:51:14,350 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+2017-12-13 11:51:14,351 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Length: 491[\r][\n]"
+2017-12-13 11:51:14,351 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+2017-12-13 11:51:14,351 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Keep-Alive: timeout=8[\r][\n]"
+2017-12-13 11:51:14,351 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Cache-Control: no-cache, must-revalidate[\r][\n]"
+2017-12-13 11:51:14,351 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "[\r][\n]"
+2017-12-13 11:51:14,352 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<xml>[\n]"
+2017-12-13 11:51:14,352 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_code><![CDATA[SUCCESS]]></return_code>[\n]"
+2017-12-13 11:51:14,352 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_msg><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></return_msg>[\n]"
+2017-12-13 11:51:14,352 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<result_code><![CDATA[FAIL]]></result_code>[\n]"
+2017-12-13 11:51:14,352 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code><![CDATA[SIGN_ERROR]]></err_code>[\n]"
+2017-12-13 11:51:14,353 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code_des><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></err_code_des>[\n]"
+2017-12-13 11:51:14,353 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_billno><![CDATA[981513137072637]]></mch_billno>[\n]"
+2017-12-13 11:51:14,353 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:51:14,353 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:51:14,353 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:51:14,354 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<total_amount>100</total_amount>[\n]"
+2017-12-13 11:51:14,354 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 << "</xml>"
+2017-12-13 11:51:14,357 DEBUG [main] [org.apache.http.headers]:124 - http-outgoing-0 << HTTP/1.1 200 OK
+2017-12-13 11:51:14,358 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Server: nginx
+2017-12-13 11:51:14,358 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Date: Wed, 13 Dec 2017 03:51:25 GMT
+2017-12-13 11:51:14,358 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Type: text/html; charset=UTF-8
+2017-12-13 11:51:14,358 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Length: 491
+2017-12-13 11:51:14,358 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Connection: keep-alive
+2017-12-13 11:51:14,359 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Keep-Alive: timeout=8
+2017-12-13 11:51:14,359 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Cache-Control: no-cache, must-revalidate
+2017-12-13 11:51:14,366 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:284 - Connection can be kept alive for 8000 MILLISECONDS
+2017-12-13 11:51:14,371 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:314 - Connection [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN] can be kept alive for 8.0 seconds
+2017-12-13 11:51:14,372 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:320 - Connection released: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:52:31,714 DEBUG [main] [org.apache.http.client.protocol.RequestAddCookies]:122 - CookieSpec selected: default
+2017-12-13 11:52:31,730 DEBUG [main] [org.apache.http.client.protocol.RequestAuthCache]:76 - Auth cache not set in the context
+2017-12-13 11:52:31,733 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:249 - Connection request: [route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2017-12-13 11:52:31,753 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:282 - Connection leased: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:52:31,755 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:234 - Opening connection {s}->https://api.mch.weixin.qq.com:443
+2017-12-13 11:52:31,764 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:138 - Connecting to api.mch.weixin.qq.com/182.254.78.168:443
+2017-12-13 11:52:31,764 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:335 - Connecting socket to api.mch.weixin.qq.com/182.254.78.168:443 with timeout 0
+2017-12-13 11:52:31,880 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:388 - Enabled protocols: [TLSv1]
+2017-12-13 11:52:31,880 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:389 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2017-12-13 11:52:31,881 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:393 - Starting handshake
+2017-12-13 11:52:32,105 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:423 - Secure session established
+2017-12-13 11:52:32,106 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:424 -  negotiated protocol: TLSv1
+2017-12-13 11:52:32,106 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:425 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2017-12-13 11:52:32,107 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:433 -  peer principal: CN=payapp.weixin.qq.com, OU=R&D, O=Tencent Technology (Shenzhen) Company Limited, L=shenzhen, ST=guangdong, C=CN
+2017-12-13 11:52:32,107 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:442 -  peer alternative names: [apihk.mch.weixin.qq.com, pay.weops.qq.com, act.weixin.qq.com, fraud.mch.weixin.qq.com, action.weixin.qq.com, oz.weixin.qq.com, fraudus.mch.weixin.qq.com, apius.mch.weixin.qq.com, api2.mch.weixin.qq.com, api.oz.weixin.qq.com, mch.weixin.qq.com, fraudhk.mch.weixin.qq.com, pay.weixin.qq.com, za.pay.wechat.com, api.mch.weixin.qq.com, api.pay.weixin.qq.com, wx.gtimg.com, payapp.weixin.qq.com]
+2017-12-13 11:52:32,107 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:446 -  issuer principal: CN=GeoTrust SSL CA - G3, O=GeoTrust Inc., C=US
+2017-12-13 11:52:32,116 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:145 - Connection established 192.168.1.199:49636<->182.254.78.168:443
+2017-12-13 11:52:32,116 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:255 - Executing request POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:52:32,116 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:260 - Target auth state: UNCHALLENGED
+2017-12-13 11:52:32,117 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:266 - Proxy auth state: UNCHALLENGED
+2017-12-13 11:52:32,119 DEBUG [main] [org.apache.http.headers]:135 - http-outgoing-0 >> POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:52:32,119 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Connection: keep-alive
+2017-12-13 11:52:32,120 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept: */*
+2017-12-13 11:52:32,120 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+2017-12-13 11:52:32,120 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Host: api.mch.weixin.qq.com
+2017-12-13 11:52:32,120 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> X-Requested-With: XMLHttpRequest
+2017-12-13 11:52:32,120 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Cache-Control: max-age=0
+2017-12-13 11:52:32,121 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) 
+2017-12-13 11:52:32,121 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Length: 764
+2017-12-13 11:52:32,121 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2017-12-13 11:52:32,121 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "POST /mmpaymkttransfers/sendredpack HTTP/1.1[\r][\n]"
+2017-12-13 11:52:32,122 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Connection: keep-alive[\r][\n]"
+2017-12-13 11:52:32,122 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept: */*[\r][\n]"
+2017-12-13 11:52:32,122 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+2017-12-13 11:52:32,122 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Host: api.mch.weixin.qq.com[\r][\n]"
+2017-12-13 11:52:32,122 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "X-Requested-With: XMLHttpRequest[\r][\n]"
+2017-12-13 11:52:32,123 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Cache-Control: max-age=0[\r][\n]"
+2017-12-13 11:52:32,123 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) [\r][\n]"
+2017-12-13 11:52:32,123 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Length: 764[\r][\n]"
+2017-12-13 11:52:32,123 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+2017-12-13 11:52:32,123 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "[\r][\n]"
+2017-12-13 11:52:32,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "<com.jero.esc.common.weixin.entity.RedPacketEntity>[\n]"
+2017-12-13 11:52:32,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <nonce_str><![CDATA[7EE0B3456D634088819B8A75D073614D]]></nonce_str>[\n]"
+2017-12-13 11:52:32,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <sign><![CDATA[E01E2545B349E2BFD57D341C5A73BB68]]></sign>[\n]"
+2017-12-13 11:52:32,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_billno><![CDATA[941513137150642]]></mch_billno>[\n]"
+2017-12-13 11:52:32,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:52:32,124 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:52:32,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <send_name><![CDATA[[0xe8][0xbf][0x91][0xe5][0x88][0xb0][0xe5][0xae][0xb6][0xe5][0x85][0xac][0xe4][0xbc][0x97][0xe5][0xb9][0xb3][0xe5][0x8f][0xb0]]]></send_name>[\n]"
+2017-12-13 11:52:32,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:52:32,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_amount><![CDATA[100]]></total_amount>[\n]"
+2017-12-13 11:52:32,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_num><![CDATA[1]]></total_num>[\n]"
+2017-12-13 11:52:32,125 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wishing><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x96][0xb0][0xe7][0x94][0xa8][0xe6][0x88][0xb7],[0xe4][0xb8][0x87][0xe5][0x85][0x83][0xe7][0xba][0xa2][0xe5][0x8c][0x85][0xe7][0xad][0x89][0xe4][0xbd][0xa0][0xe6][0x8b][0xbf]]]></wishing>[\n]"
+2017-12-13 11:52:32,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <client_ip><![CDATA[192.168.1.199]]></client_ip>[\n]"
+2017-12-13 11:52:32,126 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <act_name><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x9c][0x89][0xe5][0xa5][0x96]]]></act_name>[\n]"
+2017-12-13 11:52:32,126 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 >> "</com.jero.esc.common.weixin.entity.RedPacketEntity>"
+2017-12-13 11:52:32,290 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+2017-12-13 11:52:32,291 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Server: nginx[\r][\n]"
+2017-12-13 11:52:32,291 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Date: Wed, 13 Dec 2017 03:52:44 GMT[\r][\n]"
+2017-12-13 11:52:32,291 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+2017-12-13 11:52:32,292 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Length: 491[\r][\n]"
+2017-12-13 11:52:32,292 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+2017-12-13 11:52:32,292 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Keep-Alive: timeout=8[\r][\n]"
+2017-12-13 11:52:32,292 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Cache-Control: no-cache, must-revalidate[\r][\n]"
+2017-12-13 11:52:32,292 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "[\r][\n]"
+2017-12-13 11:52:32,292 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<xml>[\n]"
+2017-12-13 11:52:32,293 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_code><![CDATA[SUCCESS]]></return_code>[\n]"
+2017-12-13 11:52:32,293 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_msg><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></return_msg>[\n]"
+2017-12-13 11:52:32,293 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<result_code><![CDATA[FAIL]]></result_code>[\n]"
+2017-12-13 11:52:32,293 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code><![CDATA[SIGN_ERROR]]></err_code>[\n]"
+2017-12-13 11:52:32,294 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code_des><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></err_code_des>[\n]"
+2017-12-13 11:52:32,294 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_billno><![CDATA[941513137150642]]></mch_billno>[\n]"
+2017-12-13 11:52:32,294 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:52:32,294 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:52:32,294 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:52:32,295 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<total_amount>100</total_amount>[\n]"
+2017-12-13 11:52:32,295 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 << "</xml>"
+2017-12-13 11:52:32,298 DEBUG [main] [org.apache.http.headers]:124 - http-outgoing-0 << HTTP/1.1 200 OK
+2017-12-13 11:52:32,299 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Server: nginx
+2017-12-13 11:52:32,299 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Date: Wed, 13 Dec 2017 03:52:44 GMT
+2017-12-13 11:52:32,299 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Type: text/html; charset=UTF-8
+2017-12-13 11:52:32,299 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Length: 491
+2017-12-13 11:52:32,299 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Connection: keep-alive
+2017-12-13 11:52:32,299 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Keep-Alive: timeout=8
+2017-12-13 11:52:32,300 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Cache-Control: no-cache, must-revalidate
+2017-12-13 11:52:32,308 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:284 - Connection can be kept alive for 8000 MILLISECONDS
+2017-12-13 11:52:32,313 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:314 - Connection [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN] can be kept alive for 8.0 seconds
+2017-12-13 11:52:32,313 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:320 - Connection released: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:58:46,238 DEBUG [main] [org.apache.http.client.protocol.RequestAddCookies]:122 - CookieSpec selected: default
+2017-12-13 11:58:46,257 DEBUG [main] [org.apache.http.client.protocol.RequestAuthCache]:76 - Auth cache not set in the context
+2017-12-13 11:58:46,260 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:249 - Connection request: [route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2017-12-13 11:58:46,280 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:282 - Connection leased: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2017-12-13 11:58:46,282 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:234 - Opening connection {s}->https://api.mch.weixin.qq.com:443
+2017-12-13 11:58:46,291 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:138 - Connecting to api.mch.weixin.qq.com/182.254.78.168:443
+2017-12-13 11:58:46,292 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:335 - Connecting socket to api.mch.weixin.qq.com/182.254.78.168:443 with timeout 0
+2017-12-13 11:58:46,398 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:388 - Enabled protocols: [TLSv1]
+2017-12-13 11:58:46,399 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:389 - Enabled cipher suites:[TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, SSL_RSA_WITH_RC4_128_SHA, TLS_ECDH_ECDSA_WITH_RC4_128_SHA, TLS_ECDH_RSA_WITH_RC4_128_SHA, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA, SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA, SSL_RSA_WITH_RC4_128_MD5, TLS_EMPTY_RENEGOTIATION_INFO_SCSV]
+2017-12-13 11:58:46,400 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:393 - Starting handshake
+2017-12-13 11:58:46,605 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:423 - Secure session established
+2017-12-13 11:58:46,606 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:424 -  negotiated protocol: TLSv1
+2017-12-13 11:58:46,606 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:425 -  negotiated cipher suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2017-12-13 11:58:46,607 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:433 -  peer principal: CN=payapp.weixin.qq.com, OU=R&D, O=Tencent Technology (Shenzhen) Company Limited, L=shenzhen, ST=guangdong, C=CN
+2017-12-13 11:58:46,608 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:442 -  peer alternative names: [apihk.mch.weixin.qq.com, pay.weops.qq.com, act.weixin.qq.com, fraud.mch.weixin.qq.com, action.weixin.qq.com, oz.weixin.qq.com, fraudus.mch.weixin.qq.com, apius.mch.weixin.qq.com, api2.mch.weixin.qq.com, api.oz.weixin.qq.com, mch.weixin.qq.com, fraudhk.mch.weixin.qq.com, pay.weixin.qq.com, za.pay.wechat.com, api.mch.weixin.qq.com, api.pay.weixin.qq.com, wx.gtimg.com, payapp.weixin.qq.com]
+2017-12-13 11:58:46,608 DEBUG [main] [org.apache.http.conn.ssl.SSLConnectionSocketFactory]:446 -  issuer principal: CN=GeoTrust SSL CA - G3, O=GeoTrust Inc., C=US
+2017-12-13 11:58:46,616 DEBUG [main] [org.apache.http.impl.conn.DefaultHttpClientConnectionOperator]:145 - Connection established 192.168.1.199:55050<->182.254.78.168:443
+2017-12-13 11:58:46,617 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:255 - Executing request POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:58:46,617 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:260 - Target auth state: UNCHALLENGED
+2017-12-13 11:58:46,618 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:266 - Proxy auth state: UNCHALLENGED
+2017-12-13 11:58:46,620 DEBUG [main] [org.apache.http.headers]:135 - http-outgoing-0 >> POST /mmpaymkttransfers/sendredpack HTTP/1.1
+2017-12-13 11:58:46,621 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Connection: keep-alive
+2017-12-13 11:58:46,621 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept: */*
+2017-12-13 11:58:46,621 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+2017-12-13 11:58:46,621 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Host: api.mch.weixin.qq.com
+2017-12-13 11:58:46,622 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> X-Requested-With: XMLHttpRequest
+2017-12-13 11:58:46,622 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Cache-Control: max-age=0
+2017-12-13 11:58:46,622 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) 
+2017-12-13 11:58:46,622 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Content-Length: 764
+2017-12-13 11:58:46,622 DEBUG [main] [org.apache.http.headers]:138 - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2017-12-13 11:58:46,623 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "POST /mmpaymkttransfers/sendredpack HTTP/1.1[\r][\n]"
+2017-12-13 11:58:46,624 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Connection: keep-alive[\r][\n]"
+2017-12-13 11:58:46,624 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept: */*[\r][\n]"
+2017-12-13 11:58:46,624 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+2017-12-13 11:58:46,624 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Host: api.mch.weixin.qq.com[\r][\n]"
+2017-12-13 11:58:46,625 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "X-Requested-With: XMLHttpRequest[\r][\n]"
+2017-12-13 11:58:46,625 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Cache-Control: max-age=0[\r][\n]"
+2017-12-13 11:58:46,625 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) [\r][\n]"
+2017-12-13 11:58:46,625 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Content-Length: 764[\r][\n]"
+2017-12-13 11:58:46,625 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+2017-12-13 11:58:46,626 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "[\r][\n]"
+2017-12-13 11:58:46,626 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "<com.jero.esc.common.weixin.entity.RedPacketEntity>[\n]"
+2017-12-13 11:58:46,626 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <nonce_str><![CDATA[3091BF7BE9EA4BC390E56D78201AEFDB]]></nonce_str>[\n]"
+2017-12-13 11:58:46,626 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <sign><![CDATA[3F6AC0145DC4EB9A8CAD483DDE7A488C]]></sign>[\n]"
+2017-12-13 11:58:46,627 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_billno><![CDATA[011513137525138]]></mch_billno>[\n]"
+2017-12-13 11:58:46,627 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:58:46,627 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:58:46,627 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <send_name><![CDATA[[0xe8][0xbf][0x91][0xe5][0x88][0xb0][0xe5][0xae][0xb6][0xe5][0x85][0xac][0xe4][0xbc][0x97][0xe5][0xb9][0xb3][0xe5][0x8f][0xb0]]]></send_name>[\n]"
+2017-12-13 11:58:46,629 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:58:46,629 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_amount><![CDATA[100]]></total_amount>[\n]"
+2017-12-13 11:58:46,629 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <total_num><![CDATA[1]]></total_num>[\n]"
+2017-12-13 11:58:46,629 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <wishing><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x96][0xb0][0xe7][0x94][0xa8][0xe6][0x88][0xb7],[0xe4][0xb8][0x87][0xe5][0x85][0x83][0xe7][0xba][0xa2][0xe5][0x8c][0x85][0xe7][0xad][0x89][0xe4][0xbd][0xa0][0xe6][0x8b][0xbf]]]></wishing>[\n]"
+2017-12-13 11:58:46,630 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <client_ip><![CDATA[192.168.1.199]]></client_ip>[\n]"
+2017-12-13 11:58:46,630 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 >> "  <act_name><![CDATA[[0xe6][0xb3][0xa8][0xe5][0x86][0x8c][0xe6][0x9c][0x89][0xe5][0xa5][0x96]]]></act_name>[\n]"
+2017-12-13 11:58:46,630 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 >> "</com.jero.esc.common.weixin.entity.RedPacketEntity>"
+2017-12-13 11:58:46,782 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+2017-12-13 11:58:46,783 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Server: nginx[\r][\n]"
+2017-12-13 11:58:46,783 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Date: Wed, 13 Dec 2017 03:58:58 GMT[\r][\n]"
+2017-12-13 11:58:46,783 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+2017-12-13 11:58:46,784 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Content-Length: 491[\r][\n]"
+2017-12-13 11:58:46,784 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+2017-12-13 11:58:46,784 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Keep-Alive: timeout=8[\r][\n]"
+2017-12-13 11:58:46,784 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "Cache-Control: no-cache, must-revalidate[\r][\n]"
+2017-12-13 11:58:46,785 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "[\r][\n]"
+2017-12-13 11:58:46,785 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<xml>[\n]"
+2017-12-13 11:58:46,785 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_code><![CDATA[SUCCESS]]></return_code>[\n]"
+2017-12-13 11:58:46,785 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<return_msg><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></return_msg>[\n]"
+2017-12-13 11:58:46,786 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<result_code><![CDATA[FAIL]]></result_code>[\n]"
+2017-12-13 11:58:46,786 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code><![CDATA[SIGN_ERROR]]></err_code>[\n]"
+2017-12-13 11:58:46,786 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<err_code_des><![CDATA[[0xe7][0xad][0xbe][0xe5][0x90][0x8d][0xe9][0x94][0x99][0xe8][0xaf][0xaf]]]></err_code_des>[\n]"
+2017-12-13 11:58:46,786 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_billno><![CDATA[011513137525138]]></mch_billno>[\n]"
+2017-12-13 11:58:46,787 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<mch_id><![CDATA[1486272382]]></mch_id>[\n]"
+2017-12-13 11:58:46,787 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<wxappid><![CDATA[wxd0c763640d4b8f08]]></wxappid>[\n]"
+2017-12-13 11:58:46,787 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<re_openid><![CDATA[o5tP4v0LMeCnKzawLbuiAmDd8pAA]]></re_openid>[\n]"
+2017-12-13 11:58:46,787 DEBUG [main] [org.apache.http.wire]:72 - http-outgoing-0 << "<total_amount>100</total_amount>[\n]"
+2017-12-13 11:58:46,787 DEBUG [main] [org.apache.http.wire]:86 - http-outgoing-0 << "</xml>"
+2017-12-13 11:58:46,791 DEBUG [main] [org.apache.http.headers]:124 - http-outgoing-0 << HTTP/1.1 200 OK
+2017-12-13 11:58:46,792 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Server: nginx
+2017-12-13 11:58:46,792 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Date: Wed, 13 Dec 2017 03:58:58 GMT
+2017-12-13 11:58:46,792 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Type: text/html; charset=UTF-8
+2017-12-13 11:58:46,792 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Content-Length: 491
+2017-12-13 11:58:46,793 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Connection: keep-alive
+2017-12-13 11:58:46,793 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Keep-Alive: timeout=8
+2017-12-13 11:58:46,793 DEBUG [main] [org.apache.http.headers]:127 - http-outgoing-0 << Cache-Control: no-cache, must-revalidate
+2017-12-13 11:58:46,803 DEBUG [main] [org.apache.http.impl.execchain.MainClientExec]:284 - Connection can be kept alive for 8000 MILLISECONDS
+2017-12-13 11:58:46,808 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:314 - Connection [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN] can be kept alive for 8.0 seconds
+2017-12-13 11:58:46,809 DEBUG [main] [org.apache.http.impl.conn.PoolingHttpClientConnectionManager]:320 - Connection released: [id: 0][route: {s}->https://api.mch.weixin.qq.com:443][state: SURNAME=37238320, CN=éåºæ·è·¯ç§ææéå¬å¸, OU=MMPay, O=Tencent, L=Shenzhen, ST=Guangdong, C=CN][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]

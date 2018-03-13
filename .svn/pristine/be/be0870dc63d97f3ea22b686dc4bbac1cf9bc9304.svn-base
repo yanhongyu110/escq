@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.pubinfo.NavigationInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.pubinfo.NavigationInfo">
+    <id column="NAV_ID" jdbcType="VARCHAR" property="navId" />
+    <result column="NAV_TYPE" jdbcType="VARCHAR" property="navType" />
+    <result column="NAV_POSITION" jdbcType="VARCHAR" property="navPosition" />
+    <result column="NAV_CONTENT" jdbcType="VARCHAR" property="navContent" />
+    <result column="NAV_CREATETIME" jdbcType="TIMESTAMP" property="navCreatetime" />
+    <result column="NAV_CREATOR" jdbcType="VARCHAR" property="navCreator" />
+    <result column="NAV_COMMENT" jdbcType="VARCHAR" property="navComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    NAV_ID, NAV_TYPE, NAV_POSITION, NAV_CONTENT, NAV_CREATETIME, NAV_CREATOR, NAV_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from navigation_info
+    where NAV_ID = #{navId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from navigation_info
+    where NAV_ID = #{navId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.pubinfo.NavigationInfo">
+    insert into navigation_info (NAV_ID, NAV_TYPE, NAV_POSITION, 
+      NAV_CONTENT, NAV_CREATETIME, NAV_CREATOR, 
+      NAV_COMMENT)
+    values (#{navId,jdbcType=VARCHAR}, #{navType,jdbcType=VARCHAR}, #{navPosition,jdbcType=VARCHAR}, 
+      #{navContent,jdbcType=VARCHAR}, #{navCreatetime,jdbcType=TIMESTAMP}, #{navCreator,jdbcType=VARCHAR}, 
+      #{navComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.pubinfo.NavigationInfo">
+    insert into navigation_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="navId != null">
+        NAV_ID,
+      </if>
+      <if test="navType != null">
+        NAV_TYPE,
+      </if>
+      <if test="navPosition != null">
+        NAV_POSITION,
+      </if>
+      <if test="navContent != null">
+        NAV_CONTENT,
+      </if>
+      <if test="navCreatetime != null">
+        NAV_CREATETIME,
+      </if>
+      <if test="navCreator != null">
+        NAV_CREATOR,
+      </if>
+      <if test="navComment != null">
+        NAV_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="navId != null">
+        #{navId,jdbcType=VARCHAR},
+      </if>
+      <if test="navType != null">
+        #{navType,jdbcType=VARCHAR},
+      </if>
+      <if test="navPosition != null">
+        #{navPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="navContent != null">
+        #{navContent,jdbcType=VARCHAR},
+      </if>
+      <if test="navCreatetime != null">
+        #{navCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="navCreator != null">
+        #{navCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="navComment != null">
+        #{navComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.pubinfo.NavigationInfo">
+    update navigation_info
+    <set>
+      <if test="navType != null">
+        NAV_TYPE = #{navType,jdbcType=VARCHAR},
+      </if>
+      <if test="navPosition != null">
+        NAV_POSITION = #{navPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="navContent != null">
+        NAV_CONTENT = #{navContent,jdbcType=VARCHAR},
+      </if>
+      <if test="navCreatetime != null">
+        NAV_CREATETIME = #{navCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="navCreator != null">
+        NAV_CREATOR = #{navCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="navComment != null">
+        NAV_COMMENT = #{navComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where NAV_ID = #{navId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.pubinfo.NavigationInfo">
+    update navigation_info
+    set NAV_TYPE = #{navType,jdbcType=VARCHAR},
+      NAV_POSITION = #{navPosition,jdbcType=VARCHAR},
+      NAV_CONTENT = #{navContent,jdbcType=VARCHAR},
+      NAV_CREATETIME = #{navCreatetime,jdbcType=TIMESTAMP},
+      NAV_CREATOR = #{navCreator,jdbcType=VARCHAR},
+      NAV_COMMENT = #{navComment,jdbcType=VARCHAR}
+    where NAV_ID = #{navId,jdbcType=VARCHAR}
+  </update>
+</mapper>

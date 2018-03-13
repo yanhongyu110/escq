@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.system.SysAdminRoleMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.system.SysAdminRole">
+    <id column="ADMIN_ROLE_ID" jdbcType="VARCHAR" property="adminRoleId" />
+    <result column="ADMIN_ROLE_NAME" jdbcType="VARCHAR" property="adminRoleName" />
+    <result column="ADMIN_ROLE_STATUS" jdbcType="INTEGER" property="adminRoleStatus" />
+    <result column="ADMIN_ROLE_REMARK" jdbcType="VARCHAR" property="adminRoleRemark" />
+    <result column="ADMIN_ROLE_MANAGE" jdbcType="BIT" property="adminRoleManage" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ADMIN_ROLE_ID, ADMIN_ROLE_NAME, ADMIN_ROLE_STATUS, ADMIN_ROLE_REMARK, ADMIN_ROLE_MANAGE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_admin_role
+    where ADMIN_ROLE_ID = #{adminRoleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_admin_role
+    where ADMIN_ROLE_ID = #{adminRoleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.system.SysAdminRole">
+    insert into sys_admin_role (ADMIN_ROLE_ID, ADMIN_ROLE_NAME, ADMIN_ROLE_STATUS, 
+      ADMIN_ROLE_REMARK, ADMIN_ROLE_MANAGE)
+    values (#{adminRoleId,jdbcType=VARCHAR}, #{adminRoleName,jdbcType=VARCHAR}, #{adminRoleStatus,jdbcType=INTEGER}, 
+      #{adminRoleRemark,jdbcType=VARCHAR}, #{adminRoleManage,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.system.SysAdminRole">
+    insert into sys_admin_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adminRoleId != null">
+        ADMIN_ROLE_ID,
+      </if>
+      <if test="adminRoleName != null">
+        ADMIN_ROLE_NAME,
+      </if>
+      <if test="adminRoleStatus != null">
+        ADMIN_ROLE_STATUS,
+      </if>
+      <if test="adminRoleRemark != null">
+        ADMIN_ROLE_REMARK,
+      </if>
+      <if test="adminRoleManage != null">
+        ADMIN_ROLE_MANAGE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adminRoleId != null">
+        #{adminRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="adminRoleName != null">
+        #{adminRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="adminRoleStatus != null">
+        #{adminRoleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="adminRoleRemark != null">
+        #{adminRoleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="adminRoleManage != null">
+        #{adminRoleManage,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.system.SysAdminRole">
+    update sys_admin_role
+    <set>
+      <if test="adminRoleName != null">
+        ADMIN_ROLE_NAME = #{adminRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="adminRoleStatus != null">
+        ADMIN_ROLE_STATUS = #{adminRoleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="adminRoleRemark != null">
+        ADMIN_ROLE_REMARK = #{adminRoleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="adminRoleManage != null">
+        ADMIN_ROLE_MANAGE = #{adminRoleManage,jdbcType=BIT},
+      </if>
+    </set>
+    where ADMIN_ROLE_ID = #{adminRoleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.system.SysAdminRole">
+    update sys_admin_role
+    set ADMIN_ROLE_NAME = #{adminRoleName,jdbcType=VARCHAR},
+      ADMIN_ROLE_STATUS = #{adminRoleStatus,jdbcType=INTEGER},
+      ADMIN_ROLE_REMARK = #{adminRoleRemark,jdbcType=VARCHAR},
+      ADMIN_ROLE_MANAGE = #{adminRoleManage,jdbcType=BIT}
+    where ADMIN_ROLE_ID = #{adminRoleId,jdbcType=VARCHAR}
+  </update>
+</mapper>

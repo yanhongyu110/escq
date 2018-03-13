@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="../jquery/jquery-1.8.3.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./map.css">
+	<script type="text/javascript" src="./map.js?v=3233"></script>
+	<style type="text/css">
+		.dw{
+			font-size: 16px;
+			width: 100px;
+			height: 30px;
+			display: block;
+			background: #ddd;
+			color: #000;
+			text-align: center;
+			margin: 50px 30px 20px;
+			line-height: 30px;
+			border-radius: 5px;
+			text-decoration: none;
+		}
+	</style>
+</head>
+<body>
+
+
+	<a class="dw" href="javascript:void(0)"  map-start map-click="ffff">定位</a>
+
+	<script>
+	function ffff(rel){
+		console.log(rel);
+	}
+	</script>
+
+
+</body>
+
+</html>

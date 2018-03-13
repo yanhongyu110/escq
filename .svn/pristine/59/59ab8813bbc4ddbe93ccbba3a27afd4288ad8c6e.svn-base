@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.goodsinfo.ServiceRemarkMapper">
+
+	<resultMap type="com.jero.esc.vo.goodsinfo.ServiceRemarkVo"
+		id="Vo">
+		<id column="SERVICE_ID" property="serviceId" jdbcType="VARCHAR" />
+		<result column="SR_ID" property="srId" jdbcType="VARCHAR" />
+		<result column="LOG_ID" property="logId" jdbcType="VARCHAR" />
+
+		<result column="SR_REMARK" property="srRemark" jdbcType="VARCHAR" />
+		<result column="SR_CREATETIME" property="srCreatetime"
+			jdbcType="VARCHAR" />
+		<result column="SR_CONTENT" property="srContent" jdbcType="VARCHAR" />
+		<result column="SR_APPENDTIME" property="srAppendtime"
+			jdbcType="VARCHAR" />
+		<result column="SR_APPENDCONTENT" property="srAppendcontent"
+			jdbcType="VARCHAR" />
+		<result column="SR_RESPONSETIME" property="srResponsetime"
+			jdbcType="VARCHAR" />
+		<result column="SR_RESPONSECONTENT" property="srResponsecontent"
+			jdbcType="VARCHAR" />
+		<result column="SR_RESPONSEAPPENDTIME" property="srResponseappendtime"
+			jdbcType="VARCHAR" />
+		<result column="SR_RESPONSEAPPENDCONTENT" property="srResponseappendcontent"
+			jdbcType="VARCHAR" />
+		<result column="SR_COMMENT" property="srComment" jdbcType="VARCHAR" />
+		<result column="LOG_NAME" property="logName" jdbcType="VARCHAR" />
+		<result column="USER_PHOTO" property="userPhoto" jdbcType="VARCHAR" />
+		<result column="SR_LEVEL" property="srLevel" jdbcType="VARCHAR" />
+		<result column="SERVICE_TITLE" property="serviceTitle" jdbcType="VARCHAR" />
+		<result column="SERVICE_CONTENT" property="serviceContent" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="BaseResultMap" type="com.jero.esc.po.goodsinfo.ServiceRemark">
+		<id column="SR_ID" jdbcType="VARCHAR" property="srId" />
+		<result column="SR_REMARK" jdbcType="REAL" property="srRemark" />
+		<result column="SR_CREATETIME" jdbcType="TIMESTAMP" property="srCreatetime" />
+		<result column="SR_CONTENT" jdbcType="VARCHAR" property="srContent" />
+		<result column="SR_APPENDTIME" jdbcType="TIMESTAMP" property="srAppendtime" />
+		<result column="SR_APPENDCONTENT" jdbcType="VARCHAR" property="srAppendcontent" />
+		<result column="SR_RESPONSETIME" jdbcType="TIMESTAMP" property="srResponsetime" />
+		<result column="SR_RESPONSECONTENT" jdbcType="VARCHAR"
+			property="srResponsecontent" />
+		<result column="SR_RESPONSEAPPENDTIME" jdbcType="TIMESTAMP"
+			property="srResponseappendtime" />
+		<result column="SR_RESPONSEAPPENDCONTENT" jdbcType="VARCHAR"
+			property="srResponseappendcontent" />
+		<result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+		<result column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId" />
+		<result column="SR_COMMENT" jdbcType="VARCHAR" property="srComment" />
+		<result column="SR_ORDER" jdbcType="VARCHAR" property="srOrder" />
+		<result column="SR_LEVEL" jdbcType="INTEGER" property="srLevel"></result>
+	</resultMap>
+	<sql id="Base_Column_List">
+		SR_ID, SR_REMARK, SR_CREATETIME, SR_CONTENT, SR_APPENDTIME,
+		SR_APPENDCONTENT, SR_RESPONSETIME,
+		SR_RESPONSECONTENT, SR_RESPONSEAPPENDTIME, SR_RESPONSEAPPENDCONTENT, LOG_ID, SERVICE_ID,
+		SR_COMMENT,SR_ORDER,SR_LEVEL
+	</sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from service_remark
+		where SR_ID = #{srId,jdbcType=VARCHAR}
+	</select>
+
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from service_remark
+		where SR_ID = #{srId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.jero.esc.po.goodsinfo.ServiceRemark">
+		insert into service_remark (SR_ID, SR_REMARK, SR_CREATETIME,
+		SR_CONTENT, SR_APPENDTIME, SR_APPENDCONTENT,
+		SR_RESPONSETIME, SR_RESPONSECONTENT, SR_RESPONSEAPPENDTIME,
+		SR_RESPONSEAPPENDCONTENT, LOG_ID, SERVICE_ID,
+		SR_COMMENT,SR_ORDER,SR_LEVEL)
+		values (#{srId,jdbcType=VARCHAR}, #{srRemark,jdbcType=REAL},
+		#{srCreatetime,jdbcType=TIMESTAMP},
+		#{srContent,jdbcType=VARCHAR}, #{srAppendtime,jdbcType=TIMESTAMP},
+		#{srAppendcontent,jdbcType=VARCHAR},
+		#{srResponsetime,jdbcType=TIMESTAMP},
+		#{srResponsecontent,jdbcType=VARCHAR},
+		#{srResponseappendtime,jdbcType=TIMESTAMP},
+		#{srResponseappendcontent,jdbcType=VARCHAR},
+		#{logId,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR},
+		#{srComment,jdbcType=VARCHAR},#{srOrder},#{srLevel})
+	</insert>
+	<select id="selectServiceRemarkByServiceId" parameterType="com.jero.esc.vo.goodsinfo.ServiceRemarkVo"
+		resultMap="Vo">
+		SELECT
+		DISTINCT
+		service_remark.SR_ID,
+		service_remark.SR_REMARK,
+		service_remark.SR_CREATETIME,
+		service_remark.SR_CONTENT,
+		service_remark.SR_APPENDTIME,
+		service_remark.SR_APPENDCONTENT,
+		service_remark.SR_RESPONSETIME,
+		service_remark.SR_RESPONSECONTENT,
+		service_remark.SR_RESPONSEAPPENDTIME,
+		service_remark.SR_RESPONSEAPPENDCONTENT,
+		service_remark.LOG_ID,
+		service_remark.SERVICE_ID,
+		service_remark.SR_COMMENT,
+		service_remark.SR_LEVEL,
+		log_info.LOG_NAME,
+		user_info.USER_PHOTO
+		FROM
+		service_remark
+		INNER JOIN user_info ON service_remark.LOG_ID =
+		user_info.LOG_ID
+		INNER JOIN log_info ON service_remark.LOG_ID =
+		log_info.LOG_ID
+
+		<where>
+			<if test="serviceId != null and serviceId !='' ">
+				AND SERVICE_ID = #{serviceId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="srLevel != null">
+				AND SR_LEVEL in 
+				<foreach collection="srLevel" item="sl" open="(" close=")" separator=",">
+					#{sl,jdbcType=VARCHAR}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<select id="selectCountServiceRemarkByServiceId" parameterType="com.jero.esc.vo.goodsinfo.ServiceRemarkVo"
+		resultType="java.lang.Integer">
+		select
+		count(*)
+		from service_remark
+		<where>
+			<if test="serviceId != null and serviceId !='' ">
+				AND SERVICE_ID = #{serviceId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="srLevel != null">
+				AND SR_LEVEL in 
+				<foreach collection="srLevel" item="sl" open="(" close=")" separator=",">
+					#{sl,jdbcType=VARCHAR}
+				</foreach>
+			</if>
+		</where>
+	</select>
+	<select id="CountServiceRemarkByServiceId" parameterType="String"
+		resultType="java.lang.Integer">
+		select
+		count(*)
+		from service_remark
+		<where>
+				 SERVICE_ID = #{serviceId,jdbcType=VARCHAR}
+		</where>
+	</select>
+
+	<insert id="insertSelective" parameterType="com.jero.esc.po.goodsinfo.ServiceRemark">
+		insert into service_remark
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="srId != null">
+				SR_ID,
+			</if>
+			<if test="srRemark != null">
+				SR_REMARK,
+			</if>
+			<if test="srCreatetime != null">
+				SR_CREATETIME,
+			</if>
+			<if test="srContent != null">
+				SR_CONTENT,
+			</if>
+			<if test="srAppendtime != null">
+				SR_APPENDTIME,
+			</if>
+			<if test="srAppendcontent != null">
+				SR_APPENDCONTENT,
+			</if>
+			<if test="srResponsetime != null">
+				SR_RESPONSETIME,
+			</if>
+			<if test="srResponsecontent != null">
+				SR_RESPONSECONTENT,
+			</if>
+			<if test="srResponseappendtime != null">
+				SR_RESPONSEAPPENDTIME,
+			</if>
+			<if test="srResponseappendcontent != null">
+				SR_RESPONSEAPPENDCONTENT,
+			</if>
+			<if test="logId != null">
+				LOG_ID,
+			</if>
+			<if test="serviceId != null">
+				SERVICE_ID,
+			</if>
+			<if test="srComment != null">
+				SR_COMMENT,
+			</if>
+			<if test="srOrder != null">
+				SR_ORDER,
+			</if>
+			<if test="srLevel != null">
+				SR_LEVEL,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="srId != null">
+				#{srId,jdbcType=VARCHAR},
+			</if>
+			<if test="srRemark != null">
+				#{srRemark,jdbcType=REAL},
+			</if>
+			<if test="srCreatetime != null">
+				#{srCreatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="srContent != null">
+				#{srContent,jdbcType=VARCHAR},
+			</if>
+			<if test="srAppendtime != null">
+				#{srAppendtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="srAppendcontent != null">
+				#{srAppendcontent,jdbcType=VARCHAR},
+			</if>
+			<if test="srResponsetime != null">
+				#{srResponsetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="srResponsecontent != null">
+				#{srResponsecontent,jdbcType=VARCHAR},
+			</if>
+			<if test="srResponseappendtime != null">
+				#{srResponseappendtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="srResponseappendcontent != null">
+				#{srResponseappendcontent,jdbcType=VARCHAR},
+			</if>
+			<if test="logId != null">
+				#{logId,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceId != null">
+				#{serviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="srComment != null">
+				#{srComment,jdbcType=VARCHAR},
+			</if>
+			<if test="srOrder != null">
+				#{srOrder},
+			</if>
+			<if test="srLevel != null">
+				#{srLevel},
+			</if>
+
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.goodsinfo.ServiceRemark">
+		update service_remark
+		<set>
+			<if test="srRemark != null">
+				SR_REMARK = #{srRemark,jdbcType=REAL},
+			</if>
+			<if test="srCreatetime != null">
+				SR_CREATETIME = #{srCreatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="srContent != null">
+				SR_CONTENT = #{srContent,jdbcType=VARCHAR},
+			</if>
+			<if test="srAppendtime != null">
+				SR_APPENDTIME = #{srAppendtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="srAppendcontent != null">
+				SR_APPENDCONTENT = #{srAppendcontent,jdbcType=VARCHAR},
+			</if>
+			<if test="srResponsetime != null">
+				SR_RESPONSETIME = #{srResponsetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="srResponsecontent != null">
+				SR_RESPONSECONTENT = #{srResponsecontent,jdbcType=VARCHAR},
+			</if>
+			<if test="srResponseappendtime != null">
+				SR_RESPONSEAPPENDTIME = #{srResponseappendtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="srResponseappendcontent != null">
+				SR_RESPONSEAPPENDCONTENT = #{srResponseappendcontent,jdbcType=VARCHAR},
+			</if>
+			<if test="logId != null">
+				LOG_ID = #{logId,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceId != null">
+				SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="srComment != null">
+				SR_COMMENT = #{srComment,jdbcType=VARCHAR},
+			</if>
+			<if test="srOrder != null">
+				SR_ORDER=#{srOrder},
+			</if>
+			<if test="srLevel != null">
+				SR_LEVEL=#{srLevel},
+			</if>
+
+		</set>
+		where SR_ID = #{srId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jero.esc.po.goodsinfo.ServiceRemark">
+		update service_remark
+		set SR_REMARK = #{srRemark,jdbcType=REAL},
+		SR_CREATETIME = #{srCreatetime,jdbcType=TIMESTAMP},
+		SR_CONTENT = #{srContent,jdbcType=VARCHAR},
+		SR_APPENDTIME = #{srAppendtime,jdbcType=TIMESTAMP},
+		SR_APPENDCONTENT = #{srAppendcontent,jdbcType=VARCHAR},
+		SR_RESPONSETIME = #{srResponsetime,jdbcType=TIMESTAMP},
+		SR_LEVEL=#{srLevel},
+		SR_RESPONSECONTENT = #{srResponsecontent,jdbcType=VARCHAR},
+		SR_RESPONSEAPPENDTIME = #{srResponseappendtime,jdbcType=TIMESTAMP},
+		SR_RESPONSEAPPENDCONTENT =
+		#{srResponseappendcontent,jdbcType=VARCHAR},
+		LOG_ID = #{logId,jdbcType=VARCHAR},
+		SR_ORDER=#{srOrder},
+		SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+		SR_COMMENT = #{srComment,jdbcType=VARCHAR}
+		where SR_ID = #{srId,jdbcType=VARCHAR}
+	</update>
+	
+	
+	<select id="selectCountRemark" parameterType="com.jero.esc.vo.goodsinfo.RemarkCountVo"
+		resultType="com.jero.esc.vo.goodsinfo.RemarkCountVo">
+		SELECT
+		DISTINCT
+		<if test="serviceId != null and serviceId !='' ">
+			(SELECT
+			COUNT(*)
+			FROM
+			service_remark
+			WHERE  SERVICE_ID = #{serviceId,jdbcType=VARCHAR})as remark0Count,
+			(SELECT
+			COUNT(*)
+			FROM
+			service_remark
+			WHERE SR_LEVEL=0 AND SERVICE_ID=#{serviceId,jdbcType=VARCHAR})as remark1Count,
+			(SELECT
+			COUNT(*)
+			FROM
+			service_remark
+			WHERE SR_LEVEL=1 AND SERVICE_ID=#{serviceId,jdbcType=VARCHAR})as remark2Count,
+			(SELECT
+			COUNT(*)
+			FROM
+			service_remark
+			WHERE SR_LEVEL=2 AND SERVICE_ID=#{serviceId,jdbcType=VARCHAR})as remark3Count
+		</if>
+		FROM
+		service_remark
+	</select>
+	<select id="selectCountServiceRemarkByTime"  resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM
+		service_remark
+		INNER JOIN log_info ON service_remark.LOG_ID = log_info.LOG_ID
+		INNER JOIN service_info ON service_remark.SERVICE_ID = service_info.SERVICE_ID  AND <![CDATA[ service_remark.LOG_ID <>service_info.LOG_ID]]>
+		<where>
+			<if test="logId !=null and logId !='' ">
+				log_info.LOG_ID=#{logId}
+			</if>
+			<if test="srLevel !=null ">
+				AND SR_LEVEL=#{srLevel}
+			</if>
+			<if test="createtime==1">
+				AND SR_CREATETIME>DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+			</if>
+			<if test="createtime==2">
+				AND SR_CREATETIME>DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+			</if>
+			<if test="createtime==3">
+				AND SR_CREATETIME>DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+			</if>
+			<if test="createtime==4">
+				AND SR_CREATETIME&lt;DATE_SUB(CURDATE(), INTERVAL 6 MONTH
+				)
+			</if>
+		</where>
+	</select>
+	<select id="selectServiceRemarkByLogId" resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM
+		LOG_INFO
+		INNER JOIN SERVICE_INFO ON LOG_INFO.LOG_ID = SERVICE_INFO.LOG_ID 
+		INNER JOIN SERVICE_REMARK ON SERVICE_INFO.SERVICE_ID =	SERVICE_REMARK.SERVICE_ID AND <![CDATA[ service_remark.LOG_ID <>service_info.LOG_ID]]>
+		<where>
+			<if test="logId !=null and logId !='' ">
+				log_info.LOG_ID=#{logId}
+			</if>
+			<if test="srLevel !=null ">
+				AND SR_LEVEL=#{srLevel}
+			</if>
+			<if test="createtime==1">
+				AND SR_CREATETIME>DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+			</if>
+			<if test="createtime==2">
+				AND SR_CREATETIME>DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+			</if>
+			<if test="createtime==3">
+				AND SR_CREATETIME>DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+			</if>
+			<if test="createtime==4">
+				AND SR_CREATETIME&lt;DATE_SUB(CURDATE(), INTERVAL 6 MONTH
+				)
+			</if>
+		</where>
+	</select>
+	
+	<select id="queryServiceRemarkByLogIdSrLevel" parameterType="com.jero.esc.vo.goodsinfo.ServiceRemarkVo"
+		resultMap="Vo">
+		SELECT
+		DISTINCT
+			service_remark.SR_ID,
+			service_remark.SR_REMARK,
+			service_remark.SR_CREATETIME,
+			service_remark.SR_CONTENT,
+			service_remark.SR_APPENDTIME,
+			service_remark.SR_APPENDCONTENT,
+			service_remark.SR_RESPONSETIME,
+			service_remark.SR_RESPONSECONTENT,
+			service_remark.SR_RESPONSEAPPENDTIME,
+			service_remark.SR_RESPONSEAPPENDCONTENT,
+			service_remark.LOG_ID,
+			service_remark.SERVICE_ID,
+			service_remark.SR_COMMENT,
+			service_remark.SR_ORDER,
+			service_remark.SR_LEVEL,
+			user_info.USER_PHOTO,
+			service_info.SERVICE_TITLE,
+			log_info.LOG_NAME
+			FROM
+			service_remark
+			INNER JOIN user_info ON service_remark.LOG_ID = user_info.LOG_ID
+			INNER JOIN service_info ON service_remark.SERVICE_ID = service_info.SERVICE_ID AND <![CDATA[ service_remark.LOG_ID <>service_info.LOG_ID]]>
+			INNER JOIN log_info ON service_remark.LOG_ID = log_info.LOG_ID
+
+		<where>
+			<if test="logId != null and logId !='' ">
+				AND service_remark.LOG_ID = #{logId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="srLevel != null">
+				AND SR_LEVEL in 
+				<foreach collection="srLevel" item="sl" open="(" close=")" separator=",">
+					#{sl,jdbcType=VARCHAR}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<select id="queryCountServiceRemarkByLogIdSrLevel" parameterType="com.jero.esc.vo.goodsinfo.ServiceRemarkVo"
+		resultType="java.lang.Integer">
+		select
+		count(*)
+		from service_remark
+		<where>
+			<if test="logId != null and logId !='' ">
+				AND service_remark.LOG_ID = #{logId,jdbcType=VARCHAR}
+			</if>
+
+			<if test="srLevel != null">
+				AND SR_LEVEL in 
+				<foreach collection="srLevel" item="sl" open="(" close=")" separator=",">
+					#{sl,jdbcType=VARCHAR}
+				</foreach>
+			</if>
+		</where>
+	</select>
+	
+<select id="selectCountRemarkLogId" parameterType="com.jero.esc.vo.goodsinfo.RemarkCountVo"
+		resultType="com.jero.esc.vo.goodsinfo.RemarkCountVo">
+		SELECT
+		DISTINCT
+		<if test="logId != null and logId !='' ">
+			(SELECT
+			COUNT(*)
+			FROM
+			service_remark
+			WHERE  LOG_ID = #{logId,jdbcType=VARCHAR})as remark0Count,
+			(SELECT
+			COUNT(*)
+			FROM
+			service_remark
+			WHERE SR_LEVEL=0 AND LOG_ID=#{logId,jdbcType=VARCHAR})as remark1Count,
+			(SELECT
+			COUNT(*)
+			FROM
+			service_remark
+			WHERE SR_LEVEL=1 AND LOG_ID=#{logId,jdbcType=VARCHAR})as remark2Count,
+			(SELECT
+			COUNT(*)
+			FROM
+			service_remark
+			WHERE SR_LEVEL=2 AND LOG_ID=#{logId,jdbcType=VARCHAR})as remark3Count
+		</if>
+		FROM
+		service_remark
+	</select>
+	
+	
+	<select id="selectServiceRemarkByLogIdServiceId" parameterType="com.jero.esc.vo.goodsinfo.ServiceRemarkVo"
+		resultMap="Vo">
+<!-- 		SELECT DISTINCT
+		user_info.USER_PHOTO,
+		service_remark.SR_ID,
+		service_remark.SR_REMARK,
+		service_remark.SR_CREATETIME,
+		service_remark.SR_CONTENT,
+		service_remark.SR_APPENDTIME,
+		service_remark.SR_APPENDCONTENT,
+		service_remark.SR_RESPONSETIME,
+		service_remark.SR_RESPONSECONTENT,
+		service_remark.SR_RESPONSEAPPENDTIME,
+		service_remark.SR_RESPONSEAPPENDCONTENT,
+		service_remark.SERVICE_ID,
+		service_remark.SR_COMMENT,
+		service_remark.SR_ORDER,
+		service_remark.SR_LEVEL,
+		service_info.SERVICE_TITLE,
+		service_info.SERVICE_CONTENT,
+		log_info.LOG_NAME,
+		user_info.USER_PHOTO,
+		service_info.LOG_ID
+		FROM
+		service_info
+		INNER JOIN log_info ON log_info.LOG_ID = service_info.LOG_ID
+		INNER JOIN service_remark ON service_info.SERVICE_ID = service_remark.SERVICE_ID AND <![CDATA[ service_remark.LOG_ID <>service_info.LOG_ID]]>
+		INNER JOIN user_info ON service_remark.LOG_ID = user_info.LOG_ID -->
+		
+		SELECT DISTINCT
+		user_info.USER_PHOTO,
+		service_remark.SR_ID,
+		service_remark.SR_REMARK,
+		service_remark.SR_CREATETIME,
+		service_remark.SR_CONTENT,
+		service_remark.SR_APPENDTIME,
+		service_remark.SR_APPENDCONTENT,
+		service_remark.SR_RESPONSETIME,
+		service_remark.SR_RESPONSECONTENT,
+		service_remark.SR_RESPONSEAPPENDTIME,
+		service_remark.SR_RESPONSEAPPENDCONTENT,
+		service_remark.SERVICE_ID,
+		service_remark.SR_COMMENT,
+		service_remark.SR_ORDER,
+		service_remark.SR_LEVEL,
+		service_info.SERVICE_TITLE,
+		service_info.SERVICE_CONTENT,
+		log_info.LOG_NAME,
+		user_info.USER_PHOTO,
+		log_info.LOG_ID
+		FROM
+		service_remark
+		INNER JOIN log_info ON log_info.LOG_ID = service_remark.LOG_ID
+		INNER JOIN service_info ON service_info.SERVICE_ID = service_remark.SERVICE_ID AND <![CDATA[ service_remark.LOG_ID <>service_info.LOG_ID]]>
+		INNER JOIN user_info ON service_remark.LOG_ID = user_info.LOG_ID
+
+		<where>
+			<if test="logId != null and logId !='' ">
+				AND service_info.LOG_ID = #{logId,jdbcType=VARCHAR}
+			</if>
+			<if test="srLevel != null">
+				AND service_remark.SR_LEVEL in 
+				<foreach collection="srLevel" item="sl" open="(" close=")" separator=",">
+					#{sl,jdbcType=VARCHAR}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<select id="selectCountServiceRemarkByLogIdServiceId" parameterType="com.jero.esc.vo.goodsinfo.ServiceRemarkVo"
+		resultType="java.lang.Integer">
+		select
+		count(*)
+		from
+		service_remark
+		INNER JOIN service_info ON service_remark.SERVICE_ID = service_info.SERVICE_ID AND <![CDATA[ service_remark.LOG_ID <>service_info.LOG_ID]]>
+		<where>
+			<if test="logId != null and logId !='' ">
+				AND service_info.LOG_ID = #{logId,jdbcType=VARCHAR}
+			</if>
+			
+			<if test="srLevel != null">
+				AND service_remark.SR_LEVEL in 
+				<foreach collection="srLevel" item="sl" open="(" close=")" separator=",">
+					#{sl,jdbcType=VARCHAR}
+				</foreach>
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectCountRemarkByLogIdServiceId" parameterType="com.jero.esc.vo.goodsinfo.RemarkCountVo"
+		resultType="com.jero.esc.vo.goodsinfo.RemarkCountVo">
+		SELECT
+		DISTINCT
+		<if test="logId != null and logId !='' ">
+			(SELECT
+			COUNT(*)
+			FROM
+			service_remark
+			INNER JOIN service_info ON service_info.SERVICE_ID = service_remark.SERVICE_ID AND <![CDATA[ service_remark.LOG_ID <>service_info.LOG_ID]]>
+			WHERE service_info.LOG_ID = #{logId,jdbcType=VARCHAR} )as remark0Count,
+			
+			(SELECT
+			COUNT(*)
+			FROM
+			service_remark
+			INNER JOIN service_info ON service_info.SERVICE_ID = service_remark.SERVICE_ID AND <![CDATA[ service_remark.LOG_ID <>service_info.LOG_ID]]>
+			WHERE service_remark.SR_LEVEL=0 and service_info.LOG_ID = #{logId,jdbcType=VARCHAR} )as remark1Count,
+			
+			(SELECT
+			COUNT(*)
+			FROM
+			service_remark
+			INNER JOIN service_info ON service_info.SERVICE_ID = service_remark.SERVICE_ID AND <![CDATA[ service_remark.LOG_ID <>service_info.LOG_ID]]>
+			WHERE service_remark.SR_LEVEL=1 and service_info.LOG_ID = #{logId,jdbcType=VARCHAR} )as remark2Count,
+			
+			(SELECT
+			COUNT(*)
+			FROM
+			service_remark
+			INNER JOIN service_info ON service_info.SERVICE_ID = service_remark.SERVICE_ID AND <![CDATA[ service_remark.LOG_ID <>service_info.LOG_ID]]>
+			WHERE service_remark.SR_LEVEL=2 and service_info.LOG_ID = #{logId,jdbcType=VARCHAR})as remark3Count
+			FROM
+			service_remark
+		</if>
+		
+	</select>
+</mapper>

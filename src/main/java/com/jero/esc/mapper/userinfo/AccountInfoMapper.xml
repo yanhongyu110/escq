@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.userinfo.AccountInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.userinfo.AccountInfo">
+    <id column="ACC_ID" jdbcType="VARCHAR" property="accId" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="ACC_BALANCE" jdbcType="REAL" property="accBalance" />
+    <result column="ACC_BLOCKBALANCE" jdbcType="REAL" property="accBlockbalance" />
+    <result column="ACC_POINT" jdbcType="REAL" property="accPoint" />
+    <result column="ACC_PAYPASS" jdbcType="VARCHAR" property="accPaypass" />
+    <result column="ACC_DEFAULTCARD" jdbcType="VARCHAR" property="accDefaultcard" />
+    <result column="ACC_COMMENT" jdbcType="VARCHAR" property="accComment" />
+  </resultMap>
+  
+  <!-- 账户管理 -->
+  <resultMap id="AccountMap" type="com.jero.esc.vo.userinfo.AccountVo">
+  	<!-- 账户信息表 -->
+    <id column="ACC_ID" jdbcType="VARCHAR" property="accId" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="accLogId" />
+    <result column="ACC_BALANCE" jdbcType="REAL" property="accBalance" />
+    <result column="ACC_BLOCKBALANCE" jdbcType="REAL" property="accBlockbalance" />
+    <result column="ACC_POINT" jdbcType="REAL" property="accPoint" />
+    <result column="ACC_PAYPASS" jdbcType="VARCHAR" property="accPaypass" />
+    <result column="ACC_DEFAULTCARD" jdbcType="VARCHAR" property="accDefaultcard" />
+    <result column="ACC_COMMENT" jdbcType="VARCHAR" property="accComment" />
+    <!-- 登陆账号信息表 -->
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="LOG_CELL" jdbcType="VARCHAR" property="logCell" />
+    <result column="LOG_EMAIL" jdbcType="VARCHAR" property="logEmail" />
+    <result column="LOG_NAME" jdbcType="VARCHAR" property="logName" />
+    <result column="LOG_PASS" jdbcType="VARCHAR" property="logPass" />
+    <result column="LOG_CREATETIME" jdbcType="TIMESTAMP" property="logCreatetime" />
+    <result column="LOG_ISDELETE" jdbcType="BIT" property="logIsdelete" />
+    <result column="LOG_STATE" jdbcType="INTEGER" property="logState" />
+    <result column="LOG_TYPE" jdbcType="INTEGER" property="logType" />
+    <result column="LOG_REGIP" jdbcType="VARCHAR" property="logRegip" />
+    <result column="LOG_ISLOG" jdbcType="BIT" property="logIslog" />
+    <result column="LOG_COMMENT" jdbcType="VARCHAR" property="logComment" />
+    <!-- 账号收支明细表 -->
+    <result column="APD_ID" jdbcType="VARCHAR" property="apdId" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="apdLogId" />
+    <result column="APD_IOTYPE" jdbcType="INTEGER" property="apdIotype" />
+    <result column="APD_PAYTYPE" jdbcType="INTEGER" property="apdPaytype" />
+    <result column="APD_CREATETIME" jdbcType="TIMESTAMP" property="apdCreatetime" />
+    <result column="APD_AMOUNT" jdbcType="REAL" property="apdAmount" />
+    <result column="APD_DEALTYPE" jdbcType="INTEGER" property="apdDealtype" />
+    <result column="APD_ADMINORDERNO" jdbcType="VARCHAR" property="apdAdminorderno" />
+    <result column="APD_DEALNO" jdbcType="VARCHAR" property="apdDealno" />
+    <result column="APD_COMMENT" jdbcType="VARCHAR" property="apdComment" />
+  </resultMap>
+  <!-- 账户提现 -->
+  <resultMap id="AccountDrawMap" type="com.jero.esc.vo.pay.AccountDrawVo">
+  	<!-- 账户信息表 -->
+    <id column="ACC_ID" jdbcType="VARCHAR" property="accId" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="accLogId" />
+    <result column="ACC_BALANCE" jdbcType="REAL" property="accBalance" />
+    <result column="ACC_BLOCKBALANCE" jdbcType="REAL" property="accBlockbalance" />
+    <result column="ACC_POINT" jdbcType="REAL" property="accPoint" />
+    <result column="ACC_PAYPASS" jdbcType="VARCHAR" property="accPaypass" />
+    <result column="ACC_DEFAULTCARD" jdbcType="VARCHAR" property="accDefaultcard" />
+    <result column="ACC_COMMENT" jdbcType="VARCHAR" property="accComment" />
+    <!-- 登陆账号信息表 -->
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="LOG_CELL" jdbcType="VARCHAR" property="logCell" />
+    <result column="LOG_EMAIL" jdbcType="VARCHAR" property="logEmail" />
+    <result column="LOG_NAME" jdbcType="VARCHAR" property="logName" />
+    <result column="LOG_PASS" jdbcType="VARCHAR" property="logPass" />
+    <result column="LOG_CREATETIME" jdbcType="TIMESTAMP" property="logCreatetime" />
+    <result column="LOG_ISDELETE" jdbcType="BIT" property="logIsdelete" />
+    <result column="LOG_STATE" jdbcType="INTEGER" property="logState" />
+    <result column="LOG_TYPE" jdbcType="INTEGER" property="logType" />
+    <result column="LOG_REGIP" jdbcType="VARCHAR" property="logRegip" />
+    <result column="LOG_ISLOG" jdbcType="BIT" property="logIslog" />
+    <result column="LOG_COMMENT" jdbcType="VARCHAR" property="logComment" />
+  </resultMap>
+  
+  <select id="selectLogAccById" resultMap="AccountMap">
+  	SELECT
+	account_info.ACC_BALANCE,
+	accont_payment_details.APD_IOTYPE,
+	accont_payment_details.APD_AMOUNT,
+	accont_payment_details.APD_ID,
+	accont_payment_details.LOG_ID,
+	accont_payment_details.APD_PAYTYPE,
+	accont_payment_details.APD_CREATETIME,
+	accont_payment_details.APD_DEALTYPE,
+	accont_payment_details.APD_ADMINORDERNO,
+	accont_payment_details.APD_DEALNO,
+	accont_payment_details.APD_COMMENT,
+	log_info.LOG_ID,
+	log_info.LOG_CELL,
+	log_info.LOG_EMAIL,
+	log_info.LOG_NAME,
+	log_info.LOG_PASS,
+	log_info.LOG_CREATETIME,
+	log_info.LOG_ISDELETE,
+	log_info.LOG_STATE,
+	log_info.LOG_TYPE,
+	log_info.LOG_REGIP,
+	log_info.LOG_ISLOG,
+	log_info.LOG_COMMENT,
+	account_info.ACC_ID,
+	account_info.LOG_ID,
+	account_info.ACC_BLOCKBALANCE,
+	account_info.ACC_POINT,
+	account_info.ACC_PAYPASS,
+	account_info.ACC_DEFAULTCARD,
+	account_info.ACC_COMMENT
+	FROM
+	log_info
+	INNER JOIN account_info ON log_info.LOG_ID = account_info.LOG_ID
+	INNER JOIN accont_payment_details ON log_info.LOG_ID = accont_payment_details.LOG_ID
+  </select>
+  
+  <select id="selectLogAccCountById" resultType="int">
+  	SELECT COUNT(*)
+	FROM
+	log_info
+	INNER JOIN account_info ON log_info.LOG_ID = account_info.LOG_ID
+	INNER JOIN accont_payment_details ON log_info.LOG_ID = accont_payment_details.LOG_ID
+  </select>
+  
+  <select id="selectBalanceById" resultMap="BaseResultMap">
+  	SELECT
+	account_info.ACC_ID,
+	account_info.LOG_ID,
+	account_info.ACC_BALANCE,
+	account_info.ACC_BLOCKBALANCE,
+	account_info.ACC_POINT,
+	account_info.ACC_PAYPASS,
+	account_info.ACC_DEFAULTCARD,
+	account_info.ACC_COMMENT
+	FROM
+	account_info
+	<where>
+		LOG_ID = #{logId}
+	</where>
+  </select>
+  
+  <sql id="Base_Column_List">
+    ACC_ID, LOG_ID, ACC_BALANCE, ACC_BLOCKBALANCE, ACC_POINT, ACC_PAYPASS, ACC_DEFAULTCARD, ACC_COMMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account_info
+    where ACC_ID = #{accId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByLogId" parameterType="java.lang.String" resultMap="AccountMap">
+    select 
+    	ACC_ID, a.LOG_ID, ACC_BALANCE, ACC_BLOCKBALANCE, ACC_POINT, ACC_PAYPASS, ACC_DEFAULTCARD, ACC_COMMENT
+    from account_info a
+    INNER JOIN log_info l ON l.LOG_ID = a.LOG_ID
+    where a.LOG_ID = #{logId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from account_info
+    where ACC_ID = #{accId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.userinfo.AccountInfo">
+    insert into account_info (ACC_ID, LOG_ID, ACC_BALANCE, 
+      ACC_BLOCKBALANCE, ACC_POINT, ACC_PAYPASS, ACC_DEFAULTCARD, 
+      ACC_COMMENT)
+    values (#{accId,jdbcType=VARCHAR}, #{logId,jdbcType=VARCHAR}, #{accBalance,jdbcType=REAL}, 
+      #{accBlockbalance,jdbcType=REAL}, #{accPoint,jdbcType=REAL}, #{accPaypass,jdbcType=VARCHAR}, #{accDefaultcard,jdbcType=VARCHAR}, 
+      #{accComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.userinfo.AccountInfo">
+    insert into account_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="accId != null">
+        ACC_ID,
+      </if>
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="accBalance != null">
+        ACC_BALANCE,
+      </if>
+      <if test="accBlockbalance != null">
+        ACC_BLOCKBALANCE,
+      </if>
+      <if test="accPoint != null">
+        ACC_POINT,
+      </if>
+      <if test="accPaypass != null">
+        ACC_PAYPASS,
+      </if>
+      <if test="accDefaultcard != null">
+        ACC_DEFAULTCARD,
+      </if>
+      <if test="accComment != null">
+        ACC_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="accId != null">
+        #{accId,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="accBalance != null">
+        #{accBalance,jdbcType=REAL},
+      </if>
+      <if test="accBlockbalance != null">
+        #{accBlockbalance,jdbcType=REAL},
+      </if>
+      <if test="accPoint != null">
+        #{accPoint,jdbcType=REAL},
+      </if>
+      <if test="accPaypass != null">
+        #{accPaypass,jdbcType=VARCHAR},
+      </if>
+      <if test="accDefaultcard != null">
+        #{accDefaultcard,jdbcType=VARCHAR},
+      </if>
+      <if test="accComment != null">
+        #{accComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <update id="updateByLogId" parameterType="com.jero.esc.po.userinfo.AccountInfo">
+        update account_info
+        <set>
+            <if test="accBalance != null">
+                ACC_BALANCE = #{accBalance,jdbcType=REAL},
+            </if>
+            <if test="accBlockbalance != null">
+                ACC_BLOCKBALANCE = #{accBlockbalance,jdbcType=REAL},
+            </if>
+            <if test="accPoint != null">
+                ACC_POINT = #{accPoint,jdbcType=REAL},
+            </if>
+            <if test="accPaypass != null">
+                ACC_PAYPASS = #{accPaypass,jdbcType=VARCHAR},
+            </if>
+            <if test="accDefaultcard != null">
+                ACC_DEFAULTCARD = #{accDefaultcard,jdbcType=VARCHAR},
+            </if>
+            <if test="accComment != null">
+                ACC_COMMENT = #{accComment,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where  LOG_ID = #{logId,jdbcType=VARCHAR}
+    </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.userinfo.AccountInfo">
+    update account_info
+    <set>
+      <if test="logId != null">
+        LOG_ID = #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="accBalance != null">
+        ACC_BALANCE = #{accBalance,jdbcType=REAL},
+      </if>
+      <if test="accBlockbalance != null">
+        ACC_BLOCKBALANCE = #{accBlockbalance,jdbcType=REAL},
+      </if>
+      <if test="accPoint != null">
+        ACC_POINT = #{accPoint,jdbcType=REAL},
+      </if>
+      <if test="accPaypass != null">
+        ACC_PAYPASS = #{accPaypass,jdbcType=VARCHAR},
+      </if>
+      <if test="accDefaultcard != null">
+        ACC_DEFAULTCARD = #{accDefaultcard,jdbcType=VARCHAR},
+      </if>
+      <if test="accComment != null">
+        ACC_COMMENT = #{accComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ACC_ID = #{accId,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.userinfo.AccountInfo">
+    update account_info
+    set LOG_ID = #{logId,jdbcType=VARCHAR},
+      ACC_BALANCE = #{accBalance,jdbcType=REAL},
+      ACC_BLOCKBALANCE = #{accBlockbalance,jdbcType=REAL},
+      ACC_POINT = #{accPoint,jdbcType=REAL},
+      ACC_PAYPASS = #{accPaypass,jdbcType=VARCHAR},
+      ACC_DEFAULTCARD = #{accDefaultcard,jdbcType=VARCHAR},
+      ACC_COMMENT = #{accComment,jdbcType=VARCHAR}
+    where ACC_ID = #{accId,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

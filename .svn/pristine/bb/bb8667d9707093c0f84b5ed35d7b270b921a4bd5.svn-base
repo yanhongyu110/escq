@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.bizinfo.CollectUtodMapper">
+<resultMap id="CollectUtodMap" type="com.jero.esc.vo.bizinfo.CollectDemand">
+    	<id column="CUTD_USER" jdbcType="VARCHAR" property="cutdUser" />
+    	<id column="CUTD_DEMAND" jdbcType="VARCHAR" property="cutdDemand" />
+		<result column="DEM_ID" jdbcType="VARCHAR" property="demId" />
+		<result column="DEM_LOGID" jdbcType="VARCHAR" property="demLogid" />
+		<result column="DEM_CONTACT" jdbcType="VARCHAR" property="demContact" />
+		<result column="DEM_CELL" jdbcType="VARCHAR" property="demCell" />
+		<result column="DEM_TITLE" jdbcType="VARCHAR" property="demTitle" />
+		<result column="DEM_BRIEF" jdbcType="VARCHAR" property="demBrief" />
+		<result column="DEM_CONTENT" jdbcType="VARCHAR" property="demContent" />
+		<result column="DEM_TYPETREE" jdbcType="VARCHAR" property="demTypetree" />
+		<result column="DEM_TYPE" jdbcType="VARCHAR" property="demType" />
+		<result column="DEM_CREATETIME" jdbcType="TIMESTAMP" property="demCreatetime" />
+		<result column="DEM_STATE" jdbcType="INTEGER" property="demState" />
+		<result column="DEM_IMAGE" jdbcType="VARCHAR" property="demImage" />
+		<result column="DEM_KEYWORD" jdbcType="VARCHAR" property="demKeyword" />
+		<result column="DEM_ISDELETE" jdbcType="BIT" property="demIsdelete" />
+		<result column="DEM_COMMENTS" jdbcType="VARCHAR" property="demComments" />
+    	<result column="USER_PHOTO" jdbcType="VARCHAR" property="userPhoto" />
+  </resultMap>
+  <delete id="delete" parameterType="com.jero.esc.po.bizinfo.CollectUtod">
+    delete from collect_user_to_demand
+    where CUTD_USER = #{cutdUser,jdbcType=VARCHAR}
+      and CUTD_DEMAND = #{cutdDemand,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.bizinfo.CollectUtod">
+    insert into collect_user_to_demand (CUTD_USER, CUTD_DEMAND)
+    values (#{cutdUser,jdbcType=VARCHAR}, #{cutdDemand,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.bizinfo.CollectUtod">
+    insert into collect_user_to_demand
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cutdUser != null">
+        CUTD_USER,
+      </if>
+      <if test="cutdDemand != null">
+        CUTD_DEMAND,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cutdUser != null">
+        #{cutdUser,jdbcType=VARCHAR},
+      </if>
+      <if test="cutdDemand != null">
+        #{cutdDemand,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCon"  parameterType="com.jero.esc.po.bizinfo.CollectUtod" resultType="java.lang.Integer">
+  		select count(*) from collect_user_to_demand
+  		INNER JOIN demand ON collect_user_to_demand.CUTD_DEMAND = demand.DEM_ID 
+  		 <where>
+        	<if test="cutdUser!=null and cutdUser !=''">
+                AND collect_user_to_demand.CUTD_USER= #{cutdUser,jdbcType=VARCHAR}
+            </if>
+            <if test="cutdDemand !=null and cutdDemand !=''">
+                AND collect_user_to_demand.CUTD_DEMAND= #{cutdDemand,jdbcType=VARCHAR}
+            </if>
+        </where>
+  
+  </select>
+  <select id="selectByUser" parameterType="String" resultMap="CollectUtodMap">
+		SELECT
+			collect_user_to_demand.CUTD_USER,
+			collect_user_to_demand.CUTD_DEMAND,
+			demand.DEM_ID,
+			demand.DEM_LOGID,
+			demand.DEM_CONTACT,
+			demand.DEM_CELL,
+			demand.DEM_TITLE,
+			demand.DEM_BRIEF,
+			demand.DEM_CONTENT,
+			demand.DEM_TYPETREE,
+			demand.DEM_TYPE,
+			demand.DEM_CREATETIME,
+			demand.DEM_STATE,
+			demand.DEM_IMAGE,
+			demand.DEM_KEYWORD,
+			demand.DEM_ISDELETE,
+			demand.DEM_COMMENTS,
+			user_info.USER_PHOTO
+			FROM
+			collect_user_to_demand
+			INNER JOIN demand ON collect_user_to_demand.CUTD_DEMAND = demand.DEM_ID
+			INNER JOIN user_info ON demand.DEM_LOGID = user_info.LOG_ID
+			WHERE
+			collect_user_to_demand.CUTD_USER = #{cutdUser,jdbcType=VARCHAR}
+			  
+  </select>
+  
+  
+</mapper>

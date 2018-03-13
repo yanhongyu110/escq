@@ -1,0 +1,124 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html>
+<html>
+	<head>
+	<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+		<meta charset="UTF-8">
+		<title>需求列表</title>
+		<link rel="stylesheet" href="${webtxc}/css/public.css" />
+		<link rel="stylesheet" href="${webtxc}/css/service.css" />
+		<link rel="stylesheet" href="${webtxc}/css/page.css" />
+		<script type="text/javascript" src="${webtxc}/js/jquery.citys.js"></script>
+		<script type="text/javascript">
+			var demType1 = '${demType}';
+		</script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".click_all").click(function() {
+					$(".sv_seach_zhanshi").toggle();
+				});
+			});
+		</script>
+		<script type="text/javascript" src="${webtxc}/myjs/demand/demandList.js?v=2"></script>
+
+	</head>
+
+	<body>
+
+
+	<%--<c:if test="${sessionScope.module!=null}">--%>
+		<%--<%@include file="/WEB-INF/jsp/common/top1.jsp"%>--%>
+	<%--</c:if>--%>
+	<%--<c:if test="${sessionScope.module==null}">--%>
+		<%@include file="/WEB-INF/jsp/common/top.jsp"%>
+	<%--</c:if>--%>
+
+		<div class="bannerResource"></div>
+		
+			<div class="content">
+				<div class="sv_position">
+					<h3><a href="javascript:window.history.go(-1);">首页</a> >> <a>需求列表</a></h3>
+				</div>
+				
+				
+				<div class="cc_list">
+					<div class="cc_list_left" >
+				  		<ul id="typeull">
+						<c:forEach var="it" items="${commonTypeList}">
+	            		<c:if test="${it.id==demType}">
+		            		<li style="color:#fb5a5a;" val="${it.id}" >${it.text}</li>
+	            		</c:if>
+	            		<c:if test="${it.id!=demType}">
+		            		<li val="${it.id}" >${it.text}</li>
+	            		</c:if>
+	        			</c:forEach>
+						</ul>
+					</div>
+					<div class="sv_expert">
+						<!-- <div  id="demo" class="sv_seach citys">
+							<ul name="province">
+							</ul>
+							<ul name="city">
+							</ul>
+							<ul name="area">
+							</ul>
+						</div> -->
+						<!-- <div class="map_s" ><a href="${webtxc}/map/search.html">地图搜索</a></div> -->
+						<!-- <script type="text/javascript">
+		               	 $('#demo').citys({province:'',city:'',area:'',required: false});
+		            	</script> -->
+						<div class="sv_sx" style="margin-top: 0;">
+							<ul>
+								<li class="ss_gg">共搜到<font id="allcount"></font>个结果！</li>
+								<!-- <li class="sv_sx_zz">
+									<a style="color: #FB5A5A;border: 1px solid #FB5A5A;" class="no_bg">综合排序</a>
+									<a>约见最多</a>
+									<a>口碑最好</a>
+									<a>价格最高</a>
+								</li> -->
+							</ul>
+						</div>
+						<div id="myexpert">
+						<%-- <c:forEach items="${proList}" var="it">
+							<div class="sv_zj">
+								<div class="sv_zj_img">
+									<img src="${webtxc}/${it.piPhoto}" />
+								</div>
+								<div class="sv_zj_title">
+									<h3>${it.piPosition}</h3>
+									<p>${it.piRealname}&nbsp;&nbsp;&nbsp;&nbsp;工作年限：${it.piWorkyear}年</p>
+									<p style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${it.piBrief}</p>
+									<p><a><font>${it.piDealnum}</font>人约见</a> <a><font>${it.piMeetnum}</font>人想见</a> <a>评分：<font>${it.piRek}</font>分</a></p>
+								</div>
+								<div class="sv_zj_btn">
+									<a class="ex_pay">￥${it.psetPrice}</a> 元/次
+									<a class="ex_yj">约TA见面</a>
+								</div>
+							</div>
+						</c:forEach> --%>
+						</div>	
+					</div><!-- end.sv_expert -->
+				</div><!-- end.cc_list -->
+				<div id="pageDiv" class="jogger">
+					<!-- <span class="disabled">&lt; </span>
+					<span class="current">1</span>
+					<a href="#?page=2">2</a>
+					<a href="#?page=3">3</a>
+					<a href="#?page=4">4</a>
+					<a href="#?page=5">5</a>
+					<a href="#?page=6">6</a>
+					<a href="#?page=7">7</a>...
+					<a href="#?page=199">199</a>
+					<a href="#?page=200">200</a>
+					<a href="#?page=2">&gt; </a> -->
+				</div>
+				
+				
+			</div>
+			<!--end.content-->
+			<%@include file="/WEB-INF/jsp/common/bottom.jsp"%>
+	</body>
+
+</html>

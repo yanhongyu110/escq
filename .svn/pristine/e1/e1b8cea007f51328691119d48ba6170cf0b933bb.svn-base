@@ -1,0 +1,403 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jsp/common/common.jsp" %>
+
+<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="optionalModuleName" class="ng-app:myApp">
+<head>
+    <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
+    <%@ include file="/WEB-INF/jsp/common/angular.jsp" %>
+    <%@ include file="/WEB-INF/jsp/common/anima.jsp" %>
+    <%@ include file="/WEB-INF/jsp/common/kindeditor.jsp" %>
+    <link rel="stylesheet" href="${webtxc}/css/public.css?v=123"/>
+    <link rel="stylesheet" href="${webtxc}/css/personal.css?v=123"/>
+    <script type="text/javascript" src="${webtxc}/js/personal_tab.js"></script>
+     <script type="text/javascript" src="${webtxc}/js/jquery.citysh.js?val=12"></script>
+    <script type="text/javascript" src="${webtxc}/js/personal_menu.js"></script>
+    <link rel="stylesheet" type="text/css" href="${webtxc}/map/map.css">
+    <script type="text/javascript" src="${webtxc}/map/map.js?val=123"></script>
+    <script type="text/javascript" src="${webtxc}/myjs/checkinfo/providerinfo.js?val=13assa56"></script>
+    <script src="${webtxc}/vue/vue.min.js"></script>
+    <script>
+        $(function () {
+            $.post(path+'/company/companyListAjax.html',{},function (r) {
+                var app=new Vue({
+                    el:'#orz_com',
+                    data:{
+                        piCom:'${providerInfo.piCom}',
+                        piCompany:'${providerInfo.piCompany}',
+                        list:r.list
+                    },
+                    methods:{
+                        select:function (r) {
+                            this.piCompany= r.compName;
+                        }
+                    }
+                })
+            },'json')
+        })
+    </script>
+
+    <title>服务商认证信息修改</title>
+</head>
+
+<body>
+
+	<c:set var="istop" value="true" />
+    <%@include file="/WEB-INF/jsp/common/top.jsp" %>
+    <div class="content">
+        <%@include file="/WEB-INF/jsp/common/left.jsp" %>
+        
+            <div class="content-right" >
+				<form id="form" action="${webtxc}/checkinfo/providerCheck/modifyCheckInfo.html" method="post" ng-app="myApp" ng-controller="controller" name="f" novalidate>
+                <div class="expert_mes ">
+                    <h2>基本信息</h2>
+                    <div class="status_icon">
+                        <p class="progress_bar"></p>
+                        <div class="status_progress status_one on">
+                            <div class="steps">1
+                                <div class="stripeL"></div>
+                                <div class="stripeR"></div>
+                            </div>
+                            <div class="status_text">基本信息</div>
+                        </div>
+                        <div class="status_progress status_two">
+                            <div class="steps">2
+                                <div class="stripeL"></div>
+                                <div class="stripeR"></div>
+                            </div>
+                            <div class="status_text">认证资料</div>
+                        </div>
+                        <div class="status_progress status_three">
+                            <div class="steps">3
+                                <div class="stripeL"></div>
+                                <div class="stripeR"></div>
+                            </div>
+                            <div class="status_text">个人介绍</div>
+                        </div>
+
+                    </div><!--end.status_icon-->
+                    <div class="note_message">
+                        <ul>
+                            <li class="mes">真实姓名：</li>
+                            <li><input class="mees" type="text" value="${providerInfo.piRealname}" name="piRealname" ></li>
+                        </ul>
+                        <ul id="orz_com">
+                            <li class="mes">所属公司：</li>
+                            <li>
+                                <select name="piCom" style="width: 378px" v-model="piCom">
+                                    <option v-for="it in list" :value="it.compId" v-text="it.compName" @click="select(it)"></option>
+                                </select>
+                                <input  class="mees" type="hidden" v-model="piCompany" name="piCompany" placeholder="请填写您的任职机构" >
+                            </li>
+                            <%--<li class="zp_ts">字数不超过<span>30</span>个字。</li>--%>
+                        </ul>
+                        <ul>
+                            <li class="mes">任职职位/头衔：</li>
+                            <li><input class="mees piPosition" type="text" value="${providerInfo.piPosition}" maxlength="30" name="piPosition" required><span class="tips">*必填</span></li>
+                        	 <li class="zp_ts">字数不超过<span>30</span>个字。</li>
+                        </ul>
+                       <ul>
+                            <li class="mes">工作年限：</li>
+                            <li><input class="mees piWorkyear" type="text" name="piWorkyear"  value="${providerInfo.piWorkyear}" maxlength="2" placeholder="请填写您的工作年限"><span class="tips">*必填</span></li>
+                            <li class="zp_ts" style="display:none;"><span>请确认工作年限的范围0-50</span>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li class="mes">联系方式：</li>
+                            <li><input class="mees piCell" type="text" name="piCell" value="${providerInfo.piCell}" maxlength="11" placeholder="请填写您的联系方式"><span class="tips">*必填</span></li>
+                            <li class="zp_ts" style="display:none;"><span>请填写正确的联系方式</span></li>
+                        </ul>
+                        <ul>
+                            <li class="mes">邮箱：</li>
+                            <li><input class="mees piEmail" type="text" name="piEmail"  value="${providerInfo.piEmail}" maxlength="30" placeholder="请填写您的邮箱地址"><span class="tips">*必填</span></li>
+                            <li class="zp_ts" style="display:none;"><span>请填写正确的邮箱</span></li>
+                        </ul>
+                        <ul>
+                            <li class="mes">关键字：</li>
+                            <li><textarea  class="piKeywords" name="piKeywords" style="resize: none;margin-bottom: 15px;" rows="5" cols="48">${providerInfo.piKeywords}</textarea></li>
+                            <li class="zp_ts"><span class="tips">*必填</span><br>请填写此主题的关键字，以逗号（，）分隔，最多<span>5</span>个关键字，如：话题咨询，互联网产品</li>
+                        </ul>
+                        <ul>
+                            <li class="mes">常驻城市：</li>
+                            <li>
+                                <div id="city" class="citys">
+				                <p>
+				                    <select  class="province" name="province"></select>
+				                    <select  class="city"  name="city"></select>
+				                    <select  class="area" name="area"></select>
+				                    <span class="tips">*必填</span>
+				                </p>
+				           		</div>
+				            	<input type="hidden" class="piArea" name="piArea" />
+				           <script type="text/javascript">
+				           var piArea="${providerInfo.piArea}";
+				           var tt=piArea.split("-").length-1;
+				           console.log(tt);
+				           if(tt==1){
+				        	   piArea=piArea+"-";
+				           }
+				           $(".piArea").val(piArea);
+				           if(piArea!=null||piArea!=""){
+				        	   var address=piArea.split("-"); 
+				        	   
+				        	   $('#city').citys({province:address[0],city:address[1],area:address[2],onChange:function(hehe){ if(hehe.area==""){ $(".piArea").val(hehe.province+"-"+hehe.city)}else{ $(".piArea").val(hehe.province+"-"+hehe.city+"-"+hehe.area)};}},function(api){
+				                    var info = api.getInfo();
+				                    if(info.area=="")
+				                   		 { $(".piArea").val(info.province+"-"+info.city)
+				                    	}else{
+				                    		$(".piArea").val(info.province+"-"+info.city+"-"+info.area)};
+				                });
+				           }else{
+				        	   $('#city').citys({province:'重庆',city:'渝北区',area:''});
+				           }
+				                </script>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li class="mes">详细地址：</li>
+                            <li><input type="text"  class="mees"  value="${providerInfo.piAddr}" name="piAddr" ng-model="piAddr" readonly="readonly" ></li>
+                            <li><input type="button" value="点击定位"  map-start map-click="sss"></li><span class="tips">*必填</span>
+                            <!-- <li><input type="hidden" name="point"></li> -->
+                        </ul>
+                        <div class="mes_btn">
+
+                            <a class="mes_bc">下一步</a>
+                        </div>
+                    </div>
+
+                </div><!--end.expert_mes-->
+                <div class="expert_mes ">
+                    <h2>个人介绍</h2>
+                    <div class="status_icon">
+                        <p class="progress_bar"></p>
+                        <div class="status_progress status_one ">
+                            <div class="steps">1
+                                <div class="stripeL"></div>
+                                <div class="stripeR"></div>
+                            </div>
+                            <div class="status_text">基本信息</div>
+                        </div>
+                        <div class="status_progress status_two ">
+                            <div class="steps">2
+                                <div class="stripeL"></div>
+                                <div class="stripeR"></div>
+                            </div>
+                            <div class="status_text">认证资料</div>
+                        </div>
+                        <div class="status_progress status_three on">
+                            <div class="steps">3
+                                <div class="stripeL"></div>
+                                <div class="stripeR"></div>
+                            </div>
+                            <div class="status_text">个人介绍</div>
+                        </div>
+                    </div>
+                    <!--end.status_icon-->
+                    <div class="note_message">
+                        <ul>
+                            <li class="mes">生活照片：</li>
+                            <li class="expert_xl">
+                          	  <a class="upload"><img class="imgUrl" src="${ providerInfo.piPhoto}"/></a>
+                              <input type="hidden" class="piPhoto" name="piPhoto" value="${ providerInfo.piPhoto}" />
+                            </li>
+
+                            <li class="zp_ts"><span class="tips">*必填</span>请上传代表您个人形象的生活照片，此照片将显示在个人简介中，照片大小不超过<span>10M</span>。</li>
+                        </ul>
+                        <ul>
+                            <li class="mes">视频封面：</li>
+                            <li class="expert_xl">
+                          	  <a class="upload"><img class="imgUrl" src="${ providerInfo.piComment}"/></a>
+                              <input type="hidden" class="piComment" name="piComment"  value="${ providerInfo.piComment}" />
+                            </li>
+
+                            <li class="zp_ts"><span>（选填）</span><br>请上传代表您的介绍视频的封面显示图片，照片大小不超过<span>10M</span>。</li>
+                        </ul>
+                        <ul class="media">
+                            <li class="mes">介绍视频：</li>
+                            <li class="expert_mp ex_sp" >
+                            	<div id="mediadiv" class="ex_zxs media_click"></div>
+                                <a  id="media" class="ex_bd"></a>
+                               <input type="hidden"  readonly="readonly"  id="mediaUpload" class="piVideo" name="piVideo" value="${ providerInfo.piVideo}" rows="5"/>
+                            </li>
+
+                            <li class="zp_ts"><span>（选填）</span><br>注：大小为100M以内<br/>支持MP4、flv等格式</li>
+                        </ul>
+                        <ul>
+                            <li class="mes">一句话描述：</li>
+                            <li>
+                                <textarea name="piBrief" ng-pattern="/^.{0,25}$/" maxlength="25"  cols="54" rows="2">${ providerInfo.piBrief}</textarea>
+                            </li>
+                            <li class="zp_ts"><span>（选填）</span><br>字数不能超过<span>25</span>个字</li>
+                           <!--  <li class="zp_ts" ng-show="f.piBrief.$dirty&&f.piBrief.$invalid">字数不能超过<span>25</span>个字。</li> -->
+                        </ul>
+                        <ul>
+                            <li class="mes">个人介绍：</li>
+                            <li>
+                                <textarea name="piContent"  style="resize: none;" maxlength="200" ng-pattern="/^.{0,200}$/" cols="54" rows="9">${ providerInfo.piContent}</textarea>
+                            </li>
+
+                            <!-- <li class="zp_ts"  ng-show="f.piContent.$dirty&&f.piContent.$invalid">字数不能超过<span>200</span>个字。</li> -->
+                            <li class="zp_ts"><span class="tips">*必填</span><br>字数不能超过<span>200</span>个字</li>
+                            <li class="qt_more">
+                                <a><b>看看别人家都怎么写文案</b></a>
+                                <a>【荐】王小二 互联网产品经理..</a>
+                                <a>【荐】王小二 互联网产品经理..</a>
+                                <a>【荐】王小二 互联网产品经理..</a>
+                                <a>【荐】王小二 互联网产品经理..</a>
+                            </li>
+                        </ul>
+
+                        <ul>
+                            <li class="mes m_padding">相关链接：</li>
+                            <li class="xg_links">
+                            <div class="links" id="links">
+                            <a class="addrow" id="addrow" href="javascript:void(0)">添加</a>
+                            <div class="link" style="display:none;" id="link">
+                                    <div class="bo_wk">
+                               		<span>标题：<input type="text" class="linkname" /></span>
+                             		 <span>网址：<input type="text" class="linkurl" /></span>
+                             		 
+                                <a class="delrow" href="javascript:void(0)">删除</a>
+                                </div>
+                            </div>
+                            <div class="link linktemp">
+                                    <div class="bo_wk">
+                               		<span> 标题：<input type="text" class="linkname"/></span>
+                             		<span> 网址：<input type="text" class="linkurl"/></span>
+                                
+                                </div>
+                            </div>
+                        </div>
+                         <input class="piUrls" type="hidden" name="piUrls" value="${providerInfo.piUrls}" ng-model="piUrls"  />
+                        </li>
+                          <li class="zp_ts m_padding">相关链接<span>（选填）</span>请在此附上您的博客地址或网络上关于您的报道链接<br/>网址样式：http://www.baidu.com
+                            </li>
+						</ul>
+
+                        <div class="mes_btn">
+                            <a class="mes_bc">上一步</a>
+
+                            <a id="modify" class="mes_bc" >保存</a>
+                        </div>
+
+                    </form>
+
+                </div><!--end.expert_mes-->
+
+                <div></div>
+
+
+
+                    <%--<div ng-show="!baiduMap.isHidden"  style="overflow: hidden;border-radius: 2%;border: 1px solid #b1a7a7;box-shadow: 0px 0px 31px 1px #c5c5c5;text-align: center;margin-left: -400px;margin-top: -300px;;width: 800px;height:600px;background-color: #fdfcfc;position: fixed;top: 50%;left: 50%">--%>
+                        <%--<div style="width: 200%;height: 35px;line-height: 35px;background-color: #dcdcdc;text-align: left;position: relative;z-index: 10000" id="ss">--%>
+                            <%--<span style="font-size: 21px;margin-left: 10px;font-weight: bold;">百度地图</span>--%>
+                        <%--</div>--%>
+                        <%--<div style="width: 100%;height: 6%;line-height: 30px">--%>
+            <%--<span style="text-align: left;width: 71%;display: inline-block;vertical-align: middle">--%>
+                <%--<!--<map-citys style=""></map-citys>-->--%>
+                <%--<map-search-input style="width: 200px" placeholder="请输入搜寻地址"></map-search-input>--%>
+                <%--<map-search-btn></map-search-btn>--%>
+            <%--</span>--%>
+            <%--<span style="text-align: right;width: 25%;display: inline-block;vertical-align: middle">--%>
+                <%--<map-reset-search value="重置"></map-reset-search>--%>
+                <%--<map-get-position fuc="sss" value="得到点"></map-get-position>--%>
+            <%--</span>--%>
+                        <%--</div>--%>
+                        <%--<div style="width: 100%;height: 88%">--%>
+                            <%--<baidu-map style="height: 97%;width: 97%;display: inline-block" use-gps="true"></baidu-map>--%>
+                            <%--<div map-infor-temp>--%>
+                                <%--<h4>#city#</h4>--%>
+                                <%--<input type="text" style="border: 1px solid red">--%>
+                                <%--<input type="button" click="sss" value="点击打出详情">--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--&lt;%&ndash;<map-show-data-btn value="从后台获取数据" url="../data"></map-show-data-btn>&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;<map-show-position-marker-btn value="显示定位标符"></map-show-position-marker-btn>&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;<map-clear-over-btn value="清除所有标符"></map-clear-over-btn>&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;<map-could-search-input></map-could-search-input>&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;<map-nearby-btn value="搜商家" range="3000"></map-nearby-btn>&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;所有信息在控制台&ndash;%&gt;--%>
+                    <%--</div>--%>
+
+                    <input id="pointt" name="pointt" type="hidden"  ng-model="point">
+
+                    <!--end.content-right-->
+                </div>
+            </div>
+        
+        <!--end.content-->
+</div>
+    <%@include file="/WEB-INF/jsp/common/bottom.jsp" %>
+
+
+
+</body>
+<script type="text/javascript">
+
+
+    function sss(value) {
+        var scope = angular.element($("#form")[0]).scope();
+        $('[map]').hide()
+
+
+//        scope.baiduMap.isHidden=true;
+
+
+        //数据处理
+        scope.piAddr=value.address;
+        var m={}
+        m.pointLat=value.point.lat;
+        m.pointLng=value.point.lng
+        $("[name=pointt]").val(JSON.stringify(m));
+
+
+        console.log(value)
+        scope.$apply()
+    }
+
+
+    angular.module("myApp", ['fastValidate']).controller("controller", function ($scope) {
+//        $scope.baiduMap = {}
+//        $scope.baiduMap.isHidden = true;
+//        $scope.showMap = function () {
+//            $scope.baiduMap.isHidden = false;
+//        }
+          $scope.piAddr = '${providerInfo.piAddr}';
+         /*  $scope.piBrief = '${providerInfo.piBrief}';
+          $scope.piContent = '${providerInfo.piContent}';
+          $scope.userPhoto = '${providerInfo.userPhoto}';
+          $scope.piUrls = '${providerInfo.piUrls}';
+          $scope.piKeywords = '${providerInfo.piKeywords}'; */
+    })
+    
+  
+	 $('#pointt').val('${providerInfo.point}');
+	 
+	 //给网址input 框赋值
+	 var piurls=[];
+	 piurls=${providerInfo.piUrls};
+	 //console.log(piurls.length);
+	 //添加链接网址input框 
+	 for(var i=0;i<piurls.length-1;i++){
+		 var ss=$("#link").clone(true)
+			ss.show(0)
+			ss.addClass("linktemp");
+			$('#links').append(ss).css({height:'+=60px'});
+			$('.content-right').css({height:'+=80px'});
+	 }
+	 //将结果赋值给网址input框
+	  for(var i=0;i<piurls.length;i++){
+		  var temp=[];
+		  temp=piurls[i];
+		  $(".linktemp:eq("+i+")").find(".linkname").val(piurls[i][0]);
+		  $(".linktemp:eq("+i+")").find(".linkurl").val(piurls[i][1]);
+	  }
+	 
+	//将视频url赋给视频div
+	if('${providerInfo.piVideo}'==''){
+      $('#mediadiv').html('<video controls="" width="420" height="170">'
+     +'<source src="${providerInfo.piVideo}">'
+     +'<embed id="myembed" src="${providerInfo.piVideo}"  width="420" height="170" autostart="0" loop="0" />'
+     +'</video>');
+	}
+</script>
+</html>

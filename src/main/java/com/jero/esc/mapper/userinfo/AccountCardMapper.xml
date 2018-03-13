@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.userinfo.AccountCardMapper">
+  <resultMap id="BaseResultMap" type="com.jero.esc.po.userinfo.AccountCard">
+    <id column="AC_ID" jdbcType="VARCHAR" property="acId" />
+    <result column="LOG_ID" jdbcType="VARCHAR" property="logId" />
+    <result column="AC_NO" jdbcType="VARCHAR" property="acNo" />
+    <result column="AC_CELL" jdbcType="VARCHAR" property="acCell" />
+    <result column="AC_CARDID" jdbcType="VARCHAR" property="acCardid" />
+    <result column="AC_BANK" jdbcType="VARCHAR" property="acBank" />
+    <result column="AC_TYPE" jdbcType="INTEGER" property="acType" />
+    <result column="AC_CREATETIME" jdbcType="TIMESTAMP" property="acCreatetime" />
+    <result column="AC_ISDELETE" jdbcType="BIT" property="acIsdelete" />
+    <result column="AC_COMMENT" jdbcType="VARCHAR" property="acComment" />
+    <result column="AC_NAME" jdbcType="VARCHAR" property="acName" />
+  </resultMap>
+  
+  <select id="selectAllCard" resultMap="BaseResultMap">
+  	SELECT
+	account_card.AC_ID,
+	account_card.LOG_ID,
+	account_card.AC_NO,
+	account_card.AC_CELL,
+	account_card.AC_CARDID,
+	account_card.AC_BANK,
+	account_card.AC_TYPE,
+	account_card.AC_CREATETIME,
+	account_card.AC_ISDELETE,
+	account_card.AC_COMMENT,
+	account_card.AC_NAME
+	FROM
+	account_card
+	<where>
+		LOG_ID = #{logId}
+	</where>
+  </select>
+  
+  <sql id="Base_Column_List">
+    AC_ID, LOG_ID, AC_NO, AC_CELL, AC_CARDID, AC_BANK, AC_TYPE, AC_CREATETIME, AC_ISDELETE, 
+    AC_COMMENT,AC_NAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account_card
+    where AC_ID = #{acId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from account_card
+    where AC_ID = #{acId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jero.esc.po.userinfo.AccountCard">
+    insert into account_card (AC_ID, LOG_ID, AC_NO, 
+      AC_CELL, AC_CARDID, AC_BANK, 
+      AC_TYPE, AC_CREATETIME, AC_ISDELETE, 
+      AC_COMMENT,AC_NAME)
+    values (#{acId,jdbcType=VARCHAR}, #{logId,jdbcType=VARCHAR}, #{acNo,jdbcType=VARCHAR}, 
+      #{acCell,jdbcType=VARCHAR}, #{acCardid,jdbcType=VARCHAR}, #{acBank,jdbcType=VARCHAR}, 
+      #{acType,jdbcType=INTEGER}, #{acCreatetime,jdbcType=TIMESTAMP}, #{acIsdelete,jdbcType=BIT}, 
+      #{acComment,jdbcType=VARCHAR},#{acName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jero.esc.po.userinfo.AccountCard">
+    insert into account_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="acId != null">
+        AC_ID,
+      </if>
+      <if test="logId != null">
+        LOG_ID,
+      </if>
+      <if test="acNo != null">
+        AC_NO,
+      </if>
+      <if test="acCell != null">
+        AC_CELL,
+      </if>
+      <if test="acCardid != null">
+        AC_CARDID,
+      </if>
+      <if test="acBank != null">
+        AC_BANK,
+      </if>
+      <if test="acType != null">
+        AC_TYPE,
+      </if>
+      <if test="acCreatetime != null">
+        AC_CREATETIME,
+      </if>
+      <if test="acIsdelete != null">
+        AC_ISDELETE,
+      </if>
+      <if test="acComment != null">
+        AC_COMMENT,
+      </if>
+      <if test="acName != null">
+        AC_NAME,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="acId != null">
+        #{acId,jdbcType=VARCHAR},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="acNo != null">
+        #{acNo,jdbcType=VARCHAR},
+      </if>
+      <if test="acCell != null">
+        #{acCell,jdbcType=VARCHAR},
+      </if>
+      <if test="acCardid != null">
+        #{acCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="acBank != null">
+        #{acBank,jdbcType=VARCHAR},
+      </if>
+      <if test="acType != null">
+        #{acType,jdbcType=INTEGER},
+      </if>
+      <if test="acCreatetime != null">
+        #{acCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acIsdelete != null">
+        #{acIsdelete,jdbcType=BIT},
+      </if>
+      <if test="acComment != null">
+        #{acComment,jdbcType=VARCHAR},
+      </if>
+      <if test="acName != null">
+        #{acName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.userinfo.AccountCard">
+    update account_card
+    <set>
+      <if test="logId != null">
+        LOG_ID = #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="acNo != null">
+        AC_NO = #{acNo,jdbcType=VARCHAR},
+      </if>
+      <if test="acCell != null">
+        AC_CELL = #{acCell,jdbcType=VARCHAR},
+      </if>
+      <if test="acCardid != null">
+        AC_CARDID = #{acCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="acBank != null">
+        AC_BANK = #{acBank,jdbcType=VARCHAR},
+      </if>
+      <if test="acType != null">
+        AC_TYPE = #{acType,jdbcType=INTEGER},
+      </if>
+      <if test="acCreatetime != null">
+        AC_CREATETIME = #{acCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acIsdelete != null">
+        AC_ISDELETE = #{acIsdelete,jdbcType=BIT},
+      </if>
+      <if test="acComment != null">
+        AC_COMMENT = #{acComment,jdbcType=VARCHAR},
+      </if>
+      <if test="acName != null">
+        AC_NAME = #{acName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AC_ID = #{acId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.userinfo.AccountCard">
+    update account_card
+    set LOG_ID = #{logId,jdbcType=VARCHAR},
+      AC_NO = #{acNo,jdbcType=VARCHAR},
+      AC_CELL = #{acCell,jdbcType=VARCHAR},
+      AC_CARDID = #{acCardid,jdbcType=VARCHAR},
+      AC_BANK = #{acBank,jdbcType=VARCHAR},
+      AC_TYPE = #{acType,jdbcType=INTEGER},
+      AC_CREATETIME = #{acCreatetime,jdbcType=TIMESTAMP},
+      AC_ISDELETE = #{acIsdelete,jdbcType=BIT},
+      AC_COMMENT = #{acComment,jdbcType=VARCHAR},
+      AC_NAME = #{acName,jdbcType=VARCHAR}
+    where AC_ID = #{acId,jdbcType=VARCHAR}
+  </update>
+</mapper>

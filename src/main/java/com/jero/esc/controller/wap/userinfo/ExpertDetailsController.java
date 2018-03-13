@@ -1,0 +1,198 @@
+package com.jero.esc.controller.wap.userinfo;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.alibaba.fastjson.JSONObject;
+import com.jero.esc.common.controller.BaseController;
+import com.jero.esc.common.utils.JsonUtil;
+import com.jero.esc.common.utils.fastvalidate.FastValid;
+import com.jero.esc.mapper.userinfo.LogInfoMapper;
+import com.jero.esc.po.userinfo.LogInfo;
+import com.jero.esc.po.userinfo.ProviderInfo;
+import com.jero.esc.po.userinfo.ServiceInfo;
+import com.jero.esc.service.bizinfo.IFocusUtopService;
+import com.jero.esc.service.demand.IDemandService;
+import com.jero.esc.service.userinfo.IProviderDetailsService;
+import com.jero.esc.vo.demand.Demand;
+
+@Controller
+@RequestMapping(value="/wap/userinfo")
+public class ExpertDetailsController extends BaseController {
+	
+	@Autowired
+	IProviderDetailsService providerDetailsService;
+	@Autowired
+	private IDemandService demandService;
+	@Autowired
+	private IFocusUtopService focusUtopService;
+	@Autowired
+	private LogInfoMapper logInfoMapper;
+	/**
+	 * 
+	 *<pre>
+	 *<b> 跳转个人主页 .</b>
+	 *<b>Description:</b> 
+	 *    服务
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-11-9 下午2:20:05
+	 *@param session
+	 *@param logId
+	 *@return
+	 *</pre>
+	 */
+	@RequestMapping("/providerdetails/preproviderdetails")
+	public ModelAndView preProvider(HttpSession session,@RequestParam("logId") String logId){
+		LogInfo logInfo = new LogInfo();
+		logInfo.setLogId(logId);
+		ProviderInfo info = providerDetailsService.queryProviderDetailsById(logInfo,null);
+		RowBounds rowBounds = getRowBounds(1, 6);
+		List<ServiceInfo> list = providerDetailsService.queryServiceInfoByCon(logInfo, rowBounds);
+		info.setServiceInfos(list);
+		int serviceNum=providerDetailsService.countServiceInfoByCon(logInfo);
+		info.setServiceNum(serviceNum);
+		ModelAndView modelAndView = new ModelAndView();
+		//查询粉丝数量
+		int count = focusUtopService.queryFocusCount(logInfo.getLogId());
+		modelAndView.addObject("count", count);
+		modelAndView.setViewName("/wap/userinfo/expertdetails");
+		System.out.println(JSONObject.toJSONString(info.getServiceInfos()));
+		modelAndView.addObject("info", info);
+		return modelAndView;
+	}
+	/**
+	 * 
+	 *<pre>
+	 *<b> 跳转个人主页 .</b>
+	 *<b>Description:</b> 
+	 *    需求
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-11-16 下午2:12:20
+	 *@param session
+	 *@param type
+	 *@return
+	 *</pre>
+	 */
+	@RequestMapping("/providerdetails/preProviderForXuqiu")
+	public ModelAndView preProviderForXuqiu(HttpSession session, String logId){
+		ModelAndView modelAndView = new ModelAndView();
+		LogInfo logInfo = new LogInfo();
+		logInfo.setLogId(logId);
+		//获取个人信息
+		logInfo = logInfoMapper.selectLogInfoByLogId(logInfo);
+		//查询关注数量
+		int countFollow = focusUtopService.queryFocusCountFollow(logInfo.getLogId());
+		modelAndView.addObject("countFollow", countFollow);
+		//查询粉丝数量
+		int count = focusUtopService.queryFocusCount(logInfo.getLogId());
+		modelAndView.addObject("count", count);
+		//获取第一页需求列表
+		RowBounds rowBounds = getRowBounds(1, 6);
+		//根据用户ID查询需求列表
+		List<Demand> list = demandService.selectDemandByLogId(rowBounds, logInfo.getLogId());
+		modelAndView.addObject("list", list);
+		//获取展示用户的信息
+		modelAndView.addObject("info", logInfo);
+		modelAndView.setViewName("/wap/userinfo/demandListforhomepage");
+		return modelAndView;
+	}
+	
+	/**
+	 * 
+	 *<pre>
+	 *<b> 个人中心-个人主页 .</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-11-16 下午2:11:29
+	 *@param session
+	 *@param type
+	 *@return
+	 *</pre>
+	 */
+	@RequestMapping("/providerdetails/preProviderFromUser")
+	public ModelAndView preProviderFromUser(HttpSession session, String type){
+		LogInfo logInfo = null;
+		if("true".equals(type)){
+			logInfo = retrievalCurrentUserInfo(session);
+		}
+		ModelAndView modelAndView = new ModelAndView();
+		if(logInfo != null){
+			//判断用户是否为服务商
+			if(2 == logInfo.getLogType()){
+				ProviderInfo info = providerDetailsService.queryProviderDetailsById(logInfo,null);
+				RowBounds rowBounds = getRowBounds(1, 6);
+				List<ServiceInfo> list = providerDetailsService.queryServiceInfoByCon(logInfo, rowBounds);
+				info.setServiceInfos(list);
+				int serviceNum=providerDetailsService.countServiceInfoByCon(logInfo);
+				info.setServiceNum(serviceNum);
+				//查询粉丝数量
+				int count = focusUtopService.queryFocusCount(logInfo.getLogId());
+				modelAndView.addObject("count", count);
+				modelAndView.setViewName("/wap/userinfo/expertdetails");
+				System.out.println(JSONObject.toJSONString(info.getServiceInfos()));
+				modelAndView.addObject("info", info);
+			}else if(1 == logInfo.getLogType()){
+				//查询关注数量
+				int countFollow = focusUtopService.queryFocusCountFollow(logInfo.getLogId());
+				modelAndView.addObject("countFollow", countFollow);
+				//查询粉丝数量
+				int count = focusUtopService.queryFocusCount(logInfo.getLogId());
+				modelAndView.addObject("count", count);
+				//获取第一页需求列表
+				RowBounds rowBounds = getRowBounds(1, 6);
+				//根据用户ID查询需求列表
+				List<Demand> list = demandService.selectDemandByLogId(rowBounds, logInfo.getLogId());
+				modelAndView.addObject("list", list);
+				//获取展示用户的信息
+				modelAndView.addObject("info", logInfo);
+				modelAndView.setViewName("/wap/userinfo/demandListforhomepage");
+			}
+		}
+		return modelAndView;
+	}
+	
+	@RequestMapping("/providerdetails/ajaxpaging")
+	public void AjaxPaging(HttpSession session,HttpServletResponse response ,@RequestParam("logId") String logId,Integer page){
+		if (FastValid.isEmp(page)){
+            page=2;
+        }
+		RowBounds rowBounds = getRowBounds(page, 6);
+		LogInfo logInfo = new LogInfo();
+		logInfo.setLogId(logId);
+		List<ServiceInfo> list = providerDetailsService.queryServiceInfoByCon(logInfo, rowBounds);
+		JsonUtil.printByJSON(response, list);
+	}
+	/**
+	 * 
+	 *<pre>
+	 *<b> 分页查询需求列表 .</b>
+	 *<b>Description:</b> 
+	 *    根据用户id
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-11-16 上午10:44:43
+	 *@param session
+	 *@param response
+	 *@param logId
+	 *@param page
+	 *</pre>
+	 */
+	@RequestMapping(value="/providerdetails/queryDemandByPage")
+	public void queryDemandByPage(HttpSession session,HttpServletResponse response ,@RequestParam("logId") String logId,Integer page){
+		if (FastValid.isEmp(page)){
+            page=2;
+        }
+		RowBounds rowBounds = getRowBounds(page, 6);
+		List<Demand> list = demandService.selectDemandByLogId(rowBounds, logId);
+		JsonUtil.printByJSON(response, list);
+	}
+}

@@ -1,0 +1,126 @@
+package com.jero.esc.common.weixin;
+
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import com.jero.esc.common.weixin.result.RedPacketResult;
+import com.jero.esc.common.weixin.result.TransfersResult;
+
+/**
+ * 
+ * <pre>
+ * <b> 微信返回结果处理.</b>
+ * <b>Description:</b> 
+ *    返回结果转化为实体类
+ * <b>Author:</b> yanhongyu
+ * <b>Date:</b> 2017-12-12上午11:32:19
+ * <b>Changelog:</b>
+ *   ----------------------------------------------------------------------------
+ *   Ver   Date                     Detail
+ *   ----------------------------------------------------------------------------
+ *   1.0   2017-12-12上午11:32:19         new file.
+ * </pre>
+ */
+public class WeiXinReultReturn {
+	
+	/**
+	 * 
+	 *<pre>
+	 *<b> 微信红包 .</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-12-13 上午9:43:24
+	 *@param jsonStr
+	 *@return
+	 *</pre>
+	 */
+	public static RedPacketResult returnRedPacketResult(String jsonStr){
+		RedPacketResult redPacketResult = new RedPacketResult();
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map = XMLUtil.parseXml(jsonStr);
+			System.out.println(map);
+			redPacketResult = (RedPacketResult) mapToBean(map, RedPacketResult.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return redPacketResult;
+	}
+	
+	/**
+	 * 
+	 *<pre>
+	 *<b> 企业支付 .</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-12-12 上午11:35:37
+	 *@param jsonStr
+	 *@return
+	 *</pre>
+	 */
+	public static TransfersResult returnTransfersReult(String jsonStr){
+		TransfersResult transfersReult = new TransfersResult();
+		// 把返回的字符串解释成DOM节点
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map = XMLUtil.parseXml(jsonStr);
+			System.out.println(map);
+			transfersReult = (TransfersResult) mapToBean(map, TransfersResult.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return transfersReult;
+	}
+	/**
+	 * 
+	 *<pre>
+	 *<b> 利用反正把Map转化为实体类 .</b>
+	 *<b>Description:</b> 
+	 *    
+	 *<b>Author:</b> yanhongyu
+	 *<b>Date:</b> 2017-12-12 下午12:05:46
+	 *@param map
+	 *@param obj
+	 *@return
+	 *@throws Exception
+	 *</pre>
+	 */
+	public static <T> T mapToBean(Map<String, Object> map, Class<T> obj) throws Exception {  
+	    if (map == null) {  
+	        return null;  
+	    }  
+	    Set<Entry<String, Object>> sets = map.entrySet();  
+	    T t = obj.newInstance();  
+	    Method[] methods = obj.getDeclaredMethods();  
+	    for (Entry<String, Object> entry : sets) {  
+	        String str = entry.getKey();  
+	        String setMethod = "set" + str.substring(0, 1).toUpperCase() + str.substring(1);  
+	        for (Method method : methods) {  
+	            if (method.getName().equals(setMethod)) {  
+	                method.invoke(t, entry.getValue());  
+	            }  
+	        }  
+	    }  
+	    return t;  
+	}  
+	
+	public static void main(String[] args) throws Exception {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		
+//		RedPacketEntity red = new RedPacketEntity("1", "1", "1", "1", "1", null, null, "1", "1", null, null, null, null);
+//		
+//		String jsonStr = WeiXinXml.getRedPacketXml(red);
+//		map = XMLUtil.parseXml(jsonStr);
+//		try {
+//			RedPacketEntity transfersReult = (RedPacketEntity) mapToBean(map, RedPacketEntity.class);
+//			System.out.println(transfersReult.getMch_id());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+	}
+}

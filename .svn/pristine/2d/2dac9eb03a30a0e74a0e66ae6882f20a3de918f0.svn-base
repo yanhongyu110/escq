@@ -1,0 +1,1286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jero.esc.mapper.goodsinfo.ServiceInfoMapper">
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"></cache>
+    <resultMap id="BaseResultMap" type="com.jero.esc.po.goodsinfo.ServiceInfo">
+        <id column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="logId"/>
+        <result column="SERVICE_REMARK" jdbcType="VARCHAR" property="serviceRemark"/>
+        <result column="SERVICE_TITLE" jdbcType="VARCHAR" property="serviceTitle"/>
+        <result column="SERVICE_BIREF" jdbcType="VARCHAR" property="serviceBiref"/>
+        <result column="SERVICE_CONTENT" jdbcType="VARCHAR" property="serviceContent"/>
+        <result column="SERVICE_PRICE" jdbcType="VARCHAR" property="servicePrice"/>
+        <result column="SERVICE_RESPONSE" jdbcType="REAL" property="serviceResponse"/>
+        <result column="SERVICE_MEETNUM" jdbcType="INTEGER" property="serviceMeetnum"/>
+        <result column="SERVICE_SUCCESSNUM" jdbcType="INTEGER"
+                property="serviceSuccessnum"/>
+        <result column="SERVICE_ISDELETE" jdbcType="BIT" property="serviceIsdelete"/>
+        <result column="SERVICE_CREATETIME" jdbcType="TIMESTAMP"
+                property="serviceCreatetime"/>
+        <result column="SERVICE_STATE" jdbcType="INTEGER" property="serviceState"/>
+        <result column="SERVICE_MEETTIME" jdbcType="REAL" property="serviceMeettime"/>
+        <result column="SERVICE_TYPE" jdbcType="VARCHAR" property="serviceType"/>
+        <result column="SERVICE_ATTRINFO" jdbcType="VARCHAR" property="serviceAttrinfo"/>
+        <result column="SERVICE_KEYWORDS" jdbcType="VARCHAR" property="serviceKeywords"/>
+        <result column="SERVICE_PIC" jdbcType="VARCHAR" property="servicePic"/>
+        <result column="SERVICE_COMMENT" jdbcType="VARCHAR" property="serviceComment"/>
+        <result column="SERVICE_TYPETREE" jdbcType="VARCHAR" property="typeTree"/>
+        <result column="SERVICE_MARK" jdbcType="REAL" property="serviceMark"/>
+        <!--收藏人数-->
+        <result column="SERVICE_COLLECTNUM" jdbcType="INTEGER" property="serviceCollectNum"/>
+        <!--点赞人数-->
+        <result column="SERVICE_ZANNUM" jdbcType="INTEGER" property="serviceZanNum"/>
+
+        <collection property="serviceRemarks"
+                    resultMap="com.jero.esc.mapper.goodsinfo.ServiceRemarkMapper.BaseResultMap"/>
+        <collection property="priceSets"
+                    resultMap="com.jero.esc.mapper.details.PriceSetMapper.BaseResultMap"/>
+        <collection property="serviceSnapshots"
+                    resultMap="com.jero.esc.mapper.goodsinfo.ServiceSnapshotMapper.BaseResultMap"/>
+    </resultMap>
+
+    <resultMap type="com.jero.esc.vo.userinfo.ServiceVo" id="ServiceVoMap">
+
+
+        <!--服务信息表 -->
+        <id column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="logId"/>
+        <result column="SERVICE_REMARK" jdbcType="VARCHAR" property="serviceRemark"/>
+        <result column="SERVICE_TITLE" jdbcType="VARCHAR" property="serviceTitle"/>
+        <result column="SERVICE_BIREF" jdbcType="VARCHAR" property="serviceBiref"/>
+        <result column="SERVICE_CONTENT" jdbcType="VARCHAR" property="serviceContent"/>
+        <result column="SERVICE_PRICE" jdbcType="VARCHAR" property="servicePrice"/>
+        <result column="SERVICE_RESPONSE" jdbcType="REAL" property="serviceResponse"/>
+        <result column="SERVICE_MEETNUM" jdbcType="INTEGER" property="serviceMeetnum"/>
+        <result column="SERVICE_SUCCESSNUM" jdbcType="INTEGER"
+                property="serviceSuccessnum"/>
+        <result column="SERVICE_ISDELETE" jdbcType="BIT" property="serviceIsdelete"/>
+        <result column="SERVICE_CREATETIME" jdbcType="TIMESTAMP"
+                property="serviceCreatetime"/>
+        <result column="SERVICE_STATE" jdbcType="INTEGER" property="serviceState"/>
+        <result column="SERVICE_MEETTIME" jdbcType="REAL" property="serviceMeettime"/>
+        <result column="SERVICE_TYPE" jdbcType="VARCHAR" property="serviceType"/>
+        <result column="SERVICE_ATTRINFO" jdbcType="VARCHAR" property="serviceAttrinfo"/>
+        <result column="SERVICE_KEYWORDS" jdbcType="VARCHAR" property="serviceKeywords"/>
+        <result column="SERVICE_COMMENT" jdbcType="VARCHAR" property="serviceComment"/>
+        <result column="SERVICE_PIC" jdbcType="VARCHAR" property="servicePic"/>
+        <result column="SERVICE_TYPETREE" jdbcType="VARCHAR" property="typeTree"/>
+        <result column="SERVICE_MARK" jdbcType="VARCHAR" property="serviceMark"/>
+        <!--收藏人数-->
+        <result column="SERVICE_COLLECTNUM" jdbcType="INTEGER" property="serviceCollectNum"/>
+        <!--点赞人数-->
+        <result column="SERVICE_ZANNUM" jdbcType="INTEGER" property="serviceZanNum"/>
+        <!--服务商信息表 -->
+        <result column="PI_ID" jdbcType="VARCHAR" property="piId"/>
+        <result column="PI_AREA" jdbcType="VARCHAR" property="piArea"/>
+        <result column="PI_PHOTO" jdbcType="VARCHAR" property="piPhoto"/>
+        <result column="PI_KEYWORDS" jdbcType="VARCHAR" property="piKeywords"/>
+        <result column="PI_REMARK" jdbcType="REAL" property="piRemark"/>
+        <result column="PI_TYPE" jdbcType="INTEGER" property="piType"/>
+        <result column="PI_REALNAME" jdbcType="VARCHAR" property="piRealname"/>
+        <result column="PI_COMPANY" jdbcType="VARCHAR" property="piCompany"/>
+        <result column="PI_POSITION" jdbcType="VARCHAR" property="piPosition"/>
+        <result column="PI_WORKYEAR" jdbcType="INTEGER" property="piWorkyear"/>
+        <result column="PI_EMAIL" jdbcType="VARCHAR" property="piEmail"/>
+        <result column="PI_CELL" jdbcType="VARCHAR" property="piCell"/>
+        <result column="PI_ADDR" jdbcType="VARCHAR" property="piAddr"/>
+        <result column="PI_ISDELETE" jdbcType="BIT" property="piIsdelete"/>
+        <result column="PI_CONTENT" jdbcType="VARCHAR" property="piContent"/>
+        <result column="PI_BRIEF" jdbcType="VARCHAR" property="piBrief"/>
+        <result column="PI_MEETNUM" jdbcType="INTEGER" property="piMeetnum"/>
+        <result column="PI_DEALNUM" jdbcType="INTEGER" property="piDealnum"/>
+        <result column="PI_RESPONSETIME" jdbcType="INTEGER" property="piResponsetime"/>
+        <result column="PI_URLS" jdbcType="VARCHAR" property="piUrls"/>
+        <result column="PI_COMMENT" jdbcType="VARCHAR" property="piComment"/>
+        <result column="PI_MARK" jdbcType="VARCHAR" property="piMark"/>
+        <!-- 服务类型表 -->
+        <result column="CT_NAME" jdbcType="VARCHAR" property="ctName"/>
+         <!-- 登录信息表 -->
+        <result column="LOG_NAME" jdbcType="VARCHAR" property="logName"/>
+        <!-- 服务评价表 -->
+        <result column="COUNT_REMARK" jdbcType="VARCHAR" property="countRemark"/>
+        <!-- 价格表 -->
+        <result column="PSET_DISCOUNT_TYPE" jdbcType="INTEGER" property="psetDiscountType"/>
+        <result column="PSET_POINT_TYPE" jdbcType="INTEGER" property="psetPointType"/>
+        <result column="PSET_PRICE" jdbcType="REAL" property="psetPrice"/>
+        <result column="PSET_POINT" jdbcType="REAL" property="psetPoint"/>
+        <result column="PSET_CREATE_TIME" jdbcType="TIMESTAMP" property="psetCreateTime"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="psetLogId"/>
+        <result column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId"/>
+        <result column="PSET_COMMENT" jdbcType="VARCHAR" property="psetComment"/>
+
+        <result column="COMPANY" property="company" jdbcType="VARCHAR"/>
+        <result column="DISTANCE" jdbcType="VARCHAR" property="distance"/>
+
+        <!--  阶段表 -->
+        <!-- 	    <result column="SS_ID" jdbcType="VARCHAR" property="ssId"/>
+                <result column="SS_NAME" jdbcType="VARCHAR" property="ssName"/>
+                <result column="SS_DESCRIBE" jdbcType="VARCHAR" property="ssDescribe"/>
+                <result column="SS_PRICE" jdbcType="VARCHAR" property="ssPrice"/>
+                <result column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId"/>
+                <result column="SS_SORT" jdbcType="INTEGER" property="ssSort"/>
+                <result column="LOG_ID" jdbcType="VARCHAR" property="logId"/>
+                <result column="SS_COMMENT" jdbcType="VARCHAR" property="ssComment"/> -->
+
+        <collection property="serviceSteps" ofType="com.jero.esc.po.goodsinfo.ServiceStep" column="SERVICE_ID"
+                    select="com.jero.esc.mapper.goodsinfo.ServiceStepMapper.selectServiceSetById"/>
+        <collection property="priceSets" column="SERVICE_ID"
+                    select="com.jero.esc.mapper.details.PriceSetMapper.selectPriceSetByService"/>
+
+    </resultMap>
+
+    <resultMap type="com.jero.esc.vo.goodsinfo.ServiceInfoVo" id="ServicePriceMap">
+        <!-- 服务信息表 -->
+        <id column="SERVICE_ID" jdbcType="VARCHAR" property="serviceId"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="logId"/>
+        <result column="SERVICE_REMARK" jdbcType="VARCHAR" property="serviceRemark"/>
+        <result column="SERVICE_TITLE" jdbcType="VARCHAR" property="serviceTitle"/>
+        <result column="SERVICE_BIREF" jdbcType="VARCHAR" property="serviceBiref"/>
+        <result column="SERVICE_CONTENT" jdbcType="VARCHAR" property="serviceContent"/>
+        <result column="SERVICE_PRICE" jdbcType="VARCHAR" property="servicePrice"/>
+        <result column="SERVICE_RESPONSE" jdbcType="REAL" property="serviceResponse"/>
+        <result column="SERVICE_MEETNUM" jdbcType="INTEGER" property="serviceMeetnum"/>
+        <result column="SERVICE_SUCCESSNUM" jdbcType="INTEGER"
+                property="serviceSuccessnum"/>
+        <result column="SERVICE_ISDELETE" jdbcType="BIT" property="serviceIsdelete"/>
+        <result column="SERVICE_CREATETIME" jdbcType="TIMESTAMP"
+                property="serviceCreatetime"/>
+        <result column="SERVICE_STATE" jdbcType="INTEGER" property="serviceState"/>
+        <result column="SERVICE_MEETTIME" jdbcType="REAL" property="serviceMeettime"/>
+        <result column="SERVICE_TYPE" jdbcType="VARCHAR" property="serviceType"/>
+        <result column="SERVICE_ATTRINFO" jdbcType="VARCHAR" property="serviceAttrinfo"/>
+        <result column="SERVICE_KEYWORDS" jdbcType="VARCHAR" property="serviceKeywords"/>
+        <result column="SERVICE_COMMENT" jdbcType="VARCHAR" property="serviceComment"/>
+        <result column="SERVICE_PIC" jdbcType="VARCHAR" property="servicePic"/>
+        <result column="SERVICE_MARK" jdbcType="REAL" property="serviceMark"/>
+        <!--收藏人数-->
+        <result column="SERVICE_COLLECTNUM" jdbcType="INTEGER" property="serviceCollectNum"/>
+        <!--点赞人数-->
+        <result column="SERVICE_ZANNUM" jdbcType="INTEGER" property="serviceZanNum"/>
+        <!-- 价格表 -->
+        <result column="PSET_ID" jdbcType="VARCHAR" property="psetId"/>
+        <result column="PSET_DISCOUNT_TYPE" jdbcType="INTEGER" property="psetDiscountType"/>
+        <result column="PSET_POINT_TYPE" jdbcType="INTEGER" property="psetPointType"/>
+        <result column="PSET_PRICE" jdbcType="REAL" property="psetPrice"/>
+        <result column="PSET_POINT" jdbcType="REAL" property="psetPoint"/>
+        <result column="PSET_CREATE_TIME" jdbcType="TIMESTAMP" property="psetCreateTime"/>
+        <result column="LOG_ID" jdbcType="VARCHAR" property="psetLogId"/>
+        <result column="SERVICE_ID" jdbcType="VARCHAR" property="psetServiceId"/>
+        <result column="PSET_COMMENT" jdbcType="VARCHAR" property="psetComment"/>
+        <result column="DISTANCE" jdbcType="VARCHAR" property="distance"/>
+    </resultMap>
+
+    <select id="selectByLogId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from service_info
+        where LOG_ID = #{id} and SERVICE_TITLE = #{serviceTitle}
+    </select>
+
+    <select id="selectServiceByCon" resultMap="ServicePriceMap">
+        SELECT
+        service_info.SERVICE_ID,
+        service_info.LOG_ID,
+        service_info.SERVICE_REMARK,
+        service_info.SERVICE_TITLE,
+        service_info.SERVICE_BIREF,
+        service_info.SERVICE_PRICE,
+        service_info.SERVICE_RESPONSE,
+        service_info.SERVICE_MEETNUM,
+        service_info.SERVICE_SUCCESSNUM,
+        service_info.SERVICE_ISDELETE,
+        service_info.SERVICE_CREATETIME,
+        service_info.SERVICE_STATE,
+        service_info.SERVICE_MEETTIME,
+        service_info.SERVICE_TYPE,
+        service_info.SERVICE_ATTRINFO,
+        service_info.SERVICE_KEYWORDS,
+        service_info.SERVICE_COMMENT,
+        service_info.SERVICE_PIC,
+        service_info.SERVICE_TYPETREE,
+        service_info.SERVICE_MARK,
+        price_set.PSET_PRICE,
+        ROUND(
+        6378.138 * 2 * ASIN(
+        SQRT(
+        POW(
+        SIN(
+        (
+        #{lat} * PI() / 180 - point.POINT_LAT * PI() / 180
+        ) / 2
+        ),
+        2
+        ) + COS(#{lat} * PI() / 180) * COS(point.POINT_LAT * PI() / 180) * POW(
+        SIN(
+        (
+        #{lng} * PI() / 180 - point.POINT_LNG * PI() / 180
+        ) / 2
+        ),
+        2
+        )
+        )
+        ) * 1000
+        ) AS DISTANCE
+        FROM
+        service_info
+        INNER JOIN price_set ON service_info.SERVICE_ID = price_set.SERVICE_ID
+        INNER JOIN log_info ON service_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN provider_info ON log_info.LOG_ID = provider_info.LOG_ID
+        INNER JOIN company_info ON company_info.COMP_ID = provider_info.PI_COM
+        INNER JOIN point ON log_info.LOG_ID = point.POINT_PROVIDER
+        <where>
+            (
+            service_info.SERVICE_TITLE LIKE '%${search}%'
+            AND SERVICE_STATE = 2
+            AND provider_info.PI_AREA LIKE '%${province}%${city}%${area}%'
+            AND SERVICE_ISDELETE = 0
+            OR service_info.SERVICE_KEYWORDS LIKE '%${search}%'
+            AND SERVICE_STATE = 2
+            AND SERVICE_ISDELETE = 0
+            )
+            <if test="type != null and type != '' ">
+                AND SERVICE_TYPETREE LIKE '%${type}%'
+            </if>
+        </where>
+        ORDER BY ${order}
+    </select>
+
+    <select id="selectServiceCountByCon" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        service_info
+        INNER JOIN price_set ON service_info.SERVICE_ID = price_set.SERVICE_ID
+        INNER JOIN log_info ON service_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN provider_info ON log_info.LOG_ID = provider_info.LOG_ID
+        INNER JOIN company_info ON company_info.COMP_ID = provider_info.PI_COM
+        INNER JOIN point ON log_info.LOG_ID = point.POINT_PROVIDER
+        <where>
+            (
+            service_info.SERVICE_TITLE LIKE '%${search}%'
+            AND SERVICE_STATE = 2
+            AND provider_info.PI_AREA LIKE '%${province}%${city}%${area}%'
+            AND SERVICE_ISDELETE = 0
+            OR service_info.SERVICE_KEYWORDS LIKE '%${search}%'
+            AND SERVICE_STATE = 2
+            AND SERVICE_ISDELETE = 0
+            )
+            <if test="type != null and type != '' ">
+                AND SERVICE_TYPETREE LIKE '%${type}%'
+            </if>
+        </where>
+        ORDER BY ${order}
+    </select>
+
+
+    <select id="selectServiceByType" resultMap="ServicePriceMap">
+        SELECT
+        service_info.SERVICE_ID,
+        service_info.LOG_ID,
+        service_info.SERVICE_REMARK,
+        service_info.SERVICE_TITLE,
+        service_info.SERVICE_BIREF,
+        service_info.SERVICE_PRICE,
+        service_info.SERVICE_RESPONSE,
+        service_info.SERVICE_MEETNUM,
+        service_info.SERVICE_SUCCESSNUM,
+        service_info.SERVICE_ISDELETE,
+        service_info.SERVICE_CREATETIME,
+        service_info.SERVICE_STATE,
+        service_info.SERVICE_MEETTIME,
+        service_info.SERVICE_TYPE,
+        service_info.SERVICE_ATTRINFO,
+        service_info.SERVICE_KEYWORDS,
+        service_info.SERVICE_COMMENT,
+        service_info.SERVICE_PIC,
+        service_info.SERVICE_TYPETREE,
+        service_info.SERVICE_MARK,
+        price_set.PSET_PRICE,
+        price_set.PSET_DISCOUNT_TYPE
+        FROM
+        service_info
+        INNER JOIN price_set ON service_info.SERVICE_ID = price_set.SERVICE_ID
+        INNER JOIN log_info ON service_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN provider_info ON log_info.LOG_ID = provider_info.LOG_ID
+        <where>
+            <if test="serviceTypetree!=null and serviceTypetree!=''">
+                service_info.SERVICE_TYPETREE LIKE '%${serviceTypetree}%'
+            </if>
+            AND SERVICE_STATE = 2
+            <if test="(province != null and province != '') or (city != null and city != '') or (area != null and area != '')">
+                AND provider_info.PI_AREA LIKE '%${province}%${city}%${area}%'
+            </if>
+            AND SERVICE_ISDELETE = 0
+        </where>
+        ORDER BY ${order}
+    </select>
+
+    <select id="selectServiceCountByType" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        service_info
+        INNER JOIN price_set ON service_info.SERVICE_ID = price_set.SERVICE_ID
+        INNER JOIN log_info ON service_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN provider_info ON log_info.LOG_ID = provider_info.LOG_ID
+        <where>
+            <if test="serviceTypetree!=null and serviceTypetree!=''">
+                service_info.SERVICE_TYPETREE LIKE '%${serviceTypetree}%'
+            </if>
+            AND SERVICE_STATE = 2
+            AND provider_info.PI_AREA LIKE '%${province}%${city}%${area}%'
+            AND SERVICE_ISDELETE = 0
+            AND log_info.COMPANY=#{com}
+        </where>
+    </select>
+
+    <select id="selectIndexService" resultMap="ServiceVoMap">
+    	SELECT
+		service_info.SERVICE_TITLE,
+		provider_info.PI_REALNAME,
+		provider_info.PI_PHOTO,
+		provider_info.PI_POSITION,
+		provider_info.PI_REMARK,
+		log_info.LOG_NAME,
+		service_info.SERVICE_PIC,
+		service_info.SERVICE_ID,
+		service_info.LOG_ID,
+		service_info.SERVICE_MEETNUM,
+		service_info.SERVICE_SUCCESSNUM,
+		service_info.SERVICE_COLLECTNUM,
+		service_info.SERVICE_ZANNUM,
+		service_info.SERVICE_REMARK,
+        ROUND(
+        6378.138 * 2 * ASIN(
+            SQRT(
+                POW(
+                    SIN(
+                        (
+                            #{lat} * PI() / 180 - point.POINT_LAT * PI() / 180
+                        ) / 2
+                    ),
+                    2
+                ) + COS(#{lat} * PI() / 180) * COS(point.POINT_LAT * PI() / 180) * POW(
+                    SIN(
+                        (
+                            #{lng} * PI() / 180 - point.POINT_LNG * PI() / 180
+                        ) / 2
+                    ),
+                    2
+                )
+            )
+        ) * 1000
+    	) AS DISTANCE
+		FROM
+		service_info
+		INNER JOIN log_info ON service_info.LOG_ID = log_info.LOG_ID
+		INNER JOIN provider_info ON log_info.LOG_ID = provider_info.LOG_ID
+		INNER JOIN point ON log_info.LOG_ID = point.POINT_PROVIDER
+		ORDER BY SERVICE_SUCCESSNUM DESC, SERVICE_CREATETIME DESC
+		LIMIT 20
+    </select>
+
+
+    <select id="selectHomeServiceInfo" resultMap="ServicePriceMap">
+        SELECT
+        service_info.SERVICE_ID,
+        service_info.LOG_ID,
+        service_info.SERVICE_REMARK,
+        service_info.SERVICE_TITLE,
+        service_info.SERVICE_PRICE,
+        service_info.SERVICE_RESPONSE,
+        service_info.SERVICE_MEETNUM,
+        service_info.SERVICE_SUCCESSNUM,
+        service_info.SERVICE_ISDELETE,
+        service_info.SERVICE_CREATETIME,
+        service_info.SERVICE_STATE,
+        service_info.SERVICE_MEETTIME,
+        service_info.SERVICE_TYPE,
+        service_info.SERVICE_ATTRINFO,
+        service_info.SERVICE_KEYWORDS,
+        service_info.SERVICE_COMMENT,
+        service_info.SERVICE_PIC,
+        service_info.SERVICE_MARK,
+        price_set.PSET_PRICE
+        FROM
+        service_info
+        INNER JOIN price_set ON service_info.SERVICE_ID = price_set.SERVICE_ID
+        INNER JOIN log_info ON log_info.LOG_ID = service_info.LOG_ID
+        INNER JOIN provider_info ON provider_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN company_info ON company_info.COMP_ID = provider_info.PI_COM
+        <where>
+            <if test="serviceTypetree!=null and serviceTypetree!=''">
+                service_info.SERVICE_TYPETREE LIKE '%${serviceTypetree}%'
+            </if>
+            AND SERVICE_STATE = 2
+            AND SERVICE_ISDELETE = 0
+            <if test=" module != null and module != '' ">
+                AND company_info.COMP_COMMENTS = #{module}
+            </if>
+        </where>
+        ORDER BY
+        service_info.SERVICE_MEETTIME DESC
+        LIMIT 8
+    </select>
+
+    <sql id="Base_Column_List">
+        SERVICE_ID, LOG_ID, SERVICE_REMARK, SERVICE_TITLE,
+        SERVICE_BIREF,
+        SERVICE_CONTENT,
+        SERVICE_PRICE, SERVICE_RESPONSE,
+        SERVICE_MEETNUM, SERVICE_SUCCESSNUM,
+        SERVICE_ISDELETE,
+        SERVICE_CREATETIME, SERVICE_STATE, SERVICE_MEETTIME, SERVICE_TYPE,
+        SERVICE_ATTRINFO,
+        SERVICE_KEYWORDS, SERVICE_COMMENT,SERVICE_TYPETREE,SERVICE_MARK,SERVICE_PIC,SERVICE_ZANNUM,SERVICE_COLLECTNUM
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from service_info
+        where SERVICE_ID = #{serviceId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectServiceInfo" resultMap="ServiceVoMap" useCache="false">
+        select
+        A.SERVICE_ID,
+        A.LOG_ID,
+        A.SERVICE_REMARK,
+        A.SERVICE_TITLE,
+        A.SERVICE_PRICE,
+        A.SERVICE_RESPONSE,
+        A.SERVICE_MEETNUM,
+        A.SERVICE_SUCCESSNUM,
+        A.SERVICE_ISDELETE,
+        A.SERVICE_CREATETIME,
+        A.SERVICE_STATE,
+        A.SERVICE_MEETTIME,
+        A.SERVICE_TYPE,
+        A.SERVICE_ATTRINFO,
+        A.SERVICE_KEYWORDS,
+        A.SERVICE_COMMENT,
+        A.SERVICE_PIC,
+        B.PSET_DISCOUNT_TYPE,
+        B.PSET_CREATE_TIME,
+        B.PSET_PRICE,
+        C.PI_AREA,
+        D.SS_NAME,
+        D.SS_DESCRIBE
+        from service_info A
+        INNER JOIN price_set AS B ON A.SERVICE_ID = B.SERVICE_ID
+        INNER JOIN provider_info AS C ON A.LOG_ID = C.LOG_ID
+        INNER JOIN service_step AS D ON D.SERVICE_ID = A.SERVICE_ID
+        <where>
+            1=1
+
+            <if test="start != null and start != ''">
+                AND SERVICE_CREATETIME>#{start}
+            </if>
+            <if test="end != null and end != '' ">
+                AND SERVICE_CREATETIME &lt; #{end}
+            </if>
+
+            <if test="serviceId != null">
+                AND A.SERVICE_ID=#{serviceId}
+            </if>
+            <if test="logId != null">
+                AND A.LOG_ID=#{logId}
+            </if>
+            <if test="serviceTitle != null and serviceTitle!=''">
+                AND A.SERVICE_TITLE LIKE
+                CONCAT('%','${serviceTitle}','%' )
+            </if>
+            <if test="servicePrice != null">
+                AND A.SERVICE_PRICE=#{servicePrice}
+            </if>
+            <if test="serviceIsdelete != null">
+                AND A.SERVICE_ISDELETE=#{serviceIsdelete}
+            </if>
+            <if test="psetCreateTime != null and psetCreateTime !=''">
+                AND DATE(B.PSET_CREATE_TIME)=#{psetCreateTime}
+            </if>
+            <if test="serviceCreatetime != null and serviceCreatetime !=''">
+                AND DATE(A.SERVICE_CREATETIME)=#{serviceCreatetime}
+            </if>
+            <if test="serviceType != null and serviceType!=''">
+                AND A.SERVICE_TYPE=#{serviceType}
+            </if>
+            <if test="psetDiscountType != null">
+                AND B.PSET_DISCOUNT_TYPE=#{psetDiscountType}
+            </if>
+            <if test="serviceState != null">
+                AND A.SERVICE_STATE=#{serviceState}
+            </if>
+
+        </where>
+    </select>
+    <select id="countServiceInfo" resultType="java.lang.Integer" useCache="false">
+        select
+        COUNT(*)
+        from service_info A
+        INNER JOIN price_set AS B ON A.SERVICE_ID = B.SERVICE_ID
+        INNER JOIN provider_info AS C ON A.LOG_ID = C.LOG_ID
+        INNER JOIN service_step AS D ON D.SERVICE_ID = A.SERVICE_ID
+        <where>
+            1=1
+
+            <if test="start != null">
+                AND SERVICE_CREATETIME>#{start}
+            </if>
+            <if test="end != null">
+                AND SERVICE_CREATETIME &lt; #{end}
+            </if>
+
+            <if test="serviceId != null">
+                AND A.SERVICE_ID=#{serviceId}
+            </if>
+            <if test="logId != null">
+                AND A.LOG_ID=#{logId}
+            </if>
+            <if test="serviceTitle != null and serviceTitle!=''">
+                AND A.SERVICE_TITLE LIKE
+                CONCAT('%','${serviceTitle}','%' )
+            </if>
+            <if test="servicePrice != null">
+                AND A.SERVICE_PRICE=#{servicePrice}
+            </if>
+            <if test="serviceIsdelete != null">
+                AND A.SERVICE_ISDELETE=#{serviceIsdelete}
+            </if>
+            <if test="psetCreateTime != null and psetCreateTime !=''">
+                AND DATE(B.PSET_CREATE_TIME)=#{psetCreateTime}
+            </if>
+            <if test="serviceCreatetime != null and serviceCreatetime !=''">
+                AND DATE(A.SERVICE_CREATETIME)=#{serviceCreatetime}
+            </if>
+            <if test="serviceType != null and serviceType!=''">
+                AND A.SERVICE_TYPE=#{serviceType}
+            </if>
+            <if test="psetDiscountType != null">
+                AND B.PSET_DISCOUNT_TYPE=#{psetDiscountType}
+            </if>
+        </where>
+    </select>
+    <select id="countByExample" parameterType="com.jero.esc.po.goodsinfo.ServiceInfo" resultType="java.lang.Integer">
+        select
+        COUNT(*)
+        from service_info
+        <where>
+            1=1
+            <if test="ser.serviceId != null">
+                AND SERVICE_ID=#{ser.serviceId}
+            </if>
+            <if test="ser.logId != null">
+                AND LOG_ID=#{ser.logId}
+            </if>
+            <if test="ser.serviceRemark != null">
+                AND SERVICE_REMARK=#{ser.serviceRemark}
+            </if>
+            <if test="ser.serviceTitle != null">
+                AND SERVICE_TITLE=#{ser.serviceTitle}
+            </if>
+            <if test="ser.serviceBiref != null">
+                AND SERVICE_BIREF=#{ser.serviceBiref}
+            </if>
+            <if test="ser.serviceContent != null">
+                AND SERVICE_CONTENT=#{ser.serviceContent}
+            </if>
+            <if test="ser.servicePrice != null">
+                AND SERVICE_PRICE=#{ser.servicePrice}
+            </if>
+            <if test="ser.serviceResponse != null">
+                AND SERVICE_RESPONSE=#{ser.serviceResponse}
+            </if>
+            <if test="ser.serviceMeetnum != null">
+                AND SERVICE_MEETNUM=#{ser.serviceMeetnum}
+            </if>
+            <if test="ser.serviceSuccessnum != null">
+                AND SERVICE_SUCCESSNUM=#{ser.serviceSuccessnum}
+            </if>
+            <if test="ser.serviceIsdelete != null">
+                AND SERVICE_ISDELETE=#{ser.serviceIsdelete}
+            </if>
+            <if test="ser.serviceCreatetime != null">
+                AND SERVICE_CREATETIME=#{ser.serviceCreatetime}
+            </if>
+            <if test="ser.serviceState != null">
+                AND SERVICE_STATE=#{ser.serviceState}
+            </if>
+            <if test="ser.serviceMeettime != null">
+                AND SERVICE_MEETTIME=#{ser.serviceMeettime}
+            </if>
+            <if test="ser.serviceType != null">
+                AND SERVICE_TYPE=#{ser.serviceType}
+            </if>
+            <if test="ser.serviceAttrinfo != null">
+                AND SERVICE_ATTRINFO=#{ser.serviceAttrinfo}
+            </if>
+            <if test="ser.serviceKeywords != null">
+                AND SERVICE_KEYWORDS=#{ser.serviceKeywords}
+            </if>
+            <if test="ser.serviceComment != null">
+                AND SERVICE_COMMENT=#{ser.serviceComment}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="countByRequire" resultType="java.lang.Integer">
+        SELECT
+        COUNT (SERVICE_ID)
+        FROM
+        SERVICE_INFO
+        INNER JOIN PROVIDER_INFO ON
+        PROVIDER_INFO.LOG_ID = SERVICE_INFO.LOG_ID
+        <where>
+            1=1
+            AND LOG_ID=#{logId}
+            <if test="serviceTitle != null">
+                AND SERVICE_INFO.SERVICE_TITLE LIKE
+                CONCAT('%','${serviceTitle}','%' )
+            </if>
+            <if test="box.name != null">
+                AND PROVIDER_INFO.PI_REALNAME LIKE
+                CONCAT('%','${box.name}','%' )
+            </if>
+            <if test="box.star != null">
+                AND SERVICE_CREATETIME>#{box.star}
+            </if>
+            <if test="box.end != null">
+                AND SERVICE_CREATETIME &lt; #{box.end}
+            </if>
+        </where>
+        ORDER BY SERVICE_CREATETIME DESC
+    </select>
+
+    <select id="selectByRequire" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        ,
+        <include
+                refid="com.jero.esc.mapper.userinfo.ProviderInfoMapper.Base_Column_List"/>
+        FROM
+        SERVICE_INFO
+        INNER JOIN PROVIDER_INFO ON PROVIDER_INFO.LOG_ID =
+        SERVICE_INFO.LOG_ID
+        <where>
+            1=1
+            AND LOG_ID=#{logId}
+            <if test="serviceTitle != null">
+                AND SERVICE_INFO.SERVICE_TITLE LIKE
+                CONCAT('%','${serviceTitle}','%' )
+            </if>
+            <if test="box.name != null">
+                AND PROVIDER_INFO.PI_REALNAME LIKE
+                CONCAT('%','${box.name}','%' )
+            </if>
+            <if test="box.star != null">
+                AND SERVICE_CREATETIME>#{box.star}
+            </if>
+            <if test="box.end != null">
+                AND SERVICE_CREATETIME &lt; #{box.end}
+            </if>
+        </where>
+        ORDER BY SERVICE_CREATETIME DESC
+    </select>
+
+    <select id="selectServiceByModule" resultMap="ServiceVoMap">
+        SELECT
+        service_info.SERVICE_ID,
+        service_info.SERVICE_TITLE,
+        service_info.SERVICE_BIREF,
+        service_info.SERVICE_PIC,
+        service_info.SERVICE_TYPE,
+        common_type.CT_NAME
+        FROM
+        service_info
+        INNER JOIN common_type ON service_info.SERVICE_TYPE = common_type.CT_ID
+        <where>
+            <if test="serviceTypetree !=null and serviceTypetree !=''">
+                service_info.SERVICE_TYPETREE LIKE '%${serviceTypetree}%'
+            </if>
+            AND SERVICE_STATE = 2
+            AND SERVICE_ISDELETE = 0
+        </where>
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from
+        service_info
+        where SERVICE_ID = #{serviceId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.jero.esc.po.goodsinfo.ServiceInfo">
+        insert into service_info
+        (SERVICE_ID, LOG_ID, SERVICE_REMARK,
+        SERVICE_TITLE, SERVICE_BIREF,
+        SERVICE_CONTENT,
+        SERVICE_PRICE, SERVICE_RESPONSE, SERVICE_MEETNUM,
+        SERVICE_SUCCESSNUM, SERVICE_ISDELETE, SERVICE_CREATETIME,
+        SERVICE_STATE, SERVICE_MEETTIME, SERVICE_TYPE,
+        SERVICE_ATTRINFO,
+        SERVICE_KEYWORDS, SERVICE_COMMENT
+        )
+        values
+        (#{serviceId,jdbcType=VARCHAR}, #{logId,jdbcType=VARCHAR},
+        #{serviceRemark,jdbcType=VARCHAR},
+        #{serviceTitle,jdbcType=VARCHAR},
+        #{serviceBiref,jdbcType=VARCHAR}, #{serviceContent,jdbcType=VARCHAR},
+        #{servicePrice,jdbcType=VARCHAR}, #{serviceResponse,jdbcType=REAL},
+        #{serviceMeetnum,jdbcType=INTEGER},
+        #{serviceSuccessnum,jdbcType=INTEGER},
+        #{serviceIsdelete,jdbcType=BIT},
+        #{serviceCreatetime,jdbcType=TIMESTAMP},
+        #{serviceState,jdbcType=INTEGER}, #{serviceMeettime,jdbcType=REAL},
+        #{serviceType,jdbcType=INTEGER},
+        #{serviceAttrinfo,jdbcType=VARCHAR},
+        #{serviceKeywords,jdbcType=VARCHAR},
+        #{serviceComment,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.jero.esc.po.goodsinfo.ServiceInfo">
+        insert into service_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="serviceId != null">
+                SERVICE_ID,
+            </if>
+            <if test="logId != null">
+                LOG_ID,
+            </if>
+            <if test="serviceRemark != null">
+                SERVICE_REMARK,
+            </if>
+            <if test="serviceTitle != null">
+                SERVICE_TITLE,
+            </if>
+            <if test="serviceBiref != null">
+                SERVICE_BIREF,
+            </if>
+            <if test="serviceContent != null">
+                SERVICE_CONTENT,
+            </if>
+            <if test="servicePrice != null">
+                SERVICE_PRICE,
+            </if>
+            <if test="serviceResponse != null">
+                SERVICE_RESPONSE,
+            </if>
+            <if test="serviceMeetnum != null">
+                SERVICE_MEETNUM,
+            </if>
+            <if test="serviceSuccessnum != null">
+                SERVICE_SUCCESSNUM,
+            </if>
+            <if test="serviceIsdelete != null">
+                SERVICE_ISDELETE,
+            </if>
+            <if test="serviceCreatetime != null">
+                SERVICE_CREATETIME,
+            </if>
+            <if test="serviceState != null">
+                SERVICE_STATE,
+            </if>
+            <if test="serviceMeettime != null">
+                SERVICE_MEETTIME,
+            </if>
+            <if test="serviceType != null">
+                SERVICE_TYPE,
+            </if>
+            <if test="serviceAttrinfo != null">
+                SERVICE_ATTRINFO,
+            </if>
+            <if test="serviceKeywords != null">
+                SERVICE_KEYWORDS,
+            </if>
+            <if test="serviceComment != null">
+                SERVICE_COMMENT,
+            </if>
+            <if test="typeTree != null">
+                SERVICE_TYPETREE,
+            </if>
+            <if test="serviceMark != null">
+                SERVICE_MARK,
+            </if>
+            <if test="servicePic != null">
+                SERVICE_PIC,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="serviceId != null">
+                #{serviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="logId != null">
+                #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceRemark != null">
+                #{serviceRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceTitle != null">
+                #{serviceTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceBiref != null">
+                #{serviceBiref,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceContent != null">
+                #{serviceContent,jdbcType=VARCHAR},
+            </if>
+            <if test="servicePrice != null">
+                #{servicePrice,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceResponse != null">
+                #{serviceResponse,jdbcType=REAL},
+            </if>
+            <if test="serviceMeetnum != null">
+                #{serviceMeetnum,jdbcType=INTEGER},
+            </if>
+            <if test="serviceSuccessnum != null">
+                #{serviceSuccessnum,jdbcType=INTEGER},
+            </if>
+            <if test="serviceIsdelete != null">
+                #{serviceIsdelete,jdbcType=BIT},
+            </if>
+            <if test="serviceCreatetime != null">
+                #{serviceCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="serviceState != null">
+                #{serviceState,jdbcType=INTEGER},
+            </if>
+            <if test="serviceMeettime != null">
+                #{serviceMeettime,jdbcType=REAL},
+            </if>
+            <if test="serviceType != null">
+                #{serviceType,jdbcType=INTEGER},
+            </if>
+            <if test="serviceAttrinfo != null">
+                #{serviceAttrinfo,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceKeywords != null">
+                #{serviceKeywords,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceComment != null">
+                #{serviceComment,jdbcType=VARCHAR},
+            </if>
+            <if test="typeTree != null">
+                #{typeTree},
+            </if>
+            <if test="serviceMark != null">
+                #{serviceMark},
+            </if>
+            <if test="servicePic != null">
+                #{servicePic},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jero.esc.po.goodsinfo.ServiceInfo">
+        update service_info
+        <set>
+            <if test="logId != null">
+                LOG_ID = #{logId,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceRemark != null">
+                SERVICE_REMARK = #{serviceRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceTitle != null">
+                SERVICE_TITLE = #{serviceTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceBiref != null">
+                SERVICE_BIREF = #{serviceBiref,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceContent != null">
+                SERVICE_CONTENT = #{serviceContent,jdbcType=VARCHAR},
+            </if>
+            <if test="servicePrice != null">
+                SERVICE_PRICE = #{servicePrice,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceResponse != null">
+                SERVICE_RESPONSE = #{serviceResponse,jdbcType=REAL},
+            </if>
+            <if test="serviceMeetnum != null">
+                SERVICE_MEETNUM = #{serviceMeetnum,jdbcType=INTEGER},
+            </if>
+            <if test="serviceSuccessnum != null">
+                SERVICE_SUCCESSNUM =
+                #{serviceSuccessnum,jdbcType=INTEGER},
+            </if>
+            <if test="serviceIsdelete != null">
+                SERVICE_ISDELETE = #{serviceIsdelete,jdbcType=BIT},
+            </if>
+            <if test="serviceCreatetime != null">
+                SERVICE_CREATETIME =
+                #{serviceCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="serviceState != null">
+                SERVICE_STATE = #{serviceState,jdbcType=INTEGER},
+            </if>
+            <if test="serviceMeettime != null">
+                SERVICE_MEETTIME = #{serviceMeettime,jdbcType=REAL},
+            </if>
+            <if test="serviceType != null">
+                SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceAttrinfo != null">
+                SERVICE_ATTRINFO = #{serviceAttrinfo,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceKeywords != null">
+                SERVICE_KEYWORDS = #{serviceKeywords,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceComment != null">
+                SERVICE_COMMENT = #{serviceComment,jdbcType=VARCHAR},
+            </if>
+            <if test="typeTree != null">
+                SERVICE_TYPETREE=#{typeTree},
+            </if>
+            <if test="serviceMark != null">
+                SERVICE_MARK=#{serviceMark},
+            </if>
+            <if test="servicePic != null">
+                SERVICE_PIC=#{servicePic},
+            </if>
+            <if test="serviceZanNum != null">
+                SERVICE_ZANNUM=#{serviceZanNum},
+            </if>
+            <if test="serviceCollectNum != null">
+                SERVICE_COLLECTNUM=#{serviceCollectNum},
+            </if>
+
+        </set>
+        where SERVICE_ID = #{serviceId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jero.esc.po.goodsinfo.ServiceInfo">
+        update
+        service_info
+        set LOG_ID = #{logId,jdbcType=VARCHAR},
+        SERVICE_REMARK =
+        #{serviceRemark,jdbcType=VARCHAR},
+        SERVICE_TITLE =
+        #{serviceTitle,jdbcType=VARCHAR},
+        SERVICE_BIREF =
+        #{serviceBiref,jdbcType=VARCHAR},
+        SERVICE_CONTENT =
+        #{serviceContent,jdbcType=VARCHAR},
+        SERVICE_PRICE =
+        #{servicePrice,jdbcType=VARCHAR},
+        SERVICE_RESPONSE =
+        #{serviceResponse,jdbcType=REAL},
+        SERVICE_MEETNUM =
+        #{serviceMeetnum,jdbcType=INTEGER},
+        SERVICE_SUCCESSNUM =
+        #{serviceSuccessnum,jdbcType=INTEGER},
+        SERVICE_ISDELETE =
+        #{serviceIsdelete,jdbcType=BIT},
+        SERVICE_CREATETIME =
+        #{serviceCreatetime,jdbcType=TIMESTAMP},
+        SERVICE_STATE =
+        #{serviceState,jdbcType=INTEGER},
+        SERVICE_MEETTIME =
+        #{serviceMeettime,jdbcType=REAL},
+        SERVICE_TYPE =
+        #{serviceType,jdbcType=INTEGER},
+        SERVICE_ATTRINFO =
+        #{serviceAttrinfo,jdbcType=VARCHAR},
+        SERVICE_KEYWORDS =
+        #{serviceKeywords,jdbcType=VARCHAR},
+        SERVICE_COMMENT =
+        #{serviceComment,jdbcType=VARCHAR}
+        where SERVICE_ID =
+        #{serviceId,jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="selectServiceDetailsById" parameterType="java.lang.String" resultMap="ServiceVoMap">
+        SELECT
+        provider_info.PI_ID,
+        provider_info.PI_AREA,
+        provider_info.PI_PHOTO,
+        provider_info.PI_KEYWORDS,
+        provider_info.PI_REMARK,
+        provider_info.PI_TYPE,
+        provider_info.PI_REALNAME,
+        provider_info.PI_COMPANY,
+        provider_info.PI_POSITION,
+        provider_info.PI_WORKYEAR,
+        provider_info.PI_EMAIL,
+        provider_info.PI_CELL,
+        provider_info.PI_ADDR,
+        provider_info.PI_ISDELETE,
+        provider_info.PI_CONTENT,
+        provider_info.LOG_ID,
+        provider_info.PI_BRIEF,
+        provider_info.PI_MEETNUM,
+        provider_info.PI_DEALNUM,
+        provider_info.PI_RESPONSETIME,
+        provider_info.PI_URLS,
+        provider_info.PI_COMMENT,
+        provider_info.PI_MARK,
+        provider_info.PI_VIDEO,
+        common_type.CT_TYPE,
+        common_type.CT_ID,
+        common_type.CT_NAME,
+        common_type.CT_FID,
+        price_set.LOG_ID,
+        price_set.PSET_ID,
+        price_set.PSET_DISCOUNT_TYPE,
+        price_set.PSET_POINT_TYPE,
+        price_set.PSET_PRICE,
+        price_set.PSET_POINT,
+        price_set.PSET_CREATE_TIME,
+        price_set.PSET_COMMENT,
+        service_info.SERVICE_ID,
+        service_info.LOG_ID,
+        service_info.SERVICE_REMARK,
+        service_info.SERVICE_TITLE,
+        service_info.SERVICE_BIREF,
+        service_info.SERVICE_CONTENT,
+        service_info.SERVICE_PRICE,
+        service_info.SERVICE_RESPONSE,
+        service_info.SERVICE_MEETNUM,
+        service_info.SERVICE_SUCCESSNUM,
+        service_info.SERVICE_ISDELETE,
+        service_info.SERVICE_CREATETIME,
+        service_info.SERVICE_STATE,
+        service_info.SERVICE_MEETTIME,
+        service_info.SERVICE_TYPE,
+        service_info.SERVICE_ATTRINFO,
+        service_info.SERVICE_KEYWORDS,
+        service_info.SERVICE_COMMENT,
+        service_info.SERVICE_PIC,
+        service_info.SERVICE_TYPETREE,
+        service_info.SERVICE_MARK,
+        service_info.SERVICE_ZANNUM,
+        service_info.SERVICE_COLLECTNUM,
+        log_info.COMPANY
+        FROM
+        service_info
+        INNER JOIN provider_info ON service_info.LOG_ID = provider_info.LOG_ID
+        INNER JOIN common_type ON service_info.SERVICE_TYPE = common_type.CT_ID
+        INNER JOIN price_set ON service_info.SERVICE_ID = price_set.SERVICE_ID
+        AND service_info.LOG_ID = price_set.LOG_ID
+        INNER JOIN log_info ON service_info.LOG_ID = log_info.LOG_ID
+        <where>
+            1=1
+            AND SERVICE_INFO.SERVICE_ID=#{serviceId} AND PRICE_SET.PSET_DISCOUNT_TYPE=#{priceType}
+            <if test="com != null and com != '' ">
+                AND log_info.COMPANY=#{com}
+            </if>
+
+        </where>
+    </select>
+
+
+    <select id="selectServiceSourceById" parameterType="java.lang.String" resultMap="ServiceVoMap">
+        SELECT
+        provider_info.PI_ID,
+        provider_info.PI_AREA,
+        provider_info.PI_PHOTO,
+        provider_info.PI_KEYWORDS,
+        provider_info.PI_REMARK,
+        provider_info.PI_TYPE,
+        provider_info.PI_REALNAME,
+        provider_info.PI_COMPANY,
+        provider_info.PI_POSITION,
+        provider_info.PI_WORKYEAR,
+        provider_info.PI_EMAIL,
+        provider_info.PI_CELL,
+        provider_info.PI_ADDR,
+        provider_info.PI_ISDELETE,
+        provider_info.PI_CONTENT,
+        provider_info.LOG_ID,
+        provider_info.PI_BRIEF,
+        provider_info.PI_MEETNUM,
+        provider_info.PI_DEALNUM,
+        provider_info.PI_RESPONSETIME,
+        provider_info.PI_URLS,
+        provider_info.PI_COMMENT,
+        provider_info.PI_MARK,
+        provider_info.PI_VIDEO,
+        common_type.CT_TYPE,
+        common_type.CT_ID,
+        common_type.CT_NAME,
+        common_type.CT_FID,
+        service_info.SERVICE_ID,
+        service_info.LOG_ID,
+        service_info.SERVICE_REMARK,
+        service_info.SERVICE_TITLE,
+        service_info.SERVICE_BIREF,
+        service_info.SERVICE_CONTENT,
+        service_info.SERVICE_PRICE,
+        service_info.SERVICE_RESPONSE,
+        service_info.SERVICE_MEETNUM,
+        service_info.SERVICE_SUCCESSNUM,
+        service_info.SERVICE_ISDELETE,
+        service_info.SERVICE_CREATETIME,
+        service_info.SERVICE_STATE,
+        service_info.SERVICE_MEETTIME,
+        service_info.SERVICE_TYPE,
+        service_info.SERVICE_ATTRINFO,
+        service_info.SERVICE_KEYWORDS,
+        service_info.SERVICE_COMMENT,
+        service_info.SERVICE_PIC,
+        service_info.SERVICE_TYPETREE,
+        service_info.SERVICE_MARK
+        FROM
+        SERVICE_INFO
+        INNER JOIN provider_info ON service_info.LOG_ID = provider_info.LOG_ID
+        INNER JOIN common_type ON service_info.SERVICE_TYPE = common_type.CT_ID
+        INNER JOIN log_info ON service_info.LOG_ID = log_info.LOG_ID
+        <where>
+            SERVICE_INFO.SERVICE_ID=#{serviceId}
+            AND log_info.COMPANY=#{com}
+        </where>
+    </select>
+
+    <select id="selectServiceByProvider" resultMap="ServiceVoMap">
+        SELECT
+        provider_info.PI_PHOTO,
+        service_info.SERVICE_PIC,
+        service_info.SERVICE_ID,
+        provider_info.PI_MARK,
+        provider_info.LOG_ID,
+        provider_info.PI_DEALNUM,
+        provider_info.PI_POSITION,
+        provider_info.PI_REALNAME,
+        provider_info.PI_REMARK,
+        service_info.SERVICE_TITLE,
+        service_info.SERVICE_REMARK
+        FROM
+        provider_info
+        INNER JOIN log_info ON provider_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN service_info ON log_info.LOG_ID = service_info.LOG_ID
+        INNER JOIN price_set ON service_info.SERVICE_ID = price_set.SERVICE_ID
+        INNER JOIN company_info ON provider_info.PI_COM = company_info.COMP_ID
+        where
+        1=1
+        <if test="com!=null and com != ''">
+            AND company_info.COMP_COMMENTS LIKE '%${com}%'
+        </if>
+        GROUP BY
+        provider_info.PI_ID
+        ORDER BY
+        ${order}
+    </select>
+
+    <select id="selectServiceCountByProvider" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM(
+        SELECT
+        provider_info.PI_PHOTO,
+        service_info.SERVICE_PIC,
+        provider_info.PI_MARK,
+        provider_info.PI_DEALNUM,
+        provider_info.PI_POSITION,
+        provider_info.PI_REALNAME,
+        provider_info.PI_REMARK,
+        service_info.SERVICE_TITLE,
+        service_info.SERVICE_REMARK
+        FROM
+        provider_info
+        INNER JOIN log_info ON provider_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN service_info ON log_info.LOG_ID = service_info.LOG_ID
+        INNER JOIN company_info ON provider_info.PI_COM = company_info.COMP_ID
+        where
+        1=1
+        <if test="com!=null and com != ''">
+            AND company_info.COMP_COMMENTS LIKE '%${com}%'
+        </if>
+        GROUP BY
+        provider_info.PI_ID
+        ORDER BY
+        ${order}
+        ) A
+    </select>
+
+    <select id="selectGreatService" resultMap="ServicePriceMap">
+        SELECT
+        service_info.SERVICE_ID,
+        service_info.SERVICE_TITLE,
+        price_set.PSET_PRICE,
+        service_info.SERVICE_PIC,
+        service_info.SERVICE_MARK,
+        service_info.SERVICE_SUCCESSNUM
+        FROM
+        service_info
+        INNER JOIN price_set ON service_info.SERVICE_ID = price_set.SERVICE_ID
+        INNER JOIN log_info ON service_info.LOG_ID = log_info.LOG_ID
+        where
+        1=1
+        <if test="com!=null and com!=''">
+            and SERVICE_TYPETREE LIKE '%${com}%'
+        </if>
+        and SERVICE_STATE = 2
+        order by
+        ${order}
+    </select>
+
+    <select id="selectGreatServiceCount" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        service_info
+        INNER JOIN price_set ON service_info.SERVICE_ID = price_set.SERVICE_ID
+        INNER JOIN log_info ON service_info.LOG_ID = log_info.LOG_ID
+        where
+        1=1
+        <if test="com!=null and com!=''">
+            and SERVICE_TYPETREE LIKE '%${com}%'
+        </if>
+        and SERVICE_STATE = 2
+        order by
+        ${order}
+
+    </select>
+    <select id="selectTest" resultType="java.util.Map">
+        SELECT * from service_info
+    </select>
+    <select id="selectNewService" resultMap="ServicePriceMap">
+        SELECT
+        service_info.SERVICE_ID,
+        SERVICE_TITLE,
+        SERVICE_SUCCESSNUM,
+        SERVICE_PIC,
+        SERVICE_MARK,
+        PSET_PRICE,
+        ROUND(
+        6378.138 * 2 * ASIN(
+        SQRT(
+        POW(
+        SIN(
+        (
+        #{lat} * PI() / 180 - point.POINT_LAT * PI() / 180
+        ) / 2
+        ),
+        2
+        ) + COS(#{lat} * PI() / 180) * COS(point.POINT_LAT * PI() / 180) * POW(
+        SIN(
+        (
+        #{lng} * PI() / 180 - point.POINT_LNG * PI() / 180
+        ) / 2
+        ),
+        2
+        )
+        )
+        ) * 1000
+        ) AS DISTANCE
+        from service_info
+        INNER JOIN price_set ON service_info.SERVICE_ID = price_set.SERVICE_ID
+        INNER JOIN log_info ON service_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN point ON log_info.LOG_ID = point.POINT_PROVIDER
+        <where>
+            SERVICE_STATE = 2
+            AND SERVICE_ISDELETE = 0
+        </where>
+        ORDER BY SERVICE_CREATETIME DESC
+    </select>
+
+    <select id="selectNewServiceCount" resultType="int">
+        SELECT COUNT(*) from service_info
+        INNER JOIN price_set ON service_info.SERVICE_ID = price_set.SERVICE_ID
+        INNER JOIN log_info ON service_info.LOG_ID = log_info.LOG_ID
+        INNER JOIN point ON log_info.LOG_ID = point.POINT_PROVIDER
+        <where>
+            SERVICE_STATE = 2
+            AND SERVICE_ISDELETE = 0
+        </where>
+        ORDER BY SERVICE_CREATETIME DESC
+    </select>
+</mapper>

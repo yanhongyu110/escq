@@ -1,0 +1,117 @@
+package com.jero.esc.service.impl.userinfo;
+
+import java.util.List;
+
+import com.jero.esc.common.utils.JsonUtil;
+import com.jero.esc.common.utils.exception.ExceptionWithMessage;
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jero.esc.common.po.JsonResult;
+import com.jero.esc.mapper.userinfo.AccountInfoMapper;
+import com.jero.esc.po.userinfo.AccountInfo;
+import com.jero.esc.service.userinfo.IAccountInfoService;
+import com.jero.esc.vo.pay.AccountDrawVo;
+import com.jero.esc.vo.userinfo.AccountVo;
+
+/**
+ * @copyright 上善云图信息技术有限公司
+ * @author zqy
+ * @version v1.0  （版本号）
+ * @date 2016年12月8日
+ * @description 账户信息   交易类型  1 支出  2收入  支付类型  1三方平台  2微信  3支付宝
+ */
+@Service
+public class AccountInfoService implements IAccountInfoService{
+	
+	@Autowired
+	private AccountInfoMapper accountInfoMapper;
+	
+	@Override
+	public List<AccountVo> queryLogAccById(RowBounds rb, String logId) {
+		return accountInfoMapper.selectLogAccById(rb, logId);
+	}
+
+	@Override
+	public Integer queryLogAccCountById(String logId) {
+		return accountInfoMapper.selectLogAccCountById(logId);
+	}
+
+	/**
+	 * @version v1.0 (版本号)
+	 * @date 2016年12月8日
+	 * @description 增加账户信息
+	 * @param record
+	 * @return Integer
+	 * @method addSelective
+	 */
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public Integer addSelective(AccountInfo record) {
+		return accountInfoMapper.insertSelective(record);
+	}
+
+	@Override
+	public List<AccountInfo> queryBalanceById(String logId) {
+		return accountInfoMapper.selectBalanceById(logId);
+	}
+	
+	/**
+	*@version v1.0 
+	*@date 2016年12月14日
+	*@description 根据logId修改账号密码
+	*@param accountInfo
+	*@return Integer
+	*@method modifyPayPassById
+	 */
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public Integer modifyPayPassById(AccountInfo accountInfo) {
+		return accountInfoMapper.updateByLogId(accountInfo);
+	}
+
+	@Override
+	public Boolean judgePayPass(AccountInfo record) throws ExceptionWithMessage {
+		JsonResult jr=new JsonResult();
+		//前台得到密码
+		String frontPass=record.getAccPaypass();
+		//数据库获取密码
+		String dataPass=accountInfoMapper.selectBalanceById(record.getLogId()).get(0).getAccPaypass();
+		
+		if(dataPass==null||dataPass.isEmpty()){
+			throw new ExceptionWithMessage("您还未设定支付密码");
+		}else if(dataPass!=frontPass){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	@Override
+	public AccountDrawVo queryAccountDrawByLogId(String logId) {
+		return accountInfoMapper.selectByLogId(logId);
+	}
+
+	@Override
+	public Integer modifyAccBalanceByLogId(String logId, int ioType, float ioMoney) {
+		// TODO Auto-generated method stub
+		// 根据  logid 获取相关账户信息
+		AccountInfo  accInfo  = accountInfoMapper.selectBalanceById(logId).get(0);
+		// 拿到当前账户信息的 余额
+		float  accCurrentBalance = accInfo.getAccBalance();
+		// 根据支付类型 设置相关 的信息
+		if(ioType == 1){ // 表是收入 
+			accCurrentBalance += ioMoney; 
+		}else if(ioType==-1){ // 表示支出
+			accCurrentBalance -= ioMoney; 
+		}else{ // 表示  不知道 不做任何操作
+		}
+		accInfo.setAccBalance(accCurrentBalance);
+		//  根据 新的  账户信息  跟新相关的数据   // 这里 创建对象存在优化  因为  mapper 更新 传递的是po对象 为了避免增加mapper的接口方法
+		return accountInfoMapper.updateByLogId(accInfo);
+	}
+	
+	
+}

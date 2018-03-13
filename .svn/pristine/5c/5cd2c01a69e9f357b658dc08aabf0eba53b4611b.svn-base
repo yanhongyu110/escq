@@ -1,0 +1,266 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/common.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>服务详情展示</title>
+<meta content="yes" name="apple-mobile-web-app-capable">
+<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+<meta name="apple-touch-fullscreen" content="yes">
+<!-- 开启对web app程序的支持  -->
+<meta content="telephone=no,email=no" name="format-detection">
+<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+<!--base css-->
+<meta name="viewport"
+	content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+<link rel="stylesheet" href="${webtxc}/css/wap/reset.css" />
+<link rel="stylesheet" href="${webtxc}/css/wap/index.css?val=1234" />
+<script src="${webtxc }/js/wap/jquery-1.9.1.min.js"></script>
+<script src="${webtxc}/js/wap/reset.js"></script>
+<script type="text/javascript">
+var loginfo='${sessionScope.logInfo}';
+var aBoolean = ${aBoolean};
+var scRes = ${scRes};
+var serviceId = '${serviceVo.serviceId}'
+</script>
+<%--<script type="text/javascript">--%>
+<%--var serviceTypetree = '${serviceTypetree}';--%>
+<%--var serviceId = '${serviceVo.serviceId}';--%>
+<%--</script>--%>
+	<script type="text/javascript" src="${webtxc }/js/wap/common.js?v=12312"></script>
+	<script type="text/javascript" src="${webtxc }/myjs/wap/goodsinfo/servicedetails.js?v=1231212132312123312"></script>
+
+	<%-- wap分享样式 --%>
+	<link rel="stylesheet" href="${webtxc}/css/wap/jqShare.css" />
+</head>
+<body>
+	<input id="serviceId" value="${serviceVo.serviceId}" type="hidden">
+	<input class="scartNum" value="1" type="hidden">
+	<input class="scartSource" value="1" type="hidden">
+	<form id="formsubmit" action="${webtxc}/wap/saleinfo/order/viewAddOrder.html" method="post">
+		<input type="hidden" class="cartList" name="cartList">
+	</form>
+	<!--wapper-->
+	<div class="wapper">
+		<!--page-->
+		<div id="page" style="margin-bottom: 56px;">
+			<div class="service_main">
+				<div class="service_main_img">
+					<img src="${serviceVo.servicePic}" />
+					<div class="service_main_img_ms">
+							<span>约见${serviceVo.serviceSuccessnum ==null?0:serviceVo.serviceSuccessnum }人</span>
+						<span>${serviceVo.serviceMeetnum ==null?0:serviceVo.serviceMeetnum }人想见</span>
+						<span><font class="zanNum">${serviceVo.serviceZanNum ==null?0:serviceVo.serviceZanNum }</font>人点赞</span>
+					</div>
+				</div>
+				<!--end.service_main_img-->
+				<div class="service_main_introduce">
+					<div class="wap_service_xq">
+						<div class="title cf">
+							<ul class="title-list fr cf ">
+								<li class="on">服务详情</li>
+								<li>服务评价</li>
+
+								<p></p>
+							</ul>
+						</div>
+
+						<div class="service_content ">
+							<div class="service_content_pj show " id="fxContent">
+								<div class="service_content_jianjie ">
+									<div class="servicer_phto">
+										<img src="${serviceVo.piPhoto }" onclick="window.location.href=path+'/wap/userinfo/providerdetails/preproviderdetails.html?logId=${serviceVo.logId }'"/>
+									</div>
+
+									<div class="service_main_introduce_title">
+										<h3>${serviceVo.serviceTitle }</h3>
+										<!--  <p>${serviceVo.piRealname}/${serviceVo.piPosition}</p>-->
+										<p>
+											<b>￥${serviceVo.psetPrice }</b>
+										</p>
+
+
+										<!--<div class="gm_xq">
+												<span class="pay">购买服务</span>
+												<span class="sc">收藏服务</span>
+											</div>-->
+									</div>
+									<!--end.service_main_introduce_title-->
+
+                                    <!--
+									<div class="s_jianjie">
+										<p>${serviceVo.serviceBiref }</p>
+									</div>
+									<!--end.s_jianjie-->
+
+									<div class="service_content_p">${serviceVo.serviceContent }</div>
+									<div class="service_content_pj_list" id="service_content_pj_list"></div>
+									<div class="jiaz" style="display: none;"></div>
+									<!--end.service_content_pj_list-->
+								</div>
+								<!--end.service_content_jianjie-->
+								<c:if test="${sessionScope.logInfo.logId!=serviceVo.logId }">
+									<div class="service_content_img_pay">
+										<div id="zan" class="dianzan">点赞(<span id="zanNum">${serviceVo.serviceZanNum != null ? serviceVo.serviceZanNum : 0}</span>)</div>
+										<%--<div style="margin: 0px auto">--%>
+										<div class="guanzhu">收藏(<span id="scNum">${serviceVo.serviceCollectNum != null ? serviceVo.serviceCollectNum : 0}</span>)</div>
+										<div class="fenx" onclick="fxClick();return false;">分享</div>
+										<div class="goumai" id="yuejian" >约见</div>
+										<%--</div>--%>
+
+									</div>
+								</c:if>
+								<!--end.service_content_img_pay-->
+								<c:if test="${fn:length(serviceVoTree) gt 1 }">
+									<div class="expert_qtss">
+										<h4>其他服务</h4>
+									</div>
+
+
+									<div class="service_content_jianjie ">
+										<c:forEach var="serviceInfoVo" items="${serviceVoTree}">
+											<c:if
+												test="${serviceInfoVo.serviceId !=serviceVo.serviceId }">
+												<a
+													href="${webtxc}/wap/goodsinfo/service/queryServiceDetails.html?serviceId=${serviceInfoVo.serviceId }&priceType=1">
+													<div class="service_list">
+														<div class="service_main_introduce_img">
+															<img src="${serviceInfoVo.servicePic }" />
+														</div>
+														<div class="service_main_introduce_title">
+															<h3>${serviceInfoVo.serviceTitle }</h3>
+
+															<p>
+																<b>￥${serviceInfoVo.psetPrice }</b>
+															</p>
+
+
+														</div>
+													</div>
+												</a>
+											</c:if>
+										</c:forEach>
+										<!--end.service_main_introduce_title-->
+										<!--end.s_jianjie-->
+									</div>
+								</c:if>
+								<!--end.service_content_jianjie-->
+							</div>
+							<!--end.service_content_pj-->
+							<div class="service_content_pj">
+								<c:forEach begin="0" end="2" var="providerVo"
+									items="${providerVoTree}">
+									<div class="expert_qt">
+										<a
+											href="${webtxc}/wap/userinfo/providerdetails/preproviderdetails.html?logId=${providerVo.piLogId}">
+											<div class="service_list_img">
+												<img src="${providerVo.piPhoto}" />
+											</div>
+											<div class="service_list_title">
+												<h3>${providerVo.piRealname}</h3>
+												<font>${providerVo.piPosition}</font><span>${providerVo.piDealnum}人约见</span>
+											</div>
+										</a>
+									</div>
+								</c:forEach>
+								<!--end.service_list-->
+							</div>
+							<!--end.expert_qt-->
+						</div>
+						<!--end.service_content_pj-->
+					</div>
+					<!--end.service_content-->
+				</div>
+				<!--end.wap_service_xq-->
+			</div>
+			<!--end.service_main_introduce-->
+		</div>
+		<!--end.service_main-->
+	</div>
+	<!--page end-->
+	</div>
+	<!--wapper end-->
+
+	<!--  分享模块开始 -->
+	<div id="jqShareMT">
+		<div id="jqShare" class="kePublic">
+			<span class="shareClosed"  onclick="fxClose();return false;"></span>
+		<!--效果html开始-->
+		<style type="text/css">
+			.bdsharebuttonbox a { width: 60px!important; height: 60px!important; margin: 0 auto 10px!important; float: none!important; padding: 0!important; display: block; }
+			.bdsharebuttonbox a img { width: 60px; height: 60px; }
+			.bdsharebuttonbox .bds_tsina { background: url(../../../images/wap/gbRes_6.png) no-repeat center center/60px 60px; }
+			.bdsharebuttonbox .bds_qzone { background: url(../../../images/wap/gbRes_4.png) no-repeat center center/60px 60px; }
+			.bdsharebuttonbox .bds_tqq { background: url(../../../images/wap/gbRes_5.png) no-repeat center center/60px 60px; }
+			.bdsharebuttonbox .bds_weixin { background: url(../../../images/wap/gbRes_2.png) no-repeat center center/60px 60px; }
+			.bdsharebuttonbox .bds_weixin2 { background: url(../../../images/wap/gbRes_7.png) no-repeat center center/60px 60px; }
+			.bdsharebuttonbox .bds_sqq { background: url(../../../images/wap/gbRes_3.png) no-repeat center center/60px 60px; }
+			.bdsharebuttonbox .bds_renren { background: url(../../../images/wap/gbRes_1.png) no-repeat center center/60px 60px; }
+			.bd_weixin_popup .bd_weixin_popup_foot { position: relative; top: -12px; }
+		</style>
+		<div class="gb_resLay">
+			<div class="gb_res_t"><span>分享到</span><i></i></div>
+			<div class="bdsharebuttonbox">
+				<ul class="gb_resItms">
+						<li onclick="fxSelect(this); return fasle;"> <a title="分享到微信" href="#" class="bds_weixin"  ></a>微信好友 </li>
+						<li onclick="fxSelect(this); return fasle;"> <a title="分享到微信" href="#" class="bds_weixin2"  ></a>微信朋友圈 </li>
+						<li onclick="fxSelect(this); return fasle;"> <a title="分享到QQ好友" href="#" class="bds_sqq"  ></a>QQ好友 </li>
+						<li onclick="fxSelect(this); return fasle;"> <a title="分享到QQ好友" href="#" class="bds_qzone"  ></a>QQ空间 </li>
+						<li onclick="fxSelect(this); return fasle;"> <a title="分享到新浪微博" href="#" class="bds_tsina" ></a>新浪微博 </li>
+				</ul>
+			</div>
+		</div>
+		<!--效果html结束-->
+		<div class="clear"></div>
+	</div>
+	</div>
+	<script type="text/javascript">
+	function fxClick(){
+		$("#jqShareMT").show();
+        $("#jqShare").css({bottom:"0px"});
+	}
+	function fxClose(){
+		 $("#jqShareMT").hide();
+         $("#jqShare").css({bottom:"170px"});
+	}
+	function fxSelect(e){
+		var  type  = $(e).index()+1+"";
+		//console.log(type);
+        //var  $divInfo  = $(".artical_xqs");
+        var  title = '${serviceVo.serviceTitle}';
+        var  content = title;
+        title=title.substring(0, 10)+"···";
+        var  url  = window.location.href;
+        var  imgUrl = path+"/images/logo.png";
+        wapShare(type,title,content,url,imgUrl);
+	}
+        $(function () {
+           /*  $(document).on("click",".fenx",function () {
+                $("#jqShareMT").show();
+                $("#jqShare").css({bottom:"0px"});
+            });
+            $(document).on("click",".shareClosed",function () {
+                $("#jqShareMT").hide();
+                $("#jqShare").css({bottom:"170px"});
+            });
+
+            $(".gb_resItms li").on("click",function () {
+				var  type  = $(this).index()+1;
+				var  $divInfo  = $("#fxContent .service_content_jianjie:eq(0)");
+				var  title = $divInfo.find(".service_main_introduce_title h3").html();
+				var  content = $divInfo.find(".service_content_p").html();
+				var  url  = window.location.href;
+				var  imgUrl = localhostPath + $divInfo.find(".servicer_phto img").attr("src");
+				wapShare(type,title,content,url,imgUrl);
+            }); */
+
+        });
+	</script>
+	<!--  分享模块结束 -->
+
+	<%@ include file="/WEB-INF/jsp/wap/common/bottom.jsp"%>
+</body>
+</html>

@@ -1,0 +1,183 @@
+var order = "PI_DEALNUM DESC";
+$(function(){
+	showDiv(jsonList,1);
+	$('.sv_sx_zz a').click(function(){
+		$(this).siblings().css("color","#999");
+		$(this).siblings().css("border","none");
+		$(this).siblings().css("background","url("+path+"/images/up.png) no-repeat 75px 5px");
+		$('.no_bg').css("background","none");
+		if($(this).text()=='综合排序'){
+			order = 'PI_DEALNUM DESC';
+			$(this).css("color","#FB5A5A");
+			$(this).css("border","1px solid #FB5A5A");
+		}else if($(this).text()=='约见最多'){
+			order = 'PI_MEETNUM DESC';
+			$(this).css("color","#FB5A5A");
+			$(this).css("background","url("+path+"/images/up_hover.png) no-repeat 75px 5px");
+			$(this).css("border","1px solid #FB5A5A");
+		}else if($(this).text()=='口碑最好'){
+			order = 'PI_MARK DESC';
+			$(this).css("color","#FB5A5A");
+			$(this).css("background","url("+path+"/images/up_hover.png) no-repeat 75px 5px");
+			$(this).css("border","1px solid #FB5A5A");
+		}else if($(this).text()=='价格最高'){
+			order = 'PSET_PRICE DESC';
+			$(this).css("color","#FB5A5A");
+			$(this).css("background","url("+path+"/images/up_hover.png) no-repeat 75px 5px");
+			$(this).css("border","1px solid #FB5A5A");
+		}
+		selectCommonAjax(1);
+	});
+	$('#typeull').on('click','li',function(){
+		serviceTypetree = $(this).attr('val');
+			jQuery('<form action="'+path+"/goodsinfo/ServiceInfo/showServiceList.html"+'" method="post">'
+					+'<input type="hidden" name="serviceTypetree" value="'+ serviceTypetree +'" />'
+					+'</form>').appendTo('body').submit().remove();
+	})
+	$(".addfocus").click(function(){
+		var xx = $(this);
+		if(thelogId!=$(this).attr('aa')){
+			$.ajax({
+				type : "POST",
+				url : path+"/bizinfo/focusutop/addFocus.html",
+				data :{providerLogId:$(this).attr("aa")},
+				success : function(result) {//返回数据根据结果进行相应的处理
+					var ajaxobj=JSON.parse(result);
+					if(ajaxobj.success){
+						alert(ajaxobj.errorMsg);
+						xx.html("已关注");
+						xx.unbind("click");
+					}else {
+						alert(ajaxobj.errorMsg);
+					}
+				}
+			});
+		}else{
+			alert("不能关注自己！");
+		}
+	})
+})
+function selectCommonAjax(pageNo){
+	$.ajax({
+			type : "post",
+			url : path+'/goodsinfo/ServiceInfo/showMorePageByAjax.html',
+			dataType:'json',
+			data:{
+				'order':order,
+				'page':pageNo,
+				'serviceTypetree':serviceTypetree,
+				'stId':stId
+			},
+			success:function(res){
+				console.info(res)
+				$('#allcount').empty();
+				$('#allcount').append(res.count);
+				count = res.count;
+				$("#showul").empty();
+				$("#pageDiv").empty();
+				showDiv(res.showList,res.pageNo);
+			},error:function (XMLHttpRequest, textStatus, errorThrown) {
+				alert("请求对象XMLHttpRequest: "+XMLHttpRequest);
+				alert("错误类型textStatus: "+textStatus);
+				alert("异常对象errorThrown: "+errorThrown);
+			}
+	});
+}
+function showDiv(res,pageNo){
+	for(var i in res){
+		var arr = res[i];
+		var piPhoto = arr["piPhoto"];
+		var piLogId = arr["logId"];
+		var piRealname = arr["piRealname"];
+		var piPosition = arr["piPosition"];
+		var piDealnum = arr["piDealnum"];
+		var servicePic = arr["servicePic"];
+		var serviceId = arr["serviceId"];
+		var serviceTitle = arr["serviceTitle"];
+		var piMark = arr["piMark"];
+		if(piMark!=null){
+			piMark = arr["piMark"].toFixed(0);
+		}
+		var inner = '<li>'
+					+'<div  class="item-panel">'
+					+'<div class="server_tx">'
+					+'<ul>'
+					+'<li><img src="'+(piPhoto||"")+'"></li>'
+					+'<li>'
+					+'<p><span><a style="text-decoration: none;" href="'+path+'/userinfo/providerdetails/preproviderdetails.html?logId='+piLogId+'&comId='+g_comid+'">'+(piRealname||"")+'</a></span><span class="addfocus" aa="'+(piLogId||"")+'">关注</span></p>'
+					+'<p>'+(piPosition||"")+'</p>'
+					+'</li>'
+					+'</ul>'
+					+'</div>'
+					+'<div class="item-pic">'
+					+'<a href="'+path+'/goodsinfo/service/queryServiceDetails.html?serviceId='+(serviceId||"")+'&comId='+g_comid+'&priceType=1" target="_blank">'
+					+'<img style="100%" src="'+(servicePic||"")+'">'
+					+'</a>'
+					+'</div>'
+					+'<div class="item-addition">'
+					+'<div class="clearfix">'
+					+'</div>'
+					+'<div class="satisfaction">'
+					+'<span class="">'+(piDealnum||0)+'人约见</span>'
+					+'</div>'
+					+'<div class="number">'
+					+'<span><em>评分：</em>'+(piMark||0)+'</span>'
+					+'</div>'
+					+'</div>'
+					+'</div>'
+					+'</li>'
+		var inner1 = '<li>'
+						+'<div class="item-panel">'
+						+'<div class="server_tx">'
+						+'<ul>'
+						+'<li><img src="'+(piPhoto||"")+'"></li>'
+						+'<li>'
+						+'<p><span><a style="text-decoration: none;" href="'+path+'/userinfo/providerdetails/preproviderdetails.html?logId='+piLogId+'&comId='+g_comid+'">'+(piRealname||"")+'</a></span><span aa="'+(piLogId||"")+'">已关注</span></p>'
+						+'<p>'+(piPosition||"")+'</p>'
+						+'</li>'
+						+'</ul>'
+						+'</div>'
+						+'<div class="item-pic">'
+						+'<a href="'+path+'/goodsinfo/service/queryServiceDetails.html?serviceId='+(serviceId||"")+'&comId='+g_comid+'&priceType=1" target="_blank">'
+						+'<img style="width:263px;height:177px;" src="'+(servicePic||"")+'">'
+						+'</a>'
+						+'</div>'
+						+'<div class="item-addition">'
+						+'<div class="clearfix">'
+						+'</div>'
+						+'<div class="satisfaction">'
+						+'<span class="">'+(piDealnum||0)+'人约见</span>'
+						+'</div>'
+						+'<div class="number">'
+						+'<span><em>评分：</em>'+(piMark||0)+'</span>'
+						+'</div>'
+						+'</div>'
+						+'</div>'
+						+'</li>'
+		if(isFocus(piLogId)){
+			$("#showul").append(inner1);
+		}else{
+			$("#showul").append(inner);
+		}
+	 }
+	pageNum(count,16 ,pageNo,'pageDiv');
+}
+function isFocus(proLogId){
+	var flag = false;
+	$.ajax({
+        type : "POST",
+        url : path+"/bizinfo/focusutop/judgeFocus.html",
+        async: false, 
+        data :{'providerLogId':proLogId},
+        success : function(result) {//返回数据根据结果进行相应的处理
+        	console.info(result)
+      	  var ajaxobj=JSON.parse(result);
+            if(ajaxobj.success){
+            	flag = true;
+            }else{
+            	flag = false;
+            }
+        }
+	})
+	return flag;
+}

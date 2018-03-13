@@ -1,0 +1,206 @@
+var orderState = null;
+var index;
+var url;
+var totalPage;
+var s = true;
+
+$(function(){
+
+    $('body').bind('touchmove', function(e) {
+        if($(window).scrollTop()>=$(document).height()-$(window).height()){
+            if((index <= totalPage)&&s) {
+                selectCommonAjax(index, orderState);
+            	s = false;
+            }
+        }
+    });
+	var index1;
+	if(f == 1){
+		url = '/wap/saleinfo/orderInfoBuyer/getAllOrder.html';
+		index1 = 0;
+	} else {
+		url = '/wap/saleinfo/orderInfoSeller/queryOrder.html';
+		index1 = 1;
+	}
+	
+	selectCommonAjax(1,'');
+	
+	var liWidth = $('.title-list li').width();
+	
+	$("#li1").on("click",function(){
+		window.location.href = path + '/wap/saleinfo/orderInfoBuyer/orderView.html';
+		selectCommonAjax(1,'');
+	});
+	
+	$("#li3").on("click",function(){
+		window.location.href = path + '/wap/saleinfo/orderInfoSeller/viewOrder.html';
+		selectCommonAjax(1,'');
+	});
+	
+	$('.my_date_bt .title-list p').stop(false, true).animate({
+		'left': index1 * liWidth + 'px'
+	}, 300);
+	
+	$('.title-list li').removeClass('on').eq(index1).addClass('on');
+
+	$(".my_date_bt .title .son-title-list li a").click(function () {
+		var index = $(this).parent().index();
+        $(".my_date_bt .title .son-title-list li").siblings().children().removeClass("active").eq(index).addClass("active")
+        $("#personer_mes").empty()
+        selectCommonAjax(1,index - 1);
+    });
+});
+
+function selectType(type) {
+    $("#personer_mes").empty()
+    selectCommonAjax(1,type);
+}
+
+function selectCommonAjax(no,state){
+	orderState = state;
+	$.ajax({
+		url:path+url,
+		type:'post',
+		dataType:'json',
+		data:{
+			'page':no,
+			"orderState":state
+		},
+		success:function(res){
+			/*if(flag)
+				$("#personer_mes").empty();*/
+			if(res!=null){
+				fy(res,no);
+			}
+			
+		}
+	});
+}
+
+function fy(res,no){
+	var total = res.total;
+	totalPage = Math.ceil(total / 10); //总页数
+	index = no + 1;
+	if (index <= totalPage){
+        s =true;
+        $(".more").html('<a id="more" class="btn">点击查看更多</a>');
+	} else {
+        $(".more").html('<a id="more" class="btn">没有更多了</a>');
+	}
+    /*$("#gengduo").empty();
+    if(no < totalPage){
+        $("#gengduo").html('<a href="javascript:;" class="gengduo">查看更多订单>></a>');
+        $(".gengduo").click(function(){
+            selectCommonAjax(index, orderState);
+            flag = false;
+        })
+    }*/
+	var order = res.rows;
+	if(order!=null){
+		sh(order);
+	}
+}
+
+function sh(order){
+    var addHtml = '';
+    $.each(order,function(i,item){
+		$.each(item.orderService,function(i1,item1){
+			var sersInfo = eval('('+item1.sersInfo+')');
+			addHtml += '<ul class="my_date h_haveborder">'+
+									'<li class="my_date_img"><img src="'+sersInfo.servicePic+'"></li>'+
+									'<li class="my_date_title">'+
+										'<h3><a href="'+path+'/wap/saleinfo/orderInfoBuyer/details.html?orderId='+item.orderNo+'">'+sersInfo.serviceTitle+'</a></h3>'+
+										'<div>'+item.orderCreatetimestr+'</div>'+
+										'<b>￥'+item1.osPrice+'<span id="orderId0" style="visibility:hidden">17051914460001</span></b>'+
+									'</li>'+
+									'<li class="my_date_zt">'+
+										'<p>'+item.orderStateStr+'</p>'+
+										
+									'</li>'+
+									/*'<li class="closed">'+
+										'<a id="d0" href="javascript:del('+item.orderNo+');" style="display: block;">'+
+											'<span style="display:none;">4</span>'+
+											'<img src="'+path+'/images/wap/wrong.jpg">'+
+										'</a>'+
+									'</li>'+*/
+									'<li class="operation">';
+			if(f == 1){
+				if(item.orderState == 1){
+					addHtml += '<a href="'+path+'/wap/saleinfo/order/viewEditOrder.html?orderNo='+item.orderNo+'">修改订单</a>';
+				} 
+				if(item.orderState == 2){
+//					var redirect_uri = encodeURIComponent("http://www.jindaoj.com/wap/userinfo/getWeichatOpenId.htm");
+//					var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0c763640d4b8f08&redirect_uri="
+//						+ redirect_uri
+//							+ "&response_type=code&scope=snsapi_base&state="
+//							+ encodeURIComponent("http://jindaoj.com/wap/saleinfo/orderInfoBuyer/getAccount.html?orderId="+item.orderNo) + "#wechat_redirect";
+					
+					addHtml += '<a href="'+path+'/wap/saleinfo/orderInfoBuyer/getAccount.html?orderId='+item.orderNo+'">支付</a>';
+//					addHtml += '<a href="'+url+'">支付</a>';
+				} 
+				if(item.orderState == 4 && item.orderRefundstate == 0){
+					addHtml += '<a href="'+path+'/wap/saleinfo/orderInfoBuyer/viewApplyRefund.html?orderNo='+item.orderNo+'">申请退款</a>'+
+								'<a href="'+path+'/wap/saleinfo/orderInfoBuyer/ConfirmPayment.html?orderNo='+item.orderNo+'&flag=2">确认支付</a>';
+				} 
+				if(item.orderRefundstate == 3){
+					addHtml += '<a href="javascript:orderInfoBuyerService('+item.orderNo+');">申请平台介入</a>';
+				} 
+				if(item.orderRefundstate != 0){
+					addHtml += '<a href="'+path+'/wap/saleinfo/orderInfoBuyer/viewRefunddetails.html?orderNo='+item.orderNo+'">退款详情</a>';
+				} 
+			} else {
+				if(item.orderState == 0){
+					addHtml += '<a href="'+path+'/wap/saleinfo/order/viewProviderConfirm.html?orderNo='+item.orderNo+'">确认订单</a>';
+				} 
+				if(item.orderRefundstate != 0){
+					addHtml += '<a href="'+path+'/wap/saleinfo/orderInfoBuyer/viewRefunddetails.html?orderNo='+item.orderNo+'">退款详情</a>';
+				} 
+				if(item.orderRefundstate == 1){
+					addHtml += '<a href="'+path+'/wap/saleinfo/orderInfoSeller/viewExpertConfirm.html?orderNo='+item.orderNo+'">确认退款</a>';
+				} 
+			}
+			if(item.orderState == 5){
+				addHtml += '<a href="'+path+'/wap/goodsinfo/serviceRemake/remakeEstimate.html?id='+item1.osId+'">评价</a>';
+			} 
+			
+			addHtml += 	'</li></ul>';
+		});
+	});
+    $("#personer_mes").append(addHtml);
+}
+
+function del(n){
+	alert("确认删除吗？","",function(){
+		$.ajax({
+			url:path+'/wap/saleinfo/orderInfoBuyer/del.html',
+			type:'post',
+			dataType:'json',
+			data:{'orderNo':n},
+			success:function(res){
+				if(res.success){
+					alert(res.errorMsg,'',function(){
+						$("#personer_mes").empty();
+						selectCommonAjax(1, orderState);
+					});
+				}
+			}
+		},function(){return false;});
+	});
+}	
+
+function orderInfoBuyerService(id){
+	$.ajax({
+		url:path+'/saleinfo/orderInfoBuyer/updateRefundStatusByOrderNo.html?orderId='+id,
+		type:'post',
+		dataType:'json',
+		success:function(res){
+			if(res.success){
+				alert(res.errorMsg,'',function(){
+					window.location.reload();
+				});
+			}
+		}
+	});
+}
+
+

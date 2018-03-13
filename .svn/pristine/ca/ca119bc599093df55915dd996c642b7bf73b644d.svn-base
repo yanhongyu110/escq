@@ -1,0 +1,573 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jsp/common/common.jsp" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <script src="${webtxc}/js/template-web.js"></script>
+    <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
+    <script>
+        var stId = 123123123;
+        var isSilde = false;
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>总平台首页</title>
+    <link href="${webtxc}/css/style.css?val=123" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="${webtxc}/css/content.css?val=1323"/>
+    <link rel="shortcut icon" href="${webtxc}/images/favicon.ico"/>
+    <link rel="bookmark" href="${webtxc}/images/favicon.ico"/>
+
+    <script src="${webtxc}/citypicker/js/city-picker.data.js"></script>
+    <script src="${webtxc}/citypicker/js/city-picker.js?V=123111233232123"></script>
+    <link rel="stylesheet" href="${webtxc}/citypicker/css/city-picker.css?v=1231122312123312323">
+
+    <%--<script src="${webtxc}/js/wap/swiper.min.js"></script>--%>
+    <%--<link rel="stylesheet" href="${webtxc}/css/wap/swiper.min.css">--%>
+
+    <script src="${webtxc}/vue/vue.min.js"></script>
+    <script src="${webtxc}/validator/jquery.form.min.js"></script>
+    <%--<script src="${webtxc}/js/slide.js"></script>--%>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#picLsy li").hover(function () {
+                $(this).find('.text:not(:animated)').animate({
+                    top: "0px"
+                }, {
+                    easing: "easeInOutExpo"
+                }, 50, function () {
+                });
+            }, function () {
+                $(this).find('.text').animate({
+                    top: "200px"
+                }, {
+                    easing: "easeInOutExpo"
+                }, 50, function () {
+                });
+            });
+
+        });
+    </script>
+
+    <%--<link rel="stylesheet" href="${webtxc}/css/public.css" />--%>
+
+    <script>
+
+        var searchBody;
+        var searchUrl = path + '/company/companyList.html';
+        var searchVal = "";
+        var gotoUrl = path + '/company/gotoCompany.html';
+
+        function search() {
+            searchVal = $('[name=search]').val();
+//            if (searchVal == '')return;
+
+
+            var $form = $('form');
+
+//            var val = $('.select_option .selected').index() ;
+//            var flag=0;
+//            switch (val) {
+//                case 0:
+//                    flag='a';
+//                    break;
+//                case 1:
+//                    flag='b';
+//                    break;
+//                case 2:
+//                    flag='c';
+//                    $('form').attr('action', path + '/demand/showList.html');
+//                    break;
+//                case 3:
+//                    flag='d';
+//                    $('form').attr('action', path + '/company/companyList.html');
+//                    break;
+//                default:
+//                    break;
+//            }
+//            $('[name=flag]').val(flag);
+
+            $form.submit();
+
+
+//                $.post(
+//                        searchUrl,
+//                        {companyName:searchVal,pro:$('#ddd').val()},
+//                        function(re){
+//                            if (searchBody!=null)searchBody.remove();
+//                            searchBody = $(template('test',{list:re}));
+//                            searchBody.find("li").each(function(){
+//                                $(this).click(function(){
+//                                    var attr = $(this).attr('compid');
+//                                    window.location.href=gotoUrl+'?companyId='+attr;
+//                                })
+//                            })
+//                            $('[name=search]').after(searchBody)
+//                        },
+//                        'json'
+//                )
+
+
+        }
+
+        $(function () {
+
+            $('[name=submit]').click(function () {
+                search();
+            })
+            $('[name=search]').blur(function () {
+                if (searchBody != null) searchBody._remove();
+            }).keyup(function (e) {
+                if (e.keyCode == 13) {
+                    search();
+                }
+            })
+        })
+
+
+    </script>
+
+
+    <%--<script type="text/html" id="test">--%>
+    <%--<div class="zh_tianjia">--%>
+    <%--{{each list }}--%>
+    <%--<li style="cursor: pointer" compId="{{$value.compId}}">{{$value.compName}}</li>--%>
+    <%--{{/each}}--%>
+    <%--</div>--%>
+    <%--</script>--%>
+    <style >
+
+        .modulehover{
+            background-color: #f8f8f8;overflow: hidden;height: 70px;display: inline-block;padding: 0px;text-align: center;width:70px;margin: 0px 10px; transition: 500ms all;padding-bottom:30px;}
+.modulehover li{line-height:20px;height:20px;float:left;padding:10px 15px;background:#fff;}
+        
+        .modulehover ul{padding:8px;overflow: hidden;}
+        .modulehover:hover{
+            height: auto;
+            overflow: visible;
+            transition: 500ms all;
+        }
+      
+    </style>
+
+</head>
+
+<body>
+<%--<%@include file="/WEB-INF/jsp/common/top.jsp"%>--%>
+<div class="page">
+    <div class="header-top">
+        <div class="header-top-nav">
+            <div class="h_logo" style="margin-right: 0px;cursor: pointer" onclick="window.location.href=path+'/company/companyIndex.html'"></div>
+            <a style="float: left;line-height: 70px;display: inline-block;font-size: 18px;color: #333;text-decoration: none;cursor: pointer;padding: 0px;text-align: center;width: 80px;height: 70px;" href="${webtxc}/company/companyIndex.html">首页</a>
+            <div style="width: 480px" class="header-nav ">
+                <%--<div class="swiper-button-prev" aria-disabled="false" tabindex="0" role="button" aria-label="Previous slide">&nbsp;</div>--%>
+                <div style="width: 700px;height: 70px;line-height: 70px">
+                    <a style="vertical-align: top;height: 70px;display: inline-block;padding: 0px;text-align: center;width: 80px;margin: 0px 10px;" class="swiper-slide" v-for="i in list" v-bind:ss="i.ctId" v-on:click="go(i.ctId)" v-text="i.ctName"></a>
+                    <a   class="modulehover"  style="padding: 0px">
+                        <p >+</p>
+                        <div class="modulehover_list" style="width:300px;background:#fff">
+                        <ul>
+                        <li v-for="i in list1"  v-bind:ss="i.ctId" v-on:click="go(i.ctId)" v-text="i.ctName"></li>
+                        </ul>
+                        </div>
+                    </a>
+                    <script >
+
+                    </script>
+
+                </div>
+
+
+
+                <%--<div class="swiper-button-next" aria-disabled="false" tabindex="0" role="button" aria-label="Next slide">&nbsp;</div>--%>
+                <script>
+                    $(function () {
+                        $.ajax({
+                            async: false,
+                            type: 'post',
+                            dataType: 'json',
+                            data: {},
+                            url: path + '/pubinfo/getTree.html',
+                            success: function (data) {
+                                var typeList = data;
+
+                                var list=typeList.slice(0,5);
+                                var list1=typeList.slice(5,typeList.length);
+
+                                console.log(list);
+
+                                console.log(list1);
+
+                                var app = new Vue({
+                                    el: '.header-top-nav',
+                                    data: {list: list,list1:list1},
+                                    methods: {
+                                        go: function (input) {
+                                            location.href = path + '/goodsinfo/ServiceInfo/homeShow.html?module=' + input;
+                                        }
+                                    }
+                                });
+//                                new Swiper('.header-nav', {
+//                                    nextButton: '#more',
+//                                    loop: true,
+//                                    slidesPerGroup: 4,
+//                                    slidesPerView: 4,
+//                                });
+                            }
+                        })
+                    })
+                </script>
+
+            </div>
+            <%--<a id="more" style="font-size: 20px;line-height: 70px;display: inline-block;font-size: 18px;color: #333;text-decoration: none;cursor: pointer;padding: 0px;text-align: center;width: 60px;height: 70px;">+</a>--%>
+
+            <!--end.header-nav-->
+
+            <div class="h_nav rxdh">
+                <div class="h_top">
+                    <span class="call"></span>
+                    <span class="call_tel">400-833-9068</span>
+                    <a><span class="email"></span> 850564496@qq.com</a>
+
+                </div>
+
+                <%--<div class="n_bottom">--%>
+                <%--登录 | 注册--%>
+                <%--<a href="server/sq.html">申请为服务商</a>--%>
+                <%--</div>--%>
+
+            </div>
+            <!--end.header-top-nav-->
+
+        </div>
+        <!--end.header-top-seach_z-->
+
+    </div>
+    <!--end.header-top-seach-->
+</div>
+<!--end.header-top-->
+<div class="header">
+    <div class="jindaoj_zpt">
+        <div class="nayouhuo_logo"><img src="${webtxc}/images/zpt_text.png"/></div>
+        <div class="search radius6">
+            <form name="searchform" method="post" action="${webtxc}/search/view.html">
+                <input type="hidden" value="a" name="flag"/>
+                <input type="hidden" value="true" name="to"/>
+                <input name='ecmsfrom' type='hidden' value='9'>
+                <input type="hidden" name="show" value="title,newstext">
+                <%--<select name="select" id="select">--%>
+                <%--<option value="a">服务</option>--%>
+                <%--<option value="b">专家</option>--%>
+                <%--<option value="c">需求</option>--%>
+                <%--<option value="d">公司</option>--%>
+                <%--</select>--%>
+                <div style="position: relative;width: 18%;display: inline-block;height: 56px;"><!-- container -->
+                    <input name="province" data-province="重庆市" id="ddd" class="inp_srh" readonly type="text" data-toggle="city-picker" placeholder="请选择省/市" data-level="province" style="display: inline-block;line-height:54px;height: 54px;width: 80%;position: absolute">
+                </div>
+                <%--<div class="select_box">--%>
+                <%--<div class="select_showbox" style="cursor: pointer;">找服务</div>--%>
+                <%--<ul class="select_option">--%>
+                <%--<li class="selected">找服务</li>--%>
+                <%--<li>找专家</li>--%>
+                <%--<li>找需求</li>--%>
+                <%--<li>找公司</li>--%>
+                <%--</ul>--%>
+                <%--</div>--%>
+                <div style="position: relative;width: 60%;display: inline-block">
+                    <input style="width: 100%;padding-left: 13px" class="inp_srh" name="search" placeholder="请输入您要搜索的服务">
+                </div>
+                <input class="btn_srh" type="submit" name="submit" value="搜索" style="cursor: pointer">
+            </form>
+        </div>
+        <%--<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>--%>
+        <%--<script type="text/javascript" src="${webtxc}/js/jquery.select.js"></script>--%>
+
+    </div>
+</div>
+
+
+<div class="content">
+    <div class="service_fabu">
+
+
+        <ul>
+            <li>
+                <div class="xuqiu_img"></div>
+                <div class="xuqiu_title">
+                    <h3>需求发布后</h3>
+                    <p>1小时内收到服务商响应</p>
+                </div>
+            </li>
+            <li>
+                <div class="xuqiu_img2"></div>
+                <div class="xuqiu_title">
+                    <h3>每个需求</h3>
+                    <p>平均有10个服务商参与</p>
+                </div>
+            </li>
+            <li>
+                <div class="xuqiu_img3"></div>
+                <div class="xuqiu_title">
+                    <h3>95%以上的需求</h3>
+                    <p>得到了圆满解决</p>
+                </div>
+            </li>
+            <li>
+                <div class="xuqiu_img4"></div>
+                <div class="xuqiu_title">
+                    <h3>所有需求</h3>
+                    <p>平台不收取任何佣金</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<%--<div class="content01_school">--%>
+<%--<div class="school_content_jiaoyou">--%>
+<%--<h3><font>热门推荐</font><em>分享爱好，乐趣被几倍放大，你会发现更强的自己</em></h3>--%>
+<%--<div class="hot_school_leix">--%>
+<%--<ul class="picL" id="picLsy">--%>
+<%--<li>--%>
+<%--<a href="#"><img src="${webtxc}/images/jiaoyou.jpg" alt=""></a>--%>
+<%--<div class="text">--%>
+<%--<b>科技</b>--%>
+<%--<p>--%>
+<%--<a href="#">和你心中的男神女神在一起...</a>--%>
+<%--</p>--%>
+<%--</div>--%>
+<%--</li>--%>
+<%--<li>--%>
+<%--<a href="#"><img src="${webtxc}/images/paotui.jpg" alt=""></a>--%>
+<%--<div class="text">--%>
+<%--<b>校园</b>--%>
+<%--<p>--%>
+<%--<a href="#">如果能有一个人为你送上美味的零食午餐，帮你买上期待已久的电影票……</a>--%>
+<%--</p>--%>
+<%--</div>--%>
+<%--</li>--%>
+<%--<li>--%>
+<%--<a href="#"><img src="${webtxc}/images/jianzhi.jpg" alt=""></a>--%>
+<%--<div class="text">--%>
+<%--<b>风水</b>--%>
+<%--<p>--%>
+<%--<a href="#">节能环保，让资源继续延续下去..</a>--%>
+<%--</p>--%>
+<%--</div>--%>
+<%--</li>--%>
+<%--<li>--%>
+<%--<a href="#"><img src="${webtxc}/images/002.jpg" alt=""></a>--%>
+<%--<div class="text">--%>
+<%--<b>教育</b>--%>
+<%--<p>--%>
+<%--<a href="#">既不耽误学习，又可以和女神游戏</a>--%>
+<%--</p>--%>
+<%--</div>--%>
+<%--</li>--%>
+<%--<li>--%>
+<%--<a href="#"><img src="${webtxc}/images/jiaojiao.jpg" alt=""></a>--%>
+<%--<div class="text">--%>
+<%--<b>婚姻</b>--%>
+<%--<p>--%>
+<%--<a href="#">施展你的才华，赚取回报。</a>--%>
+<%--</p>--%>
+<%--</div>--%>
+<%--</li>--%>
+<%--<li>--%>
+<%--<a href="#"><img src="${webtxc}/images/paotui.jpg" alt=""></a>--%>
+<%--<div class="text">--%>
+<%--<b>家政</b>--%>
+<%--<p>--%>
+<%--<a href="#">校园创业，提前体验生活。</a>--%>
+<%--</p>--%>
+<%--</div>--%>
+<%--</li>--%>
+<%--</ul>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
+
+
+<div class="provid_zhuanjia">
+    <h3><font>专家推荐</font><em>分享爱好，乐趣被几倍放大，你会发现更强的自己</em></h3>
+    <div class="school_model">
+        <ul>
+            <li v-for="it in list" style="float: left">
+                <div class="view view-tenth">
+                    <figure>
+                        <div class="thumb" style="width: 220px;height: 234px;background-position: center;background-size: cover;"
+                             v-bind:style="{'background-image': 'url('+path + ((it.prPhoto==null||it.prPhoto=='')?it.piPhoto:it.prPhoto)+')'}">
+                            <%--<img v-bind:src="  " alt=""/>--%>
+                        </div>
+                        <div class="mask">
+                            <h2>{{it.logName}} / {{it.piPosition}}</h2>
+                            <p>{{it.prDetails}}</p>
+                            <a href="javascript:void(0)" class="links" v-on:click="go(it.piLogId)">查看详情</a>
+                        </div>
+                    </figure>
+                </div>
+            </li>
+        </ul>
+        <div class="index-btn">
+            <a data-received="首页-发现更多专家" class="btn-default btn-hg" href="/search/view.html?flag=b&to=true">发现更多专家</a>
+        </div>
+    </div>
+    <script>
+
+        $.post(path + '/provider/recommend.html', {}, function (r) {
+            var proapp = new Vue({
+                el: '.school_model',
+                data: {list: r},
+                methods: {
+                    go: function (input) {
+                        location.href = path + '/userinfo/providerdetails/preproviderdetails.html?logId=' + input;
+                    }
+                }
+            })
+        }, 'json');
+    </script>
+</div>
+<div class="invester-row">
+    <h3>321973位会员正在使用近到家</h3>
+    <a href="/user/2271" title="qq   *^_^*">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/37978EC52E58914ABBE807D43382FE60/100" width="64" height="64" alt="qq   *^_^*" class="img-circle">
+    </a>
+    <a href="/user/2270" title="100果农">
+        <img src="http://www.youjiyouli.com/u/70/frontCover/149673092128601.jpg" width="64" height="64" alt="100果农" class="img-circle">
+    </a>
+    <a href="/user/2269" title="qq爱尚气球创意室">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/08CB6AE83C47C471CC7508878E156F9F/100" width="64" height="64" alt="qq爱尚气球创意室" class="img-circle">
+    </a>
+    <a href="/user/2266" title="qq秦瑟">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/9C2A32B6C7C317795707DF107A0B64FE/100" width="64" height="64" alt="qq秦瑟" class="img-circle">
+    </a>
+    <a href="/user/2264" title="qqJasmine">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/90B461FDC657F6652D3D466F73F4982A/100" width="64" height="64" alt="qqJasmine" class="img-circle">
+    </a>
+    <a href="/user/2262" title="qq王刚">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/A4EAA0A54822329E237470E7D9B40291/100" width="64" height="64" alt="qq王刚" class="img-circle">
+    </a>
+    <a href="/user/2261" title="Eureka">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/21533F788A26068EB0B2CAB386E5099D/100" width="64" height="64" alt="Eureka" class="img-circle">
+    </a>
+    <a href="/user/2260" title="weibo哎呀iye呀">
+        <img src="http://tvax3.sinaimg.cn/crop.0.0.996.996.180/006hBK1Bly8ffn87o0wwoj30ro0rpgn0.jpg" width="64" height="64" alt="weibo哎呀iye呀" class="img-circle">
+    </a>
+    <a href="/user/2259" title="qq大鹏展翅">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/CA10AA0942BB44B1CD8F19BE70A9C759/100" width="64" height="64" alt="qq大鹏展翅" class="img-circle">
+    </a>
+    <a href="/user/2257" title="qq我不是我">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/FA63A46D4FA904AB6522F5BF07E60BF1/100" width="64" height="64" alt="qq我不是我" class="img-circle">
+    </a>
+    <a href="/user/2255" title="上官寒语">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/9D4B70E126EFAB8D0AC1BC3DDC47B808/100" width="64" height="64" alt="上官寒语" class="img-circle">
+    </a>
+    <a href="/user/2252" title="qq耗子">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/284CD9D35CB673DA476D9C09AD1CEA54/100" width="64" height="64" alt="qq耗子" class="img-circle">
+    </a>
+    <a href="/user/2251" title="qq行者吴伟">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/0175132670E0F1252D6A757E9C6ABAC5/100" width="64" height="64" alt="qq行者吴伟" class="img-circle">
+    </a>
+    <a href="/user/2250" title="qq冰海若蓝">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/E837EE16443BF4DF5927625BA6BCAB4B/100" width="64" height="64" alt="qq冰海若蓝" class="img-circle">
+    </a>
+    <a href="/user/2249" title="qq山峰">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/AD740985BD94D242B87E935F569F81B4/100" width="64" height="64" alt="qq山峰" class="img-circle">
+    </a>
+    <a href="/user/2248" title="qq耿大雷">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/EE8E151730F7B25961E15924E0ECDD54/100" width="64" height="64" alt="qq耿大雷" class="img-circle">
+    </a>
+    <a href="/user/2246" title="weibo">
+        <img src="http://gongying.gostarting.com/images/noavatar.jpg" width="64" height="64" alt="weibo" class="img-circle">
+    </a>
+    <a href="/user/2244" title="qq尘?">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/133B76232C2793E83295C2C86F56D70B/100" width="64" height="64" alt="qq尘?" class="img-circle">
+    </a>
+    <a href="/user/2243" title="qq◡̈  凸逼男啵万">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/67FE6D9CBD867879AA81B60E4AF31B6C/100" width="64" height="64" alt="qq◡̈  凸逼男啵万" class="img-circle">
+    </a>
+    <a href="/user/2241" title="qq板栗/dy">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/147023A8E9BD1A5B8EED0612EF1BA66E/100" width="64" height="64" alt="qq板栗/dy" class="img-circle">
+    </a>
+    <a href="/user/2240" title="qq知足常乐">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/E90A3F4527A339B5ED27B16814F44022/100" width="64" height="64" alt="qq知足常乐" class="img-circle">
+    </a>
+    <a href="/user/2233" title="qqBill Pang">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/0C804A1182AFD40FE01E6928933CBB76/100" width="64" height="64" alt="qqBill Pang" class="img-circle">
+    </a>
+    <a href="/user/2232" title="qq张应蓝莓">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/905D9AF8AF4D9B133DD3211D37E7C76A/100" width="64" height="64" alt="qq张应蓝莓" class="img-circle">
+    </a>
+    <a href="/user/2231" title="qq未奇">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/173269372358C95FBCBC668B1C85F999/100" width="64" height="64" alt="qq未奇" class="img-circle">
+    </a>
+    <a href="/user/2229" title="qq小汪">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/D4B0BF04F710EFF0F792DB414E95F136/100" width="64" height="64" alt="qq小汪" class="img-circle">
+    </a>
+    <a href="/user/2228" title="qq桐木关茶农">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/6167105FFD1AEF0D5B9E2AD253E45D97/100" width="64" height="64" alt="qq桐木关茶农" class="img-circle">
+    </a>
+    <a href="/user/2227" title="qq倾听丶所谓旳幸福%">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/D88E3D491972E0266CCEC06AF194E029/100" width="64" height="64" alt="qq倾听丶所谓旳幸福%" class="img-circle">
+    </a>
+    <a href="/user/2226" title="weibo宝宇雪猪">
+        <img src="http://tva4.sinaimg.cn/crop.0.0.800.800.180/006z7XJljw8f8g7gg391jj30m80m8wl0.jpg" width="64" height="64" alt="weibo宝宇雪猪" class="img-circle">
+    </a>
+    <a href="/user/2225" title="Patrick">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/8633F944842BB65EBC291D8AE30A1764/100" width="64" height="64" alt="Patrick" class="img-circle">
+    </a>
+    <a href="/user/2222" title="qq533?">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/BF52D037F79E89BFCD121684A8006351/100" width="64" height="64" alt="qq533?" class="img-circle">
+    </a>
+    <a href="/user/2221" title="Micxy＇茶农小陈">
+        <img src="http://www.youjiyouli.com/u/21/frontCover/149265431431878.png" width="64" height="64" alt="Micxy＇茶农小陈" class="img-circle">
+    </a>
+    <a href="/user/2220" title="qq正青春">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/BC094599494A17AFFFCD646B85036123/100" width="64" height="64" alt="qq正青春" class="img-circle">
+    </a>
+    <a href="/user/2219" title="qqせっしょうまる">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/D8EBF4DB313BF9B6234B6C790630823F/100" width="64" height="64" alt="qqせっしょうまる" class="img-circle">
+    </a>
+    <a href="/user/2218" title="北京通州开心农场">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/4CE0A25671D68005C2F4782C09E6416B/100" width="64" height="64" alt="北京通州开心农场" class="img-circle">
+    </a>
+    <a href="/user/2216" title="qq     Amour-゜朝思">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/D492A146F293FBB11B46B32FA0A90275/100" width="64" height="64" alt="qq     Amour-゜朝思" class="img-circle">
+    </a>
+    <a href="/user/2214" title="qq眼成海.却未蓝">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/1BC847B1CC72257E696BE0A95F0CD73F/100" width="64" height="64" alt="qq眼成海.却未蓝" class="img-circle">
+    </a>
+    <a href="/user/2212" title="qq友间">
+        <img src="http://qzapp.qlogo.cn/qzapp/101142329/2EEC770095E59CDC1A8C990FD758D4E5/100" width="64" height="64" alt="qq友间" class="img-circle">
+    </a>
+    <a href="/user/2210" title="蜜语蜂蜜">
+        <img src="http://www.youjiyouli.com/u/10/frontCover/149130095043497.jpg" width="64" height="64" alt="蜜语蜂蜜" class="img-circle">
+    </a>
+    <a href="/user/2209" title="，ccz123456789">
+        <img src="http://tvax4.sinaimg.cn/default/images/default_avatar_male_180.gif" width="64" height="64" alt="，ccz123456789" class="img-circle">
+    </a>
+    <div class="clear"></div>
+</div>
+<div class="ewm">
+    <div class="ewm_zz">
+        <div class="ewm_img"><img style="width: 200px;height: 200px;" src="${webtxc}/images/appapk.png"/></div>
+        <div class="ewm_title">
+            <p>下载客户端</p>
+            <h3>随时找专家</h3>
+            <h3>随时联络专家</h3>
+            <h3>更多贴心功能</h3>
+
+        </div>
+    </div>
+</div>
+<!--end.ewm-->
+
+
+<%@include file="/WEB-INF/jsp/common/bottom.jsp" %>
+
+
+</body>
+
+</html>

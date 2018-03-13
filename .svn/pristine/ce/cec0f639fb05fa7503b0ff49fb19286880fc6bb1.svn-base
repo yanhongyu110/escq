@@ -1,0 +1,209 @@
+/*$(function(){
+	$("#refresh").click(function() {
+		refresh();
+	})
+	$('#button').click(function() {
+		button();
+	})
+	$('#checkbox').click(function(){
+		if($('#checkbox').is(':checked')){
+			$('#register').click(function(){
+				register();
+			})
+		}else{
+			$("#register").unbind("click");
+		}
+	});
+})
+*/
+var acookie = document.cookie.split(";");
+var parentId = '';
+$(function(){
+	//获取上级分销id
+     var distributionId=getDistribution();
+     alert(distributionId);
+    // alert(distributionId);
+     if(distributionId!=null && distributionId!='' && distributionId!='undefined'){
+    	 parentId = distributionId;
+     }
+});
+/**
+ * 获取cookie
+ * @returns
+ */
+function getDistribution() {// 用户id
+	var userIds;
+	acookie.forEach(function(e) {
+		if (e.indexOf("distriteuidckname") != -1) {
+			var val = e.split("=");
+			for ( var i = 0; i < val.length; i++) {
+				if ("distriteuidckname" != val[i].trim()) {
+					userIds = val[i];
+					break;
+				}
+			}
+		}
+	});
+	return userIds;
+}
+window.onload = function(){
+	$("#refresh").click(function() {
+		refresh();
+	})
+	$('#button').click(function() {
+		button();
+	})
+	$('#checkbox').click(function(){
+		if($('#checkbox').is(':checked')){
+			$('#register').css('background','#FB5A5A');
+			$('#register').click(function(){
+				register();
+			})
+			
+		}else{
+			$('#register').css('background','#999');
+			$("#register").unbind("click");
+		}
+	});
+	check();
+
+
+    $(".resetPass img").on("click",function () {
+        $(this).hide().parent().prev("input").val("");
+    });
+    $("#logPass,#savelogPass").on("input propertychange", function() {
+        if($(this).val().length>0){
+        	console.log($(this).parent().find(".resetPass img"))
+            $(this).parent().find(".resetPass img").show();
+        }else {
+            $(this).parent().find(".resetPass img").hide();
+        }
+    });
+
+
+}
+function check(){
+	if($('#checkbox').is(':checked')){
+		/*$('#register').click(function(){
+			register();
+		})*/
+		$('#register').css('background','#FB5A5A');
+		$('#register').attr("onclick","register()");
+	}else{
+		//$("#register").unbind("click");
+		$('#register').attr("onclick","");
+		$('#register').css('background','#999');
+	}
+}
+function register(){
+	var logCell = $('#logCell').val();
+	var checkcode = $('#checkcode').val();
+	var logPass = $('#logPass').val();
+	var savelogPass = $('#savelogPass').val();
+	var imagesCode = $('#imagesCode').val();
+	if(checkNull(logCell)){
+		$('#message').text('手机号不能为空').slideDown(300).delay(1000).slideUp(300);
+	}else if(!checkCell(logCell)){
+		$('#message').text('手机格式不对').slideDown(300).delay(1000).slideUp(300);
+	}else if(checkNull(imagesCode)){
+		$('#message').text('图片验证码不能为空').slideDown(300).delay(1000).slideUp(300);
+	}else if(!__isBang&&checkNull(logPass)){
+		$('#message').text('密码不能为空').slideDown(300).delay(1000).slideUp(300);
+	}else if(!__isBang&&checkNull(savelogPass)){
+		$('#message').text('确认密码不能为空').slideDown(300).delay(1000).slideUp(300);
+	}else if(!__isBang&&checkLength(logPass)){
+		$('#message').text('密码必须在6-20位之间').slideDown(300).delay(1000).slideUp(300);
+	}else if(!__isBang&&logPass != savelogPass){
+		$('#message').text('密码不相同').slideDown(300).delay(1000).slideUp(300);
+	}else if(checkNull(checkcode)){
+		$('#message').text('验证码不能为空').slideDown(300).delay(1000).slideUp(300);
+	}else if($('#checkbox').is(':checked')){
+		$("#register").unbind("click");
+		$.post(path+'/wap/userinfo/logInfo/register.html',$.param({
+			'logCell':logCell,
+			'checkCode':checkcode,
+			'logPass':$.md5(logPass),
+			'savelogPass':savelogPass,
+			'imagesCode':imagesCode,
+			isBang:__isBang,
+			parentId:parentId
+			},true),function(result){
+			$('#register').click(function(){
+				register();
+			})
+			if (result.success){
+				window.location.href=path+'/wap/main/view.html';
+			}else{
+				if(result.errorCode == "2"){
+					$('#message').text(result.errorMsg).slideDown(300).delay(1000).slideUp(300);
+				}else if(result.errorCode == "3"){
+					$('#message').text(result.errorMsg).slideDown(300).delay(1000).slideUp(300);
+				}else if(result.errorCode == "5"){
+					$('#message').text(result.errorMsg).slideDown(300).delay(1000).slideUp(300);
+				}
+			}
+		},'json');
+	}else{
+		$("#register").unbind("click");
+	}
+}
+
+var __isBang=false;
+function button(){
+	var logCell = $('#logCell').val();
+	if(checkNull(logCell)){
+		$('#message').text('手机号不能为空').slideDown(300).delay(1000).slideUp(300);
+	}else if(!checkCell(logCell)){
+		$('#message').text('输入有效手机号码').slideDown(300).delay(1000).slideUp(300);
+	}else{
+		$.ajax({
+			type : "post",
+			url : path+'/wap/userinfo/logInfo/validateLoginName.html',
+			dataType:'json',
+			data:{'logCell':logCell},
+			success:function(res){
+				if(res.success){
+					$('#logPass').removeAttr("disabled").parent().parent().show()
+					$('#savelogPass').removeAttr("disabled").parent().parent().show()
+					__isBang=false
+					timeOut(60);
+				}else{
+					if(res.errorCode == "1"){
+						$('#message').text(res.errorMsg).slideDown(300).delay(1000).slideUp(300);
+					}else if(res.errorCode == "2"){
+						$('#message').text(res.errorMsg).slideDown(300).delay(1000).slideUp(300);
+					}else if(res.errorCode == "3"){
+						timeOut(60);
+						__isBang=true
+						$('#logPass').attr("disabled","").parent().parent().hide()
+						$('#savelogPass').attr("disabled","").parent().parent().hide()
+						$('#message').text(res.errorMsg).slideDown(300).delay(1000).slideUp(300);
+					}
+				}
+			}
+		});
+	}
+}
+function timeOut(i){
+	if(i != 0){
+		$('#logCell').attr('disabled','')
+		$("#button").unbind("click");
+		$('#button').val(i+'s可重新发送');
+		$('#button').css({background:'#999',border:'0px'});
+		setTimeout(function(){timeOut(i)},(1000));
+	}else{
+		$('#logCell').removeAttr('disabled')
+		$("#button").click(function() {
+			button();
+		})
+		$('#button').val('获取验证码');
+		$('#button').css({background:'#ccc',border:'1px solid #FB5A5A'});
+	}
+	i--;
+}
+function login(){
+	window.location.href = path+"/wap/userinfo/logInfo/jumpLogin.html";
+}
+function refresh(){
+	$("#image").attr("src", path+"/wap//userinfo/logInfo/getImagesCode.html?v="+new Date);
+}

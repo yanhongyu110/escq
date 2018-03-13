@@ -1,0 +1,97 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jsp/common/common.jsp" %>
+<head>
+    <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
+    <link rel="stylesheet" href="${webtxc}/css/public.css"/>
+    <link rel="stylesheet" href="${webtxc}/css/personal.css?v=123"/>
+    <script type="text/javascript" src="${webtxc}/js/personal_tab.js"></script>
+    <script type="text/javascript" src="${webtxc}/js/personal_menu.js"></script>
+    <script type="text/javascript" src="${webtxc}/js/jquery.qrcode.min.js"></script>
+    <script>
+	//定时器每3秒访问后台是否支付完成	    
+    $(document).ready(function () {
+	    setInterval("testState()", 5000);
+	  
+	    //定时器  120秒后跳转至选择支付方式页面
+	    var exittime=120;
+	   tt(exittime);
+	    function tt(i){
+    		$(".wxtime").html(i);
+	    	if(i==0){
+	    		window.location.href="javascript:history.back(-1);";
+	    	}else{
+	    		i--;
+	    		setTimeout(function() {
+	    			tt(i)
+	    		}, (1000));
+	    		
+	    	}
+	    }
+	});
+	var URL=path+"/pay/wxpay/payreturn.html"
+	function testState() {
+	    if ($("#orderId").val() != 0) {
+	        $.ajax({
+	        	type: "post",
+	            url: URL+"?orderId=${orderId}",
+	            success: function (data) {
+	            	var temp=eval(data);
+	                if (temp==1) { //订单状态为1表示支付成功
+	                	alert("微信支付成功！",null,function(tt){window.location.href = path+"/saleinfo/orderInfoBuyer/orderView.html";},null);
+	                    //页面跳转
+	                }
+	            },
+	            error: function () {
+	                 alert("请求订单状态出错"); 
+	            }
+	        });
+	    }
+	
+	}
+
+  
+    </script>
+
+    
+    <title>微信支付</title>
+</head>
+<body>
+	<c:set var="istop" value="true" />
+    <%@include file="/WEB-INF/jsp/common/top.jsp" %>
+    <div class="content">
+        <%@include file="/WEB-INF/jsp/common/left.jsp" %>
+        
+           <div class="content-right" style="text-align: center">
+					
+					<div class="money" style="text-align: center">
+						<h3>需支付金额：<span>￥ ${price}</span></h3>
+						<a>收款方：网站平台</a>
+				    </div>
+					<div class="wx_zf" >
+						<h3>请扫描二维码进行支付，<span class="wxtime"></span>秒后将返回至选择支付方式页面请尽快进行支付。</h3>
+						<ul>
+							<li style="padding-left: 100px;">
+								<image id="codeurl" src="${webtxc}/pay/orderpay/code.html?codeurl=${codeurl}" style="height:200px;width:200px;" />
+								<p></p>
+							</li >
+							<li class="zf_right" style="padding-left: 100px;"><img src="${webtxc}/images/sys.png"></li>
+						</ul>
+						<input type="hidden" id="orderId" value="${orderId}"        />
+					</div>
+					
+					
+					
+				</div>
+                    <!--end.content-right-->
+                
+            </div>
+        
+        <!--end.content-->
+</div>
+    <%@include file="/WEB-INF/jsp/common/bottom.jsp" %>
+
+
+
+</body>
+
+</html>

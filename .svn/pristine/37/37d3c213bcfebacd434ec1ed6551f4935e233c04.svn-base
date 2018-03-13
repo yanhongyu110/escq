@@ -1,0 +1,153 @@
+/* register */
+.register,.login { width: 980px; margin: 30px auto; border: 1px solid #eee; height: 560px; color: #333;    background: #fff;overflow: hidden;}
+.register_left ,.login_left{ float: left; width: 670px;}
+.wrong{}
+.register_left_phone{ position: relative;}
+.register_left_mes , .login_left_mes{ padding-left: 75px;margin-top:50px;}
+.register_left_phone , .login_left_phone{ clear: both; }
+.register_left_phone .col-sm-1{ width:70px; float: left; padding-top: 15px;}
+.register_left_phone .col-sm-2{ float: left;}
+.register_left_phone .col-sm-2 .close{ position: absolute; top:14px; right: 160px; background:url(../images/wrong.jpg) no-repeat ; width: 19px; height: 19px;}
+.register_left_phone .control-label{ width: 366px; height: 44px; border: 1px solid #ddd; padding-left: 10px; font-family: "Microsoft YaHei";}
+.register_left_phone .phone_ts{ clear: both; padding-left: 70px; color: #F68E76; height: 22px; line-height: 22px;}
+
+.register_left_phone_yzm{ clear: both;}
+.register_left_phone_yzm .col-sm-1{ width:70px; float: left; padding-top: 15px;}
+.register_left_phone_yzm .col-sm-2{ float: left;}
+
+.register_left_phone_yzm .col-sm-2 .control-label{float: left; width: 260px; height: 44px; border: 1px solid #ddd; padding-left: 10px; font-family: "Microsoft YaHei";}
+.register_left_phone_yzm .col-sm-2 .code{ margin-left: 5px; float: left;width: 100px;height: 44px; border: 1px solid #FB5A5A; font-family: "Microsoft YaHei"; text-align: center; color: #fff; background: #FB5A5A;}
+.register_left_phone_yzm .phone_ts{ clear: both; padding-left: 70px; color: #F68E76; height: 22px; line-height: 22px; font-size: 12px;}
+
+.register_left_password{ position: relative;}
+.register_left_password{ clear: both;}
+.register_left_password .col-sm-3{width:70px; float: left; padding-top: 15px;}
+.register_left_password .col-sm-4{ float: left;}
+.register_left_password .col-sm-4 .close{ position: absolute; top:14px; right: 160px; background:url(../images/wrong.jpg) no-repeat ; width: 19px; height: 19px;}
+.register_left_password .control-label{ width: 366px; height: 44px; border: 1px solid #ddd; padding-left: 10px; font-family: "Microsoft YaHei";}
+.register_left_password .phone_ts{ clear: both; padding-left: 70px; color: #F68E76; height: 22px; line-height: 22px;}
+
+.register_left_querenpassword{ position: relative;}
+.register_left_querenpassword{ clear: both;}
+.register_left_querenpassword .col-sm-5{width:70px; float: left; padding-top: 15px;}
+.register_left_querenpassword .col-sm-6{ float: left;}
+.register_left_querenpassword .col-sm-6 .close{ position: absolute; top:14px; right: 160px; background:url(../images/wrong.jpg) no-repeat ; width: 19px; height: 19px;}
+.register_left_querenpassword .control-label{ width: 366px; height: 44px; border: 1px solid #ddd; padding-left: 10px; font-family: "Microsoft YaHei";}
+.register_left_querenpassword .phone_ts{ clear: both; padding-left: 70px; color: #F68E76; height: 22px; line-height: 22px;}
+
+.register_left_identifying{ clear: both;}
+.register_left_identifying .col-sm-7{width:70px; float: left; padding-top: 15px;}
+.register_left_identifying .col-sm-8{ float: left;}
+.register_left_identifying .control-label{ width: 255px; float: left; height: 44px; border: 1px solid #ddd; padding-left: 10px; font-family: "Microsoft YaHei";}
+.register_left_identifying .col-sm-8 .code{width: 105px;float: left; height: 46px; border: 1px solid #ddd; margin-left: 5px;}
+.register_left_identifying .phone_ts{ clear: both; padding-left: 70px; color: #F68E76; height: 22px; line-height: 22px; font-size: 12px;}
+
+.agrees{ clear: both;  padding-left: 70px;}
+.agrees input{display: inline-block;margin-right: 10px;vertical-align: top;width: 15px;height: 15px;border: 1px solid #DADADA;}
+.register_btn{ clear: both;padding-top: 40px; font-size: 16px;}
+.register_btn .button{ height: 44px; color: #fff; background: #FB5A5A; display: block; width: 380px; text-align: center; line-height: 44px; margin-left: 70px;}
+
+.register_right, .login_right{ float: right; width: 300px; background: #eee;height: 560px;}
+.register_right h2{font-size:16px; text-align: center; padding-top: 40px; font-weight: normal;} 
+.register_right h2 a{ color: #FB5A5A;font-size: 22px; text-decoration: none;}
+.register_right_btn{ width: 220px; margin: 0 auto; clear: both; background:#FB5A5A; display: block; color: #fff; text-align: center; margin-top: 20px; height: 40px; line-height: 40px; font-size: 14px;}
+
+.register_right .register_right_qt{ clear: both; padding-top: 70px; width:220px; margin: 0 auto;}
+.register_right .register_right_qt a{ margin-top: 20px;}
+.register_right .register_right_qt a span{ color: #999;}
+.register_right .wx_dl{ background: url(../images/wx.png) no-repeat 50px 2px #71c96a; text-align: center;  width:220px; height:35px; line-height: 35px;  display: block; color: #fff;}
+.register_right .qq_dl{ background: url(../images/qq.png) no-repeat 50px 3px #71c3eb; text-align: center;  width:220px; height:35px; line-height: 35px;  display: block; color: #fff;}
+
+/* login */
+.login_left_phone{ position: relative;}
+.login_left_phone .col-sm-1{ width:70px; float: left; padding-top: 15px;}
+.login_left_phone .col-sm-2{ float: left;}
+.login_left_phone .col-sm-2 .close{ position: absolute; top:14px; right: 160px; background:url(../images/wrong.jpg) no-repeat ; width: 19px; height: 19px;}
+.login_left_phone .control-label{ width: 366px; height: 44px; border: 1px solid #ddd; padding-left: 10px; font-family: "Microsoft YaHei";}
+.login_left_phone .phone_ts{ clear: both; padding-left: 70px; color: #F68E76; height: 22px; line-height: 22px;}
+
+.login_left_password{ position: relative;}
+.login_left_password{ clear: both;}
+.login_left_password .col-sm-3{width:70px; float: left; padding-top: 15px;}
+.login_left_password .col-sm-4{ float: left;}
+.login_left_password .col-sm-4 .close{ position: absolute; top:14px; right: 160px; background:url(../images/wrong.jpg) no-repeat ; width: 19px; height: 19px;}
+.login_left_password .control-label{ width: 366px; height: 44px; border: 1px solid #ddd; padding-left: 10px; font-family: "Microsoft YaHei";}
+.login_left_password .phone_ts{ clear: both; padding-left: 70px; color: #F68E76; height: 22px; line-height: 22px;}
+
+.login_agrees{ clear: both; padding-top: 20px; padding-left: 70px; width:378px; }
+.login_agrees input{display: inline-block;margin-right: 10px;vertical-align: top;width: 15px;height: 15px;border: 1px solid #DADADA;}
+.login_agrees .forget_password{ float: right;color: #FB5A5A;}
+
+.login_btn_button{ clear: both;padding-top: 40px;font-size: 16px;}
+.login_btn_button .button{ height: 44px; color: #fff; background: #FB5A5A; display: block; width: 380px; text-align: center; line-height: 44px; margin-left: 70px;}
+
+
+.login_right h2{font-size:16px; text-align: center; padding-top: 40px; font-weight: normal;} 
+.login_right h2 a{ color: #FB5A5A;font-size: 22px;}
+.login_right_btn{ width: 220px; margin: 0 auto; clear: both; background:#FB5A5A; display: block; color: #fff; text-align: center; margin-top: 20px; height: 40px; line-height: 40px; font-size: 14px;}
+
+.login_right .login_right_qt{ clear: both; padding-top: 70px; width:220px; margin: 0 auto;}
+.login_right .login_right_qt a{ margin-top: 20px;}
+.login_right .login_right_qt a span{ color: #999;}
+.login_right .wx_dl{ background: url(../images/wx.png) no-repeat 50px 2px #71c96a; text-align: center;  width:220px; height:35px; line-height: 35px;  display: block; color: #fff;}
+.login_right .qq_dl{ background: url(../images/qq.png) no-repeat 50px 3px #71c3eb; text-align: center;  width:220px; height:35px; line-height: 35px;  display: block; color: #fff;}
+
+/* success */
+
+.success{ width: 980px; margin: 0 auto; height: 500px; border:  1px solid #eee; }
+.success h2{ font-size: 20px; text-align: center; color: #999; line-height: 40px;}
+.success p{ text-align: center; color: #FB5A5A; padding-top:0px; margin-top: 5px;}
+.success_img{ text-align: center; padding-top: 80px;}
+.success_img img{ padding-bottom: 20px;}
+
+/* fail */
+
+.fail{ width: 980px; margin: 0 auto; height: 500px; border:  1px solid #eee; }
+.fail h2{ font-size: 20px; text-align: center; color: #999; line-height: 40px;}
+.fail p{ text-align: center; color: #FB5A5A; padding-top:0px; margin-top: 5px;}
+.fail_img{ text-align: center; padding-top: 80px;}
+.fail_img img{ padding-bottom: 20px;}
+
+/* 忘记密码 */
+
+.forgetpassword{width: 980px; margin: 0 auto; height: 530px; border:  1px solid #eee;     background: #fff;    margin-top: 50px;}
+.forgetpassword h2{ padding-top: 30px; text-align: center; font-size: 24px; font-weight: normal;} 
+.forgetpassword_mes{width: 500px; margin: 0 auto; padding-top: 30px;}
+
+.forgetpassword_phone{ position: relative;}
+.forgetpassword_phone{ clear: both;}
+.forgetpassword_phone .col-sm-1{ width:70px; float: left; padding-top: 15px;}
+.forgetpassword_phone .col-sm-2{ float: left;}
+.forgetpassword_phone .col-sm-2 .close{ position: absolute; top:14px; right: 70px; background:url(../images/wrong.jpg) no-repeat ; width: 19px; height: 19px;}
+.forgetpassword_phone .control-label{ width: 366px; height: 44px; border: 1px solid #ddd; padding-left: 10px; font-family: "Microsoft YaHei";}
+.forgetpassword_phone .phone_ts{ clear: both; padding-left: 70px; color: #F68E76; height: 22px; line-height: 22px;}
+
+.forgetpassword_code{ clear: both; }
+.forgetpassword_code .col-sm-1{ width:70px; float: left; padding-top: 15px;}
+.forgetpassword_code .col-sm-2{ float: left;}
+
+.forgetpassword_code .control-label{ float: left; width: 260px; height: 44px; border: 1px solid #ddd; padding-left: 10px; font-family: "Microsoft YaHei";}
+.forgetpassword_code .code{ margin-left: 5px; float: left;width: 100px;height: 44px; border: 1px solid #FB5A5A; font-family: "Microsoft YaHei"; text-align: center; color: #fff; background: #FB5A5A;}
+.forgetpassword_code .phone_ts{ clear: both; padding-left: 70px; color: #F68E76; height: 22px; line-height: 22px;}
+
+.forgetpassword_new{ position: relative;}
+.forgetpassword_new{ clear: both; }
+.forgetpassword_new .col-sm-3{ width:70px; float: left; padding-top: 15px;}
+.forgetpassword_new .col-sm-4{ float: left;}
+.forgetpassword_new .col-sm-4 .close{ position: absolute; top:14px; right: 70px; background:url(../images/wrong.jpg) no-repeat ; width: 19px; height: 19px;}
+.forgetpassword_new .control-label{ width: 366px; height: 44px; border: 1px solid #ddd; padding-left: 10px; font-family: "Microsoft YaHei";}
+.forgetpassword_new .phone_ts{ clear: both; padding-left: 70px; color: #F68E76; height: 22px; line-height: 22px;}
+
+.forgetpassword_new_sure{ position: relative;}
+.forgetpassword_new_sure{ clear: both;}
+.forgetpassword_new_sure .col-sm-5{ width:70px; float: left; padding-top: 15px;}
+.forgetpassword_new_sure .col-sm-6{ float: left;}
+.forgetpassword_new_sure .col-sm-6 .close{ position: absolute; top:14px; right: 70px; background:url(../images/wrong.jpg) no-repeat ; width: 19px; height: 19px;}
+.forgetpassword_new_sure .control-label{ width: 366px; height: 44px; border: 1px solid #ddd; padding-left: 10px; font-family: "Microsoft YaHei";}
+.forgetpassword_new_sure .phone_ts{ clear: both; padding-left: 70px; color: #F68E76; height: 22px; line-height: 22px;}
+
+.forgetpassword_fh{ padding-top: 10px; clear: both; text-align: center;}
+.forgetpassword_fh a{ margin: 0 5px; color: #666;}
+.forgetpassword_fh a:hover{ color: #FB5A5A;}
+.forgetpassword_btn{ clear: both;padding-top: 40px; font-size: 16px;}
+.forgetpassword_btn .button{ height: 44px; color: #fff; background: #FB5A5A; display: block; width: 380px; text-align: center; line-height: 44px; margin-left: 70px;}

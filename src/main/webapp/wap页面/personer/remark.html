@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!-- 这meta的作用就是删除默认的苹果工具栏和菜单栏允许全屏模式浏览-->
+		<meta name="apple-touch-fullscreen" content="yes">
+		<!-- 开启对web app程序的支持  -->
+		<meta content="telephone=no,email=no" name="format-detection">
+		<!-- iPhone会自动把你这个文字加链接样式、并且点击这个数字还会自动拨号！telephone=no就忽略页面中的数字识别为电话号码 ,email=no 忽略识别邮箱 -->
+		<!--base css-->
+		<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+		<link rel="stylesheet" href="css/reset.css" />
+		
+		<link rel="stylesheet" href="../css/personer.css" />
+		<script src="js/reset.js"></script>
+		<script src="js/TouchSlide.js"></script>
+		<script type="text/javascript" src="../js/jquery.js" ></script>
+	</head>
+	<body>
+		<div class="waiter_box">
+			<div class="border_top"></div>
+			<div class="waiter_img"><img src=""></div>
+			<div class="waiter">
+				<h1>姓名</h1>
+				<h2>服务评价：
+        	<div class="star_box" style=" position:absolute; top:0; right:-85px; margin-top:0">
+                <img src="../images/star.png">
+                <img src="../images/star.png">
+                <img src="../images/star.png">
+                <img src="../images/star.png">
+                <img src="../images/star_gray.png">
+            </div>
+        </h2>
+				<p>接单数：30单</p>
+			</div>
+			<!--<p class="waiter_id">工号：370601001</p>-->
+			<div class="border_bottom"></div>
+		</div>
+		<div class="evaluate">
+			<div class="border_top"></div>
+			<p>服务态度：</p>
+			<div class="star_box" id="oimg">
+				<img src="../images/star_gray.png">
+				<img src="../images/star_gray.png">
+				<img src="../images/star_gray.png">
+				<img src="../images/star_gray.png">
+				<img src="../images/star_gray.png">
+			</div>
+			<p style="clear:left">服务质量：</p>
+			<div class="star_box" id="cimg">
+				<img src="../images/star_gray.png">
+				<img src="../images/star_gray.png">
+				<img src="../images/star_gray.png">
+				<img src="../images/star_gray.png">
+				<img src="../images/star_gray.png">
+			</div>
+			<div class="border_bottom"></div>
+		</div>
+		<div class="say_more">
+			<div class="border_top"></div>
+			<textarea placeholder="还想说点什么（文字输入限制1-225个字符）" maxlength=225></textarea>
+			<div class="border_bottom"></div>
+		</div>
+		<!--提交-->
+		<div class="confirm_box">
+			<div class="confirm">提交</div>
+		</div>
+		<div class="success">
+			<h1>评价成功！</h1>
+			<h2>感谢您使用本次服务</h2>
+		</div>
+		<!--评价成功，弹出分享框-->
+		<div class="black"></div>
+		<div class="share_box">
+			<div class="share_title">分享给好友
+				<img src="../images/close_share.png" class="close_share">
+				<div class="border_bottom"></div>
+			</div>
+			<div class="share">
+				<img src="../images/weixin3.png">
+				<p>微信好友</p>
+			</div>
+			<div class="share1">
+				<img src="../images/friend.png">
+				<p style="text-align:left;">朋友圈</p>
+			</div>
+		</div>
+		<script>
+			//五星评价:服务态度
+			var oimg = document.getElementById("oimg");
+			$("#oimg img").click(function() { //图片点击时改变图片路径
+					$("#oimg img").attr('src', '../images/star.png');
+					$(this).nextAll().attr('src', '../images/star_gray.png');
+				})
+				//五星评价:服务质量
+			var cimg = document.getElementById("cimg");
+			$("#cimg img").click(function() {
+
+				$("#cimg img").attr('src', '../images/star.png');
+				$(this).nextAll().attr('src', '../images/star_gray.png');
+			})
+
+			//点击提交，显示评价成功
+			$(".success").hide();
+			$(".confirm").click(
+					function() {
+						$(".success").show();
+						$(".confirm_box").remove();
+						setTimeout(function() {
+							$(".black").show();
+							$(".share_box").show();
+							$(".share_box").animate({
+								bottom: '0'
+							}, 200);
+						}, 300)
+					}
+
+				)
+				//点击提交，显示评价成功:弹出分享
+			$(".black").hide();
+			$(".share_box").hide();
+			$(".close_share").click(function() {
+				$(".black").hide();
+				$(".share_box").hide();
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,18 @@
+package com.jero.esc.controller.activity.weixin.entity;
+
+import java.util.List;
+
+public class WeiXinUserInfo {
+	/** 用户扫码的openid */
+	private String openid;
+	/** 昵称 */
+	private String nickname;
+	/** 性别 1男 2女 */
+	private String sex;
+	private String language;
+	private String city;
+	private String province;
+	private String headimgurl;
+	private String unionid;
+	private List<Object> privilege;
+}
